@@ -1,0 +1,13 @@
+# Storyteller Standalone
+
+An attempt at creating a simple to use interface for the Storyteller long-form storytelling project as created and funded by Sourcefabric.
+
+## Dashboard
+
+The dashboard should be able to create entries from scratch or be able to populate fields from an existing Storyteller project.
+
+Each type of possible storyteller entry should be catered for. MVP should be a single type.
+
+## Site Output
+
+On site generation the build process should copy the contents of the src folder, story json, images, video, and audio (no idea yet) along with the php (urgh) and js files to a new folder in sites with the name of the project.  
