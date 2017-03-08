@@ -1,0 +1,34 @@
+<section class="st-video part inview" name="story{{@index}}">
+  <div class="video-container"
+       data-loop="loop"
+       data-preload="none"
+       {{#image}}
+         data-poster="{{loading}}"
+       {{/image}}
+       >
+       {{> subvideosource}}
+  </div>
+
+  <div class="content container-fluid">
+    <div class="row">
+      <div class="col-sm-12 {{#format}}{{#fullpage}}header-fullpage{{/fullpage}}{{/format}}">
+        <div class="middle">
+        {{#title}}
+          <h1>{{title}}</h1>
+        {{/title}}
+        {{#subtitle}}
+          <h2>{{subtitle}}</h2>
+        {{/subtitle}}
+        </div>
+      </div>
+    </div>
+    {{#text}}
+    <div class="row">
+      <div class="col-xs-12 col-sm-10 col-md-8 col-lg-6 text">
+        {{{text}}}
+      </div>
+    </div>
+    {{/text}}
+  </div>
+
+</section>

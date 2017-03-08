@@ -1,0 +1,76 @@
+<div class="menu_open">
+  <div class="sticks_wrapper">
+    <div class="stick -first" id="stick1"></div>
+    <div class="stick -second" id="stick2"></div>
+    <div class="stick -third" id="stick3"></div>
+  </div>
+</div>
+
+<div class="nav">
+  <nav>
+    <ul>";
+$levelprev = "";
+$levelnow  = "";
+$firstlevelever = "false"; // set this to true first time top level nav comes. Avoiding wrong </ul></li> if nav starts with child
+$counterfirstlevel = 0;
+foreach($storyboard['items'] as $storycounter => $values) {
+  //print "<pre>";print key($values);print_r($values);print "</pre>";//???
+  $story = $values[key($values)]; // get the story into an array without the key
+
+  if(isset($story['navlevel'])) {
+    $levelprev = $levelnow;
+    $levelnow = $story['navlevel'];
+    //print "\n<!-- ".$story['navlevel']." now:".$levelnow." prev:".$levelprev. "-->";
+    // close lists properly
+    if($levelprev == "child" && $levelnow == "first-level" && $firstlevelever == "true") {
+      print "
+        </ul>
+      </li><!-- / .first-level -->";
+    }
+    $navtitle = trim($story['title']);
+    if(isset($story['navtitle'])) { // navtitle allows to set a specific title for the navigation
+      if(trim($story['navtitle']) != "") {
+        $navtitle = trim($story['navtitle']);
+      }
+    }
+
+    if($story['navlevel'] == "child") {
+      print "
+          <li class=\"child\">
+            <a href=\"#story".$storycounter."\" data-articleNumber=\"story".$storycounter."\" title=\"".$navtitle."\">
+              ".$navtitle."
+            </a>
+          </li><!-- / .child -->";
+    }
+    if($story['navlevel'] == "first-level") {
+      $firstlevelever = "true"; // set this to true first time top level nav comes. Avoiding wrong </ul></li> if nav starts with child
+      $counterfirstlevel++;
+      print "
+      <li class=\"first-level\">
+        <a href=\"#story".$storycounter."\" data-articleNumber=\"story".$storycounter."\" title=\"".$navtitle."\">
+          <span>".$counterfirstlevel."</span>
+          <p>".$navtitle."</p>
+        </a>
+
+        <ul>
+          <figure>
+            <a href=\"#story".$storycounter."\" title=\"Four Season Attraction\">
+              <img src=\"".$story['navthumb']."\" />
+            </a>
+          </figure>";
+     }
+  }
+}
+if($firstlevelever == "true") { // this only needs to be closed IF there has ever been a tree-style navigation
+  print "
+        </ul>
+      </li><!-- / .first-level -->";
+}
+print "
+    </ul>
+  </nav>";
+?>
+
+  {{> social}}
+  
+</div>
