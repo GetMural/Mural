@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" id="modernizrcom" class="no-js"> <!--<![endif]-->
+  <head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    {{#meta}}
+      {{> head}}
+    {{/meta}}
+    <meta property="og:type"        content="article" />
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    <link rel="shortcut icon" href="assets/img/favicon.ico">
+    <link rel="apple-touch-icon" href="assets/img/touch-icon.png">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <!--script src="assets/js/jquery2.1.3.min.js"></script-->
+    <link href="css/style.css" rel="stylesheet">
+
+  </head>
+
+  <body class="longform" name="top">
+
+    {{> fb}}
+
+    {{> loader}}
+
+    <!-- main audio -->
+    <audio id="master-audio" preload="none" autoplay="autoplay" loop="loop"></audio>
+    <a href="#" class="mute">Mute</a>
+
+    <article>
+
+    {{#items}}
+
+      {{#imagebackground}}
+        {{> imagebackground}}
+      {{/imagebackground}}
+
+      {{#imageparallax}}
+        {{> imageparallax}}
+      {{/imageparallax}}
+
+      {{#slideshowhorizontal}}
+        {{> slideshowhorizontal}}
+      {{/slideshowhorizontal}}
+
+      {{#slideshowvertical}}
+        {{> slideshowvertical}}
+      {{/slideshowvertical}}
+
+      {{#textcentered}}
+        {{> textcentered}}
+      {{/textcentered}}
+
+      {{#videobackground}}
+        {{> videobackground}}
+      {{/videobackground}}
+
+      {{#videofullpage}}
+        {{> videofullpage}}
+      {{/videofullpage}}
+
+    {{/items}}
+
+
+    </article>
+
+    {{> social}}
+
+    <script src="js/all.js"></script>
+
+  </body>
+</html>
