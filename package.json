@@ -1,0 +1,22 @@
+{
+  "name": "express-starter",
+  "version": "0.0.1",
+  "description": "Quick Boilerplate for Express",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "shakna-israel",
+  "license": "MIT",
+  "dependencies": {
+    "consolidate": "^0.10.0",
+    "dirp": "^0.6.0",
+    "express": "^4.10.6",
+    "express-less": "0.0.6",
+    "logger": "0.0.1",
+    "method-override": "^2.3.7",
+    "mustache": "^1.0.0",
+    "node-watch": "^0.4.1",
+    "reload": "^1.1.1"
+  }
+}

@@ -5,6 +5,8 @@ var app = express();
 var expressLess = require('express-less');
 var logger = require('logger').createLogger();
 var fs = require('fs');
+var watch = require('node-watch');
+var reload = require('reload');
 var data = JSON.parse(fs.readFileSync('data/storyboard.json'));
 
 // Set Mustache as the Template Engine
@@ -68,4 +70,11 @@ var server = app.listen(8000, function() {
 	var host = server.address().address
 	var port = server.address().port
 	console.log('App is listening at http://0.0.0.0:8000');
+});
+
+// Hot Reload the Preview
+watch('data', function(filename) {
+	console.log(filename, ' changed, reloading.');
+	delete require.cache;
+	reload(server, app);
 });
