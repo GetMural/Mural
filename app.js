@@ -22,9 +22,27 @@ app.use('/', express.static('assets'));
 // Set up LESS
 app.use('/css', expressLess(__dirname + '/assets/less', { compress: true }));
 
-// Storyteller View
+// Home View
 app.get('/', function (req, res){
-	res.render('index', {
+	res.render('home', {
+		partials: {
+			preview: 'home'
+		}
+	});
+});
+
+// Editor View
+app.get('/editor', function (req, res){
+	res.render('editor', {
+		partials: {
+			preview: 'editor'
+		}
+	});
+});
+
+// Preview View
+app.get('/preview', function (req, res){
+	res.render('preview', {
 		meta: data["meta"],
 		items: data["items"],
 		partials : {
