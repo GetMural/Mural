@@ -5,7 +5,8 @@ body {
   position: relative;
   width: 100vw;
 }
-object {
+iframe {
+  border: none;
   height: 100vh;
   position: absolute;
   width: 50vw;

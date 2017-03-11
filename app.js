@@ -8,6 +8,11 @@ var fs = require('fs');
 var watch = require('node-watch');
 var reload = require('reload');
 var data = JSON.parse(fs.readFileSync('data/storyboard.json'));
+// Set up Virtual-DOM
+var h = require('virtual-dom/h');
+var diff = require('virtual-dom/diff');
+var patch = require('virtual-dom/patch');
+var createElement = require('virtual-dom/create-element');
 
 // Set Mustache as the Template Engine
 app.engine('html', cons.mustache);
@@ -18,6 +23,9 @@ app.set('views', __dirname + '/views');
 
 // Set up Static Files
 app.use('/', express.static('assets'));
+
+// Set up the data API
+app.use('/data', express.static('data'));
 
 // Set up LESS
 app.use('/css', expressLess(__dirname + '/assets/less', { compress: true }));
@@ -33,9 +41,9 @@ app.get('/', function (req, res){
 
 // Editor View
 app.get('/editor', function (req, res){
-	res.render('editor', {
+	res.render('editor/editor', {
 		partials: {
-			preview: 'editor'
+			meta: 'partials/meta'
 		}
 	});
 });
