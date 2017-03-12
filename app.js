@@ -42,6 +42,8 @@ app.get('/', function (req, res){
 // Editor View
 app.get('/editor', function (req, res){
 	res.render('editor/editor', {
+		meta: data["meta"],
+		items: data["items"],
 		partials: {
 			meta: 'partials/meta'
 		}

@@ -27,21 +27,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
       "title": meta["title"],
       "author": meta["author"]
     };
-
-    var elDOM = [];
-
-    for(var element in elements) {
-      var el = document.getElementById(elements[element]);
-      elDOM.push(el);
-    };
-
-    for(var data in dataSet) {
-      for (var i = 0; i < elDOM.length; i++) {
-        if (elDOM[i].id == data) {
-          $(elDOM[i]).val(dataSet[data]);
-        }
-      }
-    };
     
   };
 

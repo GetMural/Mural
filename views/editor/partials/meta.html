@@ -2,12 +2,12 @@
   <fieldset>
     <legend>Meta Information</legend>
     <div class="form-group label-floating">
-      <label for="site_name" class="control-label">Site Name</label>
-      <input id="site_name" type="text" class="form-control" value="{{#meta}}{{#site_name}}{{site_name}}{{/site_name}}{{/meta}}" />
-    </div>
-    <div class="form-group label-floating">
       <label for="title" class="control-label">Title</label>
       <input id="title" type="text" class="form-control" value="{{#meta}}{{#title}}{{title}}{{/title}}{{/meta}}" />
+    </div>
+    <div class="form-group label-floating">
+      <label for="site_name" class="control-label">Site Name</label>
+      <input id="site_name" type="text" class="form-control" value="{{#meta}}{{#site_name}}{{site_name}}{{/site_name}}{{/meta}}" />
     </div>
     <div class="form-group label-floating">
       <label for="site_img" class="control-label">Site Image</label>
@@ -16,6 +16,10 @@
     <div class="form-group label-floating">
       <label for="subtitle" class="control-label">Subtitle</label>
       <input id="subtitle" type="text" class="form-control" value="{{#meta}}{{#subtitle}}{{subtitle}}{{/subtitle}}{{/meta}}" />
+    </div>
+    <div class="form-group label-floating">
+      <label for="author" class="control-label">Author</label>
+      <input type="text" class="form-control" id="author" value="{{#meta}}{{#author}}{{author}}{{/author}}{{/meta}}" />
     </div>
     <div class="form-group label-floating">
       <label for="keywords" class="control-label">Keywords</label>
