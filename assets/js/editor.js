@@ -41,16 +41,15 @@ document.addEventListener("DOMContentLoaded", function (event) {
         }
       });
       $.ajax({
-        url: url,
+        url: '/update',
         dataType: 'json',
         contentType: 'application/json; charset=UTF-8',
-        data: data,
+        data: JSON.stringify(data),
         type: 'POST',
         complete: function() {
           console.log(data);
         }
       });
-      // console.log("This is where you'd match the object you're editing to the correct json object and overwrite it");
     });
 
   };

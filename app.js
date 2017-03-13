@@ -1,18 +1,14 @@
-//Definitions
+// Definitions
 var express = require('express');
 var cons = require('consolidate');
 var app = express();
+var bodyParser = require('body-parser')
 var expressLess = require('express-less');
 var logger = require('logger').createLogger();
 var fs = require('fs');
 var watch = require('node-watch');
 var reload = require('reload');
 var data = JSON.parse(fs.readFileSync('data/storyboard.json'));
-// Set up Virtual-DOM
-var h = require('virtual-dom/h');
-var diff = require('virtual-dom/diff');
-var patch = require('virtual-dom/patch');
-var createElement = require('virtual-dom/create-element');
 
 // Set Mustache as the Template Engine
 app.engine('html', cons.mustache);
@@ -98,6 +94,12 @@ var server = app.listen(8000, function() {
 	var host = server.address().address
 	var port = server.address().port
 	console.log('App is listening at http://0.0.0.0:8000');
+});
+
+app.use(bodyParser.json());
+
+app.post('/update', function(res, req){
+	console.log(req.body);
 });
 
 // Hot Reload the Preview
