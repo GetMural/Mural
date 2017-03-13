@@ -8,13 +8,14 @@
         "keywords": "Gradac, Storyteller, Sourcefabric",
         "rsspingback": "http://www.google.com/",
         "description": "On its confluence in the town center of Valjevo, river Gradac is still a clean, mountainous cold-water river. But just a few hundred meters before it joins Kolubara, Gradac runs out of it's beautiful gorge, which is about 15 kilometers long and in some places a few hundred meters high. Being that close to the town, yet still preserving it's natural values, Gradac gorge is a favorite short-trip destination for locals and others. And not only in the summer.",
-        "src": "http://www.google.com/",
+        "src": "http://storyteller-dev.lab.sourcefabric.org",
         "share": false,
         "facebook": false,
         "twitter": true
     },
     "items": [
         {
+            "id": 1,
             "videobackground": {
                 "format": {
                   "fullpage": true
@@ -31,6 +32,7 @@
             }
         },
         {
+            "id": 2,
             "textcentered": {
                 "format": {
                   "inline": true
@@ -54,6 +56,7 @@
             }
         },
         {
+            "id": 3,
             "imagebackground": {
                 "format": {
                   "fullpage": true
@@ -71,6 +74,7 @@
             }
         },
         {
+            "id": 4,
             "imagebackground": {
                 "format": {
                   "inline": true
@@ -87,6 +91,7 @@
             }
         },
         {
+            "id": 5,
             "videofullpage": {
                 "format": {
                   "fullpage": true
@@ -104,6 +109,7 @@
             }
         },
         {
+            "id": 6,
             "slideshowhorizontal": {
                 "format": {
                   "inline": true
@@ -139,6 +145,7 @@
             }
         },
         {
+            "id": 7,
             "imageparallax": {
                 "format": {
                   "fullpage": true
@@ -154,6 +161,7 @@
             }
         },
         {
+            "id": 8,
             "textcentered": {
                 "format": {
                   "inline": true
@@ -178,6 +186,7 @@
             }
         },
         {
+            "id": 9,
             "videobackground": {
                 "format": {
                   "fullpage": true
@@ -197,6 +206,7 @@
             }
         },
         {
+            "id": 10,
             "textcentered": {
                 "format": {
                   "inline": true
@@ -229,6 +239,7 @@
             }
         },
         {
+            "id": 11,
             "textcentered": {
                 "format": {
                   "inline": true
@@ -251,6 +262,7 @@
             }
         },
         {
+            "id": 12,
             "slideshowvertical": {
                 "images": [
                     {
@@ -278,6 +290,7 @@
             }
         },
         {
+            "id": 13,
             "videobackground": {
                 "format": {
                   "fullpage": true
@@ -297,6 +310,7 @@
             }
         },
         {
+            "id": 14,
             "slideshowhorizontal": {
               "format": {
                 "inline": true
@@ -322,6 +336,7 @@
             }
         },
         {
+            "id": 15,
             "textcentered": {
                 "format": {
                   "inline": true
