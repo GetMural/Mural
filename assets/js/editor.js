@@ -27,7 +27,32 @@ document.addEventListener("DOMContentLoaded", function (event) {
       "title": meta["title"],
       "author": meta["author"]
     };
-    
+
+    var save = document.getElementById('save');
+    var data = {"meta":{}};
+
+    save.addEventListener('click', function (e){
+      e.preventDefault();
+      $('input, textarea').each(function(){
+        if (this.tagName == "textarea") {
+          data["meta"][this.id] = this.innerText;
+        } else {
+          data["meta"][this.id] = this.value;
+        }
+      });
+      $.ajax({
+        url: url,
+        dataType: 'json',
+        contentType: 'application/json; charset=UTF-8',
+        data: data,
+        type: 'POST',
+        complete: function() {
+          console.log(data);
+        }
+      });
+      // console.log("This is where you'd match the object you're editing to the correct json object and overwrite it");
+    });
+
   };
 
 });
