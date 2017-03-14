@@ -9,3 +9,9 @@ body {
 .form-horizontal .form-group {
   margin: 0;
 }
+
+nav {
+  position: absolute;
+  right: 10px;
+  z-index: 10;
+}

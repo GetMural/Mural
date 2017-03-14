@@ -41,6 +41,7 @@ app.get('/editor', function (req, res){
 		meta: data["meta"],
 		items: data["items"],
 		partials: {
+			nav: 'partials/nav',
 			meta: 'partials/meta',
 			videobackground: 'partials/videobackground',
 			textcentred: 'partials/textcentred'

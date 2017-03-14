@@ -1,0 +1,15 @@
+<nav>
+  <ul>
+  {{#meta}}
+    <li><a href="#" data-load="{{id}}">Meta</a></li>
+  {{/meta}}
+  {{#items}}
+    {{#videobackground}}
+      <li><a href="#" data-load="{{id}}">{{#title}}{{title}}{{/title}}{{^title}}Video Background {{id}}{{/title}}</a></li>
+    {{/videobackground}}
+    {{#textcentred}}
+      <li><a href="#" data-load="{{id}}">{{#title}}{{title}}{{/title}}{{^title}}Text Centred {{id}}{{/title}}</a></li>
+    {{/textcentred}}
+  {{/items}}
+  </ul>
+</nav>
