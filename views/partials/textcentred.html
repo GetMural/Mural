@@ -2,7 +2,7 @@
                 {{#light}}
                   reverse_colors
                 {{/light}}"
-                 name="story{{@index}}">
+                 name="story{{id}}">
       <div class="content container-fluid">
         <div class="row">
           <div class="col-sm-12 header">
@@ -25,7 +25,7 @@
                 <img src="{{src}}" style="max-width: 100%" rel="resizable" alt="{{alt}}" />
                 <figcaption>{{title}}
                    <span class="photographer">
-                     {{credits}}
+                     {{{credits}}}
                    </span>
                 </figcaption>
               </figure>

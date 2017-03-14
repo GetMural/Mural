@@ -41,7 +41,9 @@ app.get('/editor', function (req, res){
 		meta: data["meta"],
 		items: data["items"],
 		partials: {
-			meta: 'partials/meta'
+			meta: 'partials/meta',
+			videobackground: 'partials/videobackground',
+			textcentred: 'partials/textcentred'
 		}
 	});
 });
@@ -60,7 +62,7 @@ app.get('/preview', function (req, res){
 			imageparallax: 'partials/imageparallax',
 			intro: 'partials/intro',
 			loader: 'partials/loader',
-			textcentered: 'partials/textcentered',
+			textcentered: 'partials/textcentred',
 			title: 'partials/title',
 			slideshowhorizontal: 'partials/slideshowhorizontal',
 			slideshowvertical: 'partials/slideshowvertical',
@@ -96,10 +98,11 @@ var server = app.listen(8000, function() {
 	console.log('App is listening at http://0.0.0.0:8000');
 });
 
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.post('/update', function(res, req){
-	console.log(req.body);
+	console.log(req.body.meta);
 });
 
 // Hot Reload the Preview

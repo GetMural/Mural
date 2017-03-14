@@ -38,7 +38,23 @@
     <div class="well bs-component">
       <div class="pages">
         <div class="page">
-          {{> meta}}
+          {{#noshow}}
+            {{#meta}}
+              {{> meta}}
+            {{/meta}}
+          {{/noshow}}
+
+          {{#items}}
+            {{#videobackground}}
+              {{> videobackground}}
+            {{/videobackground}}
+          {{/items}}
+
+          {{#noshow}}
+          {{#textcentred}}
+            {{> textcentred}}
+          {{/textcentred}}
+          {{/noshow}}
         </div>
       </div>
     </div>

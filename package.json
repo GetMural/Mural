@@ -1,5 +1,5 @@
 {
-  "name": "express-starter",
+  "name": "storyteller-standalone",
   "version": "0.0.1",
   "description": "Quick Boilerplate for Express",
   "main": "app.js",
@@ -18,5 +18,14 @@
     "mustache": "^1.0.0",
     "node-watch": "^0.4.1",
     "reload": "^1.1.1"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Flowdeeps/Storyteller-Standalone.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Flowdeeps/Storyteller-Standalone/issues"
+  },
+  "homepage": "https://github.com/Flowdeeps/Storyteller-Standalone#readme"
 }

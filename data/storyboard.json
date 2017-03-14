@@ -15,8 +15,8 @@
     },
     "items": [
         {
-            "id": 1,
             "videobackground": {
+                "id": 0,
                 "format": {
                   "fullpage": true
                 },
@@ -32,8 +32,8 @@
             }
         },
         {
-            "id": 2,
-            "textcentered": {
+            "textcentred": {
+                "id": 1,
                 "format": {
                   "inline": true
                 },
@@ -51,13 +51,22 @@
                     },
                     {
                         "text": "<p>Another layer that makes Gradac gorge interesting is its man-made structures. The railway Belgrade-Bar is situated here with all its bridges, tunnels and even a small railway station. Additionally, there are smaller and bigger dams made of concrete or knitted out of the tree branches. This balanced combination of artificial vs natural brought added value to site attraction.</p>\r\n                                      <p>Being here forever, firstly as a natural shelter for prehistoric people (more than 70 caves!), as well as a line of defense against the invaders in medieval times, to the usage of water power for milling - the gorge of\u00a0Gradac has several kinds of historic artifacts that are an inherent part of its charm.\u00a0</p>\r\n                                      <p>Explore the next chapters, and consider yourself invited to visit!</p>"
+                    },
+                    {
+                        "title": "Blah Blah Blah",
+                        "align": "left",
+                        "src": "http://storyteller-dev.lab.sourcefabric.org/get_img?ImageRatio=15&ImageWidth=360&ImageHeight=240&ImageId=520",
+                        "credits": "&copy; \u0110or\u0111e \u0110okovi\u0107"
+                    },
+                    {
+                        "text": "<p>Ut nec rutrum felis, ac volutpat risus. Maecenas congue quis erat nec tempus. Ut tincidunt, tortor vel porttitor varius, erat nibh hendrerit quam, sit amet gravida sem massa id nulla. Sed nunc eros, facilisis a libero eget, vestibulum tristique metus. Cras commodo magna sed commodo varius. Praesent auctor nibh id purus consequat, ac efficitur urna sollicitudin. Integer bibendum justo ac magna tristique, at mattis nisl interdum.</p>"
                     }
                 ]
             }
         },
         {
-            "id": 3,
             "imagebackground": {
+                "id": 4,
                 "format": {
                   "fullpage": true
                 },
@@ -74,8 +83,8 @@
             }
         },
         {
-            "id": 4,
             "imagebackground": {
+                "id": 5,
                 "format": {
                   "inline": true
                 },
@@ -91,8 +100,8 @@
             }
         },
         {
-            "id": 5,
             "videofullpage": {
+                "id": 6,
                 "format": {
                   "fullpage": true
                 },
@@ -109,8 +118,8 @@
             }
         },
         {
-            "id": 6,
             "slideshowhorizontal": {
+                "id": 7,
                 "format": {
                   "inline": true
                 },
@@ -145,8 +154,8 @@
             }
         },
         {
-            "id": 7,
             "imageparallax": {
+                "id": 8,
                 "format": {
                   "fullpage": true
                 },
@@ -161,8 +170,8 @@
             }
         },
         {
-            "id": 8,
-            "textcentered": {
+            "textcentred": {
+                "id": 9,
                 "format": {
                   "inline": true
                 },
@@ -186,8 +195,8 @@
             }
         },
         {
-            "id": 9,
             "videobackground": {
+                "id": 10,
                 "format": {
                   "fullpage": true
                 },
@@ -206,8 +215,8 @@
             }
         },
         {
-            "id": 10,
-            "textcentered": {
+            "textcentred": {
+                "id": 11,
                 "format": {
                   "inline": true
                 },
@@ -239,8 +248,8 @@
             }
         },
         {
-            "id": 11,
-            "textcentered": {
+            "textcentred": {
+                "id": 12,
                 "format": {
                   "inline": true
                 },
@@ -262,8 +271,8 @@
             }
         },
         {
-            "id": 12,
             "slideshowvertical": {
+                "id": 13,
                 "images": [
                     {
                         "title": "One of several so-called 'knitted' dams",
@@ -290,8 +299,8 @@
             }
         },
         {
-            "id": 13,
             "videobackground": {
+                "id": 14,
                 "format": {
                   "fullpage": true
                 },
@@ -310,8 +319,8 @@
             }
         },
         {
-            "id": 14,
             "slideshowhorizontal": {
+              "id": 15,
               "format": {
                 "inline": true
               },
@@ -336,8 +345,8 @@
             }
         },
         {
-            "id": 15,
-            "textcentered": {
+            "textcentred": {
+                "id": 16,
                 "format": {
                   "inline": true
                 },
