@@ -1,9 +1,10 @@
 <form class="form-horizontal" data-id="{{id}}">
   <fieldset>
     <legend>Text Centred</legend>
-    <div class="form-group label-floating">
-      <label for="title" class="control-label">Title</label>
-      <input id="title" type="text" class="form-control" value="{{#title}}{{title}}{{/title}}" />
-    </div>
+
+    {{> title}}
+
+    {{> formcontrols}}
+
   </fieldset>
 </form>

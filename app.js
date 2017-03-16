@@ -42,6 +42,9 @@ app.get('/editor', function (req, res){
 		items: data["items"],
 		partials: {
 			nav: 'partials/nav',
+			formcontrols: 'partials/formcontrols',
+			title: 'partials/title',
+			subtitle: 'partials/subtitle',
 			meta: 'partials/meta',
 			videobackground: 'partials/videobackground',
 			textcentred: 'partials/textcentred'
