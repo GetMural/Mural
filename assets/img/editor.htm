@@ -21,6 +21,10 @@
 
   <script src="js/live.js"></script>
 
+  <script>
+    $.material.init();
+  </script>
+
   <script src="js/editor.js"></script>
 
 </head>
@@ -31,13 +35,25 @@
     </div>
   </div>
 
-  {{> editornav}}
+<nav>
+  <ul>
+    <li><a href="#" data-load="">Meta</a></li>
+      <li><a href="#" data-load="0">Gradac to the People!</a></li>
+      <li><a href="#" data-load="1">Gradac to the People!</a></li>
+      <li><a href="#" data-load="9">Winter activities</a></li>
+      <li><a href="#" data-load="10">Man-made structures</a></li>
+      <li><a href="#" data-load="11">Shortcut through the Gorge</a></li>
+      <li><a href="#" data-load="12">Gradac dams</a></li>
+      <li><a href="#" data-load="14">Nature &amp; wildlife</a></li>
+      <li><a href="#" data-load="16">Insects &amp; reptiles</a></li>
+  </ul>
+</nav>
 
   <div class="container-fluid main">
     <div class="well bs-component">
       <div class="pages">
-        <div class="page js-Load">
-          <p>Please select an element from the navigation or create a new Storyteller element</p>
+        <div class="page">
+          <div id="load">Load content here</div>
         </div>
       </div>
     </div>

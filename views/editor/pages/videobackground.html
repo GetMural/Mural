@@ -1,0 +1,31 @@
+<form class="form-horizontal" data-id="">
+  <fieldset>
+    <legend>Video Background</legend>
+
+    <div class="form-group">
+      <div class="togglebutton">
+        <label for="fullpage">
+          <input id="fullpage" type="checkbox" class="form-control" checked="checked" />
+          <span class="toggle"></span>
+          Fullpage
+        </label>
+      </div>
+    </div>
+
+    {{> title}}
+
+    {{> subtitle}}
+
+    {{> videosources}}
+
+    <fieldset>
+      <legend>Poster Image</legend>
+
+      {{> image}}
+
+    </fieldset>
+
+    {{> formcontrols}}
+
+  </fieldset>
+</form>

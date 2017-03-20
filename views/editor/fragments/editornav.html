@@ -1,0 +1,31 @@
+<nav class="js-Nav">
+  <ul>
+  {{#meta}}
+    <li>
+      <a href="/editor/page/meta" data-load="{{id}}" class="js-NavLink">Meta</a>
+    </li>
+  {{/meta}}
+  {{#items}}
+    {{#videobackground}}
+      <li>
+        <a href="/editor/page/videobackground" data-load="{{id}}" class="js-NavLink">{{#title}}{{title}}{{/title}}{{^title}}Video Background {{id}}{{/title}}</a>
+      </li>
+    {{/videobackground}}
+    {{#textcentred}}
+      <li>
+        <a href="/editor/page/textcentred" data-load="{{id}}" class="js-NavLink">{{#title}}{{title}}{{/title}}{{^title}}Text Centred {{id}}{{/title}}</a>
+      </li>
+    {{/textcentred}}
+    {{#imagebackground}}
+      <li>
+        <a href="/editor/page/imagebackground" data-load="{{id}}" class="js-NavLink">{{#title}}{{title}}{{/title}}{{^title}}Image Background {{id}}{{/title}}</a>
+      </li>
+    {{/imagebackground}}
+    {{#slideshowhorizontal}}
+      <li>
+        <a href="/editor/page/slideshowhorizontal" data-load="{{id}}" class="js-NavLink">{{#title}}{{title}}{{/title}}{{^title}}Slideshow (Horizontal) {{id}}{{/title}}</a>
+      </li>
+    {{/slideshowhorizontal}}
+  {{/items}}
+  </ul>
+</nav>
