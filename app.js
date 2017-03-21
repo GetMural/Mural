@@ -147,12 +147,20 @@ app.get('/editor/fragment/videosources', function(req, res){
 
 // Meta Info Page
 app.get('/editor/page/meta', function(req, res){
-	res.render('editor/pages/meta');
+	res.render('editor/pages/meta', {
+		partials: {
+			formcontrols: '../fragments/formcontrols'
+		}
+	});
 });
 
 // Textcentred Page
 app.get('/editor/page/textcentred', function(req, res){
-	res.render('editor/pages/textcentred');
+	res.render('editor/pages/textcentred', {
+		partials: {
+			formcontrols: '../fragments/formcontrols'
+		}
+	});
 });
 
 // Imagebackground Page
@@ -238,11 +246,10 @@ var server = app.listen(8000, function() {
 	console.log('App is listening at http://0.0.0.0:8000');
 });
 
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+app.use(bodyParser.raw());
 
 app.post('/update', function(req, res){
-	console.log(req.body.meta);
+	res.render('some-file', { meta: req.body.meta });
 });
 
 // Hot Reload the Preview

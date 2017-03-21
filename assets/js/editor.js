@@ -37,6 +37,13 @@ document.addEventListener("DOMContentLoaded", function (event) {
             items = data["items"];
         loadMaterial();
         populateForms(meta, items);
+        var save = document.getElementById('save');
+        if (typeof save !== "undefined") {
+          save.addEventListener('click', function (event){
+            event.preventDefault();
+            saveData();
+          });
+        }
       };
     };
     XHR.open('GET', url, true);
@@ -52,25 +59,31 @@ document.addEventListener("DOMContentLoaded", function (event) {
     var textcentredFormEl = $('.js-TextCentred')[0];
 
     if (typeof metaFormEl != "undefined") {
+      $('input, textarea').each(function () {
+        var id = this.id;
+        for (var i = 0; i < Object.keys(meta).length; i++) {
+          var key = Object.keys(meta)[i];
+          if (key == id) {
+            if (this.tagName.toLowerCase() == "input") {
+              this.value = meta[id];
+            }
+            if (this.tagName.toLowerCase() == "textarea") {
+              this.innerText = meta[id];
+            }
+          }
+        }
 
+      });
     }
 
   };
 
-  var saveData = function (meta, items) {
+  var saveData = function () {
 
-    var save = document.getElementById('save');
-    var meta = {"meta":{}};
-    var items = {"items":{}};
+    var data = {"meta":{}};
 
-    save.addEventListener('click', function (event){
-      event.preventDefault();
       $('input, textarea').each(function (){
-        if (this.tagName == "textarea") {
-          data["meta"][this.id] = this.innerText;
-        } else {
-          data["meta"][this.id] = this.value;
-        };
+        data["meta"][this.id] = this.value;
       });
       $.ajax({
         url: '/update',
@@ -82,8 +95,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
           console.log("posted");
         }
       });
-    });
-
-  };
+    };
 
 });
