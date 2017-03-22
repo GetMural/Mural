@@ -1,4 +1,4 @@
-<form class="form-horizontal js-Meta">
+<form class="form-horizontal js-Meta" method="POST" action="/update">
   <fieldset>
     <legend>Meta Information</legend>
 
@@ -6,39 +6,39 @@
 
     <div class="form-group">
       <label for="site_name" class="control-label">Site Name</label>
-      <input id="site_name" type="text" class="form-control" value="" />
+      <input name="site_name" type="text" class="form-control" value="" />
     </div>
 
     <div class="form-group">
       <label for="site_img" class="control-label">Site Image</label>
-      <input id="site_img" type="text" class="form-control" value="" />
+      <input name="site_img" type="text" class="form-control" value="" />
     </div>
 
     {{> subtitle}}
 
     <div class="form-group">
       <label for="author" class="control-label">Author</label>
-      <input type="text" class="form-control" id="author" value="" />
+      <input type="text" class="form-control" name="author" value="" />
     </div>
 
     <div class="form-group">
       <label for="keywords" class="control-label">Keywords</label>
-      <textarea id="keywords" class="form-control"></textarea>
+      <textarea name="keywords" class="form-control"></textarea>
     </div>
 
     <div class="form-group">
       <label for="rsspingback" class="control-label">RSS Pingback</label>
-      <input id="rsspingback" type="text" class="form-control" value="" />
+      <input name="rsspingback" type="text" class="form-control" value="" />
     </div>
 
     <div class="form-group">
       <label for="description" class="control-label">Description</label>
-      <textarea id="description" class="form-control"></textarea>
+      <textarea name="description" class="form-control"></textarea>
     </div>
 
     <div class="form-group">
       <label for="src" class="control-label">Src</label>
-      <input id="src" type="text" class="form-control" value="" />
+      <input name="src" type="text" class="form-control" value="" />
     </div>
 
     <!--

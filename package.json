@@ -9,6 +9,7 @@
   "author": "shakna-israel",
   "license": "MIT",
   "dependencies": {
+    "body-parser": "^1.17.1",
     "consolidate": "^0.10.0",
     "dirp": "^0.6.0",
     "express": "^4.10.6",

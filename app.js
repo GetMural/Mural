@@ -1,13 +1,14 @@
 // Definitions
 var express = require('express');
-var cons = require('consolidate');
 var app = express();
-var bodyParser = require('body-parser')
-var expressLess = require('express-less');
-var logger = require('logger').createLogger();
+var bodyParser = require('body-parser');
+var cons = require('consolidate');
 var fs = require('fs');
-var watch = require('node-watch');
+var logger = require('logger').createLogger();
+var path = require('path');
 var reload = require('reload');
+var watch = require('node-watch');
+
 var data = JSON.parse(fs.readFileSync('data/storyboard.json'));
 
 // Set Mustache as the Template Engine
@@ -22,9 +23,6 @@ app.use('/', express.static('assets'));
 
 // Set up the data API
 app.use('/data', express.static('data'));
-
-// Set up LESS
-app.use('/css', expressLess(__dirname + '/assets/less', { compress: true }));
 
 // Home View
 app.get('/', function (req, res){
@@ -224,32 +222,33 @@ app.get('/preview', function (req, res){
 	});
 });
 
-// All Errors Except for 404 Page.
-app.use(function(err, req, res, next){
-	var requestedURL = 'http://0.0.0.0:8000';
-	console.error(err.stack);
-	console.log(err.stack + '  URL: ' + requestedURL);
-	res.render('error', {title: err.stack});
+app.listen(8000, function () {
+  console.log('Server is running. Point your browser to: http://localhost:8000');
 });
 
-// 404 Error Page. MUST BE LAST (except for server).
-app.use(function(req, res, next){
-	var requestedURL = 'http://0.0.0.0:8000';
-	console.log('Error: 404 - ' + requestedURL );
-	res.render('error', {title: '404'});
-});
+//support parsing of application/json type post data
+app.use(bodyParser.json());
 
-// Set the Server Up
-var server = app.listen(8000, function() {
-	var host = server.address().address
-	var port = server.address().port
-	console.log('App is listening at http://0.0.0.0:8000');
-});
+//support parsing of application/x-www-form-urlencoded post data
+app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use(bodyParser.raw());
+app.post('/update', function(req, res) {
+	res.setHeader('Content-Type', 'application/json');
 
-app.post('/update', function(req, res){
-	res.render('some-file', { meta: req.body.meta });
+	//mimic a slow network connection
+
+	var meta = {"meta":{}};
+
+	var items = req.body;
+
+	for (var item in items) {
+		meta["meta"][item] = items[item];
+	}
+
+	res.send(JSON.stringify({
+		data: data
+	}));
+
 });
 
 // Hot Reload the Preview

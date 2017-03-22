@@ -41,6 +41,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
         if (typeof save !== "undefined") {
           save.addEventListener('click', function (event){
             event.preventDefault();
+            event.stopPropagation();
             saveData();
           });
         }
@@ -60,7 +61,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
     if (typeof metaFormEl != "undefined") {
       $('input, textarea').each(function () {
-        var id = this.id;
+        var id = this.name;
         for (var i = 0; i < Object.keys(meta).length; i++) {
           var key = Object.keys(meta)[i];
           if (key == id) {
@@ -78,23 +79,27 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
   };
 
-  var saveData = function () {
+  function saveData() {
 
-    var data = {"meta":{}};
+    var data = {};
 
+      var self = this;
       $('input, textarea').each(function (){
-        data["meta"][this.id] = this.value;
+        data[this.name] = this.value;
       });
+      console.log(data);
+
       $.ajax({
         url: '/update',
-        dataType: 'json',
-        contentType: 'application/json; charset=UTF-8',
-        data: JSON.stringify(data),
         type: 'POST',
-        complete: function () {
-          console.log("posted");
-        }
+        data: data,
+        success: postSuccessHandler
       });
+
     };
+
+  function postSuccessHandler() {
+    console.log("Posted data");
+  }
 
 });
