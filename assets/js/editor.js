@@ -1,7 +1,12 @@
 document.addEventListener("DOMContentLoaded", function (event) {
 
-  function loadMaterial() {
+  function loadAssets() {
     $.material.init();
+    $('.js-RichText').htmlarea({
+      toolbar: [
+        ["html"], ["bold", "italic", "underline"]
+      ]
+    });
   };
 
   var url = '/data/storyboard.json';
@@ -37,7 +42,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
         var data = JSON.parse(XHR.responseText),
             meta = data["meta"],
             items = data["items"];
-        loadMaterial();
         populateForms(meta, items);
         var save = document.getElementById('save');
         if (typeof save !== "undefined") {
@@ -72,7 +76,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
             }
           }
         }
-
       });
     }
 
@@ -85,47 +88,53 @@ document.addEventListener("DOMContentLoaded", function (event) {
         if (typeof item["textcentred"] != "undefined") {
           if (window.id == item["textcentred"]["id"]) {
             item = item["textcentred"];
-            for (j = 0; j < item["snippets"].length; j++) {
-              var snippet = item["snippets"][j];
-              if (typeof snippet["text"] != "undefined") {
-                var textContent = snippet["text"],
+            if (typeof item["snippets"] != "undefined") {
+              for (j = 0; j < item["snippets"].length; j++) {
+                var snippet = item["snippets"][j];
+                if (typeof snippet["text"] != "undefined") {
+                  function populateText() {
+                    var textContent = snippet["text"],
                     textEl = document.createElement('div'),
                     textbox = "/editor/fragment/snippettext";
-                $(textEl).load(textbox, function( response, status, xhr ) {
-                  if ( status !== "error" ) {
-                    textarea = this.querySelector('textarea');
-                    textarea.value = textContent;
+                    $(textEl).load(textbox, function( response, status, xhr ) {
+                      if ( status !== "error" ) {
+                        textarea = this.querySelector('textarea');
+                        textarea.value = textContent;
+                      }
+                    });
+                    $(textEl).appendTo('.js-ContentDynamic');
                   }
-                });
-                $(textEl).appendTo('.js-ContentDynamic');
-              } else {
-                // must be image - I hate doing it this way though
-                for (var n = 0; n < Object.keys(snippet)[n]; n++) {
-                  console.log(snippet[n]);
+                  populateText();
+                } else {
+                  // must be image - I hate doing it this way though
+                  for (var n = 0; n < Object.keys(snippet)[n]; n++) {
+                    console.log(snippet[n]);
+                  }
                 }
               }
             }
+            $('input, textarea').each(function () {
+              var name = this.name;
+              for (var i = 0; i < Object.keys(item).length; i++) {
+                var key = Object.keys(item)[i];
+                if (this.tagName.toLowerCase() == "input") {
+                  if (this.type == "checkbox" && this.name == name) {
+                    if (item[name] == true) {
+                      this.checked = true;
+                    }
+                  } else {
+                    this.value = item[name];
+                  }
+                }
+                if (this.tagName.toLowerCase() == "textarea") {
+                  this.value = item[name];
+                }
+              }
+            });
           }
         }
       }
-
-      $('input, textarea').each(function () {
-        var name = this.name;
-        for (var i = 0; i < Object.keys(item).length; i++) {
-          var key = Object.keys(item)[i];
-          if (key == name) {
-            if (this.tagName.toLowerCase() == "input") {
-              this.value = item[name];
-            }
-            if (this.tagName.toLowerCase() == "textarea") {
-              this.innerText = item[name];
-            }
-          }
-        }
-
-      });
     }
-
   };
 
   function saveData() {
@@ -134,7 +143,11 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
       var self = this;
       $('input, textarea').each(function (){
-        data[this.name] = this.value;
+        if (this.type == "checkbox") {
+          data[this.name] = this.checked;
+        } else {
+          data[this.name] = this.value;
+        }
       });
       console.log(data);
 
