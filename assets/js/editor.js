@@ -2,11 +2,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
   function loadAssets() {
     $.material.init();
-    $('.js-RichText').htmlarea({
-      toolbar: [
-        ["html"], ["bold", "italic", "underline"]
-      ]
-    });
   };
 
   var url = '/data/storyboard.json';
@@ -43,6 +38,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
             meta = data["meta"],
             items = data["items"];
         populateForms(meta, items);
+        loadAssets();
         var save = document.getElementById('save');
         if (typeof save !== "undefined") {
           save.addEventListener('click', function (event){
@@ -94,11 +90,15 @@ document.addEventListener("DOMContentLoaded", function (event) {
                 if (typeof snippet["text"] != "undefined") {
                   function populateText() {
                     var textContent = snippet["text"],
-                    textEl = document.createElement('div'),
-                    textbox = "/editor/fragment/snippettext";
+                        textEl = document.createElement('div'),
+                        textbox = "/editor/fragment/snippettext",
+                        timestamp = Date.now();
                     $(textEl).load(textbox, function( response, status, xhr ) {
                       if ( status !== "error" ) {
                         textarea = this.querySelector('textarea');
+                        var tmpName = "text" + timestamp;
+                        $(this).find('label').attr('for', tmpName);
+                        $(textarea).attr('name', tmpName).attr('id', tmpName);
                         textarea.value = textContent;
                       }
                     });
@@ -113,6 +113,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
                 }
               }
             }
+            addAssets();
             $('input, textarea').each(function () {
               var name = this.name;
               for (var i = 0; i < Object.keys(item).length; i++) {
@@ -137,12 +138,68 @@ document.addEventListener("DOMContentLoaded", function (event) {
     }
   };
 
+  function addAssets() {
+    $('.js-AddText').bind('click', function (event) {
+      event.preventDefault();
+      var timestamp = Date.now();
+      var textbox = "/editor/fragment/snippettext",
+          textEl = document.createElement('div');
+      $(textEl).load(textbox, function ( response, status, xhr ) {
+        if ( status !== "error" ) {
+          var tmpName = "text" + timestamp;
+          $(this).find('label').attr('for', tmpName);
+          textarea = this.querySelector('textarea');
+          $(textarea).attr('name', tmpName);
+          $(textarea).attr('id', tmpName);
+          textarea.focus();
+        }
+      });
+      $(textEl).appendTo('.js-ContentDynamic');
+    });
+    $('.js-AddImage').bind('click', function (event) {
+      event.preventDefault();
+      var timestamp = Date.now(),
+          imagebox = "/editor/fragment/snippetimage",
+          imageEl = document.createElement('div');
+      $(imageEl).load(imagebox, function ( response, status, xhr ) {
+        if ( status !== "error" ) {
+          var tmpName = "src" + timestamp;
+          var tmpCreditsName = "credits" + timestamp;
+          $(this).find('label').each( function () {
+            if ($(this).attr('for') == "src") {
+              var forSrc = $(this);
+              $(forSrc).attr('for', tmpName);
+            }
+            if ($(this).attr('for') == "credits") {
+              var forCredits = $(this);
+              $(forCredits).attr('for', tmpCreditsName);
+            }
+          });
+          $(this).find('input').each( function (){
+            if ($(this).attr('name') == "src") {
+              var src = $(this);
+              $(src).attr('name', tmpName);
+              $(src).attr('id', tmpName);
+              $(src).focus();
+            }
+            if ($(this).attr('name') == "credits") {
+              var credits = $(this);
+              $(credits).attr('name', tmpCreditsName);
+              $(credits).attr('id', tmpCreditsName);
+            }
+          });
+        }
+      });
+      $(imageEl).appendTo('.js-ContentDynamic');
+    });
+  }
+
   function saveData() {
 
     var data = {};
 
       var self = this;
-      $('input, textarea').each(function (){
+      $('input, textarea').each( function (){
         if (this.type == "checkbox") {
           data[this.name] = this.checked;
         } else {
