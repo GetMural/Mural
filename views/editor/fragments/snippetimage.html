@@ -1,0 +1,32 @@
+<div class="form-group">
+  <div class="togglebutton">
+    <label for="align">Alignment</label>
+    <div class="radio radio-primary">
+      <label>
+        <input type="radio" name="alignment" name="alignmentDefault" value="default" checked="checked">
+          <span class="circle"></span>
+          <span class="check"></span>
+        Default (Centre)
+      </label>
+      <label>
+        <input type="radio" name="alignment" name="alignmentLeft" value="left">
+          <span class="circle"></span>
+          <span class="check"></span>
+        Left
+      </label>
+      <label>
+        <input type="radio" name="alignment" name="alignmentRight" value="right">
+          <span class="circle"></span>
+          <span class="check"></span>
+        Right
+      </label>
+    </div>
+  </div>
+</div>
+
+<fieldset>
+  <legend>Image</legend>
+
+  {{> image}}
+
+</fieldset>

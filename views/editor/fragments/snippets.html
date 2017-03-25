@@ -1,44 +1,5 @@
-<div class="form-group">
-  <label for="title" class="control-label">Title</label>
-  <input name="title" type="text" class="form-control" value="" />
-</div>
+{{> title}}
 
-<div class="form-group">
-  <div class="togglebutton">
-    <label for="align">Alignment</label>
-    <div class="radio radio-primary">
-      <label>
-        <input type="radio" name="alignment" name="alignmentDefault" value="default" checked="checked">
-          <span class="circle"></span>
-          <span class="check"></span>
-        Default (Centre)
-      </label>
-      <label>
-        <input type="radio" name="alignment" name="alignmentLeft" value="left">
-          <span class="circle"></span>
-          <span class="check"></span>
-        Left
-      </label>
-      <label>
-        <input type="radio" name="alignment" name="alignmentRight" value="right">
-          <span class="circle"></span>
-          <span class="check"></span>
-        Right
-      </label>
-    </div>
-  </div>
-</div>
+{{> snippetimage}}
 
-<fieldset>
-  <legend>Image</legend>
-
-  {{> image}}
-
-</fieldset>
-
-<fieldset>
-  <legend>Text</legend>
-
-  {{> text}}
-
-</fieldset>
+{{> snippettext}}

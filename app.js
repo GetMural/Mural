@@ -105,6 +105,24 @@ app.get('/editor/fragment/slide', function(req, res){
 	});
 });
 
+// Snippet Image Fragment
+app.get('/editor/fragment/snippetimage', function(req, res){
+	res.render('editor/fragments/snippetimage', {
+		partials: {
+			image: 'image'
+		}
+	});
+});
+
+// Snippet Text Fragment
+app.get('/editor/fragment/snippettext', function(req, res){
+	res.render('editor/fragments/snippettext', {
+		partials: {
+			richtext: 'richtext'
+		}
+	});
+});
+
 // Subtitle Fragment
 app.get('/editor/fragment/subtitle', function(req, res){
 	res.render('editor/fragments/subtitle', {
@@ -119,6 +137,15 @@ app.get('/editor/fragment/text', function(req, res){
 	res.render('editor/fragments/text', {
 		partials: {
 			text: 'text'
+		}
+	});
+});
+
+// Rich Text Fragment
+app.get('/editor/fragment/richtext', function(req, res){
+	res.render('editor/fragments/richtext', {
+		partials: {
+			richtext: 'richtext'
 		}
 	});
 });
@@ -156,7 +183,12 @@ app.get('/editor/page/meta', function(req, res){
 app.get('/editor/page/textcentred', function(req, res){
 	res.render('editor/pages/textcentred', {
 		partials: {
-			formcontrols: '../fragments/formcontrols'
+			formcontrols: '../fragments/formcontrols',
+			intro: '../fragments/intro',
+			snippetimage: '../fragments/snippetimage',
+			snippettext: '../fragments/snippettext',
+			subtitle: '../fragments/subtitle',
+			title: '../fragments/title'
 		}
 	});
 });
@@ -165,6 +197,7 @@ app.get('/editor/page/textcentred', function(req, res){
 app.get('/editor/page/imagebackground', function(req, res){
 	res.render('editor/pages/imagebackground', {
 		partials: {
+			formcontrols: '../fragments/formcontrols',
 			fullpage: '../fragments/fullpage',
 			imagebackground: '../fragments/imagesources',
 			text: '../fragments/text',
@@ -178,6 +211,7 @@ app.get('/editor/page/imagebackground', function(req, res){
 app.get('/editor/page/slideshowhorizontal', function(req, res){
 	res.render('editor/pages/slideshowhorizontal', {
 		partials: {
+			formcontrols: '../fragments/formcontrols',
 			title: '../fragments/title'
 		}
 	});
