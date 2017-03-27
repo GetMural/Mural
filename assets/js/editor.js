@@ -84,6 +84,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
         if (typeof item["textcentred"] != "undefined") {
           if (window.id == item["textcentred"]["id"]) {
             item = item["textcentred"];
+            console.log(item); // uncommnet this to see the item
             if (typeof item["snippets"] != "undefined") {
               for (j = 0; j < item["snippets"].length; j++) {
                 var snippet = item["snippets"][j];
@@ -91,9 +92,9 @@ document.addEventListener("DOMContentLoaded", function (event) {
                   function populateText() {
                     var textContent = snippet["text"],
                         textEl = document.createElement('div'),
-                        textbox = "/editor/fragment/snippettext",
+                        textBox = "/editor/fragment/snippettext",
                         timestamp = Date.now();
-                    $(textEl).load(textbox, function( response, status, xhr ) {
+                    $(textEl).load(textBox, function( response, status, xhr ) {
                       if ( status !== "error" ) {
                         textarea = this.querySelector('textarea');
                         var tmpName = "text" + timestamp;
@@ -106,10 +107,26 @@ document.addEventListener("DOMContentLoaded", function (event) {
                   }
                   populateText();
                 } else {
-                  // must be image - I hate doing it this way though
-                  for (var n = 0; n < Object.keys(snippet)[n]; n++) {
-                    console.log(snippet[n]);
+                  function populateImage() {
+                    for (var i = 0; i < Object.keys(snippet).length; i++) {
+                      var key = Object.keys(snippet)[i],
+                          value = snippet[key];
+                    }
+                    var imageEl = document.createElement('div'),
+                        imageBox = "/editor/fragment/snippetimage",
+                        timestamp= Date.now();
+                    $(imageEl).load(imageBox, function( response, status, xhr ) {
+                      if ( status !== "error" ) {
+                        // input = this.querySelector('input');
+                        // var tmpName = "text" + timestamp;
+                        // $(this).find('label').attr('for', tmpName);
+                        // $(input).attr('name', tmpName).attr('id', tmpName);
+                        // input.value = textContent;
+                      }
+                    });
+                    $(imageEl).appendTo('.js-ContentDynamic');
                   }
+                  populateImage();
                 }
               }
             }
@@ -164,6 +181,8 @@ document.addEventListener("DOMContentLoaded", function (event) {
       $(imageEl).load(imagebox, function ( response, status, xhr ) {
         if ( status !== "error" ) {
           var tmpName = "src" + timestamp;
+          var tmpTitleName = "title" + timestamp;
+          var tmpAlignmentName = "alignment" + timestamp;
           var tmpCreditsName = "credits" + timestamp;
           $(this).find('label').each( function () {
             if ($(this).attr('for') == "src") {
@@ -176,11 +195,21 @@ document.addEventListener("DOMContentLoaded", function (event) {
             }
           });
           $(this).find('input').each( function (){
+            if ($(this).attr('name') == "title") {
+              var src = $(this);
+              $(src).attr('name', tmpTitleName);
+              $(src).attr('id', tmpTitleName);
+              $(src).focus();
+            }
+            if ($(this).attr('name') == "alignment") {
+              var radio = $(this);
+              $(radio).attr('name', tmpAlignmentName);
+              $(radio).attr('id', tmpAlignmentName);
+            }
             if ($(this).attr('name') == "src") {
               var src = $(this);
               $(src).attr('name', tmpName);
               $(src).attr('id', tmpName);
-              $(src).focus();
             }
             if ($(this).attr('name') == "credits") {
               var credits = $(this);
@@ -196,29 +225,78 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
   function saveData() {
 
-    var data = {};
+    var postData = {},
+        snippets = [],
+        snippetImage = [];
 
-      var self = this;
-      $('input, textarea').each( function (){
-        if (this.type == "checkbox") {
-          data[this.name] = this.checked;
+      var i = 0;
+      postData["postData"] = "postData";
+      postData["id"] = window.id;
+      $('fieldset').each( function () {
+        if ($(this).hasClass('js-SnippetText')) {
+          $(this).find('input, textarea').each( function () {
+            snippets.push(this.value);
+          });
+        } else if ($(this).hasClass('js-SnippetImage')) {
+          $(this).find('input').each( function () {
+            if ((this.type == "radio") && (this.checked == true)) {
+              snippetImage.push(this.dataset.name + ":" + this.value);
+            }
+            if (this.type == "text") {
+              snippetImage.push(this.dataset.name + ": " + this.value);
+            }
+          });
+          snippets.push(snippetImage);
+          snippetImage = [];
         } else {
-          data[this.name] = this.value;
+          $(this).find('input, textarea').each( function () {
+            if (this.type == "checkbox") {
+              postData[this.dataset.name] = this.checked;
+            }
+            if ((this.type == "text") || (this.type == "textarea")) {
+              postData[this.dataset.name] = this.value;
+            }
+          });
         }
       });
-      console.log(data);
+
+      if (snippetImage.length > 0) {
+        for (image in snippetImage) {
+          console.log(snippetImage[image]);
+        }
+      }
+
+      if (snippets.length > 0) {
+        postData["snippets"] = [];
+        for (snippet in snippets) {
+          if (typeof snippets[snippet] == "string") {
+            postData["snippets"].push({"text": snippets[snippet]});
+          } else {
+            var imageAttr = {};
+            for (var i = 0; i < snippets[snippet].length; i++) {
+              var key = snippets[snippet][i].split(":")[0],
+                  value = snippets[snippet][i].split(":")[1];
+              imageAttr[key] = value;
+            }
+            postData["snippets"].push(imageAttr);
+          }
+        }
+      }
+
+      console.log(postData);
 
       $.ajax({
         url: '/update',
         type: 'POST',
-        data: data,
-        success: postSuccessHandler
+        data: postData,
+        success: postSuccessHandler(postData)
       });
 
     };
 
-  function postSuccessHandler() {
-    console.log("Posted data");
+
+  function postSuccessHandler(postData) {
+    // console.log("Posted data: ", postData);
   }
 
 });

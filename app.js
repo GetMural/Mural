@@ -109,7 +109,8 @@ app.get('/editor/fragment/slide', function(req, res){
 app.get('/editor/fragment/snippetimage', function(req, res){
 	res.render('editor/fragments/snippetimage', {
 		partials: {
-			image: 'image'
+			image: 'image',
+			title: 'title'
 		}
 	});
 });
@@ -282,6 +283,17 @@ app.post('/update', function(req, res) {
 	res.send(JSON.stringify({
 		data: data
 	}));
+
+	for (item in items) {
+		console.log(Object.keys(items[item]), items[item]);
+		// if (item == "snippets") {
+		// 	for (snippet in snippets) {
+		// 		console.log(snippets[snippet]);
+		// 	}
+		// } else {
+		// 	console.log(item);
+		// }
+	}
 
 });
 
