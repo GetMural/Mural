@@ -84,7 +84,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
         if (typeof item["textcentred"] != "undefined") {
           if (window.id == item["textcentred"]["id"]) {
             item = item["textcentred"];
-            console.log(item); // uncommnet this to see the item
+            // console.log(item); // uncomment this to see the item
             if (typeof item["snippets"] != "undefined") {
               for (j = 0; j < item["snippets"].length; j++) {
                 var snippet = item["snippets"][j];
@@ -108,20 +108,39 @@ document.addEventListener("DOMContentLoaded", function (event) {
                   populateText();
                 } else {
                   function populateImage() {
-                    for (var i = 0; i < Object.keys(snippet).length; i++) {
-                      var key = Object.keys(snippet)[i],
-                          value = snippet[key];
-                    }
+                    // console.log(Object.keys(snippet), snippet);
                     var imageEl = document.createElement('div'),
                         imageBox = "/editor/fragment/snippetimage",
-                        timestamp= Date.now();
+                        timestamp = Date.now(),
+                        thisItem = {};
+                    for (key in snippet) {
+                      thisItem[key] = snippet[key];
+                    }
                     $(imageEl).load(imageBox, function( response, status, xhr ) {
                       if ( status !== "error" ) {
-                        // input = this.querySelector('input');
-                        // var tmpName = "text" + timestamp;
-                        // $(this).find('label').attr('for', tmpName);
-                        // $(input).attr('name', tmpName).attr('id', tmpName);
-                        // input.value = textContent;
+                        $(this).find('input').each( function () {
+                          if ($(this).attr('type') == "radio") {
+                            var tmpRadioName = "radio" + timestamp;
+                            $(this).attr('name', tmpRadioName);
+                            for (key in thisItem) {
+                              if ($(this).val() == thisItem[key]) {
+                                $(this).parent().parent().find('input').each( function () {
+                                  if ($(this).attr('type') == 'radio') {
+                                    $(this).attr('checked', false);
+                                  }
+                                });
+                                $(this).attr('checked', true).click();
+                              }
+                            }
+                          } else {
+                            var tmpName = "text" + timestamp;
+                            for (key in thisItem) {
+                              if ($(this).attr('name') == key) {
+                                $(this).val(thisItem[key]);
+                              }
+                            }
+                          }
+                        });
                       }
                     });
                     $(imageEl).appendTo('.js-ContentDynamic');
