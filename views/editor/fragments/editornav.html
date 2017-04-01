@@ -8,28 +8,28 @@
         <ul class="dropdown-menu">
           {{#meta}}
             <li>
-              <a href="/editor/page/meta" class="js-NavLink">Meta</a>
+              <a href="/editor/page/meta" data-type="meta" class="js-NavLink">Meta</a>
             </li>
           {{/meta}}
           {{#items}}
             {{#videobackground}}
               <li>
-                <a href="/editor/page/videobackground" data-id="{{id}}" class="js-NavLink">{{#title}}{{title}}{{/title}}{{^title}}Video Background {{id}}{{/title}}</a>
+                <a href="/editor/page/videobackground" data-id="{{id}}" data-type="videobackground" class="js-NavLink">{{#title}}{{title}}{{/title}}{{^title}}Video Background {{id}}{{/title}}</a>
               </li>
             {{/videobackground}}
             {{#textcentred}}
               <li>
-                <a href="/editor/page/textcentred" data-id="{{id}}" class="js-NavLink">{{#title}}{{title}}{{/title}}{{^title}}Text Centred {{id}}{{/title}}</a>
+                <a href="/editor/page/textcentred" data-id="{{id}}" data-type="textcentred" class="js-NavLink">{{#title}}{{title}}{{/title}}{{^title}}Text Centred {{id}}{{/title}}</a>
               </li>
             {{/textcentred}}
             {{#imagebackground}}
               <li>
-                <a href="/editor/page/imagebackground" data-id="{{id}}" class="js-NavLink">{{#title}}{{title}}{{/title}}{{^title}}Image Background {{id}}{{/title}}</a>
+                <a href="/editor/page/imagebackground" data-id="{{id}}" data-type="imagebackground" class="js-NavLink">{{#title}}{{title}}{{/title}}{{^title}}Image Background {{id}}{{/title}}</a>
               </li>
             {{/imagebackground}}
             {{#slideshowhorizontal}}
               <li>
-                <a href="/editor/page/slideshowhorizontal" data-id="{{id}}" class="js-NavLink">{{#title}}{{title}}{{/title}}{{^title}}Slideshow (Horizontal) {{id}}{{/title}}</a>
+                <a href="/editor/page/slideshowhorizontal" data-id="{{id}}" data-type="slideshowhorizontal" class="js-NavLink">{{#title}}{{title}}{{/title}}{{^title}}Slideshow (Horizontal) {{id}}{{/title}}</a>
               </li>
             {{/slideshowhorizontal}}
           {{/items}}
