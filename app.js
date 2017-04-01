@@ -223,8 +223,10 @@ app.get('/editor/page/videobackground', function(req, res){
 	res.render('editor/pages/videobackground', {
 		partials: {
 			formcontrols: '../fragments/formcontrols',
-			image: '../fragments/image',
-			videobackground: 'videobackground'
+			title: '../fragments/title',
+			subtitle: '../fragments/subtitle',
+			videobackground: 'videobackground',
+			videosources: '../fragments/videosources'
 		}
 	});
 });
@@ -275,10 +277,6 @@ app.post('/update', function(req, res) {
 	var meta = {"meta":{}};
 
 	var items = req.body;
-
-	for (var item in items) {
-		meta["meta"][item] = items[item];
-	}
 
 	res.send(JSON.stringify({
 		data: data

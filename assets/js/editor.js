@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
         event.preventDefault();
         var navItem = this,
             link = this.href;
-        window.id = this.dataset.id;
+        window.id = parseInt(this.dataset.id);
         window.type = this.dataset.type;
         $(bodyElement).load(link, function (response, status, xhr) {
           if ( status !== "error" ) {
@@ -182,6 +182,60 @@ document.addEventListener("DOMContentLoaded", function (event) {
         }
       }
     }
+    // Video Background
+    var videoBackgroundEl = $('.js-VideoBackground')[0];
+
+    if (typeof videoBackgroundEl != "undefined") {
+      for (var i = 0; i < Object.keys(items).length; i++) {
+        var item = items[i];
+        if (typeof item["videobackground"] != "undefined") {
+          if (window.id == item["videobackground"]["id"]) {
+            item = item["videobackground"];
+            console.log(item); // uncomment this to see the item
+            $('fieldset').each( function () {
+              if ($(this).hasClass('js-VideoSources')) {
+                $(this).find('input, textarea').each(function () {
+                  var name = this.name;
+                  for (key in item["video"]) {
+                    if (name == key) {
+                      $(this).val(item["video"][key]);
+                    }
+                  }
+                });
+              } else if ($(this).hasClass('js-PosterImage')) {
+                $(this).find('input, textarea').each(function () {
+                  var name = this.name;
+                  for (key in item["image"]) {
+                    if (name == key) {
+                      $(this).val(item["image"][key]);
+                    }
+                  }
+                });
+              } else {
+                $(this).find('input, textarea').each(function () {
+                  var name = this.name;
+                  for (var i = 0; i < Object.keys(item).length; i++) {
+                    var key = Object.keys(item)[i];
+                    if (this.tagName.toLowerCase() == "input") {
+                      if (this.type == "checkbox" && this.name == name) {
+                        if (item[name] == true) {
+                          this.checked = true;
+                        }
+                      } else {
+                        this.value = item[name];
+                      }
+                    }
+                    if (this.tagName.toLowerCase() == "textarea") {
+                      this.value = item[name];
+                    }
+                  }
+                });
+              }
+            });
+          }
+        }
+      }
+    }
   };
 
   function addAssets() {
@@ -259,7 +313,8 @@ document.addEventListener("DOMContentLoaded", function (event) {
     var type = window.type,
         postData = {},
         snippets = [],
-        snippetImage = [];
+        snippetImage = [],
+        posterImage = {};
       var i = 0;
       postData[type] = {};
       postData[type]["id"] = window.id;
@@ -279,6 +334,21 @@ document.addEventListener("DOMContentLoaded", function (event) {
           });
           snippets.push(snippetImage);
           snippetImage = [];
+        } else if ($(this).hasClass('js-VideoSources')) {
+          postData[type]["video"] = {};
+          $(this).find('input').each( function () {
+            postData[type]["video"][this.dataset.name] = this.value;
+          });
+        } else if ($(this).hasClass('js-PosterImage')) {
+          postData[type]["image"] = {};
+          $(this).find('input').each( function () {
+            postData[type]["image"][this.dataset.name] = this.value;
+          });
+        } else if ($(this).hasClass('js-Format')) {
+          postData[type]["format"] = {};
+          $(this).find('input').each( function () {
+            postData[type]["format"][this.dataset.name] = this.checked;
+          });
         } else {
           $(this).find('input, textarea').each( function () {
             if (this.type == "checkbox") {

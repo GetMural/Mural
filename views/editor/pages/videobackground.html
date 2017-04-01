@@ -1,31 +1,46 @@
-<form class="form-horizontal" data-id="">
-  <fieldset>
-    <legend>Video Background</legend>
+<form class="form-horizontal js-VideoBackground" data-id="">
+
+  <legend>Video Background</legend>
+
+  <fieldset class="js-Format">
 
     <div class="form-group">
       <div class="togglebutton">
         <label for="fullpage">
-          <input id="fullpage" type="checkbox" class="form-control" checked="checked" />
+          <input id="fullpage" data-name="fullpage" type="checkbox" class="form-control" checked="checked" />
           <span class="toggle"></span>
           Fullpage
         </label>
       </div>
     </div>
 
+  </fieldset>
+
+  <fieldset>
+
     {{> title}}
 
     {{> subtitle}}
 
+  </fieldset>
+
+  <fieldset class="js-VideoSources">
+
     {{> videosources}}
 
-    <fieldset>
-      <legend>Poster Image</legend>
+  </fieldset>
 
-      {{> image}}
+  <fieldset class="js-PosterImage">
 
-    </fieldset>
+    <legend>Poster Image</legend>
 
-    {{> formcontrols}}
+    <div class="form-group">
+      <label for="loading" class="control-label">Src</label>
+      <input name="loading" data-name="loading" type="text" class="form-control" value="" />
+    </div>
 
   </fieldset>
+
+  {{> formcontrols}}
+
 </form>
