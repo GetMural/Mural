@@ -317,7 +317,9 @@ document.addEventListener("DOMContentLoaded", function (event) {
         posterImage = {};
       var i = 0;
       postData[type] = {};
-      postData[type]["id"] = window.id;
+      if (window.type != "meta") {
+        postData[type]["id"] = window.id;
+      }
       $('fieldset').each( function () {
         if ($(this).hasClass('js-SnippetText')) {
           $(this).find('input, textarea').each( function () {
@@ -369,8 +371,12 @@ document.addEventListener("DOMContentLoaded", function (event) {
           } else {
             var imageAttr = {};
             for (var i = 0; i < snippets[snippet].length; i++) {
-              var key = snippets[snippet][i].split(":")[0],
-                  value = snippets[snippet][i].split(":")[1];
+              var key = snippets[snippet][i].split(":")[0];
+              if (snippets[snippet][i].split(":").length > 2) {
+                var value = snippets[snippet][i].split(":")[1] + ":" + snippets[snippet][i].split(":")[2];
+              } else {
+                var value = snippets[snippet][i].split(":")[1];
+              }
               imageAttr[key] = value;
             }
             postData[type]["snippets"].push(imageAttr);
