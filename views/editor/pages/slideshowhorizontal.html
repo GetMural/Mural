@@ -1,6 +1,8 @@
 <form class="form-horizontal" data-id="">
+
+  <legend class="title">Slideshow Horizontal</legend>
+
   <fieldset>
-    <legend>Slideshow Horizontal</legend>
 
     {{> fullpage}}
 
@@ -8,14 +10,16 @@
 
     {{> text}}
 
-    <fieldset>
-      <legend>Slides [+]</legend>
+  </fieldset>
 
-      {{> slide}}
+  <fieldset class="js-Slides">
 
-    </fieldset>
+    <a href="#" class="js-AddSlide">Slide [+]</a>
 
-    {{> formcontrols}}
+    <div class="js-ContentDynamic"></div>
 
   </fieldset>
+
+  {{> formcontrols}}
+
 </form>

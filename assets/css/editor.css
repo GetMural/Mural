@@ -10,12 +10,15 @@ body {
   margin: 0;
 }
 
-legend {
-  user-select: none;
+.title {
+  color: #fff;
+  max-width: 50vw;
+  position: absolute;
+  top: 14px;
 }
 
-nav {
-  position: absolute;
-  right: 10px;
-  z-index: 10;
+legend,
+button#save
+ {
+  user-select: none;
 }

@@ -1,7 +1,9 @@
 <form class="form-horizontal js-TextCentred" data-id="">
-    <legend>Text Centred</legend>
 
-    <fieldset>
+  <legend class="title">Text Centred</legend>
+
+  <fieldset>
+
     <div class="form-group">
       <div class="togglebutton">
         <label for="light">
@@ -17,19 +19,22 @@
     {{> subtitle}}
 
     {{> intro}}
-    </fieldset>
 
-      <legend>Content Blocks</legend>
-      <ul class="js-ContentBlockSelector">
-        <li>
-          <a href="#" class="js-AddText">Text [+]</a>
-        </li>
-        <li>
-          <a href="#" class="js-AddImage">Image [+]</a>
-        </li>
-      </ul>
-      <div class="js-ContentDynamic"></div>
+  </fieldset>
 
-    {{> formcontrols}}
+  <legend>Content Blocks</legend>
+
+  <ul class="js-ContentBlockSelector">
+    <li>
+      <a href="#" class="js-AddText">Text [+]</a>
+    </li>
+    <li>
+      <a href="#" class="js-AddImage">Image [+]</a>
+    </li>
+  </ul>
+
+  <div class="js-ContentDynamic"></div>
+
+  {{> formcontrols}}
 
 </form>
