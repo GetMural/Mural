@@ -4,6 +4,15 @@ document.addEventListener("DOMContentLoaded", function (event) {
     $.material.init();
   };
 
+  $('.dropdown').on('click', function () {
+    $(this).toggleClass('open');
+    $(this).find('.dropdown-toggle').each( function () {
+      $(this).on('click', function (event) {
+        event.preventDefault();
+      });
+    });
+  });
+
   var url = '/data/storyboard.json';
 
   function loadPages() {
@@ -55,7 +64,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
   function populateForms(meta, items) {
 
-    // meta information
+    // Meta Information
     var metaFormEl = $('.js-Meta')[0];
 
     if (typeof metaFormEl != "undefined") {
@@ -75,7 +84,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
       });
     }
 
-    // meta information
+    // Text Centred
     var textCentredFormEl = $('.js-TextCentred')[0];
 
     if (typeof textCentredFormEl != "undefined") {
@@ -175,6 +184,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
   };
 
   function addAssets() {
+    // Add Text Block
     $('.js-AddText').bind('click', function (event) {
       event.preventDefault();
       var timestamp = Date.now();
@@ -192,6 +202,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
       });
       $(textEl).appendTo('.js-ContentDynamic');
     });
+    // Add Image Block
     $('.js-AddImage').bind('click', function (event) {
       event.preventDefault();
       var timestamp = Date.now(),
@@ -302,8 +313,8 @@ document.addEventListener("DOMContentLoaded", function (event) {
         }
       }
 
-      console.log(postData);
-
+      // console.log(postData);
+      
       $.ajax({
         url: '/update',
         type: 'POST',
@@ -315,7 +326,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
 
   function postSuccessHandler(postData) {
-    // console.log("Posted data: ", postData);
+    console.log("Posted data: ", postData);
   }
 
 });
