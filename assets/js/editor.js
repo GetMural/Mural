@@ -26,6 +26,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
         var navItem = this,
             link = this.href;
         window.id = this.dataset.id;
+        window.type = this.dataset.type;
         $(bodyElement).load(link, function (response, status, xhr) {
           if ( status !== "error" ) {
             loadData();
@@ -255,13 +256,13 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
   function saveData() {
 
-    var postData = {},
+    var type = window.type,
+        postData = {},
         snippets = [],
         snippetImage = [];
-
       var i = 0;
-      postData["postData"] = "postData";
-      postData["id"] = window.id;
+      postData[type] = {};
+      postData[type]["id"] = window.id;
       $('fieldset').each( function () {
         if ($(this).hasClass('js-SnippetText')) {
           $(this).find('input, textarea').each( function () {
@@ -281,26 +282,20 @@ document.addEventListener("DOMContentLoaded", function (event) {
         } else {
           $(this).find('input, textarea').each( function () {
             if (this.type == "checkbox") {
-              postData[this.dataset.name] = this.checked;
+              postData[type][this.dataset.name] = this.checked;
             }
             if ((this.type == "text") || (this.type == "textarea")) {
-              postData[this.dataset.name] = this.value;
+              postData[type][this.dataset.name] = this.value;
             }
           });
         }
       });
 
-      if (snippetImage.length > 0) {
-        for (image in snippetImage) {
-          console.log(snippetImage[image]);
-        }
-      }
-
       if (snippets.length > 0) {
-        postData["snippets"] = [];
+        postData[type]["snippets"] = [];
         for (snippet in snippets) {
           if (typeof snippets[snippet] == "string") {
-            postData["snippets"].push({"text": snippets[snippet]});
+            postData[type]["snippets"].push({"text": snippets[snippet]});
           } else {
             var imageAttr = {};
             for (var i = 0; i < snippets[snippet].length; i++) {
@@ -308,13 +303,13 @@ document.addEventListener("DOMContentLoaded", function (event) {
                   value = snippets[snippet][i].split(":")[1];
               imageAttr[key] = value;
             }
-            postData["snippets"].push(imageAttr);
+            postData[type]["snippets"].push(imageAttr);
           }
         }
       }
 
       // console.log(postData);
-      
+
       $.ajax({
         url: '/update',
         type: 'POST',
@@ -323,7 +318,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
       });
 
     };
-
 
   function postSuccessHandler(postData) {
     console.log("Posted data: ", postData);
