@@ -200,7 +200,7 @@ app.get('/editor/page/imagebackground', function(req, res){
 		partials: {
 			formcontrols: '../fragments/formcontrols',
 			fullpage: '../fragments/fullpage',
-			imagebackground: '../fragments/imagesources',
+			imagesources: '../fragments/imagesources',
 			text: '../fragments/text',
 			title: '../fragments/title',
 			subtitle: '../fragments/subtitle'
@@ -223,6 +223,7 @@ app.get('/editor/page/videobackground', function(req, res){
 	res.render('editor/pages/videobackground', {
 		partials: {
 			formcontrols: '../fragments/formcontrols',
+			fullpage: '../fragments/fullpage',
 			title: '../fragments/title',
 			subtitle: '../fragments/subtitle',
 			videobackground: 'videobackground',

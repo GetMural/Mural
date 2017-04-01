@@ -10,8 +10,9 @@ Each type of possible storyteller entry should be catered for. MVP should be a s
 
 So far the Storyteller editor supports the following types:
 
-* Full page video backgrounds
+* Full page video background type
 * The text centred type
+* Image Background type
 
 ## Site Output
 

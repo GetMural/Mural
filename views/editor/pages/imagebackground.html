@@ -1,10 +1,10 @@
-<form class="form-horizontal" data-id="">
+<form class="form-horizontal js-ImageBackground" data-id="">
 
   <legend class="title">Image Background</legend>
 
-  <fieldset>
+  {{> fullpage}}
 
-    {{> fullpage}}
+  <fieldset>
 
       <!--
         Nav Level
@@ -17,9 +17,9 @@
 
     {{> text}}
 
-    {{> imagesources}}
-
   </fieldset>
+
+  {{> imagesources}}
 
   {{> formcontrols}}
 

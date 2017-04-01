@@ -182,6 +182,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
         }
       }
     }
+
     // Video Background
     var videoBackgroundEl = $('.js-VideoBackground')[0];
 
@@ -191,7 +192,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
         if (typeof item["videobackground"] != "undefined") {
           if (window.id == item["videobackground"]["id"]) {
             item = item["videobackground"];
-            console.log(item); // uncomment this to see the item
+            // console.log(item); // uncomment this to see the item
             $('fieldset').each( function () {
               if ($(this).hasClass('js-VideoSources')) {
                 $(this).find('input, textarea').each(function () {
@@ -236,6 +237,53 @@ document.addEventListener("DOMContentLoaded", function (event) {
         }
       }
     }
+
+    // Image Background
+    var imageBackgroundEl = $('.js-ImageBackground')[0];
+
+    if (typeof imageBackgroundEl != "undefined") {
+      for (var i = 0; i < Object.keys(items).length; i++) {
+        var item = items[i];
+        if (typeof item["imagebackground"] != "undefined") {
+          if (window.id == item["imagebackground"]["id"]) {
+            item = item["imagebackground"];
+            // console.log(item); // uncomment this to see the item
+            $('fieldset').each( function () {
+              if ($(this).hasClass('js-ImageSources')) {
+                $(this).find('input').each( function () {
+                  for (key in item["image"]) {
+                    if ($(this).attr('name') == key) {
+                      $(this).val(item["image"][key]);
+                    }
+                  }
+                });
+              } else {
+                $(this).find('input, textarea').each( function () {
+                  for (key in item) {
+                    if ($(this)[0].tagName.toLowerCase() == "input") {
+                      if ($(this).attr('type') == "checkbox") {
+                        if (item["format"][$(this).attr('name')] === true) {
+                          $(this).attr('checked', true);
+                        } else {
+                          $(this).attr('checked', false);
+                        }
+                      } else if ($(this).attr('name') == key) {
+                        $(this).val(item[key]);
+                      }
+                    } else {
+                      if ($(this).attr('name') == key) {
+                        $(this).val(item[key]);
+                      }
+                    }
+                  }
+                });
+              }
+            })
+          }
+        }
+      }
+    }
+
   };
 
   function addAssets() {
@@ -350,6 +398,11 @@ document.addEventListener("DOMContentLoaded", function (event) {
           postData[type]["format"] = {};
           $(this).find('input').each( function () {
             postData[type]["format"][this.dataset.name] = this.checked;
+          });
+        } else if ($(this).hasClass('js-ImageSources')) {
+          postData[type]["image"] = {}
+          $(this).find('input').each( function () {
+            postData[type]["image"][this.dataset.name] = this.value;
           });
         } else {
           $(this).find('input, textarea').each( function () {
