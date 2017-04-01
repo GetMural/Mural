@@ -284,15 +284,15 @@ app.post('/update', function(req, res) {
 		data: data
 	}));
 
+	fs.writeFile("test/tmp.txt", JSON.stringify(items), function( err ) {
+		if (err) {
+			return console.log( err );
+		}
+		console.log("file was written");
+	});
+
 	for (item in items) {
-		console.log(Object.keys(items[item]), items[item]);
-		// if (item == "snippets") {
-		// 	for (snippet in snippets) {
-		// 		console.log(snippets[snippet]);
-		// 	}
-		// } else {
-		// 	console.log(item);
-		// }
+		console.log(item, items[item]);
 	}
 
 });
