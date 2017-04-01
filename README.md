@@ -15,4 +15,4 @@ So far the Storyteller editor supports the following types:
 
 ## Site Output
 
-On site generation the build process should copy the contents of the src folder, story json, images, video, and audio (no idea yet) along with ___the php (urgh)___ and js files to a new folder in sites with the name of the project.  
+On site generation the build process should copy the contents of the src folder, story json, images, video, and audio (no idea yet) ~~along with the php (urgh)~~ and js files to a new folder in sites with the name of the project.  
