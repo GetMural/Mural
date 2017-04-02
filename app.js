@@ -85,6 +85,15 @@ app.get('/editor/fragment/imagesources', function(req, res){
 	});
 });
 
+// Inline Toggle Fragment
+app.get('/editor/fragment/inline', function(req, res){
+	res.render('editor/fragments/inline', {
+		partials: {
+			inline: 'inline'
+		}
+	});
+});
+
 // Intro Fragment
 app.get('/editor/fragment/intro', function(req, res){
 	res.render('editor/fragments/intro', {
@@ -213,6 +222,9 @@ app.get('/editor/page/slideshowhorizontal', function(req, res){
 	res.render('editor/pages/slideshowhorizontal', {
 		partials: {
 			formcontrols: '../fragments/formcontrols',
+			inline: '../fragments/inline',
+			text: '../fragments/text',
+			slide: '../fragments/slide',
 			title: '../fragments/title'
 		}
 	});

@@ -284,6 +284,72 @@ document.addEventListener("DOMContentLoaded", function (event) {
       }
     }
 
+    // Slideshow Horizontal
+    var slideshowHorizontalEl = $('.js-SlideshowHorizontal')[0];
+
+    if (typeof slideshowHorizontalEl != "undefined") {
+      for (var i = 0; i < Object.keys(items).length; i++) {
+        var item = items[i];
+        if (typeof item["slideshowhorizontal"] != "undefined") {
+          if (window.id == item["slideshowhorizontal"]["id"]) {
+            if (typeof item["slideshowhorizontal"]["images"] != "undefined") {
+              var images = item["slideshowhorizontal"]["images"];
+              for (j = 0; j < images.length; j++) {
+                var image = images[j];
+                // console.log(image);
+                function populateImage() {
+                  // console.log(Object.keys(snippet), snippet);
+                  var imageEl = document.createElement('div'),
+                      imageBox = "/editor/fragment/slide",
+                      timestamp = Date.now(),
+                      thisItem = {};
+                  for (key in image) {
+                    thisItem[key] = image[key];
+                  }
+                  $(imageEl).load(imageBox, function( response, status, xhr ) {
+                    if ( status !== "error" ) {
+                      $(this).find('input').each( function () {
+                        var tmpName = "text" + timestamp;
+                        for (key in thisItem) {
+                          if ($(this).attr('name') == key) {
+                            $(this).val(thisItem[key]);
+                          }
+                        }
+                      });
+                    }
+                  });
+                  $(imageEl).appendTo('.js-ContentDynamic');
+                }
+                populateImage();
+              }
+            }
+            addAssets();
+            $('input, textarea').each(function () {
+              var name = this.name;
+
+              // console.log(item);
+              for (key in item) {
+                var thisItem = item[key];
+                if (this.tagName.toLowerCase() == "input") {
+                  if (this.type == "checkbox" && this.name == name) {
+                    if (this.checked == true) {
+                      this.checked = false;
+                      if (thisItem["format"][name] == true) {
+                        this.checked = true;
+                      }
+                    }
+                  } else {
+                    this.value = thisItem[name];
+                  }
+                } else {
+                  this.value = thisItem[name];
+                }
+              }
+            });
+          }
+        }
+      }
+    }
   };
 
   function addAssets() {
@@ -354,6 +420,48 @@ document.addEventListener("DOMContentLoaded", function (event) {
       });
       $(imageEl).appendTo('.js-ContentDynamic');
     });
+    $('.js-AddSlide').bind('click', function (event) {
+      event.preventDefault();
+      var timestamp = Date.now(),
+          imagebox = "/editor/fragment/slide",
+          imageEl = document.createElement('div');
+      $(imageEl).load(imagebox, function ( response, status, xhr ) {
+        if ( status !== "error" ) {
+          var tmpName = "src" + timestamp;
+          var tmpTitleName = "title" + timestamp;
+          var tmpCreditsName = "credits" + timestamp;
+          $(this).find('label').each( function () {
+            if ($(this).attr('for') == "src") {
+              var forSrc = $(this);
+              $(forSrc).attr('for', tmpName);
+            }
+            if ($(this).attr('for') == "credits") {
+              var forCredits = $(this);
+              $(forCredits).attr('for', tmpCreditsName);
+            }
+          });
+          $(this).find('input').each( function (){
+            if ($(this).attr('name') == "title") {
+              var src = $(this);
+              $(src).attr('name', tmpTitleName);
+              $(src).attr('id', tmpTitleName);
+              $(src).focus();
+            }
+            if ($(this).attr('name') == "src") {
+              var src = $(this);
+              $(src).attr('name', tmpName);
+              $(src).attr('id', tmpName);
+            }
+            if ($(this).attr('name') == "credits") {
+              var credits = $(this);
+              $(credits).attr('name', tmpCreditsName);
+              $(credits).attr('id', tmpCreditsName);
+            }
+          });
+        }
+      });
+      $(imageEl).appendTo('.js-ContentDynamic');
+    });
   }
 
   function saveData() {
@@ -362,6 +470,8 @@ document.addEventListener("DOMContentLoaded", function (event) {
         postData = {},
         snippets = [],
         snippetImage = [],
+        slides = [],
+        slideImage = [],
         posterImage = {};
       var i = 0;
       postData[type] = {};
@@ -384,6 +494,13 @@ document.addEventListener("DOMContentLoaded", function (event) {
           });
           snippets.push(snippetImage);
           snippetImage = [];
+        } else if ($(this).hasClass('js-Slides')) {
+          $(this).find('input').each( function () {
+            console.log($(this)[0]);
+            slideImage.push(this.dataset.name + ": " + this.value);
+          });
+          slides.push(slideImage);
+          slideImage = [];
         } else if ($(this).hasClass('js-VideoSources')) {
           postData[type]["video"] = {};
           $(this).find('input').each( function () {
@@ -415,6 +532,23 @@ document.addEventListener("DOMContentLoaded", function (event) {
           });
         }
       });
+
+      if (slides.length > 0) {
+        postData[type]["images"] = [];
+        for (slideImage in slides) {
+          var imageAttr = {};
+          for (var i = 0; i < slides[slideImage].length; i++) {
+            var key = slides[slideImage][i].split(":")[0];
+            if (slides[slideImage][i].split(":").length > 2) {
+              var value = slides[slideImage][i].split(":")[1] + ":" + slides[slideImage][i].split(":")[2];
+            } else {
+              var value = slides[slideImage][i].split(":")[1];
+            }
+            imageAttr[key] = value;
+          }
+          postData[type]["images"].push(imageAttr);
+        }
+      }
 
       if (snippets.length > 0) {
         postData[type]["snippets"] = [];

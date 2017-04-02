@@ -1,10 +1,10 @@
-<form class="form-horizontal" data-id="">
+<form class="form-horizontal js-SlideshowHorizontal" data-id="">
 
   <legend class="title">Slideshow Horizontal</legend>
 
-  <fieldset>
+  {{> inline}}
 
-    {{> fullpage}}
+  <fieldset>
 
     {{> title}}
 
@@ -12,13 +12,9 @@
 
   </fieldset>
 
-  <fieldset class="js-Slides">
+  <a href="#" class="js-AddSlide">Slide [+]</a>
 
-    <a href="#" class="js-AddSlide">Slide [+]</a>
-
-    <div class="js-ContentDynamic"></div>
-
-  </fieldset>
+  <div class="js-ContentDynamic"></div>
 
   {{> formcontrols}}
 
