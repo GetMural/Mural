@@ -14,6 +14,7 @@ So far the Storyteller editor supports the following types:
 * The text centred
 * Image Background
 * Slideshow Horizontal
+* Video Full Page
 
 ## Site Output
 

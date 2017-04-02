@@ -103,6 +103,15 @@ app.get('/editor/fragment/intro', function(req, res){
 	});
 });
 
+// Loading Image Fragment
+app.get('/editor/fragment/loadingimage', function(req, res){
+	res.render('editor/fragments/loadingimage', {
+		partials: {
+			loadingimage: 'loadingimage'
+		}
+	});
+});
+
 // Slide Fragment
 app.get('/editor/fragment/slide', function(req, res){
 	res.render('editor/fragments/slide', {
@@ -239,6 +248,20 @@ app.get('/editor/page/videobackground', function(req, res){
 			title: '../fragments/title',
 			subtitle: '../fragments/subtitle',
 			videobackground: 'videobackground',
+			videosources: '../fragments/videosources'
+		}
+	});
+});
+
+// Videofullpage Page
+app.get('/editor/page/videofullpage', function(req, res){
+	res.render('editor/pages/videofullpage', {
+		partials: {
+			formcontrols: '../fragments/formcontrols',
+			fullpage: '../fragments/fullpage',
+			loadingimage: '../fragments/loadingimage',
+			text: '../fragments/text',
+			title: '../fragments/title',
 			videosources: '../fragments/videosources'
 		}
 	});
