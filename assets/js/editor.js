@@ -54,7 +54,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
           save.addEventListener('click', function (event){
             event.preventDefault();
             event.stopPropagation();
-            saveData();
+            saveData(meta, items);
           });
         }
       };
@@ -204,7 +204,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
                   }
                 });
               } else if ($(this).hasClass('js-PosterImage')) {
-                $(this).find('input, textarea').each(function () {
+                $(this).find('input').each(function () {
                   var name = this.name;
                   for (key in item["image"]) {
                     if (name == key) {
@@ -278,7 +278,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
                   }
                 });
               }
-            })
+            });
           }
         }
       }
@@ -350,6 +350,51 @@ document.addEventListener("DOMContentLoaded", function (event) {
         }
       }
     }
+
+    var videoFullpageEl = $('.js-VideoFullpage')[0];
+
+    if (typeof videoFullpageEl != "undefined") {
+      for (var i = 0; i < Object.keys(items).length; i++) {
+        var item = items[i];
+        if (typeof item["videofullpage"] != "undefined") {
+          if (window.id == item["videofullpage"]["id"]) {
+            item = item["videofullpage"];
+            // console.log(item); // uncomment this to see the item
+            $('fieldset').each( function () {
+              if ($(this).hasClass('js-Format')) {
+                // it's the checkbox so you need to do some stuff
+              } else if ($(this).hasClass('js-VideoSources')) {
+                $(this).find('input, textarea').each(function () {
+                  var name = this.name;
+                  for (key in item["video"]) {
+                    if (name == key) {
+                      $(this).val(item["video"][key]);
+                    }
+                  }
+                });
+              } else if ($(this).hasClass('js-PosterImage')) {
+                $(this).find('input').each(function () {
+                  var name = this.name;
+                  for (key in item["image"]) {
+                    if (name == key) {
+                      $(this).val(item["image"][key]);
+                    }
+                  }
+                });
+              } else {
+                $(this).find('input, textarea').each( function () {
+                  var name = $(this).attr('name');
+                  for (key in item) {
+                    $(this).val(item[name]);
+                  }
+                });
+              }
+            });
+          }
+        }
+      }
+    }
+
   };
 
   function addAssets() {
@@ -464,7 +509,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
     });
   }
 
-  function saveData() {
+  function saveData(meta, items) {
 
     var type = window.type,
         postData = {},
@@ -473,6 +518,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
         slides = [],
         slideImage = [],
         posterImage = {};
+      postData["items"] = [];
       var i = 0;
       postData[type] = {};
       if (window.type != "meta") {
@@ -496,7 +542,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
           snippetImage = [];
         } else if ($(this).hasClass('js-Slides')) {
           $(this).find('input').each( function () {
-            console.log($(this)[0]);
             slideImage.push(this.dataset.name + ": " + this.value);
           });
           slides.push(slideImage);
@@ -571,11 +616,27 @@ document.addEventListener("DOMContentLoaded", function (event) {
         }
       }
 
-      // console.log(postData);
+      function modifyData(postData) {
+        if (typeof postData["meta"] != "undefined") {
+          postData["items"] = items;
+        } else {
+          postData["meta"] = meta;
+          for (item in items) {
+            for (thisItem in items[item]) {
+              if (window.id == items[item][thisItem]) {
+                postData["items"].push(postData[type]);
+              } else {
+                postData["items"].push(items[item]);
+              }
+            }
+          }
+        }
+      }
 
       $.ajax({
         url: '/update',
         type: 'POST',
+        beforeSend: modifyData(postData),
         data: postData,
         success: postSuccessHandler(postData)
       });
@@ -583,7 +644,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
     };
 
   function postSuccessHandler(postData) {
-    console.log("Posted data: ", postData);
+    console.log(postData);
   }
 
 });

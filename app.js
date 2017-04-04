@@ -308,26 +308,16 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.post('/update', function(req, res) {
 	res.setHeader('Content-Type', 'application/json');
 
-	//mimic a slow network connection
-
-	var meta = {"meta":{}};
-
-	var items = req.body;
-
 	res.send(JSON.stringify({
 		data: data
 	}));
 
-	fs.writeFile("test/tmp.txt", JSON.stringify(items), function( err ) {
+	fs.writeFile("test/output.json", JSON.stringify(data), function( err ) {
 		if (err) {
 			return console.log( err );
 		}
-		console.log("file was written");
+		console.log(data);
 	});
-
-	for (item in items) {
-		console.log(item, items[item]);
-	}
 
 });
 
