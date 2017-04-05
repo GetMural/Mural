@@ -518,6 +518,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
         slides = [],
         slideImage = [],
         posterImage = {};
+      postData["meta"] = {},
       postData["items"] = [];
       var i = 0;
       postData[type] = {};
@@ -616,7 +617,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
         }
       }
 
-      function modifyData(postData) {
+      function modifyData(postData, meta, items) {
         if (typeof postData["meta"] != "undefined") {
           postData["items"] = items;
         } else {
@@ -631,12 +632,13 @@ document.addEventListener("DOMContentLoaded", function (event) {
             }
           }
         }
-      }
+        return true;
+      };
+      modifyData(postData, meta, items);
 
       $.ajax({
         url: '/update',
         type: 'POST',
-        beforeSend: modifyData(postData),
         data: postData,
         success: postSuccessHandler(postData)
       });
@@ -644,7 +646,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
     };
 
   function postSuccessHandler(postData) {
-    console.log(postData);
+    // console.log(postData);
   }
 
 });

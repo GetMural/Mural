@@ -9,7 +9,7 @@ var path = require('path');
 var reload = require('reload');
 var watch = require('node-watch');
 
-var data = JSON.parse(fs.readFileSync('data/storyboard.json'));
+var JSONdata = JSON.parse(fs.readFileSync('data/storyboard.json'));
 
 // Set Mustache as the Template Engine
 app.engine('html', cons.mustache);
@@ -38,8 +38,8 @@ app.get('/', function (req, res){
 // Main Editor View
 app.get('/editor', function (req, res){
 	res.render('editor/editor', {
-		meta: data["meta"],
-		items: data["items"],
+		meta: JSONdata["meta"],
+		items: JSONdata["items"],
 		partials: {
 			editor: 'editor',
 			editornav: 'fragments/editornav'
@@ -270,8 +270,8 @@ app.get('/editor/page/videofullpage', function(req, res){
 // Preview View
 app.get('/preview', function (req, res){
 	res.render('preview', {
-		meta: data["meta"],
-		items: data["items"],
+		meta: JSONdata["meta"],
+		items: JSONdata["items"],
 		partials : {
 			body: 'partials/body',
 			fb: 'partials/fb',
@@ -308,22 +308,24 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.post('/update', function(req, res) {
 	res.setHeader('Content-Type', 'application/json');
 
+	data = req.body;
+
 	res.send(JSON.stringify({
 		data: data
 	}));
 
-	fs.writeFile("test/output.json", JSON.stringify(data), function( err ) {
+	fs.writeFile("data/storyboard.json", JSON.stringify(data), function( err ) {
 		if (err) {
 			return console.log( err );
 		}
-		console.log(data);
+		console.log("Data captured");
 	});
 
 });
 
-// Hot Reload the Preview
-watch('data', function(filename) {
-	console.log(filename, ' changed, reloading.');
-	delete require.cache;
-	reload(server, app);
-});
+// // Hot Reload the Preview
+// watch('data', function(filename) {
+// 	console.log(filename, ' changed, reloading.');
+// 	delete require.cache;
+// 	reload(app);
+// });
