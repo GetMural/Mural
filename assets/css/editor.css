@@ -31,10 +31,6 @@ body {
   z-index: 10;
 }
 
-textarea {
-  min-height: 150px;
-}
-
 legend,
 button#save
  {

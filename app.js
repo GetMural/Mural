@@ -4,6 +4,7 @@ var app = express();
 var bodyParser = require('body-parser');
 var cons = require('consolidate');
 var fs = require('fs');
+var JSONFormatter = require("json-fmt");
 var logger = require('logger').createLogger();
 var path = require('path');
 var reload = require('reload');
@@ -193,6 +194,7 @@ app.get('/editor/fragment/videosources', function(req, res){
 app.get('/editor/page/meta', function(req, res){
 	res.render('editor/pages/meta', {
 		partials: {
+			title: '../fragments/title',
 			formcontrols: '../fragments/formcontrols'
 		}
 	});
@@ -308,12 +310,15 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.post('/update', function(req, res) {
 	res.setHeader('Content-Type', 'application/json');
 
+	// get the form request
 	data = req.body;
 
+	// json stringify the data
 	res.send(JSON.stringify({
 		data: data
 	}));
 
+	// write the prettified data
 	fs.writeFile("data/storyboard.json", JSON.stringify(data), function( err ) {
 		if (err) {
 			return console.log( err );
@@ -323,9 +328,8 @@ app.post('/update', function(req, res) {
 
 });
 
-// // Hot Reload the Preview
-// watch('data', function(filename) {
-// 	console.log(filename, ' changed, reloading.');
-// 	delete require.cache;
-// 	reload(app);
-// });
+// Hot Reload the Preview
+watch('data', { recursive: true }, function(evt, name) {
+  console.log(evt, ' changed.');
+	delete require.cache['app.js'];
+});
