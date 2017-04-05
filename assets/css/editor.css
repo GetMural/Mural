@@ -1,0 +1,38 @@
+body {
+  padding: 80px 20px 0;
+}
+
+.pages > div {
+  margin: 0;
+}
+
+.nav-container {
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  z-index: 10;
+}
+
+.nav {
+  margin-right: 0;
+}
+
+.form-horizontal .form-group {
+  margin: 0;
+}
+
+
+.title {
+  color: #fff;
+  max-width: 50vw;
+  position: fixed;
+  top: 8px;
+  z-index: 10;
+}
+
+legend,
+button#save
+ {
+  user-select: none;
+}

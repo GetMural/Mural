@@ -1,0 +1,34 @@
+<fieldset class="js-SnippetImage">
+  <legend>Image</legend>
+
+  <div class="form-group">
+    <div class="togglebutton">
+        <legend for="align">Alignment</legend>
+        <div class="radio radio-primary">
+          <label>
+            <input type="radio" name="alignment" name="alignmentDefault" data-name="align" value="default" checked="checked">
+              <span class="circle"></span>
+              <span class="check"></span>
+            Default (Centre)
+          </label>
+          <label>
+            <input type="radio" name="alignment" name="alignmentLeft" data-name="align" value="left">
+              <span class="circle"></span>
+              <span class="check"></span>
+            Left
+          </label>
+          <label>
+            <input type="radio" name="alignment" name="alignmentRight" data-name="align" value="right">
+              <span class="circle"></span>
+              <span class="check"></span>
+            Right
+          </label>
+      </div>
+    </div>
+  </div>
+
+  {{> title}}
+
+  {{> image}}
+
+</fieldset>
