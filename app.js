@@ -4,7 +4,6 @@ var app = express();
 var bodyParser = require('body-parser');
 var cons = require('consolidate');
 var fs = require('fs');
-var JSONFormatter = require("json-fmt");
 var logger = require('logger').createLogger();
 var path = require('path');
 var reload = require('reload');
