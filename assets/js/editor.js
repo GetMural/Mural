@@ -37,9 +37,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
   };
   loadPages();
 
-  function loadData(meta, items) {
-
-
+  function loadData() {
     var XHR = new XMLHttpRequest();
 
     XHR.onreadystatechange = function () {
@@ -518,135 +516,133 @@ document.addEventListener("DOMContentLoaded", function (event) {
         slides = [],
         slideImage = [],
         posterImage = {};
-      postData["meta"] = {},
-      postData["items"] = [];
-      var i = 0;
-      postData[type] = {};
-      if (window.type != "meta") {
-        postData[type]["id"] = window.id;
+    var i = 0;
+    postData[type] = {};
+    postData["items"] = [];
+    if (window.type != "meta") {
+      postData[type]["id"] = window.id;
+    }
+    $('fieldset').each( function () {
+      if ($(this).hasClass('js-SnippetText')) {
+        $(this).find('input, textarea').each( function () {
+          snippets.push(this.value);
+        });
+      } else if ($(this).hasClass('js-SnippetImage')) {
+        $(this).find('input').each( function () {
+          if ((this.type == "radio") && (this.checked == true)) {
+            snippetImage.push(this.dataset.name + ":" + this.value);
+          }
+          if (this.type == "text") {
+            snippetImage.push(this.dataset.name + ": " + this.value);
+          }
+        });
+        snippets.push(snippetImage);
+        snippetImage = [];
+      } else if ($(this).hasClass('js-Slides')) {
+        $(this).find('input').each( function () {
+          slideImage.push(this.dataset.name + ": " + this.value);
+        });
+        slides.push(slideImage);
+        slideImage = [];
+      } else if ($(this).hasClass('js-VideoSources')) {
+        postData[type]["video"] = {};
+        $(this).find('input').each( function () {
+          postData[type]["video"][this.dataset.name] = this.value;
+        });
+      } else if ($(this).hasClass('js-PosterImage')) {
+        postData[type]["image"] = {};
+        $(this).find('input').each( function () {
+          postData[type]["image"][this.dataset.name] = this.value;
+        });
+      } else if ($(this).hasClass('js-Format')) {
+        postData[type]["format"] = {};
+        $(this).find('input').each( function () {
+          postData[type]["format"][this.dataset.name] = this.checked;
+        });
+      } else if ($(this).hasClass('js-ImageSources')) {
+        postData[type]["image"] = {}
+        $(this).find('input').each( function () {
+          postData[type]["image"][this.dataset.name] = this.value;
+        });
+      } else {
+        $(this).find('input, textarea').each( function () {
+          if (this.type == "checkbox") {
+            postData[type][this.dataset.name] = this.checked;
+          }
+          if ((this.type == "text") || (this.type == "textarea")) {
+            postData[type][this.dataset.name] = this.value;
+          }
+        });
       }
-      $('fieldset').each( function () {
-        if ($(this).hasClass('js-SnippetText')) {
-          $(this).find('input, textarea').each( function () {
-            snippets.push(this.value);
-          });
-        } else if ($(this).hasClass('js-SnippetImage')) {
-          $(this).find('input').each( function () {
-            if ((this.type == "radio") && (this.checked == true)) {
-              snippetImage.push(this.dataset.name + ":" + this.value);
-            }
-            if (this.type == "text") {
-              snippetImage.push(this.dataset.name + ": " + this.value);
-            }
-          });
-          snippets.push(snippetImage);
-          snippetImage = [];
-        } else if ($(this).hasClass('js-Slides')) {
-          $(this).find('input').each( function () {
-            slideImage.push(this.dataset.name + ": " + this.value);
-          });
-          slides.push(slideImage);
-          slideImage = [];
-        } else if ($(this).hasClass('js-VideoSources')) {
-          postData[type]["video"] = {};
-          $(this).find('input').each( function () {
-            postData[type]["video"][this.dataset.name] = this.value;
-          });
-        } else if ($(this).hasClass('js-PosterImage')) {
-          postData[type]["image"] = {};
-          $(this).find('input').each( function () {
-            postData[type]["image"][this.dataset.name] = this.value;
-          });
-        } else if ($(this).hasClass('js-Format')) {
-          postData[type]["format"] = {};
-          $(this).find('input').each( function () {
-            postData[type]["format"][this.dataset.name] = this.checked;
-          });
-        } else if ($(this).hasClass('js-ImageSources')) {
-          postData[type]["image"] = {}
-          $(this).find('input').each( function () {
-            postData[type]["image"][this.dataset.name] = this.value;
-          });
-        } else {
-          $(this).find('input, textarea').each( function () {
-            if (this.type == "checkbox") {
-              postData[type][this.dataset.name] = this.checked;
-            }
-            if ((this.type == "text") || (this.type == "textarea")) {
-              postData[type][this.dataset.name] = this.value;
-            }
-          });
-        }
-      });
+    });
 
-      if (slides.length > 0) {
-        postData[type]["images"] = [];
-        for (slideImage in slides) {
+    if (slides.length > 0) {
+      postData[type]["images"] = [];
+      for (slideImage in slides) {
+        var imageAttr = {};
+        for (var i = 0; i < slides[slideImage].length; i++) {
+          var key = slides[slideImage][i].split(":")[0];
+          if (slides[slideImage][i].split(":").length > 2) {
+            var value = slides[slideImage][i].split(":")[1] + ":" + slides[slideImage][i].split(":")[2];
+          } else {
+            var value = slides[slideImage][i].split(":")[1];
+          }
+          imageAttr[key] = value;
+        }
+        postData[type]["images"].push(imageAttr);
+      }
+    }
+
+    if (snippets.length > 0) {
+      postData[type]["snippets"] = [];
+      for (snippet in snippets) {
+        if (typeof snippets[snippet] == "string") {
+          postData[type]["snippets"].push({"text": snippets[snippet]});
+        } else {
           var imageAttr = {};
-          for (var i = 0; i < slides[slideImage].length; i++) {
-            var key = slides[slideImage][i].split(":")[0];
-            if (slides[slideImage][i].split(":").length > 2) {
-              var value = slides[slideImage][i].split(":")[1] + ":" + slides[slideImage][i].split(":")[2];
+          for (var i = 0; i < snippets[snippet].length; i++) {
+            var key = snippets[snippet][i].split(":")[0];
+            if (snippets[snippet][i].split(":").length > 2) {
+              var value = snippets[snippet][i].split(":")[1] + ":" + snippets[snippet][i].split(":")[2];
             } else {
-              var value = slides[slideImage][i].split(":")[1];
+              var value = snippets[snippet][i].split(":")[1];
             }
             imageAttr[key] = value;
           }
-          postData[type]["images"].push(imageAttr);
+          postData[type]["snippets"].push(imageAttr);
         }
       }
+    }
 
-      if (snippets.length > 0) {
-        postData[type]["snippets"] = [];
-        for (snippet in snippets) {
-          if (typeof snippets[snippet] == "string") {
-            postData[type]["snippets"].push({"text": snippets[snippet]});
-          } else {
-            var imageAttr = {};
-            for (var i = 0; i < snippets[snippet].length; i++) {
-              var key = snippets[snippet][i].split(":")[0];
-              if (snippets[snippet][i].split(":").length > 2) {
-                var value = snippets[snippet][i].split(":")[1] + ":" + snippets[snippet][i].split(":")[2];
-              } else {
-                var value = snippets[snippet][i].split(":")[1];
-              }
-              imageAttr[key] = value;
-            }
-            postData[type]["snippets"].push(imageAttr);
-          }
-        }
-      }
-
-      function modifyData(postData, meta, items) {
-        if (typeof postData["meta"] != "undefined") {
-          postData["items"] = items;
-        } else {
-          postData["meta"] = meta;
-          for (item in items) {
-            for (thisItem in items[item]) {
-              if (window.id == items[item][thisItem]) {
-                postData["items"].push(postData[type]);
-              } else {
-                postData["items"].push(items[item]);
-              }
+    function modifyData(postData, meta, items) {
+      if (typeof postData["meta"] != "undefined") {
+        postData["items"] = items;
+      } else {
+        postData["meta"] = meta;
+        for (item in items) {
+          for (thisItem in items[item]) {
+            if (window.id == items[item][thisItem]) {
+              postData["items"].push(postData[type]);
+            } else {
+              postData["items"].push(items[item]);
             }
           }
         }
-        return true;
-      };
-      modifyData(postData, meta, items);
-
-      $.ajax({
-        url: '/update',
-        type: 'POST',
-        data: postData,
-        success: postSuccessHandler(postData)
-      });
-
+      }
+      return true;
     };
+    modifyData(postData, meta, items);
+
+    $.ajax({
+      url: '/update',
+      type: 'POST',
+      data: postData,
+      success: postSuccessHandler(postData)
+    });
+  };
 
   function postSuccessHandler(postData) {
-    // console.log(postData);
+    loadPages();
   }
 
 });
