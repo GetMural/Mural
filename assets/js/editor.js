@@ -1,41 +1,20 @@
 document.addEventListener("DOMContentLoaded", function (event) {
 
-  function loadAssets() {
-    $.material.init();
-  };
-
-  $('.dropdown').on('click', function () {
-    $(this).toggleClass('open');
-    $(this).find('.dropdown-toggle').each( function () {
-      $(this).on('click', function (event) {
-        event.preventDefault();
-      });
+  $('.js-nav').on('change', function(){
+    var target = $(this).find(':selected'),
+        link = target.attr('value'),
+        bodyElement = document.getElementsByClassName('js-Load');
+        window.id = parseInt(target.data('id'));
+        window.type = target.data('type');
+    $(bodyElement).load(link, function (response, status, xhr) {
+      if ( status !== "error" ) {
+        loadData();
+      }
     });
+    console.log(target, link, target.data('id'), target.data('type'));
   });
 
   var url = '/data/storyboard.json';
-
-  function loadPages() {
-    var nav = document.getElementsByClassName('js-Nav'),
-        navItems = document.getElementsByClassName('js-NavLink'),
-        bodyElement = document.getElementsByClassName('js-Load');
-
-    for (var i = 0; i < navItems.length; i++) {
-      navItems[i].addEventListener('click', function (event) {
-        event.preventDefault();
-        var navItem = this,
-            link = this.href;
-        window.id = parseInt(this.dataset.id);
-        window.type = this.dataset.type;
-        $(bodyElement).load(link, function (response, status, xhr) {
-          if ( status !== "error" ) {
-            loadData();
-          }
-        });
-      });
-    };
-  };
-  loadPages();
 
   function loadData() {
     var XHR = new XMLHttpRequest();
@@ -46,7 +25,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
             meta = data["meta"],
             items = data["items"];
         populateForms(meta, items);
-        loadAssets();
         var save = document.getElementById('save');
         if (typeof save !== "undefined") {
           save.addEventListener('click', function (event){
