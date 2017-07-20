@@ -6,14 +6,18 @@ document.addEventListener("DOMContentLoaded", function (event) {
         bodyElement = document.getElementsByClassName('js-Load');
         window.id = parseInt(target.data('id'));
         window.type = target.data('type');
+    loadPages(bodyElement, link);
+  });
+
+  var url = '/data/storyboard.json';
+
+  function loadPages(bodyElement, link) {
     $(bodyElement).load(link, function (response, status, xhr) {
       if ( status !== "error" ) {
         loadData();
       }
     });
-  });
-
-  var url = '/data/storyboard.json';
+  };
 
   function loadData() {
     var XHR = new XMLHttpRequest();
