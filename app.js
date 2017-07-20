@@ -246,6 +246,7 @@ app.get('/editor/page/videobackground', function(req, res){
 		partials: {
 			formcontrols: '../fragments/formcontrols',
 			fullpage: '../fragments/fullpage',
+			loadingimage: '../fragments/loadingimage',
 			title: '../fragments/title',
 			subtitle: '../fragments/subtitle',
 			videobackground: 'videobackground',

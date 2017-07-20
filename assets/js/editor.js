@@ -186,6 +186,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
                       $(this).val(item["image"][key]);
                     }
                   }
+                  console.log(name);
                 });
               } else {
                 $(this).find('input, textarea').each(function () {
