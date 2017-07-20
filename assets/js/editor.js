@@ -11,7 +11,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
         loadData();
       }
     });
-    console.log(target, link, target.data('id'), target.data('type'));
   });
 
   var url = '/data/storyboard.json';

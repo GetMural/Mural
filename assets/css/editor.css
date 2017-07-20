@@ -22,15 +22,6 @@ body {
   margin: 0;
 }
 
-
-.title {
-  color: #fff;
-  max-width: 50vw;
-  position: fixed;
-  top: 8px;
-  z-index: 10;
-}
-
 legend,
 button#save
  {
