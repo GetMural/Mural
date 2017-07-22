@@ -21,14 +21,17 @@ app.set('views', __dirname + '/views');
 // Set up Static Files
 app.use('/', express.static('assets'));
 
+// Set up node_modules
+app.use('/tools', express.static('node_modules'));
+
 // Set up the data API
 app.use('/data', express.static('data'));
 
 // Home View
 app.get('/', function (req, res){
-	res.render('home', {
+	res.render('index', {
 		partials: {
-			preview: 'home'
+			index: 'index'
 		}
 	});
 });
@@ -269,32 +272,9 @@ app.get('/editor/page/videofullpage', function(req, res){
 	});
 });
 
-// Preview View
-app.get('/preview', function (req, res){
-	res.render('preview', {
-		meta: JSONdata["meta"],
-		items: JSONdata["items"],
-		partials : {
-			body: 'partials/body',
-			fb: 'partials/fb',
-			head: 'partials/head',
-			header: 'partials/header',
-			imagebackground: 'partials/imagebackground',
-			imageparallax: 'partials/imageparallax',
-			intro: 'partials/intro',
-			loader: 'partials/loader',
-			textcentered: 'partials/textcentred',
-			title: 'partials/title',
-			slideshowhorizontal: 'partials/slideshowhorizontal',
-			slideshowvertical: 'partials/slideshowvertical',
-			snippets: 'partials/snippets',
-			social: 'partials/social',
-			subdataposterloadingimage: 'partials/subdataposterloadingimage',
-			subvideosource: 'partials/subvideosource',
-			videobackground: 'partials/videobackground',
-			videofullpage: 'partials/videofullpage'
-		}
-	});
+// Public View
+app.get('/public', function (req, res){
+	res.render('../public/index.html');
 });
 
 app.listen(8000, function () {
