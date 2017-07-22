@@ -272,6 +272,34 @@ app.get('/editor/page/videofullpage', function(req, res){
 	});
 });
 
+// Preview View
+app.get('/preview', function (req, res){
+	res.render('preview', {
+		meta: JSONdata["meta"],
+		items: JSONdata["items"],
+		partials : {
+			body: 'partials/body',
+			fb: 'partials/fb',
+			head: 'partials/head',
+			header: 'partials/header',
+			imagebackground: 'partials/imagebackground',
+			imageparallax: 'partials/imageparallax',
+			intro: 'partials/intro',
+			loader: 'partials/loader',
+			textcentered: 'partials/textcentred',
+			title: 'partials/title',
+			slideshowhorizontal: 'partials/slideshowhorizontal',
+			slideshowvertical: 'partials/slideshowvertical',
+			snippets: 'partials/snippets',
+			social: 'partials/social',
+			subdataposterloadingimage: 'partials/subdataposterloadingimage',
+			subvideosource: 'partials/subvideosource',
+			videobackground: 'partials/videobackground',
+			videofullpage: 'partials/videofullpage'
+		}
+	});
+});
+
 // Public View
 app.get('/public', function (req, res){
 	res.render('../public/index.html');
