@@ -19,3 +19,7 @@ So far the Storyteller editor supports the following types:
 ## Site Output
 
 On site generation the build process should copy the contents of the src folder, story json (for sharing and editing after the fact), images, video, and audio (no idea yet) ~~along with the php (urgh)~~ and js files to a new folder in sites with the name of the project.  
+
+## Installation and running the app
+
+So far it's as easy as `npm install` but you'll also need to have a global installation of ![cordova](https://cordova.apache.org/) to build the app outside of the context of the browser.
