@@ -1,5 +1,5 @@
 {
-  "name": "mural",
+  "name": "getmural",
   "version": "0.0.1",
   "description": "Longform Storytelling",
   "main": "app.js",
@@ -7,18 +7,22 @@
     "build": "webpack"
   },
   "author": "Pete Haughie",
-  "license": "MIT",
+  "license": "LGPL",
   "dependencies": {
     "body-parser": "^1.17.1",
     "consolidate": "^0.10.0",
     "dirp": "^0.6.0",
     "express": "^4.10.6",
     "express-less": "0.0.6",
+    "hogan": "^1.0.2",
+    "hogan-loader": "^0.0.2",
     "jquery": "^3.2.1",
+    "jshint-loader": "^0.8.4",
     "json-fmt": "^1.1.2",
     "logger": "0.0.1",
     "method-override": "^2.3.7",
     "mustache": "^1.0.0",
+    "mustache-loader": "^1.0.0",
     "node-watch": "^0.4.1",
     "reload": "^1.1.1",
     "webpack": "^3.3.0"
