@@ -1,5 +1,6 @@
 'use strict';
 
+var hogan = require('hogan.js');
 var mustache = require('mustache');
 var data = require('./data/storyboard.json');
 var path = require('path');
