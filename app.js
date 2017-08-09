@@ -1,18 +1,17 @@
 // Definitions
-var express = require('express');
-var app = express();
-var bodyParser = require('body-parser');
-var cons = require('consolidate');
-var fs = require('fs');
-var logger = require('logger').createLogger();
-var path = require('path');
-var reload = require('reload');
-var watch = require('node-watch');
-
-var JSONdata = JSON.parse(fs.readFileSync('data/storyboard.json'));
+var express 				= require('express');
+var app 						= express();
+var bodyParser 			= require('body-parser');
+var cons 						= require('consolidate');
+var fs 							= require('fs');
+var gulp						= require('gulp');
+var JSONFormatter		= require('json-fmt');
+var reload 					= require('reload');
+var watch 					= require('node-watch');
+var _ 							= require('lodash');
 
 // Set Mustache as the Template Engine
-app.engine('html', cons.mustache);
+app.engine('html', cons.hogan);
 
 // Set up Views and Partials
 app.set('view engine', 'html');
@@ -25,7 +24,66 @@ app.use('/', express.static('assets'));
 app.use('/tools', express.static('node_modules'));
 
 // Set up the data API
-app.use('/data', express.static('data'));
+app.get('/data', function (req, res) {
+   fs.readFile( "./data/storyboard.json", 'utf8', function (err, data) {
+		 var fmt = new JSONFormatter(JSONFormatter.PRETTY);
+				 fmt.append( data );
+				 res.end( fmt.flush() );
+   });
+});
+
+app.get('/data/meta', function (req, res) {
+   fs.readFile( "./data/storyboard.json", 'utf8', function (err, data) {
+		 data = JSON.parse(data);
+		 data = data.meta;
+		 data = JSON.stringify(data);
+		 var fmt = new JSONFormatter(JSONFormatter.PRETTY);
+				 fmt.append( data );
+				 res.end( fmt.flush() );
+   });
+});
+
+app.get('/data/items', function (req, res) {
+	fs.readFile( "./data/storyboard.json", 'utf8', function (err, data) {
+		data = JSON.parse(data);
+		data = data.items;
+		data = JSON.stringify(data);
+		var fmt = new JSONFormatter(JSONFormatter.PRETTY);
+				fmt.append( data );
+				res.end( fmt.flush() );
+	});
+});
+
+app.get('/data/items/id/:id', function (req, res) {
+	var query = req || {};
+	if (query.params && query.params.id) {
+			q_id = query.params.id;
+			fs.readFile( "./data/storyboard.json", 'utf8', function (err, data) {
+				data = JSON.parse(data);
+				data = data.items;
+				length = data.length;
+				if (q_id > length || q_id < 1) {
+					res.end( JSON.stringify({}) );
+				} else {
+					_.each( data, function (object) {
+						_.each( object, function (value) {
+							var id = value.id;
+							if (q_id == id) {
+								var result = JSON.stringify(value);
+								if (result) {
+									var fmt = new JSONFormatter(JSONFormatter.PRETTY);
+											fmt.append( result );
+											res.end( fmt.flush() );
+								}
+							}
+						});
+					});
+				}
+			});
+		} else {
+			res.end( JSON.stringify({}) );
+	}
+});
 
 // Home View
 app.get('/', function (req, res){
@@ -41,8 +99,8 @@ app.get('/', function (req, res){
 // Main Editor View
 app.get('/editor', function (req, res){
 	res.render('editor/editor', {
-		meta: JSONdata["meta"],
-		items: JSONdata["items"],
+		meta: JSONdata['meta'],
+		items: JSONdata['items'],
 		partials: {
 			editor: 'editor',
 			editornav: 'fragments/editornav'
@@ -275,8 +333,8 @@ app.get('/editor/page/videofullpage', function(req, res){
 // Preview View
 app.get('/preview', function (req, res){
 	res.render('preview', {
-		meta: JSONdata["meta"],
-		items: JSONdata["items"],
+		meta: JSONdata['meta'],
+		items: JSONdata['items'],
 		partials : {
 			body: 'partials/body',
 			fb: 'partials/fb',
@@ -317,7 +375,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.post('/update', function(req, res) {
 	res.setHeader('Content-Type', 'application/json');
-
 	// get the form request
 	data = req.body;
 
@@ -327,17 +384,11 @@ app.post('/update', function(req, res) {
 	}));
 
 	// write the prettified data
-	fs.writeFile("data/storyboard.json", JSON.stringify(data), function( err ) {
+	fs.writeFile('data/storyboard.json', JSON.stringify(data), function( err ) {
 		if (err) {
 			return console.log( err );
 		}
-		console.log("Data captured");
+		console.log('Data captured');
 	});
 
-});
-
-// Hot Reload the Preview
-watch('data', { recursive: true }, function(evt, name) {
-  console.log(evt, ' changed.');
-	delete require.cache['app.js'];
 });
