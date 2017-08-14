@@ -74,34 +74,42 @@ app.get('/data/get/items/id/:id', function (req, res) {
   var query = req || {}
   if (query.params && query.params.id) {
     var qId = query.params.id
-    fs.readFile('./data/storyboard.json', 'utf8', function (err, data) {
-      if (!err) {
-        data = JSON.parse(data)
-        data = data.items
-        var length = data.length
-        if (qId >= length || qId < 0) {
-          res.end(JSON.stringify({}))
-        } else {
-          _.each(data, function (object, i) {
-            var id = i
-            _.each(object, function (value) {
-              if (qId === id) {
-                var result = JSON.stringify(value)
-                if (result) {
-                  var fmt = new JSONFormatter(JSONFormatter.PRETTY)
-                  fmt.append(result)
-                  res.setHeader('Content-Type', 'application/json')
-                  res.end(fmt.flush())
+    var reg = /^\d+$/
+    if (reg.test(qId)) {
+      fs.readFile('./data/storyboard.json', 'utf8', function (err, data) {
+        if (!err) {
+          data = JSON.parse(data)
+          data = data.items
+          var length = data.length
+          if (qId >= length || qId < 0) {
+            res.setHeader('Content-Type', 'application/json')
+            res.end(JSON.stringify({}))
+          } else {
+            _.each(data, function (object, i) {
+              var id = i
+              _.each(object, function (value) {
+                if (parseInt(qId) === id) {
+                  var result = JSON.stringify(value)
+                  if (result) {
+                    var fmt = new JSONFormatter(JSONFormatter.PRETTY)
+                    fmt.append(result)
+                    res.setHeader('Content-Type', 'application/json')
+                    res.end(fmt.flush())
+                  }
                 }
-              }
+              })
             })
-          })
+          }
+        } else {
+          console.log(err)
         }
-      } else {
-        console.log(err)
-      }
-    })
+      })
+    } else {
+      res.setHeader('Content-Type', 'application/json')
+      res.end(JSON.stringify({}))
+    }
   } else {
+    res.setHeader('Content-Type', 'application/json')
     res.end(JSON.stringify({}))
   }
 })
