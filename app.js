@@ -62,12 +62,12 @@ app.get('/data/get/items/id/:id', function (req, res) {
 				data = JSON.parse(data);
 				data = data.items;
 				length = data.length;
-				if (q_id > length || q_id < 1) {
+				if (q_id >= length || q_id < 0) {
 					res.end( JSON.stringify({}) );
 				} else {
-					_.each( data, function (object) {
+					_.each( data, function (object, i) {
+            var id = i;
 						_.each( object, function (value) {
-							var id = value.id;
 							if (q_id == id) {
 								var result = JSON.stringify(value);
 								if (result) {
