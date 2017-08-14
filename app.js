@@ -24,7 +24,7 @@ app.use('/', express.static('assets'));
 app.use('/tools', express.static('node_modules'));
 
 // Set up the data API
-app.get('/data', function (req, res) {
+app.get('/data/get', function (req, res) {
    fs.readFile( "./data/storyboard.json", 'utf8', function (err, data) {
 		 var fmt = new JSONFormatter(JSONFormatter.PRETTY);
 				 fmt.append( data );
@@ -32,7 +32,7 @@ app.get('/data', function (req, res) {
    });
 });
 
-app.get('/data/meta', function (req, res) {
+app.get('/data/get/meta', function (req, res) {
    fs.readFile( "./data/storyboard.json", 'utf8', function (err, data) {
 		 data = JSON.parse(data);
 		 data = data.meta;
@@ -43,7 +43,7 @@ app.get('/data/meta', function (req, res) {
    });
 });
 
-app.get('/data/items', function (req, res) {
+app.get('/data/get/items', function (req, res) {
 	fs.readFile( "./data/storyboard.json", 'utf8', function (err, data) {
 		data = JSON.parse(data);
 		data = data.items;
@@ -54,7 +54,7 @@ app.get('/data/items', function (req, res) {
 	});
 });
 
-app.get('/data/items/id/:id', function (req, res) {
+app.get('/data/get/items/id/:id', function (req, res) {
 	var query = req || {};
 	if (query.params && query.params.id) {
 			q_id = query.params.id;
@@ -83,6 +83,10 @@ app.get('/data/items/id/:id', function (req, res) {
 		} else {
 			res.end( JSON.stringify({}) );
 	}
+});
+
+app.put('/data/put/meta', function (req, res) {
+	res.end({});
 });
 
 // Home View
