@@ -24,9 +24,22 @@ app.use('/', express.static('assets'));
 app.use('/tools', express.static('node_modules'));
 
 // Set up the data API
+var data = './data/storyboard.json';
+// var data = ''; // this will be populated from the initial load screen
+var meta = {};
+var items = {};
+
+// get the meta and items objects
+fs.readFile(data, 'utf8', function (err, data) {
+	if (!err) {
+		meta = JSON.parse(data).meta;
+		items = JSON.parse(data).items;
+	}
+});
+
 // GET
 app.get('/data/get', function (req, res) {
-	fs.readFile('./data/storyboard.json', 'utf8', function (err, data) {
+	fs.readFile(data, 'utf8', function (err, data) {
 		if (!err) {
 			var fmt = new JSONFormatter(JSONFormatter.PRETTY);
 			fmt.append(data);
@@ -39,7 +52,7 @@ app.get('/data/get', function (req, res) {
 });
 
 app.get('/data/get/meta', function (req, res) {
-	fs.readFile('./data/storyboard.json', 'utf8', function (err, data) {
+	fs.readFile(data, 'utf8', function (err, data) {
 		if (!err) {
 			data = JSON.parse(data);
 			data = data.meta;
@@ -55,13 +68,13 @@ app.get('/data/get/meta', function (req, res) {
 });
 
 app.get('/data/get/items', function (req, res) {
-	fs.readFile('./data/storyboard.json', 'utf8', function (err, data) {
+	fs.readFile(data, 'utf8', function (err, data) {
 		if (!err) {
 			data = JSON.parse(data);
-			data = data.items;
-			data = JSON.stringify(data);
+			items = data.items;
+			items = JSON.stringify(items);
 			var fmt = new JSONFormatter(JSONFormatter.PRETTY);
-			fmt.append(data);
+			fmt.append(items);
 			res.setHeader('Content-Type', 'application/json');
 			res.end(fmt.flush());
 		} else {
@@ -70,13 +83,13 @@ app.get('/data/get/items', function (req, res) {
 	});
 });
 
-app.get('/data/get/items/id/:id', function (req, res) {
+app.get('/data/get/item/id/:id', function (req, res) {
 	var query = req || {};
 	if (query.params && query.params.id) {
 		var qId = query.params.id;
 		var reg = /^\d+$/;
 		if (reg.test(qId)) {
-			fs.readFile('./data/storyboard.json', 'utf8', function (err, data) {
+			fs.readFile(data, 'utf8', function (err, data) {
 				if (!err) {
 					data = JSON.parse(data);
 					data = data.items;
@@ -118,7 +131,7 @@ app.get('/data/get/items/id/:id', function (req, res) {
 app.patch('/data/patch/meta', function (req, res) {
 	// var newData = req.;
 	console.log(req);
-	fs.readFile('./data/storyboard.json', 'utf8', function (err, data) {
+	fs.readFile(data, 'utf8', function (err, data) {
 		if (!err) {
 			data = JSON.parse(data);
 			data = data.meta;
@@ -150,8 +163,8 @@ app.get('/', function (req, res) {
 // Main Editor View
 app.get('/editor', function (req, res) {
 	res.render('editor/editor', {
-		meta: 'data/get/meta',
-		items: 'data/get/items',
+		meta: meta,
+		items: items,
 		partials: {
 			editor: 'editor',
 			editornav: 'fragments/editornav'
@@ -162,8 +175,6 @@ app.get('/editor', function (req, res) {
 // Editor Fragments
 app.get('/editor/fragment/editornav', function (req, res) {
 	res.render('editor/fragments/editornav', {
-		meta: 'data/get/meta',
-		items: 'data/get/items',
 		partials: {
 			editornav: 'editornav'
 		}
@@ -313,6 +324,7 @@ app.get('/editor/fragment/videosources', function (req, res) {
 // Meta Info Page
 app.get('/editor/page/meta', function (req, res) {
 	res.render('editor/pages/meta', {
+		meta: meta,
 		partials: {
 			title: '../fragments/title',
 			formcontrols: '../fragments/formcontrols'
@@ -326,6 +338,28 @@ app.get('/editor/page/textcentred', function (req, res) {
 		partials: {
 			formcontrols: '../fragments/formcontrols',
 			intro: '../fragments/intro',
+			snippetimage: '../fragments/snippetimage',
+			snippettext: '../fragments/snippettext',
+			subtitle: '../fragments/subtitle',
+			title: '../fragments/title'
+		}
+	});
+});
+
+// Textcentred Page with ID
+app.get('/editor/page/textcentred/id/:id', function (req, res) {
+	var query = req || {};
+	if (query.params && query.params.id) {
+		var qId = query.params.id;
+		var item = items[qId].textcentred;
+	};
+	res.render('editor/pages/textcentred', {
+		item: item,
+		partials: {
+			formcontrols: '../fragments/formcontrols',
+			image: '../fragments/image',
+			intro: '../fragments/intro',
+			richtext: '../fragments/richtext',
 			snippetimage: '../fragments/snippetimage',
 			snippettext: '../fragments/snippettext',
 			subtitle: '../fragments/subtitle',
@@ -376,6 +410,27 @@ app.get('/editor/page/videobackground', function (req, res) {
 	});
 });
 
+// Videobackground Page with id
+app.get('/editor/page/videobackground/id/:id', function (req, res) {
+	var query = req || {};
+	if (query.params && query.params.id) {
+		var qId = query.params.id;
+		var item = items[qId].videobackground;
+	};
+	res.render('editor/pages/videobackground', {
+		item: item,
+		partials: {
+			formcontrols: '../fragments/formcontrols',
+			fullpage: '../fragments/fullpage',
+			loadingimage: '../fragments/loadingimage',
+			title: '../fragments/title',
+			subtitle: '../fragments/subtitle',
+			videobackground: 'videobackground',
+			videosources: '../fragments/videosources'
+		}
+	});
+});
+
 // Videofullpage Page
 app.get('/editor/page/videofullpage', function (req, res) {
 	res.render('editor/pages/videofullpage', {
@@ -393,8 +448,9 @@ app.get('/editor/page/videofullpage', function (req, res) {
 // Preview View
 app.get('/preview', function (req, res) {
 	res.render('preview', {
-		meta: 'data/get/meta',
-		items: 'data/get/items',
+		data: data,
+		meta: data.meta,
+		items: data.items,
 		partials: {
 			body: 'partials/body',
 			fb: 'partials/fb',
