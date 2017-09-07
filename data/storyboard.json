@@ -43,7 +43,9 @@
                 "snippets": [
                     {
                         "title": "",
-                        "align": "right",
+                        "align": {
+													"right": true
+												},
                         "src": "http://storyteller-dev.lab.sourcefabric.org/get_img?ImageRatio=15&ImageWidth=360&ImageHeight=240&ImageId=520",
                         "credits": "&copy; Đorđe Đoković"
                     },
@@ -52,7 +54,9 @@
                     },
                     {
                         "title": "Blah Blah Blah",
-                        "align": "left",
+                        "align": {
+													"left": true
+												},
                         "src": "http://storyteller-dev.lab.sourcefabric.org/get_img?ImageRatio=15&ImageWidth=360&ImageHeight=240&ImageId=520",
                         "credits": "&copy; Đorđe Đoković"
                     },
@@ -175,7 +179,9 @@
                     {
                       "image": {
                         "title": "",
-                        "align": "left",
+                        "align": {
+													"left": true
+												},
                         "src": "http://storyteller-dev.lab.sourcefabric.org/get_img?ImageRatio=15&ImageWidth=360&ImageHeight=240&ImageId=472",
                         "credits": "&copy; Đorđe Đoković"
                       }
@@ -218,7 +224,9 @@
                 "snippets": [
                     {
                         "title": "",
-                        "align": "right",
+                        "align": {
+													"right": true
+												},
                         "src": "http://storyteller-dev.lab.sourcefabric.org/get_img?ImageRatio=20&ImageWidth=320&ImageHeight=213&ImageId=536",
                         "credits": "&copy; Ljuba Ranković"
                     },
@@ -227,7 +235,9 @@
                     },
                     {
                         "title": "",
-                        "align": "left",
+                        "align": {
+													"left": true
+												},
                         "src": "http://storyteller-dev.lab.sourcefabric.org/get_img?ImageRatio=20&ImageWidth=200&ImageHeight=300&ImageId=537",
                         "credits": "&copy; Ljuba Ranković"
                     },
@@ -249,7 +259,9 @@
                 "snippets": [
                     {
                         "title": "Anti-erosive dam in winter",
-                        "align": "right",
+                        "align": {
+													"right": true
+												},
                         "src": "http://storyteller-dev.lab.sourcefabric.org/get_img?ImageRatio=25&ImageWidth=256&ImageHeight=192&ImageId=481",
                         "credits": "&copy; Ljuba Ranković"
                     },
