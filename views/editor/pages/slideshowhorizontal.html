@@ -2,20 +2,49 @@
 
   <legend class="title">Slideshow Horizontal</legend>
 
-  {{> inline}}
+	{{#item}}
 
-  <fieldset>
+	  {{> inline}}
 
-    {{> title}}
+	  <fieldset>
 
-    {{> text}}
+	    {{> title}}
 
-  </fieldset>
+			{{> plaintext}}
 
-  <a href="#" class="js-AddSlide">Slide [+]</a>
+	  </fieldset>
 
-  <div class="js-ContentDynamic"></div>
+	  <a href="#" class="js-AddSlide">Slide [+]</a>
+
+	  <div class="js-ContentDynamic">
+			{{#images}}
+				{{> slide}}
+			{{/images}}
+		</div>
+
+	{{/item}}
+
+	{{^item}}
+
+	  {{> inline}}
+
+	  <fieldset>
+
+	    {{> title}}
+
+	    {{> plaintext}}
+
+	  </fieldset>
+
+	  <a href="#" class="js-AddSlide">Slide [+]</a>
+
+	  <div class="js-ContentDynamic">
+			{{> slide}}
+		</div>
+
+	{{/item}}
 
   {{> formcontrols}}
+
 
 </form>

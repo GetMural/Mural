@@ -1,17 +1,18 @@
+<script src="/tools/jquery/dist/jquery.min.js"></script>
+
+<script src="/js/textcentred.js"></script>
+
 <form class="form-horizontal js-TextCentred" data-id="">
 
   <legend class="title">Text Centred</legend>
 
+	{{#item}}
+
   <fieldset>
 
-    <div class="form-group">
-      <div class="togglebutton">
-        <label for="light">
-          <input id="light" name="light" data-name="light" type="checkbox" class="form-control" />
-          <span class="toggle"></span>
-          Light
-        </label>
-      </div>
+		<div class="form-group">
+      <label for="light">Light</label>
+			<input id="light" name="light" data-name="light" type="checkbox" class="form-control"{{#light}} checked{{/light}} />
     </div>
 
     {{> title}}
@@ -33,8 +34,62 @@
     </li>
   </ul>
 
-  <div class="js-ContentDynamic"></div>
 
-  {{> formcontrols}}
+  <div class="js-ContentDynamic">
+		{{#snippets}}
+			{{^text}}
+				{{> snippetimage}}
+			{{/text}}
+			{{#text}}
+				{{> snippettext}}
+			{{/text}}
+		{{/snippets}}
+	</div>
+
+	{{/item}}
+
+	{{^item}}
+
+  <fieldset>
+
+		<div class="form-group">
+      <label for="light">Light</label>
+			<input id="light" name="light" data-name="light" type="checkbox" class="form-control"{{#light}} checked{{/light}} />
+    </div>
+
+    {{> title}}
+
+    {{> subtitle}}
+
+    {{> intro}}
+
+  </fieldset>
+
+  <legend>Content Blocks</legend>
+
+  <ul class="js-ContentBlockSelector">
+    <li>
+      <a href="#" class="js-AddText">Text [+]</a>
+    </li>
+    <li>
+      <a href="#" class="js-AddImage">Image [+]</a>
+    </li>
+  </ul>
+
+
+  <div class="js-ContentDynamic">
+		{{#snippets}}
+			{{^text}}
+				{{> snippetimage}}
+			{{/text}}
+			{{#text}}
+				{{> snippettext}}
+			{{/text}}
+		{{/snippets}}
+	</div>
+
+	{{/item}}
+	
+	{{> formcontrols}}
 
 </form>

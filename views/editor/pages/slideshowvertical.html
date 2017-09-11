@@ -1,0 +1,21 @@
+<form class="form-horizontal js-SlideshowHorizontal" data-id="">
+
+  <legend class="title">Slideshow Horizontal</legend>
+
+	{{#item}}
+
+	  <a href="#" class="js-AddSlide">Slide [+]</a>
+
+	  <div class="js-ContentDynamic">
+			{{#images}}
+				{{> title}}
+				{{> credits}}
+				{{> imagesources}}
+			{{/images}}
+		</div>
+
+	{{/item}}
+
+  {{> formcontrols}}
+
+</form>
