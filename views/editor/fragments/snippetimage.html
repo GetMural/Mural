@@ -1,31 +1,28 @@
 <fieldset class="js-SnippetImage">
   <legend>Image</legend>
 
-  <div class="form-group">
-    <div class="togglebutton">
-        <legend for="align">Alignment</legend>
-        <div class="radio radio-primary">
-          <label>
-            <input type="radio" name="alignment" name="alignmentDefault" data-name="align" value="default" checked="checked">
-              <span class="circle"></span>
-              <span class="check"></span>
-            Default (Centre)
-          </label>
-          <label>
-            <input type="radio" name="alignment" name="alignmentLeft" data-name="align" value="left">
-              <span class="circle"></span>
-              <span class="check"></span>
-            Left
-          </label>
-          <label>
-            <input type="radio" name="alignment" name="alignmentRight" data-name="align" value="right">
-              <span class="circle"></span>
-              <span class="check"></span>
-            Right
-          </label>
-      </div>
-    </div>
-  </div>
+	<a href="#" class="js-remove">Remove</a>
+
+	<fieldset class="js-align">
+
+    <legend for="align">Alignment</legend>
+
+      <label for="alignmentDefault">
+				Default (Centre)
+      </label>
+			<input type="radio" id="alignmentDefault" name="alignment" data-name="align" value="default"{{#align}}{{#default}} data-checked="checked" checked="checked"{{/default}}{{/align}}>
+
+      <label for="alignmentLeft">
+        Left
+      </label>
+			<input type="radio" id="alignmentLeft" name="alignment" data-name="align" value="left"{{#align}}{{#left}} data-checked="checked" checked="checked"{{/left}}{{/align}}>
+
+      <label for="alignmentRight">
+        Right
+      </label>
+			<input type="radio" id="alignmentRight" name="alignment" data-name="align" value="right"{{#align}}{{#right}} data-checked="checked" checked="checked"{{/right}}{{/align}}>
+
+	</fieldset>
 
   {{> title}}
 

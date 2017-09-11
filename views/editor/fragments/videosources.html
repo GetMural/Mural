@@ -1,8 +1,8 @@
-<div class="form-group">
-  <label class="control-label">MP4</label>
-  <input name="mp4" data-name="mp4" type="text" class="form-control" value="" />
+<div>
+  <label>MP4</label>
+  <input name="mp4" data-name="mp4" type="text" {{#video.mp4}}value="{{video.mp4}}" {{/video.mp4}} placeholder="No mp4 source" />
 </div>
-<div class="form-group">
-  <label class="control-label">Webm</label>
-  <input name="webm" data-name="webm" type="text" class="form-control" value="" />
+<div>
+  <label>Webm</label>
+  <input name="webm" data-name="webm" type="text" {{#video.webm}}value="{{video.webm}}" {{/video.webm}}placeholder="No webm source" />
 </div>

@@ -1,5 +1,9 @@
-{{> title}}
+{{^text}}
+	{{> title}}
 
-{{> snippetimage}}
+	{{> snippetimage}}
+{{/text}}
 
-{{> snippettext}}
+{{#text}}
+	{{> snippettext}}
+{{/text}}
