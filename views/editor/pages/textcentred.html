@@ -1,8 +1,6 @@
 <script src="/tools/jquery/dist/jquery.min.js"></script>
 
-<script src="/js/textcentred.js"></script>
-
-<form class="form-horizontal js-TextCentred" data-id="">
+<form class="js-TextCentred" data-id="">
 
   <legend class="title">Text Centred</legend>
 
@@ -10,9 +8,9 @@
 
   <fieldset>
 
-		<div class="form-group">
+		<div>
       <label for="light">Light</label>
-			<input id="light" name="light" data-name="light" type="checkbox" class="form-control"{{#light}} checked{{/light}} />
+			<input id="light" name="light" data-name="light" type="checkbox"{{#light}} checked{{/light}} />
     </div>
 
     {{> title}}
@@ -52,9 +50,9 @@
 
   <fieldset>
 
-		<div class="form-group">
+		<div>
       <label for="light">Light</label>
-			<input id="light" name="light" data-name="light" type="checkbox" class="form-control"{{#light}} checked{{/light}} />
+			<input id="light" name="light" data-name="light" type="checkbox"{{#light}} checked{{/light}} />
     </div>
 
     {{> title}}
@@ -89,7 +87,9 @@
 	</div>
 
 	{{/item}}
-	
+
 	{{> formcontrols}}
 
 </form>
+
+<script src="/js/textcentred.js"></script>
