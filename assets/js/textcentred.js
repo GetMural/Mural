@@ -7,7 +7,7 @@ var i = 0; // needs to be global
 // radio button groups match and then recheck the active state
 
 function iterateInitialFormElements () {
-	$('.js-align').each(function () {
+	$('.js-Align').each(function () {
 		i++;
 		var name = $(this).find('input').first().attr('name') + i;
 		$(this).attr('for', name);
@@ -34,7 +34,7 @@ function checkRadioButtons () {
 checkRadioButtons();
 
 function instantiateRemove () {
-	$('.js-ContentDynamic').find('.js-remove').each(function () {
+	$('.js-Remove').each(function () {
 		$(this).on('click', function (e) {
 			e.preventDefault();
 			if ($(this).parent().parent().hasClass('temp')) {
@@ -78,7 +78,7 @@ $('.js-AddImage').on('click', function (e) {
 	var imgBox = '/editor/fragment/snippetimage';
 	$(imgEl).load(imgBox, function () {
 		$(imgEl).appendTo('.js-ContentDynamic');
-		iterateRadioElements($(this).find('.js-align'));
+		iterateRadioElements($(this).find('.js-Align'));
 		instantiateRemove();
 	});
 });
