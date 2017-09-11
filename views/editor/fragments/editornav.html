@@ -1,25 +1,31 @@
+<script src="/js/editornav.js"></script>
 <select class="js-nav">
-  <optgroup>
-    <option selected>Please select</option>
+  <optgroup label="Please select">
   {{#meta}}
-    <option value="/editor/page/meta" data-type="meta">Meta</option>
+    <option value="/editor/page/meta">Meta Information{{#title}}: {{title}}{{/title}}</option>
   {{/meta}}
   {{#items}}
     {{#imagebackground}}
-      <option value="/editor/page/imagebackground" data-id="{{id}}" data-type="imagebackground">{{#title}}{{title}}{{/title}}{{^title}}Image Background {{id}}{{/title}}</option>
+      <option value="/editor/page/imagebackground{{#id}}/id/{{id}}{{/id}}">Image Background{{#title}}: {{title}}{{/title}}</option>
     {{/imagebackground}}
     {{#slideshowhorizontal}}
-      <option value="/editor/page/slideshowhorizontal" data-id="{{id}}" data-type="slideshowhorizontal">{{#title}}{{title}}{{/title}}{{^title}}Slideshow (Horizontal) {{id}}{{/title}}</option>
+      <option value="/editor/page/slideshowhorizontal{{#id}}/id/{{id}}{{/id}}">Horizontal Slideshow{{#title}}: {{title}}{{/title}}</option>
     {{/slideshowhorizontal}}
+		{{#slideshowvertical}}
+      <option value="/editor/page/slideshowvertical{{#id}}/id/{{id}}{{/id}}">Vertical Slideshow{{#title}}: {{title}}{{/title}}</option>
+    {{/slideshowvertical}}
     {{#textcentred}}
-      <option value="/editor/page/textcentred" data-id="{{id}}" data-type="textcentred">{{#title}}{{title}}{{/title}}{{^title}}Text Centred {{id}}{{/title}}</option>
+      <option value="/editor/page/textcentred{{#id}}/id/{{id}}{{/id}}">Centred Text{{#title}}: {{title}}{{/title}}</option>
     {{/textcentred}}
     {{#videobackground}}
-      <option value="/editor/page/videobackground" data-id="{{id}}" data-type="videobackground">{{#title}}{{title}}{{/title}}{{^title}}Video Background {{id}}{{/title}}</option>
+      <option value="/editor/page/videobackground{{#id}}/id/{{id}}{{/id}}">Background Video{{#title}}: {{title}}{{/title}}</option>
     {{/videobackground}}
     {{#videofullpage}}
-      <option value="/editor/page/videofullpage" data-id="{{id}}" data-type="videofullpage" class="js-NavLink">{{#title}}{{title}}{{/title}}{{^title}}Video Fullpage {{id}}{{/title}}</option>
+      <option value="/editor/page/videofullpage{{#id}}/id/{{id}}{{/id}}">Fullpage Video{{#title}}: {{title}}{{/title}}</option>
     {{/videofullpage}}
   {{/items}}
-</optgroup>
+  {{^items}}
+    <option>No items</option>
+  {{/items}}
+  </optgroup>
 </select>
