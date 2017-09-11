@@ -522,6 +522,38 @@ app.get('/editor/page/videofullpage/id/:id', function (req, res) {
 	});
 });
 
+// Imageparallax Page
+app.get('/editor/page/imageparallax', function (req, res) {
+	res.render('editor/pages/imageparallax', {
+		partials: {
+			formcontrols: '../fragments/formcontrols',
+			fullpage: '../fragments/fullpage',
+			imagesources: '../fragments/imagesources',
+			subtitle: '../fragments/subtitle',
+			title: '../fragments/title'
+		}
+	});
+});
+
+// Videofullpage Page with ID
+app.get('/editor/page/imageparallax/id/:id', function (req, res) {
+	var query = req || {};
+	if (query.params && query.params.id) {
+		var qId = query.params.id;
+		var item = items[qId].imageparallax;
+	};
+	res.render('editor/pages/imageparallax', {
+		item: item,
+		partials: {
+			formcontrols: '../fragments/formcontrols',
+			fullpage: '../fragments/fullpage',
+			imagesources: '../fragments/imagesources',
+			subtitle: '../fragments/subtitle',
+			title: '../fragments/title'
+		}
+	});
+});
+
 // Preview View
 app.get('/preview', function (req, res) {
 	res.render('preview', {

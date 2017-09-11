@@ -1,0 +1,41 @@
+<form class="js-ImageParallax">
+
+	<legend class="title">Image Background</legend>
+
+	{{#item}}
+
+		{{> fullpage }}
+
+		<fieldset>
+
+			{{> title}}
+
+			{{> subtitle}}
+
+		</fieldset>
+
+		{{#image}}
+			{{> imagesources}}
+		{{/image}}
+
+	{{/item}}
+
+	{{^item}}
+
+		{{> fullpage }}
+
+		<fieldset>
+
+			{{> title}}
+
+			{{> subtitle}}
+
+		</fieldset>
+
+		{{> imagesources}}
+
+	{{/item}}
+
+	{{> formcontrols}}
+
+</form>
