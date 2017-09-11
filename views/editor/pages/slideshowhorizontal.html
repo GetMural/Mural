@@ -1,4 +1,6 @@
-<form class="form-horizontal js-SlideshowHorizontal" data-id="">
+<script src="/tools/jquery/dist/jquery.min.js"></script>
+
+<form class="js-SlideshowHorizontal">
 
   <legend class="title">Slideshow Horizontal</legend>
 
@@ -18,7 +20,7 @@
 
 	  <div class="js-ContentDynamic">
 			{{#images}}
-				{{> slide}}
+				{{> horizontalslide}}
 			{{/images}}
 		</div>
 
@@ -38,9 +40,7 @@
 
 	  <a href="#" class="js-AddSlide">Slide [+]</a>
 
-	  <div class="js-ContentDynamic">
-			{{> slide}}
-		</div>
+	  <div class="js-ContentDynamic"></div>
 
 	{{/item}}
 
@@ -48,3 +48,5 @@
 
 
 </form>
+
+<script src="/js/slideshowhorizontal.js"></script>

@@ -1,6 +1,8 @@
-<form class="form-horizontal js-SlideshowHorizontal" data-id="">
+<script src="/tools/jquery/dist/jquery.min.js"></script>
 
-  <legend class="title">Slideshow Horizontal</legend>
+<form class="js-SlideshowVertical" data-id="">
+
+  <legend class="title">Vertical Slideshow</legend>
 
 	{{#item}}
 
@@ -8,14 +10,22 @@
 
 	  <div class="js-ContentDynamic">
 			{{#images}}
-				{{> title}}
-				{{> credits}}
-				{{> imagesources}}
+				{{> verticalslide}}
 			{{/images}}
 		</div>
+
+	{{/item}}
+
+	{{^item}}
+
+	  <a href="#" class="js-AddSlide">Slide [+]</a>
+
+	  <div class="js-ContentDynamic"></div>
 
 	{{/item}}
 
   {{> formcontrols}}
 
 </form>
+
+<script src="/js/slideshowvertical.js"></script>
