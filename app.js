@@ -200,6 +200,17 @@ app.get('/editor/fragment/fullpage', function (req, res) {
 	});
 });
 
+// Horizontal Slide Fragment
+app.get('/editor/fragment/horizontalslide', function (req, res) {
+	res.render('editor/fragments/horizontalslide', {
+		partials: {
+			image: 'image',
+			credits: 'credits',
+			title: 'title'
+		}
+	});
+});
+
 // Image Fragment
 app.get('/editor/fragment/image', function (req, res) {
 	res.render('editor/fragments/image', {
@@ -235,11 +246,26 @@ app.get('/editor/fragment/loadingimage', function (req, res) {
 	});
 });
 
-// Slide Fragment
-app.get('/editor/fragment/slide', function (req, res) {
-	res.render('editor/fragments/slide', {
+// Text Fragment
+app.get('/editor/fragment/plaintext', function (req, res) {
+	res.render('editor/fragments/plaintext', {
+		paintext: 'plaintext'
+	});
+});
+
+// Rich Text Fragment
+app.get('/editor/fragment/richtext', function (req, res) {
+	res.render('editor/fragments/richtext', {
+		richtext: 'richtext'
+	});
+});
+
+// Vertical Slide Fragment
+app.get('/editor/fragment/verticalslide', function (req, res) {
+	res.render('editor/fragments/verticalslide', {
 		partials: {
-			image: 'image',
+			credits: 'credits',
+			imagesources: 'imagesources',
 			title: 'title'
 		}
 	});
@@ -249,6 +275,7 @@ app.get('/editor/fragment/slide', function (req, res) {
 app.get('/editor/fragment/snippetimage', function (req, res) {
 	res.render('editor/fragments/snippetimage', {
 		partials: {
+			credits: 'credits',
 			image: 'image',
 			title: 'title'
 		}
@@ -268,20 +295,6 @@ app.get('/editor/fragment/snippettext', function (req, res) {
 app.get('/editor/fragment/subtitle', function (req, res) {
 	res.render('editor/fragments/subtitle', {
 		subtitle: 'subtitle'
-	});
-});
-
-// Text Fragment
-app.get('/editor/fragment/plaintext', function (req, res) {
-	res.render('editor/fragments/plaintext', {
-		paintext: 'plaintext'
-	});
-});
-
-// Rich Text Fragment
-app.get('/editor/fragment/richtext', function (req, res) {
-	res.render('editor/fragments/richtext', {
-		richtext: 'richtext'
 	});
 });
 
@@ -395,7 +408,7 @@ app.get('/editor/page/slideshowhorizontal', function (req, res) {
 			image: '../fragments/image',
 			inline: '../fragments/inline',
 			plaintext: '../fragments/plaintext',
-			slide: '../fragments/slide',
+			horizontalslide: '../fragments/horizontalslide',
 			title: '../fragments/title'
 		}
 	});
@@ -416,7 +429,7 @@ app.get('/editor/page/slideshowhorizontal/id/:id', function (req, res) {
 			image: '../fragments/image',
 			inline: '../fragments/inline',
 			plaintext: '../fragments/plaintext',
-			slide: '../fragments/slide',
+			horizontalslide: '../fragments/horizontalslide',
 			title: '../fragments/title'
 		}
 	});
@@ -429,7 +442,8 @@ app.get('/editor/page/slideshowvertical', function (req, res) {
 			credits: '../fragments/credits',
 			formcontrols: '../fragments/formcontrols',
 			imagesources: '../fragments/imagesources',
-			title: '../fragments/title'
+			title: '../fragments/title',
+			verticalslide: '../fragments/verticalslide'
 		}
 	});
 });
@@ -447,7 +461,8 @@ app.get('/editor/page/slideshowvertical/id/:id', function (req, res) {
 			credits: '../fragments/credits',
 			formcontrols: '../fragments/formcontrols',
 			imagesources: '../fragments/imagesources',
-			title: '../fragments/title'
+			title: '../fragments/title',
+			verticalslide: '../fragments/verticalslide'
 		}
 	});
 });
