@@ -1,16 +1,16 @@
 <section class="no-effects part text_align-center
-                {{#light}}
-                  reverse_colors
-                {{/light}}"
-                 name="story{{id}}">
+          {{#light}}
+            reverse_colors
+          {{/light}}"
+         name="story{{id}}">
       <div class="content container-fluid">
         <div class="row">
           <div class="col-sm-12 header">
             {{#title}}
-            <h1>{{title}}</h1>
+              <h1>{{title}}</h1>
             {{/title}}
             {{#subtitle}}
-            <h2>{{subtitle}}</h2>
+              <h2>{{subtitle}}</h2>
             {{/subtitle}}
           </div>
         </div>
@@ -21,14 +21,14 @@
             {{/intro}}
             {{#snippets}}
               {{#src}}
-              <figure class="cms-image {{align}}" style="max-width: 360px;">
-                <img src="{{src}}" style="max-width: 100%" rel="resizable" alt="{{alt}}" />
-                <figcaption>{{title}}
-                   <span class="photographer">
-                     {{{credits}}}
-                   </span>
-                </figcaption>
-              </figure>
+                <figure class="cms-image {{align}}" style="max-width: 360px;">
+                  <img src="{{src}}" style="max-width: 100%" rel="resizable" alt="{{alt}}" />
+                  <figcaption>{{title}}
+                     <span class="photographer">
+                       {{{credits}}}
+                     </span>
+                  </figcaption>
+                </figure>
               {{/src}}
               {{{text}}}
             {{/snippets}}
