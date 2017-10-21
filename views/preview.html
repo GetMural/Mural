@@ -8,9 +8,7 @@
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    {{#meta}}
-      {{> head}}
-    {{/meta}}
+      {{> partials/head}}
     <meta property="og:type"        content="article" />
     <meta content="yes" name="apple-mobile-web-app-capable">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -26,52 +24,273 @@
 
   <body class="longform" name="top">
 
-    {{> fb}}
+    {{> partials/fb}}
 
-    {{> loader}}
+    {{> partials/loader}}
 
     <!-- main audio -->
     <audio id="master-audio" preload="none" autoplay="autoplay" loop="loop"></audio>
     <a href="#" class="mute">Mute</a>
 
     <article>
+      {{#items}}
 
-    {{#items}}
+        {{#imagebackground}}
+          <section class="part sticky-image" name="story{{id}}">
+            {{#image}}
+            <div class="bg-image"
+                {{#srcmain}}
+                  data-src="{{srcmain}}"
+                {{/srcmain}}
+                {{#srcmedium}}
+                  data-srcMedium="{{srcmedium}}"
+                {{/srcmedium}}
+                {{#srcphone}}
+                  data-srcPhone="{{srcphone}}"
+                {{/srcphone}}
+                >
+            </div>
+            {{/image}}
+            <div class="content container-fluid">
+              <div class="row">
+                <div class="col-sm-12 header-fullpage">
+                  <div class="middle">
+                  {{#title}}
+                    <h1>{{title}}</h1>
+                  {{/title}}
+                  {{#subtitle}}
+                    <h2>{{subtitle}}</h2>
+                  {{/subtitle}}
+                  </div>
+                </div>
+              </div>
+              {{#text}}
+              <div class="row">
+                <div class="col-xs-12 col-sm-10 col-md-8 col-lg-6 text">
+                  {{{text}}}
+                </div>
+              </div>
+              {{/text}}
+            </div>
+            <div class="background_gradient"></div>
+          </section>
+        {{/imagebackground}}
 
-      {{#imagebackground}}
-        {{> imagebackground}}
-      {{/imagebackground}}
+        {{#imageparallax}}
+          <section class="part parallax" name="story{{id}}">
+            {{#image}}
+            <div class="bg-image"
+                {{#srcmain}}
+                  data-src="{{srcmain}}"
+                {{/srcmain}}
+                {{#srcmedium}}
+                  data-srcMedium="{{srcmedium}}"
+                {{/srcmedium}}
+                {{#srcphone}}
+                  data-srcPhone="{{srcphone}}"
+                {{/srcphone}}
+                >
+            </div>
+            {{/image}}
 
-      {{#imageparallax}}
-        {{> imageparallax}}
-      {{/imageparallax}}
+            {{#title}}
+            <div class="content container">
+              <div class="row">
+                <div class="col-sm-12 header-fullpage">
+                  <h1>{{title}}</h1>
+                </div>
+              </div>
+            </div>
+            {{/title}}
 
-      {{#slideshowhorizontal}}
-        {{> slideshowhorizontal}}
-      {{/slideshowhorizontal}}
+          </section>
+        {{/imageparallax}}
 
-      {{#slideshowvertical}}
-        {{> slideshowvertical}}
-      {{/slideshowvertical}}
+        {{#slideshowhorizontal}}
+          <script>
+            if(galleryLinksContainer===undefined){
+              var galleryLinksContainer = [];
+            }
+          </script>
 
-      {{#textcentred}}
-        {{> textcentred}}
-      {{/textcentred}}
+          <section class="part slideshow-horizontal snap" name="story{{id}}">
+            <div class="blueimp-gallery blueimp-gallery-carousel blueimp-gallery-controls">
+              <div class="slides"></div>
+              <a class="prev">&lsaquo;</a>
+              <a class="next">&rsaquo;</a>
+              <div class="slide-caption"></div>
+            </div>
+          </section>
 
-      {{#videobackground}}
-        {{> videobackground}}
-      {{/videobackground}}
+          <script>
+            var galleryLinks = [];
+            var i = 0;
 
-      {{#videofullpage}}
-        {{> videofullpage}}
-      {{/videofullpage}}
+            {{#images}}
+            galleryLinks.push({
+              title: '{{title}}',
+              photographer: '{{credits}}',
+              href: '{{src}}',
+              original_id: i,
+              type: '{{type}}'
+            });
+            i++;
+            console.log('{{{src}}}');
+            {{/images}}
 
-    {{/items}}
+            galleryLinksContainer.push(galleryLinks);
 
+          </script>
+        {{/slideshowhorizontal}}
 
+        {{#slideshowvertical}}
+          <section class="part slideshow" name="story{{id}}">
+            {{#images}}
+              <div class="bg-image"
+                  {{#srcmain}}
+                     data-src='{{srcmain}}'
+                   {{/srcmain}}
+                   {{#srcmedium}}
+                     data-srcMedium='{{srcmedium}}'
+                   {{/srcmedium}}
+                   {{#srcphone}}
+                     data-srcPhone='{{srcphone}}'
+                   {{/srcphone}}
+                   >
+                <div class="caption">
+                  {{#title}}
+                    {{title}}
+                  {{/title}}
+                  {{#credits}}
+                    <span>{{credits}}</span>
+                  {{/credits}}
+                </div>
+              </div>
+            {{/images}}
+          </section>
+        {{/slideshowvertical}}
+
+        {{#textcentred}}
+          <section class="no-effects part text_align-center
+                    {{#light}}
+                      reverse_colors
+                    {{/light}}"
+                   name="story{{id}}">
+                <div class="content container-fluid">
+                  <div class="row">
+                    <div class="col-sm-12 header">
+                      {{#title}}
+                        <h1>{{title}}</h1>
+                      {{/title}}
+                      {{#subtitle}}
+                        <h2>{{subtitle}}</h2>
+                      {{/subtitle}}
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-xs-12 col-sm-10 col-md-8 col-lg-6 text">
+                      {{#intro}}
+                        {{{intro}}}
+                      {{/intro}}
+                      {{#snippets}}
+                        {{#src}}
+                          <figure class="cms-image {{align}}" style="max-width: 360px;">
+                            <img src="{{src}}" style="max-width: 100%" rel="resizable" alt="{{alt}}" />
+                            <figcaption>{{title}}
+                               <span class="photographer">
+                                 {{{credits}}}
+                               </span>
+                            </figcaption>
+                          </figure>
+                        {{/src}}
+                        {{{text}}}
+                      {{/snippets}}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="background_gradient"></div>
+          </section>
+        {{/textcentred}}
+
+        {{#videobackground}}
+          <section class="st-video part inview" name="story{{id}}">
+            <div class="video-container"
+                 data-loop="loop"
+                 data-preload="none"
+                 {{#image}}
+                   data-poster="{{loading}}"
+                 {{/image}}
+                 >
+               {{#video}}
+                 {{#mp4}}
+                   <source data-src="{{mp4}}" type='video/mp4'>
+                 {{/mp4}}
+                 {{#webm}}
+                   <source data-src="{{webm}}" type='video/webm'>
+                 {{/webm}}
+               {{/video}}
+            </div>
+
+            <div class="content container-fluid">
+              <div class="row">
+                <div class="col-sm-12 {{#format}}{{#fullpage}}header-fullpage{{/fullpage}}{{/format}}">
+                  <div class="middle">
+                  {{#title}}
+                    <h1>{{title}}</h1>
+                  {{/title}}
+                  {{#subtitle}}
+                    <h2>{{subtitle}}</h2>
+                  {{/subtitle}}
+                  </div>
+                </div>
+              </div>
+              {{#text}}
+              <div class="row">
+                <div class="col-xs-12 col-sm-10 col-md-8 col-lg-6 text">
+                  {{{text}}}
+                </div>
+              </div>
+              {{/text}}
+            </div>
+
+          </section>
+        {{/videobackground}}
+
+        {{#videofullpage}}
+          <section class="st-content-video part inview snap" name="story{{id}}">
+            <div class="video-container"
+                 data-preload="none"
+                 {{#image}}
+                   {{#loading}}
+                     data-poster="{{loading}}"
+                   {{/loading}}
+                 {{/image}}
+                 >
+               {{#video}}
+                 {{#mp4}}
+                   <source data-src="{{mp4}}" type='video/mp4'>
+                 {{/mp4}}
+                 {{#webm}}
+                   <source data-src="{{webm}}" type='video/webm'>
+                 {{/webm}}
+               {{/video}}
+            </div>
+            <div class="caption">
+              <div class="button-container">
+                <button class="pauseplay"></button>
+              </div>
+              <div class="text">
+                <h3>{{title}}</h3>
+                {{{text}}}
+              </div>
+            </div>
+          </section>
+        {{/videofullpage}}
+      {{/items}}
     </article>
 
-    {{> social}}
+    {{> partials/social}}
 
     <script src="js/all.js"></script>
 

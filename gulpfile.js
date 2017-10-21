@@ -3,6 +3,7 @@ var rename      = require('gulp-rename');
 var sass        = require('gulp-sass');
 var sourcemaps  = require('gulp-sourcemaps');
 var mustache    = require('gulp-mustache');
+var hogan       = require('gulp-hogan');
 
 var data        = require('./data/storyboard.json');
 
@@ -21,10 +22,10 @@ gulp.task('sass', function() {
 // Gulp Mustache Task
 gulp.task('mustache', function() {
   console.log('Building templates');
-  gulp.src("./views/*.html")
-      .pipe(mustache(data,{},{}))
+  gulp.src('./views/preview.html', {}, '.html')
+      .pipe(hogan(data, null, '.html'))
       .pipe(rename('index.html'))
-      .pipe(gulp.dest("./public"));
+      .pipe(gulp.dest('public'));
 });
 
 // Gulp watch tasks

@@ -20,6 +20,7 @@
     "express": "^4.10.6",
     "express-less": "0.0.6",
     "gulp": "^3.9.1",
+    "gulp-hogan": "^2.0.0",
     "gulp-mustache": "^3.0.0",
     "gulp-mustache-plus": "^1.0.1",
     "gulp-rename": "^1.2.2",
