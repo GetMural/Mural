@@ -572,11 +572,9 @@ app.get('/editor/page/imageparallax/id/:id', function (req, res) {
 // Preview View
 app.get('/preview', function (req, res) {
 	res.render('preview', {
-		data: data,
-		meta: data.meta,
-		items: data.items,
+		items: items,
+		meta: meta,
 		partials: {
-			body: 'partials/body',
 			fb: 'partials/fb',
 			head: 'partials/head',
 			header: 'partials/header',

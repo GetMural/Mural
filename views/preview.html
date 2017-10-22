@@ -8,12 +8,21 @@
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-      {{> partials/head}}
-    <meta property="og:type"        content="article" />
-    <meta content="yes" name="apple-mobile-web-app-capable">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-
+    {{#meta}}
+      <title>{{title}}</title>
+      <meta name="description" content="{{{description}}}">
+      <meta name="author" content="{{author}}">
+      <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="{{rsspingback}}">
+      <meta property="og:title"       content="{{title}}" />
+      <meta property="og:url"         content="{{src}}" />
+      <meta property="og:site_name"   content="{{site_name}}" />
+      <meta property="og:description" content="{{{description}}}" />
+      <meta property="og:image"       content="{{site_img}}" />
+      <meta property="og:type"        content="article" />
+      <meta content="yes" name="apple-mobile-web-app-capable">
+      <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    {{/meta}}
     <link rel="shortcut icon" href="img/favicon.ico">
     <link rel="apple-touch-icon" href="img/touch-icon.png">
     <script src="tools/jquery/dist/jquery.min.js"></script>
@@ -24,9 +33,29 @@
 
   <body class="longform" name="top">
 
-    {{> partials/fb}}
+    <div id='fb-root'></div>
+    <script>
+      (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = '//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.3';
+        fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));
+    </script>
 
-    {{> partials/loader}}
+    <div id="loader-wrapper" >
+      {{#meta}}
+        {{#site_img}}
+          <div id="loader-image" data-src="{{site_img}}"></div>
+        {{/site_img}}
+      {{/meta}}
+      <div class="spinner">
+        <div class="bounce1"></div>
+        <div class="bounce2"></div>
+        <div class="bounce3"></div>
+      </div>
+    </div>
 
     <!-- main audio -->
     <audio id="master-audio" preload="none" autoplay="autoplay" loop="loop"></audio>
@@ -291,8 +320,6 @@
     </article>
 
     {{> partials/social}}
-
-    <script src="js/all.js"></script>
 
   </body>
 </html>
