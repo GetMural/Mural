@@ -271,6 +271,9 @@ router.post('/page/textcentred/id/:id', function (req, res) {
         var qId = query.params.id;
         var item = items[qId].textcentred;
         var newItem = req.body;
+
+        console.log('ITEM', item);
+        console.log('NEW_ITEM', newItem);
     };
 
     // TODO: format and save new item, but we need some way to preserve snippet order first
