@@ -72,9 +72,9 @@ router.get('/fragment/fullpage', function (req, res) {
 router.get('/fragment/horizontalslide', function (req, res) {
     res.render('editor/fragments/horizontalslide', {
         partials: {
-            image: 'image',
-            credits: 'credits',
-            title: 'title'
+            image: 'editor/fragments/image',
+            credits: 'editor/fragments/credits',
+            title: 'editor/fragments/title'
         }
     });
 });
@@ -132,9 +132,9 @@ router.get('/fragment/richtext', function (req, res) {
 router.get('/fragment/verticalslide', function (req, res) {
     res.render('editor/fragments/verticalslide', {
         partials: {
-            credits: 'credits',
-            imagesources: 'imagesources',
-            title: 'title'
+            credits: 'editor/fragments/credits',
+            imagesources: 'editor/fragments/imagesources',
+            title: 'editor/fragments/title'
         }
     });
 });
@@ -143,9 +143,9 @@ router.get('/fragment/verticalslide', function (req, res) {
 router.get('/fragment/snippetimage', function (req, res) {
     res.render('editor/fragments/snippetimage', {
         partials: {
-            credits: 'credits',
-            image: 'image',
-            title: 'title'
+            credits: 'editor/fragments/credits',
+            image: 'editor/fragments/image',
+            title: 'editor/fragments/title'
         }
     });
 });
@@ -154,7 +154,7 @@ router.get('/fragment/snippetimage', function (req, res) {
 router.get('/fragment/snippettext', function (req, res) {
     res.render('editor/fragments/snippettext', {
         partials: {
-            richtext: 'richtext'
+            richtext: 'editor/fragments/richtext'
         }
     });
 });
