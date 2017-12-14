@@ -119,7 +119,7 @@ router.patch('/patch/meta', function (req, res) {
             data = JSON.parse(data);
             data = data.meta;
             data = JSON.stringify(data);
-            res.setHeader('Content-Type', 'routerlication/json');
+            res.setHeader('Content-Type', 'application/json');
             res.end();
         } else {
             console.log(err);
