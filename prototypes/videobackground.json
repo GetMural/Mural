@@ -1,0 +1,17 @@
+{
+  "videobackground": {
+    "id": "0",
+    "format": {
+      "fullpage": true
+    },
+    "title": "",
+    "subtitle": "",
+    "video": {
+        "mp4": "",
+        "webm": ""
+    },
+    "image": {
+        "loading": ""
+    }
+  }
+}

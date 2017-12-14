@@ -1,0 +1,18 @@
+{
+  "videofullpage": {
+    "id": "",
+    "format": {
+      "fullpage": true
+    },
+    "title": "",
+    "navlevel": "child",
+    "video": {
+      "mp4": "",
+      "webm": ""
+    },
+    "text": "",
+    "image": {
+      "loading": ""
+    }
+  }
+}
