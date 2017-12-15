@@ -150,15 +150,6 @@ router.get('/fragment/snippetimage', function (req, res) {
     });
 });
 
-// Snippet Text Fragment
-router.get('/fragment/snippettext', function (req, res) {
-    res.render('editor/fragments/snippettext', {
-        partials: {
-            richtext: 'editor/fragments/richtext'
-        }
-    });
-});
-
 // Subtitle Fragment
 router.get('/fragment/subtitle', function (req, res) {
     res.render('editor/fragments/subtitle', {
@@ -234,7 +225,6 @@ router.get('/page/textcentred', function (req, res) {
             intro: 'editor/fragments/intro',
             richtext: 'editor/fragments/richtext',
             snippetimage: 'editor/fragments/snippetimage',
-            snippettext: 'editor/fragments/snippettext',
             subtitle: 'editor/fragments/subtitle',
             title: 'editor/fragments/title'
         }
@@ -259,7 +249,6 @@ router.get('/page/textcentred/id/:id', function (req, res) {
             intro: 'editor/fragments/intro',
             richtext: 'editor/fragments/richtext',
             snippetimage: 'editor/fragments/snippetimage',
-            snippettext: 'editor/fragments/snippettext',
             subtitle: 'editor/fragments/subtitle',
             title: 'editor/fragments/title'
         }
@@ -271,12 +260,33 @@ router.post('/page/textcentred/id/:id', function (req, res) {
         var qId = query.params.id;
         var item = items[qId].textcentred;
         var newItem = req.body;
-
-        console.log('ITEM', item);
-        console.log('NEW_ITEM', newItem);
     };
 
-    // TODO: format and save new item, but we need some way to preserve snippet order first
+    // format and save new item
+    // TODO: item['format'] = { inline: true }; is missing from form
+    item['light'] = (newItem['light'] === 'on') ? true : false;
+    item['subtitle'] = newItem['subtitle'];
+    item['title'] = newItem['tc_title'];
+    // TODO: item['navlevel'] is missing from form
+    item['intro'] = newItem['intro'];
+
+    newSnippets = []
+    for(var i = 0; i < newItem['title'].length; ++i){
+
+        var newSnippet = {
+            title: newItem['title'][i],
+            credits: newItem['credits'][i],
+            src: newItem['src'][i],
+            text: newItem['text'][i],
+            align: newItem['align'][i]
+        };
+        newSnippets.push(newSnippet);
+    }
+    item['snippets'] = newSnippets;
+
+    // format and save new item
+    items[qId].textcentred = item;
+    writeFile(JSON.stringify({ meta: meta, items: items }));
 
     res.render('editor/editor', {
         meta: meta,
