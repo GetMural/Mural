@@ -3,11 +3,12 @@ var router = express.Router();
 var fs = require('fs');
 
 // TODO: refactor this to a storyboard model
-// Set up the data API
+// TODO: these variable will be part of the storyboard model
 var filename = './data/storyboard.json';
 var meta = {};
 var items = {};
 
+// TODO: these function will be part of the storyboard model
 readFile = function() {
     fs.readFile(filename, 'utf8', function (err, data) {
         if (!err) {
@@ -25,6 +26,7 @@ writeFile = function(data) {
     });
 };
 
+// TODO: once we have a storyboard model here we would instantiate the model:  storyboard = new Storybaord(filename); storyboard.readFile()
 readFile();
 
 // Main Editor View
@@ -186,9 +188,8 @@ router.get('/page/meta', function (req, res) {
 router.post('/page/meta', function (req, res) {
     var newMeta = req.body;
 
-    console.log('META', meta);
-    console.log('NEW META', newMeta);
 
+    // TODO: refactor to Storybaord.updateMeta() function
     meta['title'] = newMeta['title'];
     meta['site_name'] = newMeta['site_name'];
     meta['site_img'] = newMeta['site_img'];
@@ -201,6 +202,7 @@ router.post('/page/meta', function (req, res) {
     // TODO: meta['facebook'] is missing from form
     // TODO: meta['twitter'] is missing from form
 
+    // TODO: use Storyboard.writeFile() when its ready
     // TODO: move this to a global file save function with its own button in the frontend
     writeFile(JSON.stringify({ meta: meta, items: items }));
 

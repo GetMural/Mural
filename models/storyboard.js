@@ -4,6 +4,13 @@ var fs = require('fs');
  *  IMPORTANT:  THIS IS NOT USED CURRENTLY!!!!
  *
  */
+function Storyboard(filename) {
+    this.filename = filename;
+    this.data = {};
+    this.meta = {};
+    this.items = {};
+    // TODO: add any other class attributes we might need here
+};
 
 Storyboard.prototype = {
     readFile: function (filename) {
