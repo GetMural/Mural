@@ -8,42 +8,40 @@ function Storyboard(filename) {
     this.filename = filename;
     this.data = {};
     this.meta = {};
-    this.items = {};
-    // TODO: add any other class attributes we might need here
+    this.items = [];
 };
 
 Storyboard.prototype = {
     readFile: function (filename) {
+        var self = this;
+        if (!filename) {
+            filename = self.filename;
+        }
         fs.readFile(filename, 'utf8', function (err, data) {
             if (!err) {
-                return data;
+                self.data = data;
+                self.meta = JSON.parse(data).meta;
+                self.items = JSON.parse(data).items;
             }
         });
     },
 
     writeFile: function (filename, data) {
+        var self = this;
         fs.writeFile(filename, data, function (err) {
             if (err) {
                 return console.log(err);
             }
+            self.data = data;
         });
     },
 
-    addMeta: function (meta) {
-        this.meta = meta;
-
-        return this;
-    },
-
     getMeta: function () {
-        return this.data;
-    },
-
-    addItems: function (item) {
+        return this.meta;
     },
 
     getItems: function () {
-        return this.data;
+        return this.items;
     }
 };
 
