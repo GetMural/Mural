@@ -1,34 +1,44 @@
-<script src="/js/editornav.js"></script>
-<select class="js-nav">
-  <optgroup label="Please select">
   {{#meta}}
-    <option value="/editor/page/meta">Meta Information{{#title}}: {{title}}{{/title}}</option>
+    <table class="js-nav">
+      <tr>
+        <td>
+          <a href="/editor/page/meta"">Meta Information{{#title}}: {{title}}{{/title}}</a>
+        </td>
+      </tr>
+    </table>
   {{/meta}}
+  <table class="js-nav">
   {{#items}}
+    <tr draggable="true" ondragenter="dragenter(event)" ondragstart="dragstart(event)">
+      <td style="border: 1px solid grey">
     {{#imagebackground}}
-      <option value="/editor/page/imagebackground{{#id}}/id/{{id}}{{/id}}">Image Background{{#title}}: {{title}}{{/title}}</option>
+      <a href="/editor/page/imagebackground{{#id}}/id/{{id}}{{/id}}">Image Background{{#title}}: {{title}}{{/title}}</a>
     {{/imagebackground}}
 		{{#imageparallax}}
-      <option value="/editor/page/imageparallax{{#id}}/id/{{id}}{{/id}}">Parallax Image{{#title}}: {{title}}{{/title}}</option>
+      <a href="/editor/page/imageparallax{{#id}}/id/{{id}}{{/id}}">Parallax Image{{#title}}: {{title}}{{/title}}</td>
     {{/imageparallax}}
     {{#slideshowhorizontal}}
-      <option value="/editor/page/slideshowhorizontal{{#id}}/id/{{id}}{{/id}}">Horizontal Slideshow{{#title}}: {{title}}{{/title}}</option>
+      <a href="/editor/page/slideshowhorizontal{{#id}}/id/{{id}}{{/id}}">Horizontal Slideshow{{#title}}: {{title}}{{/title}}</td>
     {{/slideshowhorizontal}}
 		{{#slideshowvertical}}
-      <option value="/editor/page/slideshowvertical{{#id}}/id/{{id}}{{/id}}">Vertical Slideshow{{#title}}: {{title}}{{/title}}</option>
+      <a href="/editor/page/slideshowvertical{{#id}}/id/{{id}}{{/id}}">Vertical Slideshow{{#title}}: {{title}}{{/title}}</td>
     {{/slideshowvertical}}
     {{#textcentred}}
-      <option value="/editor/page/textcentred{{#id}}/id/{{id}}{{/id}}">Centred Text{{#title}}: {{title}}{{/title}}</option>
+      <a href="/editor/page/textcentred{{#id}}/id/{{id}}{{/id}}">Centred Text{{#title}}: {{title}}{{/title}}</td>
     {{/textcentred}}
     {{#videobackground}}
-      <option value="/editor/page/videobackground{{#id}}/id/{{id}}{{/id}}">Background Video{{#title}}: {{title}}{{/title}}</option>
+      <a href="/editor/page/videobackground{{#id}}/id/{{id}}{{/id}}">Background Video{{#title}}: {{title}}{{/title}}</td>
     {{/videobackground}}
     {{#videofullpage}}
-      <option value="/editor/page/videofullpage{{#id}}/id/{{id}}{{/id}}">Fullpage Video{{#title}}: {{title}}{{/title}}</option>
+      <a href="/editor/page/videofullpage{{#id}}/id/{{id}}{{/id}}">Fullpage Video{{#title}}: {{title}}{{/title}}</td>
     {{/videofullpage}}
+        </td></tr>
   {{/items}}
+  </table>
   {{^items}}
-    <option>No items</option>
+    <table><tr>
+      <td>No items</td>
+    </tr></table>
   {{/items}}
-  </optgroup>
-</select>
+</table>
+

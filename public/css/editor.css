@@ -8,7 +8,7 @@ body {
 
 .nav-container {
   left: 0;
-  position: fixed;
+  /* position: fixed; */
   top: 0;
   width: 100vw;
   z-index: 10;
@@ -26,4 +26,8 @@ legend,
 button#save
  {
   user-select: none;
+}
+
+[draggable] {
+    user-select: none;
 }
