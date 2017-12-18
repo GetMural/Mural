@@ -7,6 +7,9 @@ document.addEventListener('DOMContentLoaded', function () {
 		var bodyElement = document.getElementsByClassName('js-Load');
 		$(bodyElement).load(link);
 	});
+	$('[draggable="true"]').on('dragend', function (e) {
+		// TODO: send reordered items back to the server
+	});
 });
 
 // Drag and Drop
@@ -25,7 +28,7 @@ function isbefore(a, b) {
 
 function dragenter(e) {
     var targetelem = e.target;
-    if (targetelem.nodeName == "a") {
+    if (targetelem.nodeName == "li") {
         targetelem = targetelem.parentNode;
     }
 
