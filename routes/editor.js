@@ -1,36 +1,18 @@
 var express = require('express');
 var router = express.Router();
 var fs = require('fs');
+var Storyboard = require('../models/storyboard');
 
-// TODO: refactor this to a storyboard model
-// TODO: these variable will be part of the storyboard model
+// TODO: refactor readFile to take a callback or use promises and call readFile on every get and post function
 var filename = './data/storyboard.json';
-var meta = {};
-var items = {};
+var storyboard = new Storyboard(filename);
+var data = storyboard.readFile(filename);
 
-// TODO: these function will be part of the storyboard model
-readFile = function() {
-    fs.readFile(filename, 'utf8', function (err, data) {
-        if (!err) {
-            meta = JSON.parse(data).meta;
-            items = JSON.parse(data).items;
-        }
-    });
-};
-
-writeFile = function(data) {
-    fs.writeFile(filename, data, function(err) {
-        if (err) {
-            return console.log(err);
-        }
-    });
-};
-
-// TODO: once we have a storyboard model here we would instantiate the model:  storyboard = new Storybaord(filename); storyboard.readFile()
-readFile();
 
 // Main Editor View
 router.get('/', function (req, res, next) {
+    var meta = storyboard.getMeta();
+    var items = storyboard.getItems();
     res.render('editor/editor', {
         meta: meta,
         items: items,
@@ -177,6 +159,8 @@ router.get('/fragment/videosources', function (req, res) {
 
 // Meta Info Page
 router.get('/page/meta', function (req, res) {
+    var meta = storyboard.getMeta();
+    var items = storyboard.getItems();
     res.render('editor/pages/meta', {
         meta: meta,
         partials: {
@@ -187,6 +171,8 @@ router.get('/page/meta', function (req, res) {
 });
 router.post('/page/meta', function (req, res) {
     var newMeta = req.body;
+    var meta = storyboard.getMeta();
+    var items = storyboard.getItems();
 
 
     // TODO: refactor to Storybaord.updateMeta() function
@@ -202,9 +188,8 @@ router.post('/page/meta', function (req, res) {
     // TODO: meta['facebook'] is missing from form
     // TODO: meta['twitter'] is missing from form
 
-    // TODO: use Storyboard.writeFile() when its ready
     // TODO: move this to a global file save function with its own button in the frontend
-    writeFile(JSON.stringify({ meta: meta, items: items }));
+    storyboard.writeFile(JSON.stringify({ meta: meta, items: items }));
 
     res.render('editor/editor', {
         meta: meta,
@@ -236,6 +221,8 @@ router.get('/page/textcentred', function (req, res) {
 // Textcentred Page with ID
 router.get('/page/textcentred/id/:id', function (req, res) {
     var query = req || {};
+    var meta = storyboard.getMeta();
+    var items = storyboard.getItems();
     if (query.params && query.params.id) {
         var qId = query.params.id;
         var item = items[qId].textcentred;
@@ -258,6 +245,8 @@ router.get('/page/textcentred/id/:id', function (req, res) {
 });
 router.post('/page/textcentred/id/:id', function (req, res) {
     var query = req || {};
+    var meta = storyboard.getMeta();
+    var items = storyboard.getItems();
     if (query.params && query.params.id) {
         var qId = query.params.id;
         var item = items[qId].textcentred;
@@ -288,7 +277,7 @@ router.post('/page/textcentred/id/:id', function (req, res) {
 
     // format and save new item
     items[qId].textcentred = item;
-    writeFile(JSON.stringify({ meta: meta, items: items }));
+    storyboard.writeFile(JSON.stringify({ meta: meta, items: items }));
 
     res.render('editor/editor', {
         meta: meta,
@@ -318,6 +307,8 @@ router.get('/page/imagebackground', function (req, res) {
 // Imagebackground Page with ID
 router.get('/page/imagebackground/id/:id', function (req, res) {
     var query = req || {};
+    var meta = storyboard.getMeta();
+    var items = storyboard.getItems();
     if (query.params && query.params.id) {
         var qId = query.params.id;
         var item = items[qId].imagebackground;
@@ -338,6 +329,8 @@ router.get('/page/imagebackground/id/:id', function (req, res) {
 });
 router.post('/page/imagebackground/id/:id', function (req, res) {
     var query = req || {};
+    var meta = storyboard.getMeta();
+    var items = storyboard.getItems();
     if (query.params && query.params.id) {
         var qId = query.params.id;
         var item = items[qId].imagebackground;
@@ -361,7 +354,7 @@ router.post('/page/imagebackground/id/:id', function (req, res) {
     // save the file
     items[qId].imagebackground = item;
     // TODO: move this to a global file save function with its own button in the frontend
-    writeFile(JSON.stringify({ meta: meta, items: items }));
+    storyboard.writeFile(JSON.stringify({ meta: meta, items: items }));
 
     res.render('editor/editor', {
         meta: meta,
@@ -392,6 +385,8 @@ router.get('/page/slideshowhorizontal', function (req, res) {
 // Slideshow Horizontal Page with ID
 router.get('/page/slideshowhorizontal/id/:id', function (req, res) {
     var query = req || {};
+    var meta = storyboard.getMeta();
+    var items = storyboard.getItems();
     if (query.params && query.params.id) {
         var qId = query.params.id;
         var item = items[qId].slideshowhorizontal;
@@ -412,13 +407,12 @@ router.get('/page/slideshowhorizontal/id/:id', function (req, res) {
 });
 router.post('/page/slideshowhorizontal/id/:id', function (req, res) {
     var query = req || {};
+    var meta = storyboard.getMeta();
+    var items = storyboard.getItems();
     if (query.params && query.params.id) {
         var qId = query.params.id;
         var item = items[qId].slideshowhorizontal;
         var newItem = req.body;
-
-        console.log('ITEM', item);
-        console.log('NEW ITEM', newItem);
     };
 
     // format and save new slideshowhorizontal item
@@ -440,7 +434,7 @@ router.post('/page/slideshowhorizontal/id/:id', function (req, res) {
 
     items[qId].slideshowhorizontal = item;
     // TODO: move this to a global file save function with its own button in the frontend
-    writeFile(JSON.stringify({ meta: meta, items: items }));
+    storyboard.writeFile(JSON.stringify({ meta: meta, items: items }));
 
     res.render('editor/editor', {
         meta: meta,
@@ -469,6 +463,8 @@ router.get('/page/slideshowvertical', function (req, res) {
 // Slideshow Vertical Page with ID
 router.get('/page/slideshowvertical/id/:id', function (req, res) {
     var query = req || {};
+    var meta = storyboard.getMeta();
+    var items = storyboard.getItems();
     if (query.params && query.params.id) {
         var qId = query.params.id;
         var item = items[qId].slideshowvertical;
@@ -487,6 +483,8 @@ router.get('/page/slideshowvertical/id/:id', function (req, res) {
 });
 router.post('/page/slideshowvertical/id/:id', function (req, res) {
     var query = req || {};
+    var meta = storyboard.getMeta();
+    var items = storyboard.getItems();
     if (query.params && query.params.id) {
         var qId = query.params.id;
         var item = items[qId].slideshowvertical;
@@ -509,7 +507,7 @@ router.post('/page/slideshowvertical/id/:id', function (req, res) {
 
     items[qId].slideshowvertical = item;
     // TODO: move this to a global file save function with its own button in the frontend
-    writeFile(JSON.stringify({ meta: meta, items: items }));
+    storyboard.writeFile(JSON.stringify({ meta: meta, items: items }));
 
     res.render('editor/editor', {
         meta: meta,
@@ -540,6 +538,8 @@ router.get('/page/videobackground', function (req, res, next) {
 // Videobackground Page with ID
 router.get('/page/videobackground/id/:id', function (req, res, next) {
     var query = req || {};
+    var meta = storyboard.getMeta();
+    var items = storyboard.getItems();
     if (query.params && query.params.id) {
         var qId = query.params.id;
         var item = items[qId].videobackground;
@@ -561,6 +561,8 @@ router.get('/page/videobackground/id/:id', function (req, res, next) {
 });
 router.post('/page/videobackground/id/:id', function (req, res, next) {
     var query = req || {};
+    var meta = storyboard.getMeta();
+    var items = storyboard.getItems();
     if (query.params && query.params.id) {
         var qId = query.params.id;
         var item = items[qId].videobackground;
@@ -583,7 +585,7 @@ router.post('/page/videobackground/id/:id', function (req, res, next) {
     // save the file
     items[qId].videobackground = item;
     // TODO: move this to a global file save function with its own button in the frontend
-    writeFile(JSON.stringify({ meta: meta, items: items }));
+    storyboard.writeFile(JSON.stringify({ meta: meta, items: items }));
 
     // render main editor window with a success message
     res.render('editor/editor', {
@@ -614,6 +616,8 @@ router.get('/page/videofullpage', function (req, res) {
 // Videofullpage Page with ID
 router.get('/page/videofullpage/id/:id', function (req, res) {
     var query = req || {};
+    var meta = storyboard.getMeta();
+    var items = storyboard.getItems();
     if (query.params && query.params.id) {
         var qId = query.params.id;
         var item = items[qId].videofullpage;
@@ -633,13 +637,12 @@ router.get('/page/videofullpage/id/:id', function (req, res) {
 });
 router.post('/page/videofullpage/id/:id', function (req, res) {
     var query = req || {};
+    var meta = storyboard.getMeta();
+    var items = storyboard.getItems();
     if (query.params && query.params.id) {
         var qId = query.params.id;
         var item = items[qId].videofullpage;
         var newItem = req.body;
-
-        console.log('ITEM', item);
-        console.log('NEW ITEM', newItem);
     };
 
     // format and save new values to videofullpage
@@ -658,7 +661,7 @@ router.post('/page/videofullpage/id/:id', function (req, res) {
     // save the file
     items[qId].videofullpage = item;
     // TODO: move this to a global file save function with its own button in the frontend
-    writeFile(JSON.stringify({ meta: meta, items: items }));
+    storyboard.writeFile(JSON.stringify({ meta: meta, items: items }));
 
     res.render('editor/editor', {
         meta: meta,
@@ -687,6 +690,8 @@ router.get('/page/imageparallax', function (req, res) {
 // Videofullpage Page with ID
 router.get('/page/imageparallax/id/:id', function (req, res) {
     var query = req || {};
+    var meta = storyboard.getMeta();
+    var items = storyboard.getItems();
     if (query.params && query.params.id) {
         var qId = query.params.id;
         var item = items[qId].imageparallax;
@@ -705,6 +710,8 @@ router.get('/page/imageparallax/id/:id', function (req, res) {
 });
 router.post('/page/imageparallax/id/:id', function (req, res) {
     var query = req || {};
+    var meta = storyboard.getMeta();
+    var items = storyboard.getItems();
     if (query.params && query.params.id) {
         var qId = query.params.id;
         var item = items[qId].imageparallax;
@@ -725,7 +732,7 @@ router.post('/page/imageparallax/id/:id', function (req, res) {
 
     items[qId].imageparallax = item;
     // TODO: move this to a global file save function with its own button in the frontend
-    writeFile(JSON.stringify({ meta: meta, items: items }));
+    storyboard.writeFile(JSON.stringify({ meta: meta, items: items }));
 
     res.render('editor/editor', {
         meta: meta,
