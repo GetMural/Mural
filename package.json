@@ -7,11 +7,23 @@
     "start": "node ./bin/www",
     "clean": "rm -rf ./public/dist/index.html",
     "build": "rm -rf ./public/dist/index.html && ./node_modules/gulp/bin/gulp.js index",
-    "build:index": "./node_modules/gulp/bin/gulp.js index"
+    "build:index": "./node_modules/gulp/bin/gulp.js index",
+    "build:client": "webpack",
+    "webpack:server": "webpack-dev-server --content-base public/ --colors --host 0.0.0.0 --port 8081 --inline",
+    "dev": "bnr dev"
+  },
+  "betterScripts": {
+    "dev": {
+      "command": "npm run webpack:server",
+      "env": {
+        "NODE_ENV": "development"
+      }
+    }
   },
   "author": "Pete Haughie",
   "license": "LGPL",
   "dependencies": {
+    "better-npm-run": "^0.1.0",
     "body-parser": "~1.18.2",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
@@ -29,5 +41,17 @@
     "type": "git",
     "url": "git+https://bitbucket.com/Flowdeeps/mural.git"
   },
-  "homepage": "https://bitbucket.com/Flowdeeps/mural#readme"
+  "homepage": "https://bitbucket.com/Flowdeeps/mural#readme",
+  "devDependencies": {
+    "css-loader": "^0.28.7",
+    "extract-text-webpack-plugin": "^3.0.2",
+    "img-loader": "^2.0.0",
+    "node-sass": "^4.7.2",
+    "sass-loader": "^6.0.6",
+    "style-loader": "^0.19.1",
+    "svg-loader": "0.0.2",
+    "watch": "^1.0.2",
+    "webpack": "^3.10.0",
+    "webpack-dev-server": "^2.9.7"
+  }
 }
