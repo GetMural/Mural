@@ -35,6 +35,7 @@
     "jquery": "^3.2.1",
     "json-fmt": "^1.1.2",
     "morgan": "~1.9.0",
+    "scrollstory": "^1.0.0",
     "serve-favicon": "~2.4.5"
   },
   "repository": {

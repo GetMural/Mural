@@ -25,11 +25,6 @@
     {{/meta}}
     <link rel="shortcut icon" href="img/favicon.ico">
     <link rel="apple-touch-icon" href="img/touch-icon.png">
-    <!-- <script src="/js/jquery2.1.3.min.js"></script> -->
-    <!-- <script src="/js/live.js"></script> -->
-    <!-- <script src="/js/all.js"></script> -->
-    <!-- <link href="/css/style.css" rel="stylesheet"> -->
-
   </head>
 
   <body class="longform" name="top">
@@ -44,27 +39,12 @@
         fjs.parentNode.insertBefore(js, fjs);
       }(document, 'script', 'facebook-jssdk'));
     </script>
-
-<!--     <div id="loader-wrapper" >
-      {{#meta}}
-        {{#site_img}}
-          <div id="loader-image" data-src="{{site_img}}"></div>
-        {{/site_img}}
-      {{/meta}}
-      <div class="spinner">
-        <div class="bounce1"></div>
-        <div class="bounce2"></div>
-        <div class="bounce3"></div>
-      </div>
-    </div>
- -->
     <!-- main audio -->
     <audio id="master-audio" preload="none" autoplay="autoplay" loop="loop"></audio>
     <a href="#" class="mute">Mute</a>
 
-    <article>
+    <article id="scrollytelling">
       {{#items}}
-
         {{#imagebackground}}
           <section class="part sticky-image" name="story{{id}}">
             {{#image}}
@@ -244,24 +224,21 @@
         {{/textcentred}}
 
         {{#videobackground}}
-          <section class="st-video part inview" name="story{{id}}">
-            <div class="video-container"
-                 data-loop="loop"
-                 data-preload="none"
-                 {{#image}}
-                   data-poster="{{loading}}"
-                 {{/image}}
-                 >
-               {{#video}}
-                 {{#mp4}}
-                   <source data-src="{{mp4}}" type='video/mp4'>
-                 {{/mp4}}
-                 {{#webm}}
-                   <source data-src="{{webm}}" type='video/webm'>
-                 {{/webm}}
-               {{/video}}
-            </div>
-
+          <section class="st-video part"
+            name="story{{id}}"
+            {{#video}}
+              data-video="true"
+              data-poster="{{loading}}"
+              data-loop="true"
+              data-preload="none"
+              {{#mp4}}
+                data-mp4="{{mp4}}"
+              {{/mp4}}
+              {{#webm}}
+                data-webm="{{webm}}"
+              {{/webm}}
+            {{/video}}>
+            <div class="video-container"></div>
             <div class="content container-fluid">
               <div class="row">
                 <div class="col-sm-12 {{#format}}{{#fullpage}}header-fullpage{{/fullpage}}{{/format}}">
@@ -288,24 +265,21 @@
         {{/videobackground}}
 
         {{#videofullpage}}
-          <section class="st-content-video part inview snap" name="story{{id}}">
-            <div class="video-container"
-                 data-preload="none"
-                 {{#image}}
-                   {{#loading}}
-                     data-poster="{{loading}}"
-                   {{/loading}}
-                 {{/image}}
-                 >
-               {{#video}}
-                 {{#mp4}}
-                   <source data-src="{{mp4}}" type='video/mp4'>
-                 {{/mp4}}
-                 {{#webm}}
-                   <source data-src="{{webm}}" type='video/webm'>
-                 {{/webm}}
-               {{/video}}
-            </div>
+          <section class="st-content-video part snap"
+            name="story{{id}}"
+            {{#video}}
+              data-video="true"
+              data-poster="{{loading}}"
+              data-loop="true"
+              data-preload="none"
+              {{#mp4}}
+                data-mp4="{{mp4}}"
+              {{/mp4}}
+              {{#webm}}
+                data-webm="{{webm}}"
+              {{/webm}}
+            {{/video}}>
+            <div class="video-container"></div>
             <div class="caption">
               <div class="button-container">
                 <button class="pauseplay"></button>
@@ -322,5 +296,6 @@
 
     {{> partials/social}}
 
+    <script type="text/javascript" src="/app.js"></script>
   </body>
 </html>

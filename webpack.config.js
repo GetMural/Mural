@@ -46,3 +46,5 @@ module.exports = {
     extractSass
   ]
 };
+
+// https://github.com/van-nguyen/webpack-cdn-plugin
