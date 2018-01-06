@@ -6,6 +6,23 @@ function insertBackgroundImage($el, src, active=false) {
   $el.find('.bg-image').css(styles);
 }
 
+function removeBackgroundImage($el) {
+  $el.find('.bg-image').css({});
+}
+
+function fixBackgroundImage($el) {
+  const $container = $el.find('.bg-image');
+  $container.css('position', 'fixed');
+}
+
+function unfixBackgroundImage() {
+  const $container = $el.find('.bg-image');
+  $container.css('position', 'absolute');
+}
+
 module.exports = {
-  insertBackgroundImage
+  insertBackgroundImage,
+  removeBackgroundImage,
+  fixBackgroundImage,
+  unfixBackgroundImage
 };
