@@ -46,20 +46,21 @@
     <article id="scrollytelling">
       {{#items}}
         {{#imagebackground}}
-          <section class="part sticky-image" name="story{{id}}">
+          <section class="part sticky-image" name="story{{id}}"
             {{#image}}
-            <div class="bg-image"
-                {{#srcmain}}
-                  data-src="{{srcmain}}"
-                {{/srcmain}}
-                {{#srcmedium}}
-                  data-srcMedium="{{srcmedium}}"
-                {{/srcmedium}}
-                {{#srcphone}}
-                  data-srcPhone="{{srcphone}}"
-                {{/srcphone}}
-                >
-            </div>
+              data-image=true
+              {{#srcmain}}
+                data-src="{{srcmain}}"
+              {{/srcmain}}
+              {{#srcmedium}}
+                data-src-medium="{{srcmedium}}"
+              {{/srcmedium}}
+              {{#srcphone}}
+                data-src-phone="{{srcphone}}"
+              {{/srcphone}}
+            {{/image}}>
+            {{#image}}
+              <div class="bg-image"></div>
             {{/image}}
             <div class="content container-fluid">
               <div class="row">
