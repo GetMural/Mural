@@ -1,7 +1,9 @@
-require('../css/style.css');
+require('../css/style.scss');
 
 $ = require('jquery');
 require('scrollstory/jquery.scrollstory.js');
+
+blueimp = require('blueimp-gallery/js/blueimp-gallery');
 
 const videoMedia = require('./media/video');
 const imageMedia = require('./media/images');
@@ -58,6 +60,16 @@ $story.on('itementerviewport', function(ev, item) {
         src: item.data.webm
       }
     ]);
+  }
+
+  if (item.data.slideshow) {
+    blueimp(
+      item.el.find('.slide-container a').get(),
+      {
+        container: item.el.find('.blueimp-gallery')[0],
+        carousel: true
+      }
+    );
   }
 });
 

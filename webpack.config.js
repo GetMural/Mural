@@ -24,7 +24,13 @@ module.exports = {
           use: [{
             loader: 'css-loader?url=false' // translates CSS into CommonJS
           }, {
-            loader: 'sass-loader' // compiles Sass to CSS
+            loader: 'sass-loader', // compiles Sass to CSS
+            options: {
+              includePaths: [
+                path.resolve(__dirname, 'node_modules'),
+                path.resolve(__dirname, 'client', 'css')
+              ]
+            }
           }],
           // use style-loader in development
           fallback: 'style-loader' // creates style nodes from JS strings

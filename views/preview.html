@@ -120,40 +120,20 @@
         {{/imageparallax}}
 
         {{#slideshowhorizontal}}
-          <script>
-            if(galleryLinksContainer===undefined){
-              var galleryLinksContainer = [];
-            }
-          </script>
-
-          <section class="part slideshow-horizontal snap" name="story{{id}}">
-            <div class="blueimp-gallery blueimp-gallery-carousel blueimp-gallery-controls">
+          <section class="part slideshow-horizontal snap" name="story{{id}}" data-slideshow=true>
+            <div class="blueimp-gallery blueimp-gallery-carousel">
               <div class="slides"></div>
               <a class="prev">&lsaquo;</a>
               <a class="next">&rsaquo;</a>
               <div class="slide-caption"></div>
             </div>
+
+            <div class='slide-container'>
+              {{#images}}
+                <a href='{{src}}' title='{{title}}' type='{{type}}' data-credits='{{credits}}'>{{title}}</a>
+              {{/images}}
+            </div>
           </section>
-
-          <script>
-            var galleryLinks = [];
-            var i = 0;
-
-            {{#images}}
-            galleryLinks.push({
-              title: '{{title}}',
-              photographer: '{{credits}}',
-              href: '{{src}}',
-              original_id: i,
-              type: '{{type}}'
-            });
-            i++;
-            console.log('{{{src}}}');
-            {{/images}}
-
-            galleryLinksContainer.push(galleryLinks);
-
-          </script>
         {{/slideshowhorizontal}}
 
         {{#slideshowvertical}}

@@ -24,6 +24,7 @@
   "license": "LGPL",
   "dependencies": {
     "better-npm-run": "^0.1.0",
+    "blueimp-gallery": "^2.29.0",
     "body-parser": "~1.18.2",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
