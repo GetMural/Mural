@@ -67,7 +67,17 @@ $story.on('itementerviewport', function(ev, item) {
       item.el.find('.slide-container a').get(),
       {
         container: item.el.find('.blueimp-gallery')[0],
-        carousel: true
+        carousel: true,
+        titleElement: '.slide-caption',
+        startSlideshow: false,
+        onslide: function (index, slide) {
+          const text = this.list[index].getAttribute('data-credits');
+          const node = this.container.find('.credits');
+          node.empty();
+          if (text) {
+            node[0].appendChild(document.createTextNode(text));
+          }
+        }
       }
     );
   }
