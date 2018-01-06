@@ -88,30 +88,32 @@
         {{/imagebackground}}
 
         {{#imageparallax}}
-          <section class="part parallax" name="story{{id}}">
+          <section class="part parallax" name="story{{id}}"
             {{#image}}
-            <div class="bg-image"
-                {{#srcmain}}
-                  data-src="{{srcmain}}"
-                {{/srcmain}}
-                {{#srcmedium}}
-                  data-srcMedium="{{srcmedium}}"
-                {{/srcmedium}}
-                {{#srcphone}}
-                  data-srcPhone="{{srcphone}}"
-                {{/srcphone}}
-                >
-            </div>
+              data-image=true
+              {{#srcmain}}
+                data-src="{{srcmain}}"
+              {{/srcmain}}
+              {{#srcmedium}}
+                data-src-medium="{{srcmedium}}"
+              {{/srcmedium}}
+              {{#srcphone}}
+                data-src-phone="{{srcphone}}"
+              {{/srcphone}}
+            {{/image}}>
+
+            {{#image}}
+              <div class="bg-image"></div>
             {{/image}}
 
             {{#title}}
-            <div class="content container">
-              <div class="row">
-                <div class="col-sm-12 header-fullpage">
-                  <h1>{{title}}</h1>
+              <div class="content container">
+                <div class="row">
+                  <div class="col-sm-12 header-fullpage">
+                    <h1>{{title}}</h1>
+                  </div>
                 </div>
               </div>
-            </div>
             {{/title}}
 
           </section>

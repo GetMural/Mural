@@ -2,6 +2,7 @@ function insertBackgroundVideo ($el, srcs, active=true) {
   const $container = $el.find('.video-container');
   const video = $container.find('video')[0];
   video.loop = true;
+  video.autoplay = true;
 
   srcs.forEach((src) => {
     const source = document.createElement('source'); 
@@ -10,15 +11,16 @@ function insertBackgroundVideo ($el, srcs, active=true) {
     video.appendChild(source);
   });
 
-  $el.find('.video-container').append(video);
-  video.play();
+  video.load();
 }
 
 // remove video to prevent more downloading if it won't be watched.
 function removeBackgroundVideo ($el) {
-  const video = $el.find('.video-container video')[0];
+  const $container = $el.find('.video-container');
+  $container.css('position', '');
+  const video = $container.find('video')[0];
   video.innerHTML = '';
-  video.pause();
+  video.load();
 }
 
 function fixBackgroundVideo ($el) {

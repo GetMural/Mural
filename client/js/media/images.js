@@ -1,13 +1,13 @@
 function insertBackgroundImage($el, src, active=false) {
   const styles = {
     'background-image': `url(${src})`,
-    position: active ? 'fixed' : 'absolute'
+    position: active ? 'fixed' : ''
   };
   $el.find('.bg-image').css(styles);
 }
 
 function removeBackgroundImage($el) {
-  $el.find('.bg-image').css({});
+  $el.find('.bg-image').removeAttr('style');
 }
 
 function fixBackgroundImage($el) {
@@ -17,7 +17,7 @@ function fixBackgroundImage($el) {
 
 function unfixBackgroundImage() {
   const $container = $el.find('.bg-image');
-  $container.css('position', 'absolute');
+  $container.css('position', '');
 }
 
 module.exports = {
