@@ -28,9 +28,9 @@ function fixBackgroundVideo ($el) {
   $container.css('position', 'fixed');
 }
 
-function unfixBackgroundVideo () {
+function unfixBackgroundVideo ($el) {
   const $container = $el.find('.video-container');
-  $container.css('position', 'absolute');
+  $container.css('position', '');
 }
 
 module.exports = {

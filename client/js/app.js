@@ -30,6 +30,14 @@ $story.on('itemfocus', function(ev, item) {
 $story.on('itemblur', function(ev, item) {
   console.log('itemblur');
   console.log(item);
+
+  if (item.data.image) {
+    imageMedia.unfixBackgroundImage(item.el);
+  }
+
+  if (item.data.video) {
+    videoMedia.unfixBackgroundVideo(item.el);
+  }
 });
 
 $story.on('itementerviewport', function(ev, item) {

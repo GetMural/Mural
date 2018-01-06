@@ -15,7 +15,7 @@ function fixBackgroundImage($el) {
   $container.css('position', 'fixed');
 }
 
-function unfixBackgroundImage() {
+function unfixBackgroundImage($el) {
   const $container = $el.find('.bg-image');
   $container.css('position', '');
 }
