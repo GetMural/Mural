@@ -25,6 +25,7 @@
     {{/meta}}
     <link rel="shortcut icon" href="img/favicon.ico">
     <link rel="apple-touch-icon" href="img/touch-icon.png">
+    <link rel="stylesheet" type="text/css" href="/app.css">
   </head>
 
   <body class="longform" name="top">
@@ -90,7 +91,6 @@
         {{#imageparallax}}
           <section class="part parallax" name="story{{id}}"
             {{#image}}
-              data-image=true
               {{#srcmain}}
                 data-src="{{srcmain}}"
               {{/srcmain}}
@@ -138,7 +138,7 @@
         {{/slideshowhorizontal}}
 
         {{#slideshowvertical}}
-          <section class="part slideshow" name="story{{id}}">
+          <section class="part slideshow" name="story{{id}}" data-slides=true>
             {{#images}}
               <div class="bg-image"
                   {{#srcmain}}

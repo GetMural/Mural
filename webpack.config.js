@@ -4,7 +4,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const extractSass = new ExtractTextPlugin({
   //filename: "[name].[contenthash].css",
   filename: 'app.css',
-  disable: process.env.NODE_ENV === 'development'
+  //disable: process.env.NODE_ENV === 'development'
 });
 
 module.exports = {
@@ -20,21 +20,31 @@ module.exports = {
     rules: [
       {
         test: /\.scss|\.css$/,
-        use: extractSass.extract({
-          use: [{
-            loader: 'css-loader?url=false' // translates CSS into CommonJS
-          }, {
-            loader: 'sass-loader', // compiles Sass to CSS
-            options: {
-              includePaths: [
-                path.resolve(__dirname, 'node_modules'),
-                path.resolve(__dirname, 'client', 'css')
-              ]
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: [
+            {
+              loader: 'css-loader',
+              options: {
+                // If you are having trouble with urls not resolving add this setting.
+                // See https://github.com/webpack-contrib/css-loader#url
+                url: false,
+                minimize: true,
+                sourceMap: true
+              }
+            }, 
+            {
+              loader: 'sass-loader',
+              options: {
+                sourceMap: true,
+                includePaths: [
+                  path.resolve(__dirname, 'node_modules'),
+                  path.resolve(__dirname, 'client', 'css')
+                ]
+              }
             }
-          }],
-          // use style-loader in development
-          fallback: 'style-loader' // creates style nodes from JS strings
-        }),
+          ]
+        })
       },
       {
         test: /\.svg$/,

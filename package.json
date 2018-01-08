@@ -37,7 +37,8 @@
     "json-fmt": "^1.1.2",
     "morgan": "~1.9.0",
     "scrollstory": "^1.0.0",
-    "serve-favicon": "~2.4.5"
+    "serve-favicon": "~2.4.5",
+    "stickybits": "^2.0.13"
   },
   "repository": {
     "type": "git",

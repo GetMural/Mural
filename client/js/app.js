@@ -1,15 +1,15 @@
+require('blueimp-gallery/css/blueimp-gallery.css');
 require('../css/style.scss');
 
 $ = require('jquery');
 require('scrollstory/jquery.scrollstory.js');
 
-blueimp = require('blueimp-gallery/js/blueimp-gallery');
-
+const stickybits = require('stickybits/src/jquery.stickybits');
+const blueimp = require('blueimp-gallery/js/blueimp-gallery');
 const videoMedia = require('./media/video');
 const imageMedia = require('./media/images');
 
 const $story = $('#scrollytelling');
-
 const scrollStory = $story.scrollStory({
   contentSelector: '.part',
   debug: true
@@ -80,6 +80,15 @@ $story.on('itementerviewport', function(ev, item) {
         }
       }
     );
+  }
+
+  if (item.data.slides) {
+    item.el.find('.bg-image')
+      .each(function(i) {
+        const $el = $(this);
+        $el.css('background-image', `url(${$el.data('src')})`);
+      })
+      .stickybits();
   }
 });
 
