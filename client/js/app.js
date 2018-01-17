@@ -4,6 +4,33 @@ require('../css/style.scss');
 $ = require('jquery');
 require('scrollstory/jquery.scrollstory.js');
 
+$.fn.moveIt = function(){
+  var $window = $(window);
+  var instances = [];
+  
+  $(this).each(function(){
+    instances.push(new moveItItem($(this)));
+  });
+  
+  window.addEventListener('scroll', function(){
+    const scrollTop = $window.scrollTop();
+    instances.forEach(function(inst){
+      inst.update(scrollTop);
+    });
+  }, {passive: true});
+}
+
+var moveItItem = function(el){
+  this.el = $(el);
+  this.container = this.el.parent('.part');
+  this.speed = parseInt(this.el.attr('data-scroll-speed'));
+};
+
+moveItItem.prototype.update = function(scrollTop){
+  const top = scrollTop - this.container.offset().top;
+  this.el.css('transform', 'translateY(' + -(top / this.speed) + 'px)');
+};
+
 const stickybits = require('stickybits/src/jquery.stickybits');
 const blueimp = require('blueimp-gallery/js/blueimp-gallery');
 const videoMedia = require('./media/video');
@@ -90,6 +117,10 @@ $story.on('itementerviewport', function(ev, item) {
       })
       .stickybits();
   }
+
+  if (item.data.parallax) {
+    item.el.find('.bg-image').css('background-image', `url(${item.data.src})`);
+  }
 });
 
 $story.on('itemexitviewport', function(ev, item) {
@@ -121,3 +152,6 @@ if (landing.data.video) {
 if (landing.data.image) {
   imageMedia.insertBackgroundImage(landing.el, landing.data.src, true);
 }
+
+$('[data-scroll-speed]').moveIt();
+

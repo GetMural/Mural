@@ -89,7 +89,7 @@
         {{/imagebackground}}
 
         {{#imageparallax}}
-          <section class="part parallax" name="story{{id}}"
+          <section class="part parallax" name="story{{id}}" data-parallax=true
             {{#image}}
               {{#srcmain}}
                 data-src="{{srcmain}}"
@@ -103,11 +103,11 @@
             {{/image}}>
 
             {{#image}}
-              <div class="bg-image"></div>
+              <div class="bg-image" data-scroll-speed="-2"></div>
             {{/image}}
 
             {{#title}}
-              <div class="content container">
+              <div class="content container" data-scroll-speed="-0.8">
                 <div class="row">
                   <div class="col-sm-12 header-fullpage">
                     <h1>{{title}}</h1>
