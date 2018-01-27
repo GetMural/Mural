@@ -35,14 +35,13 @@ const stickybits = require('stickybits/src/jquery.stickybits');
 const blueimp = require('blueimp-gallery/js/blueimp-gallery');
 const videoMedia = require('./media/video');
 const imageMedia = require('./media/images');
+const isMobile = window.isMobile;
 
 const WINDOW_WIDTH = $(window).width();
 let scrKey;
-let isSmallScreen = true;
 
 if (WINDOW_WIDTH > 1024) {
   scrKey = 'src';
-  isSmallScreen = false;
 } else if (WINDOW_WIDTH > 600) {
   scrKey = 'srcMedium';
 } else {
@@ -66,9 +65,9 @@ function loadItem (item) {
 
     if (item.data.isFullpage) {
       muted = (isSoundEnabled === false) || (item.data.muted === true);
-      autoplay = !isSmallScreen;
+      autoplay = !isMobile.any;
     } else {
-      muted = (isSoundEnabled === false) || (isSmallScreen === true) || (item.data.muted === true);
+      muted = (isSoundEnabled === false) || (isMobile.any === true) || (item.data.muted === true);
       autoplay = item.data.autoplay;
     }
 
@@ -199,7 +198,7 @@ $('.mute').click(function () {
       if (item.data.isFullpage) {
         muted = (isSoundEnabled === false) || (item.data.muted === true);
       } else {
-        muted = (isSoundEnabled === false) || (isSmallScreen === true) || (item.data.muted === true);
+        muted = (isSoundEnabled === false) || (isMobile.any === true) || (item.data.muted === true);
       }
 
       videoMedia.setMuted(item.index, muted);

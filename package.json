@@ -33,6 +33,7 @@
     "gulp-hogan": "^2.0.0",
     "gulp-rename": "^1.2.2",
     "hogan-express": "^0.5.2",
+    "ismobilejs": "^0.4.1",
     "jquery": "^3.2.1",
     "json-fmt": "^1.1.2",
     "morgan": "~1.9.0",
