@@ -38,9 +38,11 @@ const imageMedia = require('./media/images');
 
 const WINDOW_WIDTH = $(window).width();
 let scrKey;
+let isSmallScreen = true;
 
 if (WINDOW_WIDTH > 1024) {
   scrKey = 'src';
+  isSmallScreen = false;
 } else if (WINDOW_WIDTH > 600) {
   scrKey = 'srcMedium';
 } else {
@@ -59,6 +61,17 @@ let isSoundEnabled = true;
 function loadItem (item) {
   // have to load videos as we remove the src and reload to prevent downloading unwatched media.
   if (item.data.video) {
+    let muted;
+    let autoplay;
+
+    if (item.data.isFullpage) {
+      muted = (isSoundEnabled === false) || (item.data.muted === true);
+      autoplay = !isSmallScreen;
+    } else {
+      muted = (isSoundEnabled === false) || (isSmallScreen === true) || (item.data.muted === true);
+      autoplay = item.data.autoplay;
+    }
+
     videoMedia.insertBackgroundVideo(
       item.el,
       item.index,
@@ -74,8 +87,8 @@ function loadItem (item) {
       ],
       {
         poster: item.data.poster,
-        autoplay: item.data.autoplay,
-        muted: (isSoundEnabled === false) || (item.data.muted === true),
+        autoplay: autoplay,
+        muted: muted,
         loop: item.data.loop
       }
     );
@@ -181,7 +194,14 @@ $('.mute').click(function () {
 
   scrollStory.getItemsInViewport().forEach(function (item) {
     if (item.data.video) {
-      const muted = (isSoundEnabled === false) || (item.data.muted === true);
+      let muted;
+
+      if (item.data.isFullpage) {
+        muted = (isSoundEnabled === false) || (item.data.muted === true);
+      } else {
+        muted = (isSoundEnabled === false) || (isSmallScreen === true) || (item.data.muted === true);
+      }
+
       videoMedia.setMuted(item.index, muted);
     }
   });
