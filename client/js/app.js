@@ -44,12 +44,10 @@ const scrollStory = $story.scrollStory({
 const LOADED_STORY_SECTIONS = [];
 let isSoundEnabled = true;
 
-const landing = scrollStory.getActiveItem();
 
 function loadItem (item) {
   // have to load videos as we remove the src and reload to prevent downloading unwatched media.
   if (item.data.video) {
-    const previous = LOADED_STORY_SECTIONS[item.index];
     videoMedia.insertBackgroundVideo(
       item.el,
       item.index,
@@ -67,8 +65,7 @@ function loadItem (item) {
         poster: item.data.poster,
         autoplay: item.data.autoplay,
         muted: (isSoundEnabled === false) || (item.data.muted === true),
-        loop: item.data.loop,
-        currentTime: (previous && previous.currentTime) || 0
+        loop: item.data.loop
       }
     );
   }
@@ -160,12 +157,12 @@ $story.on('itemexitviewport', function(ev, item) {
 
   if (item.data.video) {
     const data = videoMedia.removeBackgroundVideo(item.el, item.index);
-
-    LOADED_STORY_SECTIONS[item.index].currentTime = data.currentTime;
   }
 });
 
-loadItem(landing);
+scrollStory.getItemsInViewport().forEach(function (item) {
+  loadItem(item);
+});
 
 $('[data-scroll-speed]').moveIt();
 
