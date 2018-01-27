@@ -36,6 +36,17 @@ const blueimp = require('blueimp-gallery/js/blueimp-gallery');
 const videoMedia = require('./media/video');
 const imageMedia = require('./media/images');
 
+const WINDOW_WIDTH = $(window).width();
+let scrKey;
+
+if (WINDOW_WIDTH > 1024) {
+  scrKey = 'src';
+} else if (WINDOW_WIDTH > 600) {
+  scrKey = 'srcMedium';
+} else {
+  scrKey = 'srcPhone';
+}
+
 const $story = $('#scrollytelling');
 const scrollStory = $story.scrollStory({
   contentSelector: '.part'
@@ -75,7 +86,7 @@ function loadItem (item) {
   }
 
   if (item.data.image) {
-    imageMedia.insertBackgroundImage(item.el, item.data.src, false);
+    imageMedia.insertBackgroundImage(item.el, item.data[scrKey], false);
   }
 
   if (item.data.slideshow) {
@@ -102,13 +113,15 @@ function loadItem (item) {
     item.el.find('.bg-image')
       .each(function(i) {
         const $el = $(this);
-        $el.css('background-image', `url(${$el.data('src')})`);
+        const src = $el.data(scrKey);
+        $el.css('background-image', `url(${src})`);
       })
       .stickybits();
   }
 
   if (item.data.parallax) {
-    item.el.find('.bg-image').css('background-image', `url(${item.data.src})`);
+    const src = item.data[scrKey];
+    item.el.find('.bg-image').css('background-image', `url(${src})`);
   }
 
   LOADED_STORY_SECTIONS[item.index] = {
@@ -120,7 +133,7 @@ $story.on('itemfocus', function(ev, item) {
   console.log('itemfocus');
   console.log(item);
   if (item.data.image) {
-    imageMedia.fixBackgroundImage(item.el, item.data.src, true);
+    imageMedia.fixBackgroundImage(item.el, item.data[scrKey], true);
   }
 
   if (item.data.video) {
