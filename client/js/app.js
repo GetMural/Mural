@@ -8,8 +8,8 @@ $.fn.moveIt = function(){
   var $window = $(window);
   var instances = [];
   
-  $(this).each(function(){
-    instances.push(new moveItItem($(this)));
+  $(this).each(function() {
+    instances.push(new MoveItItem($(this)));
   });
   
   window.addEventListener('scroll', function(){
@@ -17,16 +17,16 @@ $.fn.moveIt = function(){
     instances.forEach(function(inst){
       inst.update(scrollTop);
     });
-  }, {passive: true});
+  }, {passive: true}); // TODO check compatibility
 }
 
-var moveItItem = function(el){
+const MoveItItem = function(el){
   this.el = $(el);
   this.container = this.el.parent('.part');
   this.speed = parseInt(this.el.attr('data-scroll-speed'));
 };
 
-moveItItem.prototype.update = function(scrollTop){
+MoveItItem.prototype.update = function(scrollTop){
   const top = scrollTop - this.container.offset().top;
   this.el.css('transform', 'translateY(' + -(top / this.speed) + 'px)');
 };
@@ -38,55 +38,47 @@ const imageMedia = require('./media/images');
 
 const $story = $('#scrollytelling');
 const scrollStory = $story.scrollStory({
-  contentSelector: '.part',
-  debug: true
+  contentSelector: '.part'
 }).data('plugin_scrollStory');
+
+const LOADED_STORY_SECTIONS = [];
+let isSoundEnabled = true;
 
 const landing = scrollStory.getActiveItem();
 
-$story.on('itemfocus', function(ev, item) {
-  console.log('itemfocus');
-  console.log(item);
-  if (item.data.image) {
-    imageMedia.fixBackgroundImage(item.el, item.data.src, true);
-  }
-
+function loadItem (item) {
+  // have to load videos as we remove the src and reload to prevent downloading unwatched media.
   if (item.data.video) {
-    videoMedia.fixBackgroundVideo(item.el);
+    const previous = LOADED_STORY_SECTIONS[item.index];
+    videoMedia.insertBackgroundVideo(
+      item.el,
+      item.index,
+      [
+        {
+          type: 'video/mp4',
+          src: item.data.mp4
+        },
+        {
+          type: 'video/webm',
+          src: item.data.webm
+        }
+      ],
+      {
+        poster: item.data.poster,
+        autoplay: item.data.autoplay,
+        muted: (isSoundEnabled === false) || (item.data.muted === true),
+        loop: item.data.loop,
+        currentTime: (previous && previous.currentTime) || 0
+      }
+    );
   }
-});
 
-$story.on('itemblur', function(ev, item) {
-  console.log('itemblur');
-  console.log(item);
-
-  if (item.data.image) {
-    imageMedia.unfixBackgroundImage(item.el);
+  if (LOADED_STORY_SECTIONS[item.index] !== undefined) {
+    return;
   }
 
-  if (item.data.video) {
-    videoMedia.unfixBackgroundVideo(item.el);
-  }
-});
-
-$story.on('itementerviewport', function(ev, item) {
-  console.log('itementerviewport');
-  console.log(item);
   if (item.data.image) {
     imageMedia.insertBackgroundImage(item.el, item.data.src, false);
-  }
-
-  if (item.data.video) {
-    videoMedia.insertBackgroundVideo(item.el, [
-      {
-        type: 'video/mp4',
-        src: item.data.mp4
-      },
-      {
-        type: 'video/webm',
-        src: item.data.webm
-      }
-    ]);
   }
 
   if (item.data.slideshow) {
@@ -121,6 +113,41 @@ $story.on('itementerviewport', function(ev, item) {
   if (item.data.parallax) {
     item.el.find('.bg-image').css('background-image', `url(${item.data.src})`);
   }
+
+  LOADED_STORY_SECTIONS[item.index] = {
+    loaded: true
+  };
+}
+
+$story.on('itemfocus', function(ev, item) {
+  console.log('itemfocus');
+  console.log(item);
+  if (item.data.image) {
+    imageMedia.fixBackgroundImage(item.el, item.data.src, true);
+  }
+
+  if (item.data.video) {
+    videoMedia.fixBackgroundVideo(item.el);
+  }
+});
+
+$story.on('itemblur', function(ev, item) {
+  console.log('itemblur');
+  console.log(item);
+
+  if (item.data.image) {
+    imageMedia.unfixBackgroundImage(item.el);
+  }
+
+  if (item.data.video) {
+    videoMedia.unfixBackgroundVideo(item.el);
+  }
+});
+
+$story.on('itementerviewport', function(ev, item) {
+  console.log('itementerviewport');
+  console.log(item);
+  loadItem(item);
 });
 
 $story.on('itemexitviewport', function(ev, item) {
@@ -128,30 +155,34 @@ $story.on('itemexitviewport', function(ev, item) {
   console.log(item);
 
   if (item.data.image) {
-    imageMedia.removeBackgroundImage(item.el);
+    imageMedia.unfixBackgroundImage(item.el);
   }
 
   if (item.data.video) {
-    videoMedia.removeBackgroundVideo(item.el);
+    const data = videoMedia.removeBackgroundVideo(item.el, item.index);
+
+    LOADED_STORY_SECTIONS[item.index].currentTime = data.currentTime;
   }
 });
 
-if (landing.data.video) {
-  videoMedia.insertBackgroundVideo(landing.el, [
-    {
-      type: 'video/mp4',
-      src: landing.data.mp4
-    },
-    {
-      type: 'video/webm',
-      src: landing.data.webm
-    }
-  ]);
-}
-
-if (landing.data.image) {
-  imageMedia.insertBackgroundImage(landing.el, landing.data.src, true);
-}
+loadItem(landing);
 
 $('[data-scroll-speed]').moveIt();
 
+$('.mute').click(function () {
+  $this = $(this);
+  if ($this.hasClass('muted')) {
+    isSoundEnabled = true;
+    $this.removeClass('muted');
+  } else {
+    isSoundEnabled = false;
+    $this.addClass('muted');
+  }
+
+  scrollStory.getItemsInViewport().forEach(function (item) {
+    if (item.data.video) {
+      const muted = (isSoundEnabled === false) || (item.data.muted === true);
+      videoMedia.setMuted(item.index, muted);
+    }
+  });
+});

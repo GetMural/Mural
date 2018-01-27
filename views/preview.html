@@ -42,7 +42,7 @@
     </script>
     <!-- main audio -->
     <audio id="master-audio" preload="none" autoplay="autoplay" loop="loop"></audio>
-    <a href="#" class="mute">Mute</a>
+    <span class="mute">Mute</span>
 
     <article id="scrollytelling">
       {{#items}}
@@ -214,7 +214,8 @@
               data-video="true"
               data-poster="{{loading}}"
               data-loop="true"
-              data-preload="none"
+              data-autoplay="true"
+              data-muted="false"
               {{#mp4}}
                 data-mp4="{{mp4}}"
               {{/mp4}}
@@ -255,7 +256,9 @@
               data-video="true"
               data-poster="{{loading}}"
               data-loop="true"
-              data-preload="none"
+              data-autoplay="true"
+              data-muted="false"
+              data-is-fullpage="true"
               {{#mp4}}
                 data-mp4="{{mp4}}"
               {{/mp4}}
@@ -266,6 +269,7 @@
             <div class="video-container"><video></video></div>
             <div class="caption">
               <div class="button-container play"></div>
+              <div class="button-container pause"></div>
               <div class="text">
                 <h3>{{title}}</h3>
                 {{{text}}}
