@@ -25,11 +25,11 @@
     {{/meta}}
     <link rel="shortcut icon" href="img/favicon.ico">
     <link rel="apple-touch-icon" href="img/touch-icon.png">
-    <script src="/js/jquery2.1.3.min.js"></script>
-    <!-- <script src="/js/live.js"></script> -->
-    <script src="/js/all.js"></script>
-    <link href="/css/style.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/app.css">
 
+    <script type="text/javascript">
+      !function(a){var b=/iPhone/i,c=/iPod/i,d=/iPad/i,e=/(?=.*\bAndroid\b)(?=.*\bMobile\b)/i,f=/Android/i,g=/(?=.*\bAndroid\b)(?=.*\bSD4930UR\b)/i,h=/(?=.*\bAndroid\b)(?=.*\b(?:KFOT|KFTT|KFJWI|KFJWA|KFSOWI|KFTHWI|KFTHWA|KFAPWI|KFAPWA|KFARWI|KFASWI|KFSAWI|KFSAWA)\b)/i,i=/Windows Phone/i,j=/(?=.*\bWindows\b)(?=.*\bARM\b)/i,k=/BlackBerry/i,l=/BB10/i,m=/Opera Mini/i,n=/(CriOS|Chrome)(?=.*\bMobile\b)/i,o=/(?=.*\bFirefox\b)(?=.*\bMobile\b)/i,p=new RegExp("(?:Nexus 7|BNTV250|Kindle Fire|Silk|GT-P1000)","i"),q=function(a,b){return a.test(b)},r=function(a){var r=a||navigator.userAgent,s=r.split("[FBAN");if("undefined"!=typeof s[1]&&(r=s[0]),s=r.split("Twitter"),"undefined"!=typeof s[1]&&(r=s[0]),this.apple={phone:q(b,r),ipod:q(c,r),tablet:!q(b,r)&&q(d,r),device:q(b,r)||q(c,r)||q(d,r)},this.amazon={phone:q(g,r),tablet:!q(g,r)&&q(h,r),device:q(g,r)||q(h,r)},this.android={phone:q(g,r)||q(e,r),tablet:!q(g,r)&&!q(e,r)&&(q(h,r)||q(f,r)),device:q(g,r)||q(h,r)||q(e,r)||q(f,r)},this.windows={phone:q(i,r),tablet:q(j,r),device:q(i,r)||q(j,r)},this.other={blackberry:q(k,r),blackberry10:q(l,r),opera:q(m,r),firefox:q(o,r),chrome:q(n,r),device:q(k,r)||q(l,r)||q(m,r)||q(o,r)||q(n,r)},this.seven_inch=q(p,r),this.any=this.apple.device||this.android.device||this.windows.device||this.other.device||this.seven_inch,this.phone=this.apple.phone||this.android.phone||this.windows.phone,this.tablet=this.apple.tablet||this.android.tablet||this.windows.tablet,"undefined"==typeof window)return this},s=function(){var a=new r;return a.Class=r,a};"undefined"!=typeof module&&module.exports&&"undefined"==typeof window?module.exports=r:"undefined"!=typeof module&&module.exports&&"undefined"!=typeof window?module.exports=s():"function"==typeof define&&define.amd?define("isMobile",[],a.isMobile=s()):a.isMobile=s()}(this);
+    </script>
   </head>
 
   <body class="longform" name="top">
@@ -44,42 +44,28 @@
         fjs.parentNode.insertBefore(js, fjs);
       }(document, 'script', 'facebook-jssdk'));
     </script>
-
-    <div id="loader-wrapper" >
-      {{#meta}}
-        {{#site_img}}
-          <div id="loader-image" data-src="{{site_img}}"></div>
-        {{/site_img}}
-      {{/meta}}
-      <div class="spinner">
-        <div class="bounce1"></div>
-        <div class="bounce2"></div>
-        <div class="bounce3"></div>
-      </div>
-    </div>
-
     <!-- main audio -->
     <audio id="master-audio" preload="none" autoplay="autoplay" loop="loop"></audio>
-    <a href="#" class="mute">Mute</a>
+    <span class="mute">Mute</span>
 
-    <article>
+    <article id="scrollytelling">
       {{#items}}
-
         {{#imagebackground}}
-          <section class="part sticky-image" name="story{{id}}">
+          <section class="part sticky-image" name="story{{id}}"
             {{#image}}
-            <div class="bg-image"
-                {{#srcmain}}
-                  data-src="{{srcmain}}"
-                {{/srcmain}}
-                {{#srcmedium}}
-                  data-srcMedium="{{srcmedium}}"
-                {{/srcmedium}}
-                {{#srcphone}}
-                  data-srcPhone="{{srcphone}}"
-                {{/srcphone}}
-                >
-            </div>
+              data-image=true
+              {{#srcmain}}
+                data-src="{{srcmain}}"
+              {{/srcmain}}
+              {{#srcmedium}}
+                data-src-medium="{{srcmedium}}"
+              {{/srcmedium}}
+              {{#srcphone}}
+                data-src-phone="{{srcphone}}"
+              {{/srcphone}}
+            {{/image}}>
+            {{#image}}
+              <div class="bg-image"></div>
             {{/image}}
             <div class="content container-fluid">
               <div class="row">
@@ -107,84 +93,66 @@
         {{/imagebackground}}
 
         {{#imageparallax}}
-          <section class="part parallax" name="story{{id}}">
+          <section class="part parallax" name="story{{id}}" data-parallax=true
             {{#image}}
-            <div class="bg-image"
-                {{#srcmain}}
-                  data-src="{{srcmain}}"
-                {{/srcmain}}
-                {{#srcmedium}}
-                  data-srcMedium="{{srcmedium}}"
-                {{/srcmedium}}
-                {{#srcphone}}
-                  data-srcPhone="{{srcphone}}"
-                {{/srcphone}}
-                >
-            </div>
+              {{#srcmain}}
+                data-src="{{srcmain}}"
+              {{/srcmain}}
+              {{#srcmedium}}
+                data-src-medium="{{srcmedium}}"
+              {{/srcmedium}}
+              {{#srcphone}}
+                data-src-phone="{{srcphone}}"
+              {{/srcphone}}
+            {{/image}}>
+
+            {{#image}}
+              <div class="bg-image" data-scroll-speed="-2"></div>
             {{/image}}
 
             {{#title}}
-            <div class="content container">
-              <div class="row">
-                <div class="col-sm-12 header-fullpage">
-                  <h1>{{title}}</h1>
+              <div class="content container" data-scroll-speed="-0.8">
+                <div class="row">
+                  <div class="col-sm-12 header-fullpage">
+                    <h1>{{title}}</h1>
+                  </div>
                 </div>
               </div>
-            </div>
             {{/title}}
 
           </section>
         {{/imageparallax}}
 
         {{#slideshowhorizontal}}
-          <script>
-            if(galleryLinksContainer===undefined){
-              var galleryLinksContainer = [];
-            }
-          </script>
-
-          <section class="part slideshow-horizontal snap" name="story{{id}}">
+          <section class="part slideshow-horizontal snap" name="story{{id}}" data-slideshow=true>
             <div class="blueimp-gallery blueimp-gallery-carousel blueimp-gallery-controls">
               <div class="slides"></div>
               <a class="prev">&lsaquo;</a>
               <a class="next">&rsaquo;</a>
               <div class="slide-caption"></div>
+              <div class="credits"></div>
+            </div>
+
+            <div class='slide-container'>
+              {{#images}}
+                <a href='{{src}}' title='{{title}}' type='{{type}}' data-credits='{{credits}}'>{{title}}</a>
+              {{/images}}
             </div>
           </section>
-
-          <script>
-            var galleryLinks = [];
-            var i = 0;
-
-            {{#images}}
-            galleryLinks.push({
-              title: '{{title}}',
-              photographer: '{{credits}}',
-              href: '{{src}}',
-              original_id: i,
-              type: '{{type}}'
-            });
-            i++;
-            console.log('{{{src}}}');
-            {{/images}}
-
-            galleryLinksContainer.push(galleryLinks);
-
-          </script>
         {{/slideshowhorizontal}}
 
         {{#slideshowvertical}}
-          <section class="part slideshow" name="story{{id}}">
+          <section class="part slideshow" name="story{{id}}" data-slides=true>
             {{#images}}
               <div class="bg-image"
                   {{#srcmain}}
                      data-src='{{srcmain}}'
                    {{/srcmain}}
                    {{#srcmedium}}
-                     data-srcMedium='{{srcmedium}}'
+                     data-src-medium='{{srcmedium}}'
                    {{/srcmedium}}
                    {{#srcphone}}
-                     data-srcPhone='{{srcphone}}'
+                     data-src-phone='{{srcphone}}'
                    {{/srcphone}}
                    >
                 <div class="caption">
@@ -244,24 +212,22 @@
         {{/textcentred}}
 
         {{#videobackground}}
-          <section class="st-video part inview" name="story{{id}}">
-            <div class="video-container"
-                 data-loop="loop"
-                 data-preload="none"
-                 {{#image}}
-                   data-poster="{{loading}}"
-                 {{/image}}
-                 >
-               {{#video}}
-                 {{#mp4}}
-                   <source data-src="{{mp4}}" type='video/mp4'>
-                 {{/mp4}}
-                 {{#webm}}
-                   <source data-src="{{webm}}" type='video/webm'>
-                 {{/webm}}
-               {{/video}}
-            </div>
-
+          <section class="st-video part"
+            name="story{{id}}"
+            {{#video}}
+              data-video="true"
+              data-poster="{{loading}}"
+              data-loop="true"
+              data-autoplay="true"
+              data-muted="false"
+              {{#mp4}}
+                data-mp4="{{mp4}}"
+              {{/mp4}}
+              {{#webm}}
+                data-webm="{{webm}}"
+              {{/webm}}
+            {{/video}}>
+            <div class="video-container"><video></video></div>
             <div class="content container-fluid">
               <div class="row">
                 <div class="col-sm-12 {{#format}}{{#fullpage}}header-fullpage{{/fullpage}}{{/format}}">
@@ -288,28 +254,26 @@
         {{/videobackground}}
 
         {{#videofullpage}}
-          <section class="st-content-video part inview snap" name="story{{id}}">
-            <div class="video-container"
-                 data-preload="none"
-                 {{#image}}
-                   {{#loading}}
-                     data-poster="{{loading}}"
-                   {{/loading}}
-                 {{/image}}
-                 >
-               {{#video}}
-                 {{#mp4}}
-                   <source data-src="{{mp4}}" type='video/mp4'>
-                 {{/mp4}}
-                 {{#webm}}
-                   <source data-src="{{webm}}" type='video/webm'>
-                 {{/webm}}
-               {{/video}}
-            </div>
+          <section class="st-content-video part snap"
+            name="story{{id}}"
+            {{#video}}
+              data-video="true"
+              data-poster="{{loading}}"
+              data-loop="true"
+              data-autoplay="true"
+              data-muted="false"
+              data-is-fullpage="true"
+              {{#mp4}}
+                data-mp4="{{mp4}}"
+              {{/mp4}}
+              {{#webm}}
+                data-webm="{{webm}}"
+              {{/webm}}
+            {{/video}}>
+            <div class="video-container"><video></video></div>
             <div class="caption">
-              <div class="button-container">
-                <button class="pauseplay"></button>
-              </div>
+              <div class="button-container play"></div>
+              <div class="button-container pause"></div>
               <div class="text">
                 <h3>{{title}}</h3>
                 {{{text}}}
@@ -322,5 +286,6 @@
 
     {{> partials/social}}
 
+    <script type="text/javascript" src="/app.js"></script>
   </body>
 </html>
