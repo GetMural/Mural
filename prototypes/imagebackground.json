@@ -1,0 +1,18 @@
+{
+  "imagebackground": {
+    "id": "",
+    "format": {
+      "fullpage": true
+    },
+    "title": "",
+    "subtitle": "",
+    "navlevel": "",
+    "navthumb": "",
+    "text": "",
+    "image": {
+        "srcmain": "",
+        "srcmedium": "",
+        "srcphone": ""
+    }
+  }
+}

@@ -24,15 +24,6 @@ function iterateInitialFormElements () {
 }
 iterateInitialFormElements();
 
-function checkRadioButtons () {
-	$(this).find('input').each(function () {
-		if ($(this).attr('checked')) {
-			$(this).prop('checked', true);
-		}
-	});
-}
-checkRadioButtons();
-
 function instantiateRemove () {
 	$('.js-Remove').each(function () {
 		$(this).on('click', function (e) {
@@ -47,30 +38,6 @@ function instantiateRemove () {
 };
 instantiateRemove();
 
-function iterateRadioElements (obj) {
-	++i;
-	$(obj).find('label').each(function () {
-		var target = $(this).attr('for') + i;
-		$(this).attr('for', target);
-	});
-	$(obj).find('input').each(function () {
-		var name = $(this).attr('id') + i;
-		$(this).attr('id', name);
-	});
-	iterateInitialFormElements();
-	$(obj).find('input').first().attr('checked', 'checked').prop('checked', true);
-};
-
-$('.js-AddText').on('click', function (e) {
-	e.preventDefault();
-	var textEl = document.createElement('div');
-	var textBox = '/editor/fragment/snippettext';
-	$(textEl).load(textBox, function () {
-		$(textEl).appendTo('.js-ContentDynamic');
-		instantiateRemove();
-	});
-});
-
 $('.js-AddImage').on('click', function (e) {
 	e.preventDefault();
 	var imgEl = document.createElement('div');
@@ -78,7 +45,6 @@ $('.js-AddImage').on('click', function (e) {
 	var imgBox = '/editor/fragment/snippetimage';
 	$(imgEl).load(imgBox, function () {
 		$(imgEl).appendTo('.js-ContentDynamic');
-		iterateRadioElements($(this).find('.js-Align'));
 		instantiateRemove();
 	});
 });

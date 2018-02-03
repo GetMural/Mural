@@ -1,0 +1,16 @@
+{
+  "imageparallax": {
+    "id": "",
+    "format": {
+      "fullpage": true
+    },
+    "title": "",
+    "subtitle": "",
+    "navlevel": "",
+    "image": {
+      "srcmain": "",
+      "srcmedium": "",
+      "srcphone": ""
+    }
+  }
+}

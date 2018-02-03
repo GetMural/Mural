@@ -23,3 +23,7 @@ On site generation the build process should copy the contents of the src folder,
 ## Installation and running the app
 
 So far it's as easy as `npm install` but you'll also need to have a global installation of ![cordova](https://cordova.apache.org/) to build the app outside of the context of the browser.
+
+## Build dist index.html
+
+From the command line run `npm run build`.  This will create the in public/dist/index.html which can be used as a standalone file.

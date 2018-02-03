@@ -1,0 +1,25 @@
+"textcentred": {
+  "id": "",
+  "format": {
+    "inline": true
+  },
+  "light": true,
+  "title": "",
+  "subtitle": "",
+  "navlevel": "child",
+  "intro": "",
+  "snippets": [
+    {
+      "title": "",
+      "align": {
+        "left": false,
+        "centre": true,
+        "right": false
+      },
+      "src": "",
+      "credits": "",
+      "text": ""
+    }
+  ]
+}
+},

@@ -3,29 +3,19 @@
 
 	<a href="#" class="js-Remove">Remove</a>
 
-	<fieldset class="js-Align">
-
-    <legend for="align">Alignment</legend>
-
-      <label for="alignmentDefault">
-				Default (Centre)
-      </label>
-			<input type="radio" id="alignmentDefault" name="alignment" data-name="align" value="default"{{#align}}{{#default}} data-checked="checked" checked="checked"{{/default}}{{/align}}>
-
-      <label for="alignmentLeft">
-        Left
-      </label>
-			<input type="radio" id="alignmentLeft" name="alignment" data-name="align" value="left"{{#align}}{{#left}} data-checked="checked" checked="checked"{{/left}}{{/align}}>
-
-      <label for="alignmentRight">
-        Right
-      </label>
-			<input type="radio" id="alignmentRight" name="alignment" data-name="align" value="right"{{#align}}{{#right}} data-checked="checked" checked="checked"{{/right}}{{/align}}>
-
-	</fieldset>
+    <div class="form-group">
+        <label for="align" class="control-label">Align:</label>
+        <select name="align">
+            <option {{#align}}{{#center}}selected{{/center}}{{/align}} value="center">center</option>
+            <option {{#align}}{{#left}}selected{{/left}}{{/align}} value="left">left</option>
+            <option {{#align}}{{#right}}selected{{/right}}{{/align}} value="right">right</option>
+        </select>
+    </div>
 
   {{> title}}
 
   {{> image}}
+
+  {{> richtext}}
 
 </fieldset>

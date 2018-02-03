@@ -1,6 +1,6 @@
 <script src="/tools/jquery/dist/jquery.min.js"></script>
 
-<form class="js-TextCentred" data-id="">
+<form class="js-TextCentred" data-id="" action="/editor/page/textcentred/id/{{id}}" method="post">
 
   <legend class="title">Text Centred</legend>
 
@@ -13,7 +13,10 @@
 			<input id="light" name="light" data-name="light" type="checkbox"{{#light}} checked{{/light}} />
     </div>
 
-    {{> title}}
+    <div class="form-group">
+        <label for="tc_title" class="control-label">Title</label>
+        <input name="tc_title" data-name="tc_title" type="text" class="form-control" value="{{#title}}{{title}}{{/title}}"{{^title}} placeholder="No title"{{/title}} />
+    </div>
 
     {{> subtitle}}
 
@@ -25,9 +28,6 @@
 
   <ul class="js-ContentBlockSelector">
     <li>
-      <a href="#" class="js-AddText">Text [+]</a>
-    </li>
-    <li>
       <a href="#" class="js-AddImage">Image [+]</a>
     </li>
   </ul>
@@ -35,12 +35,7 @@
 
   <div class="js-ContentDynamic">
 		{{#snippets}}
-			{{^text}}
-				{{> snippetimage}}
-			{{/text}}
-			{{#text}}
-				{{> snippettext}}
-			{{/text}}
+			{{> snippetimage}}
 		{{/snippets}}
 	</div>
 
@@ -67,9 +62,6 @@
 
   <ul class="js-ContentBlockSelector">
     <li>
-      <a href="#" class="js-AddText">Text [+]</a>
-    </li>
-    <li>
       <a href="#" class="js-AddImage">Image [+]</a>
     </li>
   </ul>
@@ -77,12 +69,7 @@
 
   <div class="js-ContentDynamic">
 		{{#snippets}}
-			{{^text}}
-				{{> snippetimage}}
-			{{/text}}
-			{{#text}}
-				{{> snippettext}}
-			{{/text}}
+			{{> snippetimage}}
 		{{/snippets}}
 	</div>
 

@@ -1,6 +1,6 @@
 <script src="/tools/jquery/dist/jquery.min.js"></script>
 
-<form class="js-SlideshowHorizontal">
+<form class="js-SlideshowHorizontal" action="/editor/page/slideshowhorizontal/id/{{id}}" method="post">
 
   <legend class="title">Slideshow Horizontal</legend>
 
@@ -10,7 +10,10 @@
 
 	  <fieldset>
 
-	    {{> title}}
+		<div class="form-group">
+		  <label for="show_title" class="control-label">Title</label>
+		  <input name="show_title" data-name="show_title" type="text" class="form-control" value="{{#title}}{{title}}{{/title}}"{{^title}} placeholder="No title"{{/title}} />
+		</div>
 
 			{{> plaintext}}
 
