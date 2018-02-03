@@ -1,11 +1,14 @@
 var $ = jQuery;
 // handle nav change event
 document.addEventListener('DOMContentLoaded', function () {
-	$('.js-nav').on('change', function () {
+	$('.js-Nav').on('change', function () {
 		var target = $(this).find(':selected');
 		var link = target.attr('value');
 		var bodyElement = document.getElementsByClassName('js-Load');
 		$(bodyElement).load(link);
+	});
+	$('[draggable="true"]').on('dragend', function (e) {
+		// TODO: send reordered items back to the server
 	});
 });
 
@@ -25,7 +28,7 @@ function isbefore(a, b) {
 
 function dragenter(e) {
     var targetelem = e.target;
-    if (targetelem.nodeName == "TD") {
+    if (targetelem.nodeName == "li") {
         targetelem = targetelem.parentNode;
     }
 
@@ -40,4 +43,3 @@ function dragstart(e) {
     source = e.target;
     e.dataTransfer.effectAllowed = 'move';
 }
-

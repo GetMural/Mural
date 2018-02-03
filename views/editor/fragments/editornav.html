@@ -1,44 +1,52 @@
+<ul class="js-Nav">
   {{#meta}}
-    <table class="js-nav">
-      <tr>
-        <td>
-          <a href="/editor/page/meta"">Meta Information{{#title}}: {{title}}{{/title}}</a>
-        </td>
-      </tr>
-    </table>
+    <li>
+      <a href="/editor/page/meta">Meta Information{{#title}}: {{title}}{{/title}}</a>
+    </li>
   {{/meta}}
-  <table class="js-nav">
+</ul>
+<ol class="js-Nav">
   {{#items}}
-    <tr draggable="true" ondragenter="dragenter(event)" ondragstart="dragstart(event)">
-      <td style="border: 1px solid grey">
-    {{#imagebackground}}
-      <a href="/editor/page/imagebackground{{#id}}/id/{{id}}{{/id}}">Image Background{{#title}}: {{title}}{{/title}}</a>
-    {{/imagebackground}}
-		{{#imageparallax}}
-      <a href="/editor/page/imageparallax{{#id}}/id/{{id}}{{/id}}">Parallax Image{{#title}}: {{title}}{{/title}}</td>
-    {{/imageparallax}}
-    {{#slideshowhorizontal}}
-      <a href="/editor/page/slideshowhorizontal{{#id}}/id/{{id}}{{/id}}">Horizontal Slideshow{{#title}}: {{title}}{{/title}}</td>
-    {{/slideshowhorizontal}}
-		{{#slideshowvertical}}
-      <a href="/editor/page/slideshowvertical{{#id}}/id/{{id}}{{/id}}">Vertical Slideshow{{#title}}: {{title}}{{/title}}</td>
-    {{/slideshowvertical}}
-    {{#textcentred}}
-      <a href="/editor/page/textcentred{{#id}}/id/{{id}}{{/id}}">Centred Text{{#title}}: {{title}}{{/title}}</td>
-    {{/textcentred}}
-    {{#videobackground}}
-      <a href="/editor/page/videobackground{{#id}}/id/{{id}}{{/id}}">Background Video{{#title}}: {{title}}{{/title}}</td>
-    {{/videobackground}}
-    {{#videofullpage}}
-      <a href="/editor/page/videofullpage{{#id}}/id/{{id}}{{/id}}">Fullpage Video{{#title}}: {{title}}{{/title}}</td>
-    {{/videofullpage}}
-        </td></tr>
+    <li draggable="true" ondragenter="dragenter(event)" ondragstart="dragstart(event)">
+      {{#imagebackground}}
+        <a href="/editor/page/imagebackground{{#id}}/id/{{id}}{{/id}}">
+          Image Background{{#title}}: {{title}}{{/title}}
+        </a>
+      {{/imagebackground}}
+  		{{#imageparallax}}
+        <a href="/editor/page/imageparallax{{#id}}/id/{{id}}{{/id}}">
+          Parallax Image{{#title}}: {{title}}{{/title}}
+        </a>
+      {{/imageparallax}}
+      {{#slideshowhorizontal}}
+        <a href="/editor/page/slideshowhorizontal{{#id}}/id/{{id}}{{/id}}">
+          Horizontal Slideshow{{#title}}: {{title}}{{/title}}
+        </a>
+      {{/slideshowhorizontal}}
+  		{{#slideshowvertical}}
+        <a href="/editor/page/slideshowvertical{{#id}}/id/{{id}}{{/id}}">
+          Vertical Slideshow{{#title}}: {{title}}{{/title}}
+        </a>
+      {{/slideshowvertical}}
+      {{#textcentred}}
+        <a href="/editor/page/textcentred{{#id}}/id/{{id}}{{/id}}">
+          Centred Text{{#title}}: {{title}}{{/title}}
+        </a>
+      {{/textcentred}}
+      {{#videobackground}}
+        <a href="/editor/page/videobackground{{#id}}/id/{{id}}{{/id}}">
+          Background Video{{#title}}: {{title}}{{/title}}
+        </a>
+      {{/videobackground}}
+      {{#videofullpage}}
+        <a href="/editor/page/videofullpage{{#id}}/id/{{id}}{{/id}}">
+          Fullpage Video{{#title}}: {{title}}{{/title}}
+        </a>
+      {{/videofullpage}}
+    </li>
   {{/items}}
   </table>
   {{^items}}
-    <table><tr>
-      <td>No items</td>
-    </tr></table>
+    <li>No items</li>
   {{/items}}
-</table>
-
+</ol>

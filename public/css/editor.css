@@ -8,9 +8,7 @@ body {
 
 .nav-container {
   left: 0;
-  /* position: fixed; */
   top: 0;
-  width: 100vw;
   z-index: 10;
 }
 
@@ -29,5 +27,6 @@ button#save
 }
 
 [draggable] {
-    user-select: none;
+  cursor: ns-resize;
+  user-select: none;
 }
