@@ -13,6 +13,68 @@
     "facebook": false,
     "twitter": true
   },
+  "nav": [
+    {
+      "id": "0",
+      "title": "Gradac to the People!"
+    },
+    {
+      "id": "1",
+      "title": "Gradac to the People!"
+    },
+    {
+      "id": "2",
+      "title": "Four Season Attraction"
+    },
+    {
+      "id": "3",
+      "title": "Summertime refreshment"
+    },
+    {
+      "id": "4",
+      "title": "Morning coffee by the river"
+    },
+    {
+      "id": "5",
+      "title": "Morning coffee by the river"
+    },
+    {
+      "id": "6",
+      "title": "Winter activities"
+    },
+    {
+      "id": "7",
+      "title": "Winter activities"
+    },
+    {
+      "id": "8",
+      "title": "Man-made structures"
+    },
+    {
+      "id": "9",
+      "title": "Shortcut through the Gorge"
+    },
+    {
+      "id": "10",
+      "title": "Gradac dams"
+    },
+    {
+      "id": "11",
+      "title": "Dams Slideshow"
+    },
+    {
+      "id": "12",
+      "title": "Nature & Wildlife"
+    },
+    {
+      "id": "13",
+      "title": "Dams Slideshow Vertical"
+    },
+    {
+      "id": "14",
+      "title": "Insects & Reptiles"
+    }
+  ],
   "items": [
     {
       "videobackground": {
