@@ -40,22 +40,22 @@ router.get('/download', function (req, res, next) {
       zlib: { level: 9 } // Sets the compression level.
     });
 
-    // good practice to catch warnings (ie stat failures and other non-blocking errors)
+    // can decide in a bit how Mural wants to handle errors in requests.
+    // (ie stat failures and other non-blocking errors)
     archive.on('warning', function(err) {
       if (err.code === 'ENOENT') {
         // log warning
+        console.log(err);
       } else {
         // throw error
         console.error(err);
       }
     });
 
-    // good practice to catch this error explicitly
     archive.on('error', function(err) {
       console.error(err);
     });
  
-    // pipe archive data to the file
     archive.pipe(res);
 
     archive
