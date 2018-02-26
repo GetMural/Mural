@@ -16,7 +16,7 @@ $(function() {
         // first, see if the doc already exists in pouchDB
         db.get(dataDoc._id).catch(function (err) {
             if (err.name === 'not_found') {
-                // if not just use then one we got from the server
+                // if not just use the one we got from the server
                 return dataDoc;
             } else {
                 throw err;
