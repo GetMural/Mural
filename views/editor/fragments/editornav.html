@@ -5,15 +5,15 @@
     </li>
   {{/meta}}
 </ul>
-<ol class="js-Nav">
+<ul id="sortable-items" class="js-Nav">
   {{#items}}
-    <li draggable="true" ondragenter="dragenter(event)" ondragstart="dragstart(event)">
+    <li>
       {{#imagebackground}}
         <a href="/editor/page/imagebackground{{#id}}/id/{{id}}{{/id}}">
           Image Background{{#title}}: {{title}}{{/title}}
         </a>
       {{/imagebackground}}
-  		{{#imageparallax}}
+  	  {{#imageparallax}}
         <a href="/editor/page/imageparallax{{#id}}/id/{{id}}{{/id}}">
           Parallax Image{{#title}}: {{title}}{{/title}}
         </a>
@@ -23,7 +23,7 @@
           Horizontal Slideshow{{#title}}: {{title}}{{/title}}
         </a>
       {{/slideshowhorizontal}}
-  		{{#slideshowvertical}}
+  	  {{#slideshowvertical}}
         <a href="/editor/page/slideshowvertical{{#id}}/id/{{id}}{{/id}}">
           Vertical Slideshow{{#title}}: {{title}}{{/title}}
         </a>
@@ -45,8 +45,7 @@
       {{/videofullpage}}
     </li>
   {{/items}}
-  </table>
   {{^items}}
     <li>No items</li>
   {{/items}}
-</ol>
+</ul>

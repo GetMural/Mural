@@ -1,8 +1,8 @@
 var fs = require('fs');
 
 /**
- *  IMPORTANT:  THIS IS NOT USED CURRENTLY!!!!
- *
+ *  IMPORTANT:  This model saves a storyboard JSON object to local filesystem
+ *  it does NOT deal with pouchDB or couchDB in anyway.
  */
 function Storyboard(filename) {
     this.filename = filename;
@@ -12,6 +12,7 @@ function Storyboard(filename) {
 };
 
 Storyboard.prototype = {
+
     readFile: function (filename) {
         var self = this;
         if (!filename) {
@@ -22,17 +23,22 @@ Storyboard.prototype = {
                 self.data = data;
                 self.meta = JSON.parse(data).meta;
                 self.items = JSON.parse(data).items;
+
+                console.log('Successfully read storyboard file.');
             }
         });
     },
 
     writeFile: function (filename, data) {
         var self = this;
+
         fs.writeFile(filename, data, function (err) {
             if (err) {
-                return console.log(err);
+                console.log('Write Storyboard File Error: ' + err);
+            } else {
+                console.log('Write Storyboard File Success');
+                self.data = data;
             }
-            self.data = data;
         });
     },
 

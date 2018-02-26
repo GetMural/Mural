@@ -4,16 +4,17 @@ var router = express.Router();
 var fs = require('fs');
 var Storyboard = require('../models/storyboard');
 
-// TODO: refactor readFile to take a callback or use promises and call readFile on every get and post function
 var filename = './data/storyboard.json';
 var storyboard = new Storyboard(filename);
-var data = storyboard.readFile(filename);
+// read file first
+storyboard.readFile(filename);
 
 var archiver = require('archiver');
 
 
 // Main Editor View
 router.get('/', function (req, res, next) {
+    storyboard.readFile(filename);
     var meta = storyboard.getMeta();
     var items = storyboard.getItems();
     res.render('editor/editor', {
@@ -26,6 +27,19 @@ router.get('/', function (req, res, next) {
         }
     });
 });
+
+// Editor Storyboard endpoint
+router.get('/storyboard', function (req, res, next) {
+    storyboard.readFile(filename);
+
+    res.json(storyboard.data);
+});
+router.post('/storyboard', function (req, res, next) {
+    var newData = req.body;
+    storyboard.writeFile(filename, newData);
+
+    res.json(newData);
+})
 
 const PUBLIC_FOLDER = path.resolve(__dirname, '..', 'public');
 
@@ -201,6 +215,7 @@ router.get('/fragment/videosources', function (req, res) {
 
 // Meta Info Page
 router.get('/page/meta', function (req, res) {
+    storyboard.readFile(filename);
     var meta = storyboard.getMeta();
     var items = storyboard.getItems();
     res.render('editor/pages/meta', {
@@ -212,6 +227,7 @@ router.get('/page/meta', function (req, res) {
     });
 });
 router.post('/page/meta', function (req, res) {
+    storyboard.readFile(filename);
     var newMeta = req.body;
     var meta = storyboard.getMeta();
     var items = storyboard.getItems();
@@ -231,7 +247,7 @@ router.post('/page/meta', function (req, res) {
     // TODO: meta['twitter'] is missing from form
 
     // TODO: move this to a global file save function with its own button in the frontend
-    storyboard.writeFile(JSON.stringify({ meta: meta, items: items }));
+    storyboard.writeFile(filename, JSON.stringify({ meta: meta, items: items }));
 
     res.render('editor/editor', {
         meta: meta,
@@ -262,6 +278,7 @@ router.get('/page/textcentred', function (req, res) {
 
 // Textcentred Page with ID
 router.get('/page/textcentred/id/:id', function (req, res) {
+    storyboard.readFile(filename);
     var query = req || {};
     var meta = storyboard.getMeta();
     var items = storyboard.getItems();
@@ -286,6 +303,7 @@ router.get('/page/textcentred/id/:id', function (req, res) {
     });
 });
 router.post('/page/textcentred/id/:id', function (req, res) {
+    storyboard.readFile(filename);
     var query = req || {};
     var meta = storyboard.getMeta();
     var items = storyboard.getItems();
@@ -319,7 +337,7 @@ router.post('/page/textcentred/id/:id', function (req, res) {
 
     // format and save new item
     items[qId].textcentred = item;
-    storyboard.writeFile(JSON.stringify({ meta: meta, items: items }));
+    storyboard.writeFile(filename, JSON.stringify({ meta: meta, items: items }));
 
     res.render('editor/editor', {
         meta: meta,
@@ -348,6 +366,7 @@ router.get('/page/imagebackground', function (req, res) {
 
 // Imagebackground Page with ID
 router.get('/page/imagebackground/id/:id', function (req, res) {
+    storyboard.readFile(filename);
     var query = req || {};
     var meta = storyboard.getMeta();
     var items = storyboard.getItems();
@@ -370,6 +389,7 @@ router.get('/page/imagebackground/id/:id', function (req, res) {
     });
 });
 router.post('/page/imagebackground/id/:id', function (req, res) {
+    storyboard.readFile(filename);
     var query = req || {};
     var meta = storyboard.getMeta();
     var items = storyboard.getItems();
@@ -396,7 +416,7 @@ router.post('/page/imagebackground/id/:id', function (req, res) {
     // save the file
     items[qId].imagebackground = item;
     // TODO: move this to a global file save function with its own button in the frontend
-    storyboard.writeFile(JSON.stringify({ meta: meta, items: items }));
+    storyboard.writeFile(filename, JSON.stringify({ meta: meta, items: items }));
 
     res.render('editor/editor', {
         meta: meta,
@@ -426,6 +446,7 @@ router.get('/page/slideshowhorizontal', function (req, res) {
 
 // Slideshow Horizontal Page with ID
 router.get('/page/slideshowhorizontal/id/:id', function (req, res) {
+    storyboard.readFile(filename);
     var query = req || {};
     var meta = storyboard.getMeta();
     var items = storyboard.getItems();
@@ -448,6 +469,7 @@ router.get('/page/slideshowhorizontal/id/:id', function (req, res) {
     });
 });
 router.post('/page/slideshowhorizontal/id/:id', function (req, res) {
+    storyboard.readFile(filename);
     var query = req || {};
     var meta = storyboard.getMeta();
     var items = storyboard.getItems();
@@ -476,7 +498,7 @@ router.post('/page/slideshowhorizontal/id/:id', function (req, res) {
 
     items[qId].slideshowhorizontal = item;
     // TODO: move this to a global file save function with its own button in the frontend
-    storyboard.writeFile(JSON.stringify({ meta: meta, items: items }));
+    storyboard.writeFile(filename, JSON.stringify({ meta: meta, items: items }));
 
     res.render('editor/editor', {
         meta: meta,
@@ -504,6 +526,7 @@ router.get('/page/slideshowvertical', function (req, res) {
 
 // Slideshow Vertical Page with ID
 router.get('/page/slideshowvertical/id/:id', function (req, res) {
+    storyboard.readFile(filename);
     var query = req || {};
     var meta = storyboard.getMeta();
     var items = storyboard.getItems();
@@ -524,6 +547,7 @@ router.get('/page/slideshowvertical/id/:id', function (req, res) {
     });
 });
 router.post('/page/slideshowvertical/id/:id', function (req, res) {
+    storyboard.readFile(filename);
     var query = req || {};
     var meta = storyboard.getMeta();
     var items = storyboard.getItems();
@@ -549,7 +573,7 @@ router.post('/page/slideshowvertical/id/:id', function (req, res) {
 
     items[qId].slideshowvertical = item;
     // TODO: move this to a global file save function with its own button in the frontend
-    storyboard.writeFile(JSON.stringify({ meta: meta, items: items }));
+    storyboard.writeFile(filename, JSON.stringify({ meta: meta, items: items }));
 
     res.render('editor/editor', {
         meta: meta,
@@ -579,6 +603,7 @@ router.get('/page/videobackground', function (req, res, next) {
 
 // Videobackground Page with ID
 router.get('/page/videobackground/id/:id', function (req, res, next) {
+    storyboard.readFile(filename);
     var query = req || {};
     var meta = storyboard.getMeta();
     var items = storyboard.getItems();
@@ -602,6 +627,7 @@ router.get('/page/videobackground/id/:id', function (req, res, next) {
     });
 });
 router.post('/page/videobackground/id/:id', function (req, res, next) {
+    storyboard.readFile(filename);
     var query = req || {};
     var meta = storyboard.getMeta();
     var items = storyboard.getItems();
@@ -627,7 +653,7 @@ router.post('/page/videobackground/id/:id', function (req, res, next) {
     // save the file
     items[qId].videobackground = item;
     // TODO: move this to a global file save function with its own button in the frontend
-    storyboard.writeFile(JSON.stringify({ meta: meta, items: items }));
+    storyboard.writeFile(filename, JSON.stringify({ meta: meta, items: items }));
 
     // render main editor window with a success message
     res.render('editor/editor', {
@@ -657,6 +683,7 @@ router.get('/page/videofullpage', function (req, res) {
 
 // Videofullpage Page with ID
 router.get('/page/videofullpage/id/:id', function (req, res) {
+    storyboard.readFile(filename);
     var query = req || {};
     var meta = storyboard.getMeta();
     var items = storyboard.getItems();
@@ -678,6 +705,7 @@ router.get('/page/videofullpage/id/:id', function (req, res) {
     });
 });
 router.post('/page/videofullpage/id/:id', function (req, res) {
+    storyboard.readFile(filename);
     var query = req || {};
     var meta = storyboard.getMeta();
     var items = storyboard.getItems();
@@ -703,7 +731,7 @@ router.post('/page/videofullpage/id/:id', function (req, res) {
     // save the file
     items[qId].videofullpage = item;
     // TODO: move this to a global file save function with its own button in the frontend
-    storyboard.writeFile(JSON.stringify({ meta: meta, items: items }));
+    storyboard.writeFile(filename, JSON.stringify({ meta: meta, items: items }));
 
     res.render('editor/editor', {
         meta: meta,
@@ -731,6 +759,7 @@ router.get('/page/imageparallax', function (req, res) {
 
 // Videofullpage Page with ID
 router.get('/page/imageparallax/id/:id', function (req, res) {
+    storyboard.readFile(filename);
     var query = req || {};
     var meta = storyboard.getMeta();
     var items = storyboard.getItems();
@@ -751,6 +780,7 @@ router.get('/page/imageparallax/id/:id', function (req, res) {
     });
 });
 router.post('/page/imageparallax/id/:id', function (req, res) {
+    storyboard.readFile(filename);
     var query = req || {};
     var meta = storyboard.getMeta();
     var items = storyboard.getItems();
@@ -774,7 +804,7 @@ router.post('/page/imageparallax/id/:id', function (req, res) {
 
     items[qId].imageparallax = item;
     // TODO: move this to a global file save function with its own button in the frontend
-    storyboard.writeFile(JSON.stringify({ meta: meta, items: items }));
+    storyboard.writeFile(filename, JSON.stringify({ meta: meta, items: items }));
 
     res.render('editor/editor', {
         meta: meta,
