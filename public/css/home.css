@@ -18,3 +18,10 @@ iframe {
 .editor {
   right: 0;
 }
+
+#toolbar {
+  padding: 5px;
+  position: absolute;
+  top: 0;
+  z-index: 999;
+}

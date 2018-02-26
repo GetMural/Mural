@@ -6,11 +6,6 @@
   <link rel="stylesheet" type="text/css" href="/css/icon.css" />
 
   <link rel="stylesheet" type="text/css" href="/css/editor.css" />
-
-  <script src="/tools/jquery/dist/jquery.min.js"></script>
-  <script src="/js/editor.js"></script>
-  <script src="/js/editornav.js"></script>
-
 </head>
 <body>
 
@@ -28,11 +23,15 @@
     <h3>Item Editor</h3>
 
     <div class="pages">
-      <div class="page js-Load">
+      <div id="item-editor" class="page">
         <p>Please select an element from the navigation or create a new Mural element</p>
       </div>
     </div>
   </div>
 
+  <script src="/tools/jquery/dist/jquery.min.js"></script>
+  <script src="/tools/pouchdb/dist/pouchdb.min.js"></script>
+  <script src="/js/editornav.js"></script>
+  <script type="text/javascript" src="/js/editor.js"></script>
 </body>
 </html>

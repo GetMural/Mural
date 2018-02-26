@@ -37,6 +37,7 @@
     "jquery": "^3.2.1",
     "json-fmt": "^1.1.2",
     "morgan": "~1.9.0",
+    "pouchdb": "^6.4.3",
     "scrollstory": "^1.0.0",
     "serve-favicon": "~2.4.5",
     "stickybits": "^2.0.13"

@@ -4,7 +4,28 @@
   <link type="text/css" rel="stylesheet" href="css/home.css" />
 </head>
 <body>
-  <iframe class="preview" src="/preview"></iframe>
+  <div id="toolbar">
+    <button id="btn-refresh-preview" class="btn btn-default">Refresh Preview</button>
+  </div>
+
+  <iframe id="preview" src="/preview"></iframe>
+
   <iframe class="editor" src="/editor"></iframe>
+
+  <script src="/tools/jquery/dist/jquery.min.js"></script>
+  <script>
+    $(function() {
+        $('#btn-refresh-preview').on('click', function() {
+            console.log("Refreshing Preview");
+            $('#preview').attr( 'src', function ( i, val ) { return val; });
+        });
+
+        // Preview Refresh Event Listener
+        $(document).on('refresh-preview', function() {
+            console.log("Refreshing Preview");
+            $('#preview').attr( 'src', function ( i, val ) { return val; });
+        });
+    })
+  </script>
 </body>
 </html>

@@ -1,12 +1,17 @@
 var $ = jQuery;
 // handle nav change event
 document.addEventListener('DOMContentLoaded', function () {
-	$('.js-Nav').on('change', function () {
-		var target = $(this).find(':selected');
-		var link = target.attr('value');
-		var bodyElement = document.getElementsByClassName('js-Load');
-		$(bodyElement).load(link);
+
+	$('.js-Nav a').on('click', function (e) {
+		var link = $(this).attr('href');
+
+		e.preventDefault();
+		e.stopPropagation();
+
+		$('#item-editor').load(link);
 	});
+
+
 	$('[draggable="true"]').on('dragend', function (e) {
 		// TODO: send reordered items back to the server
 	});
