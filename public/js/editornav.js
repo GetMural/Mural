@@ -11,40 +11,12 @@ document.addEventListener('DOMContentLoaded', function () {
 		$('#item-editor').load(link);
 	});
 
-
-	$('[draggable="true"]').on('dragend', function (e) {
-		// TODO: send reordered items back to the server
-	});
-});
-
-// Drag and Drop
-var source;
-
-function isbefore(a, b) {
-    if (a.parentNode == b.parentNode) {
-        for (var cur = a; cur; cur = cur.previousSibling) {
-            if (cur === b) {
-                return true;
-            }
+    var el = document.getElementById('sortable-items');
+    var sortableItems = Sortable.create(el, {
+        onUpdate: function (e) {
+            // TODO: send new ordered list of items to the server to be saved
+            console.log('Items have been updated', e.to);
         }
-    }
-    return false;
-}
+    });
 
-function dragenter(e) {
-    var targetelem = e.target;
-    if (targetelem.nodeName == "li") {
-        targetelem = targetelem.parentNode;
-    }
-
-    if (isbefore(source, targetelem)) {
-        targetelem.parentNode.insertBefore(source, targetelem);
-    } else {
-        targetelem.parentNode.insertBefore(source, targetelem.nextSibling);
-    }
-}
-
-function dragstart(e) {
-    source = e.target;
-    e.dataTransfer.effectAllowed = 'move';
-}
+});

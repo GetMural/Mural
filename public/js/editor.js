@@ -7,7 +7,8 @@ $(function() {
 
     // load initial storyboard from server filesystem
     $.get('/editor/storyboard', function (data, status) {
-        console.log('Loaded storyboard from server', data);
+        console.log('Loaded storyboard from server');
+        var data = JSON.parse(data);
         var dataDoc = data;
         // TODO: replace with a better unique _id
         dataDoc._id = data.meta.title;

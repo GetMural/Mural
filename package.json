@@ -41,6 +41,7 @@
     "pouchdb": "^6.4.3",
     "scrollstory": "^1.0.0",
     "serve-favicon": "~2.4.5",
+    "sortablejs": "^1.7.0",
     "stickybits": "^2.0.13"
   },
   "repository": {

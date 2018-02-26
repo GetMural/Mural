@@ -6,6 +6,8 @@
 <body>
   <div id="toolbar">
     <button id="btn-refresh-preview" class="btn btn-default">Refresh Preview</button>
+    <button id="btn-download" class="btn btn-default">Download Story</button>
+    <!-- TODO: add a hide button here that hides the toolbar or puts it out of the way of the preview -->
   </div>
 
   <iframe id="preview" src="/preview"></iframe>
@@ -18,6 +20,9 @@
         $('#btn-refresh-preview').on('click', function() {
             console.log("Refreshing Preview");
             $('#preview').attr( 'src', function ( i, val ) { return val; });
+        });
+        $('#btn-download').on('click', function() {
+            window.open('/editor/download', '_blank');
         });
 
         // Preview Refresh Event Listener
