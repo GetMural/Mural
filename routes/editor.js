@@ -1,4 +1,5 @@
 var express = require('express');
+const path = require('path');
 var router = express.Router();
 var fs = require('fs');
 var Storyboard = require('../models/storyboard');
@@ -7,6 +8,8 @@ var filename = './data/storyboard.json';
 var storyboard = new Storyboard(filename);
 // read file first
 storyboard.readFile(filename);
+
+var archiver = require('archiver');
 
 
 // Main Editor View
@@ -37,6 +40,45 @@ router.post('/storyboard', function (req, res, next) {
 
     res.json(newData);
 })
+
+const PUBLIC_FOLDER = path.resolve(__dirname, '..', 'public');
+
+router.get('/download', function (req, res, next) {
+    // Tell the browser that this is a zip file.
+    res.writeHead(200, {
+        'Content-Type': 'application/zip',
+        'Content-disposition': 'attachment; filename=mural.zip'
+    });
+
+    var archive = archiver('zip', {
+      zlib: { level: 9 } // Sets the compression level.
+    });
+
+    // can decide in a bit how Mural wants to handle errors in requests.
+    // (ie stat failures and other non-blocking errors)
+    archive.on('warning', function(err) {
+      if (err.code === 'ENOENT') {
+        // log warning
+        console.log(err);
+      } else {
+        // throw error
+        console.error(err);
+      }
+    });
+
+    archive.on('error', function(err) {
+      console.error(err);
+    });
+ 
+    archive.pipe(res);
+
+    archive
+        .file(path.resolve(PUBLIC_FOLDER, 'dist', 'index.html'), {name: 'index.html'})
+        .file(path.resolve(PUBLIC_FOLDER, 'app.css'), {name: 'app.css'})
+        .file(path.resolve(PUBLIC_FOLDER, 'app.js'), {name: 'app.js'})
+        .directory(path.resolve(PUBLIC_FOLDER, 'img'), 'img')
+        .finalize();
+});
 
 // Editor Fragments
 router.get('/fragment/editornav', function (req, res, next) {
