@@ -2,6 +2,7 @@
 <html>
 <head>
   <link type="text/css" rel="stylesheet" href="css/home.css" />
+  <script type="application/javascript" src="/tools/jquery/dist/jquery.min.js"></script>
 </head>
 <body>
   <div id="toolbar">
@@ -14,8 +15,9 @@
 
   <iframe class="editor" src="/editor"></iframe>
 
-  <script src="/tools/jquery/dist/jquery.min.js"></script>
-  <script>
+  <script type="application/javascript" src="/tools/jquery/dist/jquery.min.js"></script>
+  <script type="application/javascript">
+    var $ = jQuery;
     $(function() {
         $('#btn-refresh-preview').on('click', function() {
             console.log("Refreshing Preview");
