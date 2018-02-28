@@ -76,3 +76,5 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
 });
+
+parent.$(parent.document).trigger('refresh-preview');

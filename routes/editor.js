@@ -830,7 +830,7 @@ router.post('/reorder', function (req, res) {
         const [mediaType] = Object.keys(oldItem);
         oldItem[mediaType].id = String(i);
         newItems[i] = oldItem;
-    })
+    });
 
     const data = JSON.stringify({ meta: meta, items: newItems });
     storyboard.writeFile(filename, data);
@@ -842,7 +842,6 @@ router.post('/add', function (req, res) {
     storyboard.readFile(filename);
     const meta = storyboard.getMeta();
     const items = storyboard.getItems();
-    console.log(JSON.stringify(req.body));
     const mediaType = req.body.mediaType;
 
     items.push({
@@ -863,6 +862,35 @@ router.post('/add', function (req, res) {
             editornav: 'editor/fragments/editornav'
         }
     });
-})
+});
+
+router.post('/delete/:id', function(req, res) {
+    storyboard.readFile(filename);
+    const meta = storyboard.getMeta();
+    const items = storyboard.getItems();
+    const id = req.params.id;
+
+    items.splice(id, 1);
+
+    for (let i=0; i < items.length; i++) {
+        const oldItem = items[i];
+        // SO HACKY LOL
+        const [mediaType] = Object.keys(oldItem);
+        oldItem[mediaType].id = String(i);
+    }
+
+    const data = JSON.stringify({ meta: meta, items: items });
+    storyboard.writeFile(filename, data);
+
+    res.render('editor/editor', {
+        meta: meta,
+        items: items,
+        editor: 'editor',
+        message: 'Item Deleted',
+        partials: {
+            editornav: 'editor/fragments/editornav'
+        }
+    });
+});
 
 module.exports = router;
