@@ -30,3 +30,14 @@ button#save
   cursor: ns-resize;
   user-select: none;
 }
+
+.js-Nav  li {
+  overflow: auto;
+}
+
+.js-Nav  a {
+  float: left;
+}
+.js-Nav  form {
+  float: right;
+}
