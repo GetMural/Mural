@@ -15,6 +15,21 @@
   <div class="nav-container">
     <h3>Storyboard Editor</h3>
 
+    <div>
+      <form method="post" action="/editor/add">
+        <select name="mediaType">
+          <option value="videobackground">Background Video</option>
+          <option value="videofullpage">Fullpage Video</option>
+          <option value="imageparallax">Image Parallax</option>
+          <option value="imagebackground">Image Background</option>
+          <option value="slideshowvertical">Vertical Slideshow</option>
+          <option value="slideshowhorizontal">Horizontal Slideshow</option>
+          <option value="textcentred">Centred Text</option>
+        </select>
+        <button id="add-story-page" type="submit">Add</button>
+      </form>
+    </div>
+
     {{> editornav}}
     <div>
       <button disabled="disabled" id="reorder-save">Save</button>

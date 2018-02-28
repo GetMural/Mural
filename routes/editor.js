@@ -838,4 +838,31 @@ router.post('/reorder', function (req, res) {
     res.json(data);
 });
 
+router.post('/add', function (req, res) {
+    storyboard.readFile(filename);
+    const meta = storyboard.getMeta();
+    const items = storyboard.getItems();
+    console.log(JSON.stringify(req.body));
+    const mediaType = req.body.mediaType;
+
+    items.push({
+        [mediaType] : {
+            id: items.length
+        }
+    });
+
+    const data = JSON.stringify({ meta: meta, items: items });
+    storyboard.writeFile(filename, data);
+
+    res.render('editor/editor', {
+        meta: meta,
+        items: items,
+        editor: 'editor',
+        message: 'New Item Added',
+        partials: {
+            editornav: 'editor/fragments/editornav'
+        }
+    });
+})
+
 module.exports = router;
