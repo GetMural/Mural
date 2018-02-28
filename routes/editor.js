@@ -817,4 +817,25 @@ router.post('/page/imageparallax/id/:id', function (req, res) {
     });
 });
 
+router.post('/reorder', function (req, res) {
+    storyboard.readFile(filename);
+    var meta = storyboard.getMeta();
+    var items = storyboard.getItems();
+    var order = req.body.order;
+
+    const newItems = [];
+    order.forEach((value, i) => {
+        const oldItem = items[value];
+        // SO HACKY LOL
+        const [mediaType] = Object.keys(oldItem);
+        oldItem[mediaType].id = String(i);
+        newItems[i] = oldItem;
+    })
+
+    const data = JSON.stringify({ meta: meta, items: newItems });
+    storyboard.writeFile(filename, data);
+
+    res.json(data);
+});
+
 module.exports = router;
