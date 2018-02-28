@@ -71,6 +71,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 segments.push(i);
                 a.href = segments.join('/');
             }
+
+            currentOrder = [];
+            for (let i=0, length = el.children.length; i < length; i++) {
+                currentOrder.push(i);
+            }
+
             parent.$(parent.document).trigger('refresh-preview');
         });
     }
