@@ -4,6 +4,12 @@
 
 	{{#item}}
 
+		<div class="form-group">
+  		<input type="hidden" name="id" value="{{id}}">
+	    <label for="title" class="control-label">Title</label>
+	    <input name="title" type="text" class="form-control" value="{{title}}" placeholder="No title"/>
+	  </div>
+
 	  <a href="#" class="js-AddSlide">Slide [+]</a>
 
 	  <div class="js-ContentDynamic">
@@ -25,6 +31,3 @@
   {{> formcontrols}}
 
 </form>
-
-<script src="/js/slideshowvertical.js"></script>
-<script type="text/javascript" src="/js/itemeditor.js">

@@ -170,13 +170,7 @@ router.get('/fragment/richtext', function (req, res) {
 
 // Vertical Slide Fragment
 router.get('/fragment/verticalslide', function (req, res) {
-    res.render('editor/fragments/verticalslide', {
-        partials: {
-            credits: 'editor/fragments/credits',
-            imagesources: 'editor/fragments/imagesources',
-            title: 'editor/fragments/title'
-        }
-    });
+    res.render('editor/fragments/verticalslide');
 });
 
 // Snippet Image Fragment
@@ -515,10 +509,7 @@ router.post('/page/slideshowhorizontal/id/:id', function (req, res) {
 router.get('/page/slideshowvertical', function (req, res) {
     res.render('editor/pages/slideshowvertical', {
         partials: {
-            credits: 'editor/fragments/credits',
             formcontrols: 'editor/fragments/formcontrols',
-            imagesources: 'editor/fragments/imagesources',
-            title: 'editor/fragments/title',
             verticalslide: 'editor/fragments/verticalslide'
         }
     });
@@ -534,45 +525,30 @@ router.get('/page/slideshowvertical/id/:id', function (req, res) {
         var qId = query.params.id;
         var item = items[qId].slideshowvertical;
     };
+
+    //hack an image number in here for Hogan.... :'(
+    item.images.forEach((image, i) => {
+        image.index = i;
+    });
+
     res.render('editor/pages/slideshowvertical', {
         id: qId,
         item: item,
         partials: {
-            credits: 'editor/fragments/credits',
             formcontrols: 'editor/fragments/formcontrols',
-            imagesources: 'editor/fragments/imagesources',
-            title: 'editor/fragments/title',
             verticalslide: 'editor/fragments/verticalslide'
         }
     });
 });
 router.post('/page/slideshowvertical/id/:id', function (req, res) {
     storyboard.readFile(filename);
-    var query = req || {};
-    var meta = storyboard.getMeta();
-    var items = storyboard.getItems();
-    if (query.params && query.params.id) {
-        var qId = query.params.id;
-        var item = items[qId].slideshowvertical;
-        var newItem = req.body;
-    };
+    const meta = storyboard.getMeta();
+    const items = storyboard.getItems();
+    const qId = req.params.id;
+    items[qId].slideshowvertical = req.body;
 
-    // format and save new slideshowvertical item
-    var newImages = [];
-    for(var i = 0; i < newItem['title'].length; ++i){
-        var newImage = {
-            title: newItem['title'][i],
-            credits: newItem['credits'][i],
-            srcmain: newItem['srcmain'][i],
-            srcmedium: newItem['srcmedium'][i],
-            srcphone: newItem['srcphone'][i]
-        }
-        newImages.push(newImage);
-    }
-    item['images'] = newImages;
+    console.log(req.body);
 
-    items[qId].slideshowvertical = item;
-    // TODO: move this to a global file save function with its own button in the frontend
     storyboard.writeFile(filename, { meta: meta, items: items });
 
     res.render('editor/editor', {
