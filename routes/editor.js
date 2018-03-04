@@ -247,7 +247,7 @@ router.post('/page/meta', function (req, res) {
     // TODO: meta['twitter'] is missing from form
 
     // TODO: move this to a global file save function with its own button in the frontend
-    storyboard.writeFile(filename, JSON.stringify({ meta: meta, items: items }));
+    storyboard.writeFile(filename, { meta: meta, items: items });
 
     res.render('editor/editor', {
         meta: meta,
@@ -337,7 +337,7 @@ router.post('/page/textcentred/id/:id', function (req, res) {
 
     // format and save new item
     items[qId].textcentred = item;
-    storyboard.writeFile(filename, JSON.stringify({ meta: meta, items: items }));
+    storyboard.writeFile(filename, { meta: meta, items: items });
 
     res.render('editor/editor', {
         meta: meta,
@@ -416,7 +416,7 @@ router.post('/page/imagebackground/id/:id', function (req, res) {
     // save the file
     items[qId].imagebackground = item;
     // TODO: move this to a global file save function with its own button in the frontend
-    storyboard.writeFile(filename, JSON.stringify({ meta: meta, items: items }));
+    storyboard.writeFile(filename, { meta: meta, items: items });
 
     res.render('editor/editor', {
         meta: meta,
@@ -498,7 +498,7 @@ router.post('/page/slideshowhorizontal/id/:id', function (req, res) {
 
     items[qId].slideshowhorizontal = item;
     // TODO: move this to a global file save function with its own button in the frontend
-    storyboard.writeFile(filename, JSON.stringify({ meta: meta, items: items }));
+    storyboard.writeFile(filename, { meta: meta, items: items });
 
     res.render('editor/editor', {
         meta: meta,
@@ -573,7 +573,7 @@ router.post('/page/slideshowvertical/id/:id', function (req, res) {
 
     items[qId].slideshowvertical = item;
     // TODO: move this to a global file save function with its own button in the frontend
-    storyboard.writeFile(filename, JSON.stringify({ meta: meta, items: items }));
+    storyboard.writeFile(filename, { meta: meta, items: items });
 
     res.render('editor/editor', {
         meta: meta,
@@ -653,7 +653,7 @@ router.post('/page/videobackground/id/:id', function (req, res, next) {
     // save the file
     items[qId].videobackground = item;
     // TODO: move this to a global file save function with its own button in the frontend
-    storyboard.writeFile(filename, JSON.stringify({ meta: meta, items: items }));
+    storyboard.writeFile(filename, { meta: meta, items: items });
 
     // render main editor window with a success message
     res.render('editor/editor', {
@@ -731,7 +731,7 @@ router.post('/page/videofullpage/id/:id', function (req, res) {
     // save the file
     items[qId].videofullpage = item;
     // TODO: move this to a global file save function with its own button in the frontend
-    storyboard.writeFile(filename, JSON.stringify({ meta: meta, items: items }));
+    storyboard.writeFile(filename, { meta: meta, items: items });
 
     res.render('editor/editor', {
         meta: meta,
@@ -804,7 +804,7 @@ router.post('/page/imageparallax/id/:id', function (req, res) {
 
     items[qId].imageparallax = item;
     // TODO: move this to a global file save function with its own button in the frontend
-    storyboard.writeFile(filename, JSON.stringify({ meta: meta, items: items }));
+    storyboard.writeFile(filename, { meta: meta, items: items });
 
     res.render('editor/editor', {
         meta: meta,
@@ -832,9 +832,7 @@ router.post('/reorder', function (req, res) {
         newItems[i] = oldItem;
     });
 
-    const data = JSON.stringify({ meta: meta, items: newItems });
-    storyboard.writeFile(filename, data);
-
+    storyboard.writeFile(filename, { meta: meta, items: newItems });
     res.json(data);
 });
 
@@ -850,8 +848,7 @@ router.post('/add', function (req, res) {
         }
     });
 
-    const data = JSON.stringify({ meta: meta, items: items });
-    storyboard.writeFile(filename, data);
+    storyboard.writeFile(filename, { meta: meta, items: items });
 
     res.render('editor/editor', {
         meta: meta,
@@ -879,8 +876,7 @@ router.post('/delete/:id', function(req, res) {
         oldItem[mediaType].id = String(i);
     }
 
-    const data = JSON.stringify({ meta: meta, items: items });
-    storyboard.writeFile(filename, data);
+    storyboard.writeFile(filename, { meta: meta, items: items });
 
     res.render('editor/editor', {
         meta: meta,

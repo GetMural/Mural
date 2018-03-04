@@ -205,3 +205,11 @@ $('.mute').click(function () {
     }
   });
 });
+
+$('.sticks_wrapper').click(function() {
+  $('body').toggleClass('paneOpen');
+});
+
+$('nav').on('click', 'li', function() {
+  scrollStory.index(parseInt(this.dataset.id, 10));
+});
