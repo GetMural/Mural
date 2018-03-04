@@ -428,12 +428,7 @@ router.get('/page/slideshowhorizontal', function (req, res) {
     res.render('editor/pages/slideshowhorizontal', {
         partials: {
             formcontrols: 'editor/fragments/formcontrols',
-            credits: 'editor/fragments/credits',
-            image: 'editor/fragments/image',
-            inline: 'editor/fragments/inline',
-            plaintext: 'editor/fragments/plaintext',
-            horizontalslide: 'editor/fragments/horizontalslide',
-            title: 'editor/fragments/title'
+            horizontalslide: 'editor/fragments/horizontalslide'
         }
     });
 });
@@ -441,57 +436,42 @@ router.get('/page/slideshowhorizontal', function (req, res) {
 // Slideshow Horizontal Page with ID
 router.get('/page/slideshowhorizontal/id/:id', function (req, res) {
     storyboard.readFile(filename);
-    var query = req || {};
-    var meta = storyboard.getMeta();
-    var items = storyboard.getItems();
-    if (query.params && query.params.id) {
-        var qId = query.params.id;
-        var item = items[qId].slideshowhorizontal;
-    };
+    const meta = storyboard.getMeta();
+    const items = storyboard.getItems();
+    const qId = req.params.id;
+    const item = items[qId].slideshowhorizontal;
+
+    //hack an image number in here for Hogan.... :'(
+    if (item.images) {
+        item.images.forEach((image, i) => {
+            image.index = i;
+        });
+    }
+
+    console.log(item);
+
     res.render('editor/pages/slideshowhorizontal', {
         id: qId,
         item: item,
         partials: {
-            credits: 'editor/fragments/credits',
             formcontrols: 'editor/fragments/formcontrols',
-            image: 'editor/fragments/image',
-            inline: 'editor/fragments/inline',
-            plaintext: 'editor/fragments/plaintext',
-            horizontalslide: 'editor/fragments/horizontalslide',
-            title: 'editor/fragments/title'
+            horizontalslide: 'editor/fragments/horizontalslide'
         }
     });
 });
+
 router.post('/page/slideshowhorizontal/id/:id', function (req, res) {
     storyboard.readFile(filename);
-    var query = req || {};
-    var meta = storyboard.getMeta();
-    var items = storyboard.getItems();
-    if (query.params && query.params.id) {
-        var qId = query.params.id;
-        var item = items[qId].slideshowhorizontal;
-        var newItem = req.body;
-    };
+    const meta = storyboard.getMeta();
+    const items = storyboard.getItems();
+    const qId = req.params.id;
+    var item = items[qId].slideshowhorizontal;
+    const newItem = req.body;
 
-    // format and save new slideshowhorizontal item
-    var newImages = [];
-    for(var i = 0; i < newItem['title'].length; ++i){
-        var newImage = {
-            title: newItem['title'][i],
-            credits: newItem['credits'][i],
-            src: newItem['src'][i],
-            type: 'image/jpeg'  // TODO: this needs to be dynamic or a form field
-        }
-        newImages.push(newImage);
-    }
-    item['images'] = newImages;
-    var inline = (newItem['inline'] === 'on') ? true : false;
-    item['format'] = { inline: inline };
-    item['title'] = newItem['show_title'];
-    item['text'] = newItem['text'];
+    items[qId].slideshowhorizontal = req.body;
 
-    items[qId].slideshowhorizontal = item;
-    // TODO: move this to a global file save function with its own button in the frontend
+    console.log(req.body);
+
     storyboard.writeFile(filename, { meta: meta, items: items });
 
     res.render('editor/editor', {
@@ -527,9 +507,11 @@ router.get('/page/slideshowvertical/id/:id', function (req, res) {
     };
 
     //hack an image number in here for Hogan.... :'(
-    item.images.forEach((image, i) => {
-        image.index = i;
-    });
+    if (item.images) {
+        item.images.forEach((image, i) => {
+            image.index = i;
+        });
+    }
 
     res.render('editor/pages/slideshowvertical', {
         id: qId,

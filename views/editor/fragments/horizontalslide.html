@@ -4,8 +4,19 @@
 
 	<a href="#" class="js-Remove">Remove</a>
 
-	{{> title}}
+	<div class="form-group">
+      <label class="control-label">Title</label>
+      <input name="images[{{index}}][title]" type="text" class="form-control" value="{{title}}" placeholder="No title"/>
+    </div>
 
-	{{> image}}
+    <div>
+      <label class="control-label">Src</label>
+      <input name="images[{{index}}][src]" type="text" value="{{src}}" placeholder="No source" />
+    </div>
+
+	<div>
+      <label class="control-label">Credits</label>
+      <input name="images[{{index}}][credits]" type="text" value="{{{credits}}}" placeholder="No credits" />
+    </div>
 
 </fieldset>

@@ -4,16 +4,18 @@
 
 	{{#item}}
 
-	  {{> inline}}
-
 	  <fieldset>
 
-		<div class="form-group">
-		  <label for="show_title" class="control-label">Title</label>
-		  <input name="show_title" data-name="show_title" type="text" class="form-control" value="{{#title}}{{title}}{{/title}}"{{^title}} placeholder="No title"{{/title}} />
-		</div>
+			<div class="form-group">
+	  		<input type="hidden" name="id" value="{{id}}">
+		    <label for="title" class="control-label">Title</label>
+		    <input name="title" type="text" class="form-control" value="{{title}}" placeholder="No title"/>
+		  </div>
 
-			{{> plaintext}}
+			<div>
+			  <label for="text">Text</label>
+			  <textarea name="text" placeholder="No text">{{text}}</textarea>
+			</div>
 
 	  </fieldset>
 
@@ -24,24 +26,6 @@
 				{{> horizontalslide}}
 			{{/images}}
 		</div>
-
-	{{/item}}
-
-	{{^item}}
-
-	  {{> inline}}
-
-	  <fieldset>
-
-	    {{> title}}
-
-	    {{> plaintext}}
-
-	  </fieldset>
-
-	  <a href="#" class="js-AddSlide">Slide [+]</a>
-
-	  <div class="js-ContentDynamic"></div>
 
 	{{/item}}
 
