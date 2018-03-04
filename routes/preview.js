@@ -4,21 +4,21 @@ var fs = require('fs');
 
 // TODO: refactor this to a storyboard model
 // Set up the data API
-var data = './data/storyboard.json';
-var meta = {};
-var items = {};
+var file = './data/storyboard.json';
 
 router.get('/', function (req, res, next) {
     // TODO: refactor this to use storyboard model
-    fs.readFile(data, 'utf8', function (err, data) {
-        if (!err) {
-            meta = JSON.parse(data).meta;
-            items = JSON.parse(data).items;
+    fs.readFile(file, 'utf8', function (err, contents) {
+        if (err) {
+            return next(err);
         }
 
+        const data = JSON.parse(contents);
+
         res.render('preview', {
-            items: items,
-            meta: meta,
+            nav: data.nav,
+            items: data.items,
+            meta: data.meta,
             partials: {
                 fb: 'partials/fb',
                 head: 'partials/head',
