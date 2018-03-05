@@ -247,29 +247,30 @@ router.post('/page/meta', function (req, res) {
 // Textcentred Page with ID
 router.get('/page/textcentred/id/:id', function (req, res) {
     storyboard.readFile(filename);
-    var query = req || {};
-    var meta = storyboard.getMeta();
-    var items = storyboard.getItems();
-    if (query.params && query.params.id) {
-        var qId = query.params.id;
-        var item = items[qId].textcentred;
-    };
+    const meta = storyboard.getMeta();
+    const items = storyboard.getItems();
+    const qId = req.params.id;
+    const item = items[qId].textcentred;
+
+    //hack an image number in here for Hogan.... :'(
+    if (item.snippets) {
+        item.snippets.forEach((snippet, i) => {
+            snippet.index = i;
+        });
+    }
 
     res.render('editor/pages/textcentred', {
         id: qId,
         item: item,
         partials: {
-            credits: 'editor/fragments/credits',
             formcontrols: 'editor/fragments/formcontrols',
-            image: 'editor/fragments/image',
             intro: 'editor/fragments/intro',
-            richtext: 'editor/fragments/richtext',
             snippetimage: 'editor/fragments/snippetimage',
-            subtitle: 'editor/fragments/subtitle',
-            title: 'editor/fragments/title'
+            subtitle: 'editor/fragments/subtitle'
         }
     });
 });
+
 router.post('/page/textcentred/id/:id', function (req, res) {
     storyboard.readFile(filename);
     var query = req || {};

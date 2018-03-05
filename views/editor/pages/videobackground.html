@@ -1,71 +1,37 @@
 <form id="frm-item-editor" class="form-horizontal js-VideoBackground" data-id="" action="/editor/page/videobackground/id/{{id}}" method="post">
 
-	{{#item}}
+  {{#item}}
 
-	  <legend class="title">Video Background</legend>
+    <legend class="title">Video Background</legend>
 
-	  {{> fullpage}}
+    {{> fullpage}}
 
-	  <fieldset>
+    <fieldset>
 
-	    {{> title}}
+      {{> title}}
 
-	    {{> subtitle}}
+      {{> subtitle}}
 
-	  </fieldset>
+    </fieldset>
 
-	  <fieldset class="js-VideoSources">
+    <fieldset class="js-VideoSources">
 
-	    <legend>Video Sources</legend>
+      <legend>Video Sources</legend>
 
-	    {{> videosources}}
+      {{> videosources}}
 
-	  </fieldset>
+    </fieldset>
 
-	  <fieldset class="js-PosterImage">
+    <fieldset class="js-PosterImage">
 
-	    <legend>Poster Image</legend>
+      <legend>Poster Image</legend>
 
-	    {{> loadingimage}}
+      {{> loadingimage}}
 
-	  </fieldset>
+    </fieldset>
 
-	{{/item}}
-
-	{{^item}}
-
-	  <legend class="title">Video Background</legend>
-
-	  {{> fullpage}}
-
-	  <fieldset>
-
-	    {{> title}}
-
-	    {{> subtitle}}
-
-	  </fieldset>
-
-	  <fieldset class="js-VideoSources">
-
-	    <legend>Video Sources</legend>
-
-	    {{> videosources}}
-
-	  </fieldset>
-
-	  <fieldset class="js-PosterImage">
-
-	    <legend>Poster Image</legend>
-
-	    {{> loadingimage}}
-
-	  </fieldset>
-
-	{{/item}}
+  {{/item}}
 
   {{> formcontrols}}
 
 </form>
-
-<script type="text/javascript" src="/js/itemeditor.js">
