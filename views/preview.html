@@ -152,7 +152,19 @@
 
             <div class='slide-container'>
               {{#images}}
-                <a href='{{src}}' title='{{title}}' type='{{type}}' data-credits='{{credits}}'>{{title}}</a>
+                <a href='#'
+                  {{#srcmain}}
+                    data-src='{{srcmain}}'
+                  {{/srcmain}}
+                  {{#srcmedium}}
+                     data-src-medium='{{srcmedium}}'
+                  {{/srcmedium}}
+                  {{#srcphone}}
+                    data-src-phone='{{srcphone}}'
+                  {{/srcphone}}
+                  title='{{title}}'
+                  type='{{type}}'
+                  data-credits='{{credits}}'>{{title}}</a>
               {{/images}}
             </div>
           </section>

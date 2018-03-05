@@ -2,34 +2,26 @@
 
   <legend class="title">Slideshow Horizontal</legend>
 
-	{{#item}}
+  {{#item}}
 
-	  <fieldset>
+    <fieldset>
+      <div class="form-group">
+        <input type="hidden" name="id" value="{{id}}">
+        <label for="title" class="control-label">Title</label>
+        <input name="title" type="text" class="form-control" value="{{title}}" placeholder="No title"/>
+      </div>
+    </fieldset>
 
-			<div class="form-group">
-	  		<input type="hidden" name="id" value="{{id}}">
-		    <label for="title" class="control-label">Title</label>
-		    <input name="title" type="text" class="form-control" value="{{title}}" placeholder="No title"/>
-		  </div>
+    <a href="#" class="js-AddSlide">Slide [+]</a>
 
-			<div>
-			  <label for="text">Text</label>
-			  <textarea name="text" placeholder="No text">{{text}}</textarea>
-			</div>
+    <div class="js-ContentDynamic">
+      {{#images}}
+        {{> slide}}
+      {{/images}}
+    </div>
 
-	  </fieldset>
-
-	  <a href="#" class="js-AddSlide">Slide [+]</a>
-
-	  <div class="js-ContentDynamic">
-			{{#images}}
-				{{> horizontalslide}}
-			{{/images}}
-		</div>
-
-	{{/item}}
+  {{/item}}
 
   {{> formcontrols}}
-
 
 </form>

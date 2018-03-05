@@ -108,15 +108,9 @@ router.get('/fragment/fullpage', function (req, res) {
     });
 });
 
-// Horizontal Slide Fragment
-router.get('/fragment/horizontalslide', function (req, res) {
-    res.render('editor/fragments/horizontalslide', {
-        partials: {
-            image: 'editor/fragments/image',
-            credits: 'editor/fragments/credits',
-            title: 'editor/fragments/title'
-        }
-    });
+// Slide Fragment
+router.get('/fragment/slide', function (req, res) {
+    res.render('editor/fragments/slide');
 });
 
 // Image Fragment
@@ -168,11 +162,6 @@ router.get('/fragment/richtext', function (req, res) {
     });
 });
 
-// Vertical Slide Fragment
-router.get('/fragment/verticalslide', function (req, res) {
-    res.render('editor/fragments/verticalslide');
-});
-
 // Snippet Image Fragment
 router.get('/fragment/snippetimage', function (req, res) {
     res.render('editor/fragments/snippetimage', {
@@ -220,6 +209,7 @@ router.get('/page/meta', function (req, res) {
         }
     });
 });
+
 router.post('/page/meta', function (req, res) {
     storyboard.readFile(filename);
     var newMeta = req.body;
@@ -250,22 +240,6 @@ router.post('/page/meta', function (req, res) {
         message: 'Meta Updated',
         partials: {
             editornav: 'editor/fragments/editornav'
-        }
-    });
-});
-
-// Textcentred Page
-router.get('/page/textcentred', function (req, res) {
-    res.render('editor/pages/textcentred', {
-        partials: {
-            credits: 'editor/fragments/credits',
-            formcontrols: 'editor/fragments/formcontrols',
-            image: 'editor/fragments/image',
-            intro: 'editor/fragments/intro',
-            richtext: 'editor/fragments/richtext',
-            snippetimage: 'editor/fragments/snippetimage',
-            subtitle: 'editor/fragments/subtitle',
-            title: 'editor/fragments/title'
         }
     });
 });
@@ -344,20 +318,6 @@ router.post('/page/textcentred/id/:id', function (req, res) {
     });
 });
 
-// Imagebackground Page
-router.get('/page/imagebackground', function (req, res) {
-    res.render('editor/pages/imagebackground', {
-        partials: {
-            formcontrols: 'editor/fragments/formcontrols',
-            fullpage: 'editor/fragments/fullpage',
-            imagesources: 'editor/fragments/imagesources',
-            text: 'editor/fragments/plaintext',
-            title: 'editor/fragments/title',
-            subtitle: 'editor/fragments/subtitle'
-        }
-    });
-});
-
 // Imagebackground Page with ID
 router.get('/page/imagebackground/id/:id', function (req, res) {
     storyboard.readFile(filename);
@@ -423,16 +383,6 @@ router.post('/page/imagebackground/id/:id', function (req, res) {
     });
 });
 
-// Slideshow Horizontal Page
-router.get('/page/slideshowhorizontal', function (req, res) {
-    res.render('editor/pages/slideshowhorizontal', {
-        partials: {
-            formcontrols: 'editor/fragments/formcontrols',
-            horizontalslide: 'editor/fragments/horizontalslide'
-        }
-    });
-});
-
 // Slideshow Horizontal Page with ID
 router.get('/page/slideshowhorizontal/id/:id', function (req, res) {
     storyboard.readFile(filename);
@@ -448,14 +398,12 @@ router.get('/page/slideshowhorizontal/id/:id', function (req, res) {
         });
     }
 
-    console.log(item);
-
     res.render('editor/pages/slideshowhorizontal', {
         id: qId,
         item: item,
         partials: {
             formcontrols: 'editor/fragments/formcontrols',
-            horizontalslide: 'editor/fragments/horizontalslide'
+            slide: 'editor/fragments/slide'
         }
     });
 });
@@ -470,8 +418,6 @@ router.post('/page/slideshowhorizontal/id/:id', function (req, res) {
 
     items[qId].slideshowhorizontal = req.body;
 
-    console.log(req.body);
-
     storyboard.writeFile(filename, { meta: meta, items: items });
 
     res.render('editor/editor', {
@@ -481,16 +427,6 @@ router.post('/page/slideshowhorizontal/id/:id', function (req, res) {
         message: 'Slideshow Horizontal Updated',
         partials: {
             editornav: 'editor/fragments/editornav'
-        }
-    });
-});
-
-// Slideshow Vertical Page
-router.get('/page/slideshowvertical', function (req, res) {
-    res.render('editor/pages/slideshowvertical', {
-        partials: {
-            formcontrols: 'editor/fragments/formcontrols',
-            verticalslide: 'editor/fragments/verticalslide'
         }
     });
 });
@@ -518,18 +454,17 @@ router.get('/page/slideshowvertical/id/:id', function (req, res) {
         item: item,
         partials: {
             formcontrols: 'editor/fragments/formcontrols',
-            verticalslide: 'editor/fragments/verticalslide'
+            slide: 'editor/fragments/slide'
         }
     });
 });
+
 router.post('/page/slideshowvertical/id/:id', function (req, res) {
     storyboard.readFile(filename);
     const meta = storyboard.getMeta();
     const items = storyboard.getItems();
     const qId = req.params.id;
     items[qId].slideshowvertical = req.body;
-
-    console.log(req.body);
 
     storyboard.writeFile(filename, { meta: meta, items: items });
 
@@ -540,21 +475,6 @@ router.post('/page/slideshowvertical/id/:id', function (req, res) {
         message: 'Slideshow Vertical Updated',
         partials: {
             editornav: 'editor/fragments/editornav'
-        }
-    });
-});
-
-// Videobackground Page
-router.get('/page/videobackground', function (req, res, next) {
-    res.render('editor/pages/videobackground', {
-        partials: {
-            formcontrols: 'editor/fragments/formcontrols',
-            fullpage: 'editor/fragments/fullpage',
-            loadingimage: 'editor/fragments/loadingimage',
-            title: 'editor/fragments/title',
-            subtitle: 'editor/fragments/subtitle',
-            videobackground: 'editor/pages/videobackground',
-            videosources: 'editor/fragments/videosources'
         }
     });
 });
@@ -584,6 +504,7 @@ router.get('/page/videobackground/id/:id', function (req, res, next) {
         }
     });
 });
+
 router.post('/page/videobackground/id/:id', function (req, res, next) {
     storyboard.readFile(filename);
     var query = req || {};
@@ -625,20 +546,6 @@ router.post('/page/videobackground/id/:id', function (req, res, next) {
     });
 });
 
-// Videofullpage Page
-router.get('/page/videofullpage', function (req, res) {
-    res.render('editor/pages/videofullpage', {
-        partials: {
-            formcontrols: 'editor/fragments/formcontrols',
-            fullpage: 'editor/fragments/fullpage',
-            loadingimage: 'editor/fragments/loadingimage',
-            text: 'editor/fragments/plaintext',
-            title: 'editor/fragments/title',
-            videosources: 'editor/fragments/videosources'
-        }
-    });
-});
-
 // Videofullpage Page with ID
 router.get('/page/videofullpage/id/:id', function (req, res) {
     storyboard.readFile(filename);
@@ -662,6 +569,7 @@ router.get('/page/videofullpage/id/:id', function (req, res) {
         }
     });
 });
+
 router.post('/page/videofullpage/id/:id', function (req, res) {
     storyboard.readFile(filename);
     var query = req || {};
@@ -702,19 +610,6 @@ router.post('/page/videofullpage/id/:id', function (req, res) {
     });
 });
 
-// Imageparallax Page
-router.get('/page/imageparallax', function (req, res) {
-    res.render('editor/pages/imageparallax', {
-        partials: {
-            formcontrols: 'editor/fragments/formcontrols',
-            fullpage: 'editor/fragments/fullpage',
-            imagesources: 'editor/fragments/imagesources',
-            subtitle: 'editor/fragments/subtitle',
-            title: 'editor/fragments/title'
-        }
-    });
-});
-
 // Videofullpage Page with ID
 router.get('/page/imageparallax/id/:id', function (req, res) {
     storyboard.readFile(filename);
@@ -737,6 +632,7 @@ router.get('/page/imageparallax/id/:id', function (req, res) {
         }
     });
 });
+
 router.post('/page/imageparallax/id/:id', function (req, res) {
     storyboard.readFile(filename);
     var query = req || {};

@@ -2,23 +2,25 @@
 
   <legend class="title">Vertical Slideshow</legend>
 
-	{{#item}}
+  {{#item}}
 
-		<div class="form-group">
-  		<input type="hidden" name="id" value="{{id}}">
-	    <label for="title" class="control-label">Title</label>
-	    <input name="title" type="text" class="form-control" value="{{title}}" placeholder="No title"/>
-	  </div>
+    <fieldset>
+      <div class="form-group">
+        <input type="hidden" name="id" value="{{id}}">
+        <label for="title" class="control-label">Title</label>
+        <input name="title" type="text" class="form-control" value="{{title}}" placeholder="No title"/>
+      </div>
+    </fieldset>
 
-	  <a href="#" class="js-AddSlide">Slide [+]</a>
+    <a href="#" class="js-AddSlide">Slide [+]</a>
 
-	  <div class="js-ContentDynamic">
-			{{#images}}
-				{{> verticalslide}}
-			{{/images}}
-		</div>
+    <div class="js-ContentDynamic">
+      {{#images}}
+        {{> slide}}
+      {{/images}}
+    </div>
 
-	{{/item}}
+  {{/item}}
 
   {{> formcontrols}}
 

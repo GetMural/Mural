@@ -10479,13 +10479,17 @@ const isMobile = window.isMobile;
 
 const WINDOW_WIDTH = $(window).width();
 let scrKey;
+let attrKey;
 
 if (WINDOW_WIDTH > 1024) {
   scrKey = 'src';
+  attrKey = 'src';
 } else if (WINDOW_WIDTH > 600) {
   scrKey = 'srcMedium';
+  attrKey = 'src-medium';
 } else {
   scrKey = 'srcPhone';
+  attrKey = 'src-phone';
 }
 
 const $story = $('#scrollytelling');
@@ -10546,6 +10550,7 @@ function loadItem (item) {
       item.el.find('.slide-container a').get(),
       {
         container: item.el.find('.blueimp-gallery')[0],
+        urlProperty: attrKey,
         carousel: true,
         titleElement: '.slide-caption',
         startSlideshow: false,

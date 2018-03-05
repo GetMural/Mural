@@ -11,7 +11,7 @@ itemEditor.on('click', '.js-Remove', function (e) {
 itemEditor.on('click', '.js-AddSlide', function (e) {
 	e.preventDefault();
 	var textEl = document.createElement('div');
-	var textBox = '/editor/fragment/verticalslide';
+	var textBox = '/editor/fragment/slide';
 	$(textEl).load(textBox, function () {
 		itemEditor.find('.js-ContentDynamic').append($(textEl).html());
 		updateIndices();
