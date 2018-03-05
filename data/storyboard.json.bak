@@ -182,34 +182,31 @@
     {
       "slideshowhorizontal": {
         "id": "5",
-        "format": {
-          "inline": true
-        },
         "title": "Morning coffee by the river",
         "text": "<p>Wake up - sit on the bike or take a walk - overcome 'obstacles' - take your seat - enjoy your morning coffee!<\/p>",
         "images": [
           {
             "title": "Some like it grilled...",
             "credits": "\u0110or\u0111e \u0110okovi\u0107",
-            "src": "http:\/\/storyteller-dev.lab.sourcefabric.org\/images\/cache\/1200x800\/crop_0_0_2400_1600\/images%7Ccms-image-000000513.jpg",
+            "srcmain": "http:\/\/storyteller-dev.lab.sourcefabric.org\/images\/cache\/1200x800\/crop_0_0_2400_1600\/images%7Ccms-image-000000513.jpg",
             "type": "image\/jpeg"
           },
           {
             "title": "...while some prefer it cooked",
             "credits": "Ljuba Rankovi\u0107",
-            "src": "http:\/\/storyteller-dev.lab.sourcefabric.org\/images\/cache\/1200x800\/crop_0_0_1600_1067\/images%7Ccms-image-000000508.jpg",
+            "srcmain": "http:\/\/storyteller-dev.lab.sourcefabric.org\/images\/cache\/1200x800\/crop_0_0_1600_1067\/images%7Ccms-image-000000508.jpg",
             "type": "image\/jpeg"
           },
           {
             "title": "Equestrian Club in Deguri\u0107",
             "credits": "\u0110or\u0111e \u0110okovi\u0107",
-            "src": "http:\/\/storyteller-dev.lab.sourcefabric.org\/images\/cache\/1200x800\/crop_0_0_2400_1600\/images%7Ccms-image-000000515.jpg",
+            "srcmain": "http:\/\/storyteller-dev.lab.sourcefabric.org\/images\/cache\/1200x800\/crop_0_0_2400_1600\/images%7Ccms-image-000000515.jpg",
             "type": "image\/jpeg"
           },
           {
             "title": "The best refreshment (and a little bit of shock) is getting into the cold water",
             "credits": "\u0110or\u0111e \u0110okovi\u0107",
-            "src": "http:\/\/storyteller-dev.lab.sourcefabric.org\/images\/cache\/1200x800\/crop_0_0_2400_1600\/images%7Ccms-image-000000512.jpg",
+            "srcmain": "http:\/\/storyteller-dev.lab.sourcefabric.org\/images\/cache\/1200x800\/crop_0_0_2400_1600\/images%7Ccms-image-000000512.jpg",
             "type": "image\/jpeg"
           }
         ]
@@ -370,8 +367,8 @@
         "navthumb": "http:\/\/storyteller-dev.lab.sourcefabric.org\/images\/cache\/215x115\/crop\/images%7Ccms-image-000000455.jpg",
         "text": "<p>There are around 70 caves discovered in the gorge. The biggest one is Deguri\u0107ka cave, but others are interesting as well - either for their bat colonies, pre-historic artifacts, or just the beauty of the cave jewelry.<\/p><p>Wildlife is diverse - otter, lynx, viper, brown trout are just the most significant representatives. <\/p>",
         "video": {
-          "mp4": "\/attachment\/253\/vodopad01.mp4",
-          "webm": "\/attachment\/254\/vodopad01.webm"
+          "mp4": "http:\/\/storyteller-dev.lab.sourcefabric.org\/attachment\/253\/vodopad01.mp4",
+          "webm": "http:\/\/storyteller-dev.lab.sourcefabric.org\/attachment\/254\/vodopad01.webm"
         },
         "image": {
           "loading": "http:\/\/storyteller-dev.lab.sourcefabric.org\/images\/cache\/1920x1200\/crop\/images%7Ccms-image-000000455.jpg"
@@ -381,25 +378,22 @@
     {
       "slideshowhorizontal": {
         "id": "13",
-        "format": {
-          "inline": true
-        },
         "images": [
           {
             "title": "One of several so-called 'knitted' dams",
             "credits": "photo: \u0110or\u0111e \u0110okovi\u0107",
-            "src": "http:\/\/storyteller-dev.lab.sourcefabric.org\/images\/cache\/1920x1200\/crop\/images%7Ccms-image-000000538.jpg",
+            "srcmain": "http:\/\/storyteller-dev.lab.sourcefabric.org\/images\/cache\/1920x1200\/crop\/images%7Ccms-image-000000538.jpg",
             "type": "text\/jpg"
           },
           {
             "title": "Anti-erosive dam",
             "credits": "photo: \u0110or\u0111e \u0110okovi\u0107",
-            "src": "http:\/\/storyteller-dev.lab.sourcefabric.org\/images\/cache\/1920x1200\/crop\/images%7Ccms-image-000000480.jpg"
+            "srcmain": "http:\/\/storyteller-dev.lab.sourcefabric.org\/images\/cache\/1920x1200\/crop\/images%7Ccms-image-000000480.jpg"
           },
           {
             "title": "Deguri\u0107 Dam",
             "credits": "photo: \u0110or\u0111e \u0110okovi\u0107",
-            "src": "http:\/\/storyteller-dev.lab.sourcefabric.org\/images\/cache\/1920x1200\/crop\/images%7Ccms-image-000000457.JPG"
+            "srcmain": "http:\/\/storyteller-dev.lab.sourcefabric.org\/images\/cache\/1920x1200\/crop\/images%7Ccms-image-000000457.JPG"
           }
         ]
       }
