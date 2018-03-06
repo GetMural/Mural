@@ -256,6 +256,23 @@ router.get('/page/textcentred/id/:id', function (req, res) {
     if (item.snippets) {
         item.snippets.forEach((snippet, i) => {
             snippet.index = i;
+            snippet.options = [
+                {
+                    value: 'left',
+                    txt: 'left',
+                    selected: (snippet.align === 'left')
+                },
+                {
+                    value: 'center',
+                    txt: 'center',
+                    selected: (snippet.align === 'center')
+                },
+                {
+                    value: 'right',
+                    txt: 'right',
+                    selected: (snippet.align === 'right')
+                }
+            ];
         });
     }
 
@@ -273,39 +290,15 @@ router.get('/page/textcentred/id/:id', function (req, res) {
 
 router.post('/page/textcentred/id/:id', function (req, res) {
     storyboard.readFile(filename);
-    var query = req || {};
-    var meta = storyboard.getMeta();
-    var items = storyboard.getItems();
-    if (query.params && query.params.id) {
-        var qId = query.params.id;
-        var item = items[qId].textcentred;
-        var newItem = req.body;
-    };
+    const meta = storyboard.getMeta();
+    const items = storyboard.getItems();
+    const qId = req.params.id;
+    const item = items[qId].textcentred;
+    const newItem = req.body;
 
+    console.log(newItem);
     // format and save new item
-    // TODO: item['format'] = { inline: true }; is missing from form
-    item['light'] = (newItem['light'] === 'on') ? true : false;
-    item['subtitle'] = newItem['subtitle'];
-    item['title'] = newItem['tc_title'];
-    // TODO: item['navlevel'] is missing from form
-    item['intro'] = newItem['intro'];
-
-    newSnippets = []
-    for(var i = 0; i < newItem['title'].length; ++i){
-
-        var newSnippet = {
-            title: newItem['title'][i],
-            credits: newItem['credits'][i],
-            src: newItem['src'][i],
-            text: newItem['text'][i],
-            align: newItem['align'][i]
-        };
-        newSnippets.push(newSnippet);
-    }
-    item['snippets'] = newSnippets;
-
-    // format and save new item
-    items[qId].textcentred = item;
+    items[qId].textcentred = newItem;
     storyboard.writeFile(filename, { meta: meta, items: items });
 
     res.render('editor/editor', {
