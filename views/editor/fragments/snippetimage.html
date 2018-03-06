@@ -1,4 +1,4 @@
-<fieldset class="js-SnippetImage">
+<fieldset class="js-SnippetImage js-Dynamic">
   <legend>Image</legend>
 
 	<a href="#" class="js-Remove">Remove</a>
@@ -7,7 +7,12 @@
         <label class="control-label">Align:</label>
         <select name="snippets[{{index}}][align]">
            {{#options}}
-            <option value="{{value}}" {{#selected}} selected {{/selected}}>{{txt}}</option>
+              <option value="{{value}}" {{#selected}} selected {{/selected}}>{{txt}}</option>
+           {{/options}}
+           {{^options}}
+              <option value="left">left</option>
+              <option value="center">center</option>
+              <option value="right">right</option>
            {{/options}}
         </select>
     </div>
