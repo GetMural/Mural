@@ -2,68 +2,36 @@
 
   <legend class="title">Video Fullpage</legend>
 
-	{{#item}}
+  {{#item}}
 
-	  {{> fullpage}}
+    {{> fullpage}}
 
-	  <fieldset>
+    <fieldset>
 
-	    {{> title}}
+      {{> title}}
 
-	    {{> plaintext}}
+      {{> plaintext}}
 
-	  </fieldset>
+    </fieldset>
 
-	  <fieldset class="js-VideoSources">
+    <fieldset class="js-VideoSources">
 
-	    <legend>Video Sources</legend>
+      <legend>Video Sources</legend>
 
-	    {{> videosources}}
+      {{> videosources}}
 
-	  </fieldset>
+    </fieldset>
 
-	  <fieldset class="js-PosterImage">
+    <fieldset class="js-PosterImage">
 
-	    <legend>Poster Image</legend>
+      <legend>Poster Image</legend>
 
-	    {{> loadingimage}}
+      {{> loadingimage}}
 
-	  </fieldset>
+    </fieldset>
 
-	{{/item}}
-
-	{{^item}}
-
-		{{> fullpage}}
-
-	  <fieldset>
-
-	    {{> title}}
-
-	    {{> plaintext}}
-
-	  </fieldset>
-
-	  <fieldset class="js-VideoSources">
-
-	    <legend>Video Sources</legend>
-
-	    {{> videosources}}
-
-	  </fieldset>
-
-	  <fieldset class="js-PosterImage">
-
-	    <legend>Poster Image</legend>
-
-	    {{> loadingimage}}
-
-	  </fieldset>
-
-	{{/item}}
+  {{/item}}
 
   {{> formcontrols}}
 
 </form>
-
-<script type="text/javascript" src="/js/itemeditor.js">

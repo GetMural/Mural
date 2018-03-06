@@ -247,64 +247,58 @@ router.post('/page/meta', function (req, res) {
 // Textcentred Page with ID
 router.get('/page/textcentred/id/:id', function (req, res) {
     storyboard.readFile(filename);
-    var query = req || {};
-    var meta = storyboard.getMeta();
-    var items = storyboard.getItems();
-    if (query.params && query.params.id) {
-        var qId = query.params.id;
-        var item = items[qId].textcentred;
-    };
+    const meta = storyboard.getMeta();
+    const items = storyboard.getItems();
+    const qId = req.params.id;
+    const item = items[qId].textcentred;
+
+    //hack an image number in here for Hogan.... :'(
+    if (item.snippets) {
+        item.snippets.forEach((snippet, i) => {
+            snippet.index = i;
+            snippet.options = [
+                {
+                    value: 'left',
+                    txt: 'left',
+                    selected: (snippet.align === 'left')
+                },
+                {
+                    value: 'center',
+                    txt: 'center',
+                    selected: (snippet.align === 'center')
+                },
+                {
+                    value: 'right',
+                    txt: 'right',
+                    selected: (snippet.align === 'right')
+                }
+            ];
+        });
+    }
 
     res.render('editor/pages/textcentred', {
         id: qId,
         item: item,
         partials: {
-            credits: 'editor/fragments/credits',
             formcontrols: 'editor/fragments/formcontrols',
-            image: 'editor/fragments/image',
             intro: 'editor/fragments/intro',
-            richtext: 'editor/fragments/richtext',
             snippetimage: 'editor/fragments/snippetimage',
-            subtitle: 'editor/fragments/subtitle',
-            title: 'editor/fragments/title'
+            subtitle: 'editor/fragments/subtitle'
         }
     });
 });
+
 router.post('/page/textcentred/id/:id', function (req, res) {
     storyboard.readFile(filename);
-    var query = req || {};
-    var meta = storyboard.getMeta();
-    var items = storyboard.getItems();
-    if (query.params && query.params.id) {
-        var qId = query.params.id;
-        var item = items[qId].textcentred;
-        var newItem = req.body;
-    };
+    const meta = storyboard.getMeta();
+    const items = storyboard.getItems();
+    const qId = req.params.id;
+    const item = items[qId].textcentred;
+    const newItem = req.body;
 
+    console.log(newItem);
     // format and save new item
-    // TODO: item['format'] = { inline: true }; is missing from form
-    item['light'] = (newItem['light'] === 'on') ? true : false;
-    item['subtitle'] = newItem['subtitle'];
-    item['title'] = newItem['tc_title'];
-    // TODO: item['navlevel'] is missing from form
-    item['intro'] = newItem['intro'];
-
-    newSnippets = []
-    for(var i = 0; i < newItem['title'].length; ++i){
-
-        var newSnippet = {
-            title: newItem['title'][i],
-            credits: newItem['credits'][i],
-            src: newItem['src'][i],
-            text: newItem['text'][i],
-            align: newItem['align'][i]
-        };
-        newSnippets.push(newSnippet);
-    }
-    item['snippets'] = newSnippets;
-
-    // format and save new item
-    items[qId].textcentred = item;
+    items[qId].textcentred = newItem;
     storyboard.writeFile(filename, { meta: meta, items: items });
 
     res.render('editor/editor', {

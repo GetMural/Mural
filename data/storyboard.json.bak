@@ -107,18 +107,14 @@
         "snippets": [
           {
             "title": "",
-            "align": {
-              "right": true
-            },
+            "align": "right",
             "src": "http:\/\/storyteller-dev.lab.sourcefabric.org\/get_img?ImageRatio=15&ImageWidth=360&ImageHeight=240&ImageId=520",
             "credits": "&copy; \u0110or\u0111e \u0110okovi\u0107",
             "text": "<p>Another layer that makes Gradac gorge interesting is its man-made structures. The railway Belgrade-Bar is situated here with all its bridges, tunnels and even a small railway station. Additionally, there are smaller and bigger dams made of concrete or knitted out of the tree branches. This balanced combination of artificial vs natural brought added value to site attraction.<\/p><p>Being here forever, firstly as a natural shelter for prehistoric people (more than 70 caves!), as well as a line of defense against the invaders in medieval times, to the usage of water power for milling - the gorge of Gradac has several kinds of historic artifacts that are an inherent part of its charm. <\/p><p>Explore the next chapters, and consider yourself invited to visit!<\/p>"
           },
           {
             "title": "Blah Blah Blah",
-            "align": {
-              "left": true
-            },
+            "align": "left",
             "src": "http:\/\/storyteller-dev.lab.sourcefabric.org\/get_img?ImageRatio=15&ImageWidth=360&ImageHeight=240&ImageId=520",
             "credits": "&copy; \u0110or\u0111e \u0110okovi\u0107",
             "text": "<p>Ut nec rutrum felis, ac volutpat risus. Maecenas congue quis erat nec tempus. Ut tincidunt, tortor vel porttitor varius, erat nibh hendrerit quam, sit amet gravida sem massa id nulla. Sed nunc eros, facilisis a libero eget, vestibulum tristique metus. Cras commodo magna sed commodo varius. Praesent auctor nibh id purus consequat, ac efficitur urna sollicitudin. Integer bibendum justo ac magna tristique, at mattis nisl interdum.<\/p>"
@@ -241,9 +237,7 @@
         "snippets": [
           {
             "title": "",
-            "align": {
-              "left": true
-            },
+            "align": "left",
             "src": "http:\/\/storyteller-dev.lab.sourcefabric.org\/get_img?ImageRatio=15&ImageWidth=360&ImageHeight=240&ImageId=472",
             "credits": "&copy; \u0110or\u0111e \u0110okovi\u0107",
             "text": "<p>Quo no habemus ancillae lobortis. Alienum voluptatum per ad. Ei sit malis liber movet. Graece dignissim per ut. Ex affert quaeque reformidans per, option ornatus te nec. Ea integre insolens corrumpit quo, nec eu eligendi oportere.<\/p><p>Liber dicam qui no, an eum justo mnesarchum, vitae quodsi epicuri id nam. No qui tale cibo oratio. Te usu pertinax delicata imperdiet. Quo evertitur quaerendum eu, ut vis omnium vocent, vis assum constituto ei.<\/p>"
@@ -285,18 +279,14 @@
         "snippets": [
           {
             "title": "",
-            "align": {
-              "right": true
-            },
+            "align": "right",
             "src": "http:\/\/storyteller-dev.lab.sourcefabric.org\/get_img?ImageRatio=20&ImageWidth=320&ImageHeight=213&ImageId=536",
             "credits": "&copy; Ljuba Rankovi\u0107",
             "text": "<p>For those who go through the gorge on foot, railway tracks are a sort of highway through the wilderness. It is possible to go through railway tunnels (although a close encounter with the train inside is not pleasant at all) and bridges to quickly get to desired sites, circumventing the route that for some locations would take twice as much time if taken regularly.<\/p>"
           },
           {
             "title": "",
-            "align": {
-              "left": true
-            },
+            "align": "left",
             "src": "http:\/\/storyteller-dev.lab.sourcefabric.org\/get_img?ImageRatio=20&ImageWidth=200&ImageHeight=300&ImageId=537",
             "credits": "&copy; Ljuba Rankovi\u0107",
             "text": "<p>About the Belgrade\u2013Bar railway (source: Wikipedia): it is a railway connecting the Serbian capital of Belgrade with the town of Bar, a major seaport in Montenegro. Valjevo - U\u017eice section (the one where Gradac is) was completed in 1972.<\/p><p>Part of the railway that goes through Gradac gorge only has four bridges and ten tunnels, ranging in length from 80 meters, to 320 meters.<\/p>"
@@ -317,9 +307,7 @@
         "snippets": [
           {
             "title": "Anti-erosive dam in winter",
-            "align": {
-              "right": true
-            },
+            "align": "right",
             "src": "http:\/\/storyteller-dev.lab.sourcefabric.org\/get_img?ImageRatio=25&ImageWidth=256&ImageHeight=192&ImageId=481",
             "credits": "&copy; Ljuba Rankovi\u0107",
             "text": "<p>Then there are erosive dams.<\/p><p>At the end of winter, when the snow melts down in the mountains, huge amounts of water roll rocks, branches and whole trees downstream. It is important to be able to control these extreme cases of natural rage because a few kilometers later there are vulnurable knitted dams that can get damaged otherwise.<\/p>"

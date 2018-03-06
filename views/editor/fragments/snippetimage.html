@@ -1,21 +1,40 @@
-<fieldset class="js-SnippetImage">
+<fieldset class="js-SnippetImage js-Dynamic">
   <legend>Image</legend>
 
 	<a href="#" class="js-Remove">Remove</a>
 
     <div class="form-group">
-        <label for="align" class="control-label">Align:</label>
-        <select name="align">
-            <option {{#align}}{{#center}}selected{{/center}}{{/align}} value="center">center</option>
-            <option {{#align}}{{#left}}selected{{/left}}{{/align}} value="left">left</option>
-            <option {{#align}}{{#right}}selected{{/right}}{{/align}} value="right">right</option>
+        <label class="control-label">Align:</label>
+        <select name="snippets[{{index}}][align]">
+           {{#options}}
+              <option value="{{value}}" {{#selected}} selected {{/selected}}>{{txt}}</option>
+           {{/options}}
+           {{^options}}
+              <option value="left">left</option>
+              <option value="center">center</option>
+              <option value="right">right</option>
+           {{/options}}
         </select>
     </div>
 
-  {{> title}}
+  <div class="form-group">
+    <label class="control-label">Title</label>
+    <input name="snippets[{{index}}][title]" type="text" class="form-control" value="{{title}}" placeholder="No title" />
+  </div>
 
-  {{> image}}
+  <div class="form-group">
+    <label>Src</label>
+    <input name="snippets[{{index}}][src]" type="text" value="{{src}}" placeholder="No source" />
+  </div>
 
-  {{> richtext}}
+  <div class="form-group">
+    <label class="control-label">Credits</label>
+    <input name="snippets[{{index}}][credits]" type="text" value="{{credits}}" placeholder="No credits" />
+  </div>
+
+  <div class="form-group">
+    <label class="control-label">Text</label>
+    <textarea name="snippets[{{index}}][text]" class="js-RichText" placeholder="No text">{{text}}</textarea>
+  </div>
 
 </fieldset>
