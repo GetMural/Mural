@@ -1,10 +1,10 @@
 {
-  "name": "getmural",
+  "name": "Mural",
   "version": "0.0.1",
   "description": "Longform Storytelling",
-  "main": "app.js",
+  "main": "main.js",
   "scripts": {
-    "start": "node ./bin/www",
+    "start": "electron .",
     "clean": "rm -rf ./public/dist/index.html",
     "build": "npm run clean && npm run build:index && npm run build:client",
     "build:index": "./node_modules/gulp/bin/gulp.js index",
@@ -29,6 +29,7 @@
     "body-parser": "~1.18.2",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
+    "electron": "^1.8.2",
     "express": "~4.15.5",
     "gulp": "^3.9.1",
     "gulp-hogan": "^2.0.0",

@@ -1,24 +1,26 @@
 var express = require('express');
 var router = express.Router();
 var fs = require('fs');
+var path = require('path');
 
 // TODO: refactor this to a storyboard model
 // Set up the data API
-var file = './data/storyboard.json';
+var filename = path.join(__dirname, '../data/storyboard.json');
 
 router.get('/', function (req, res, next) {
     // TODO: refactor this to use storyboard model
-    fs.readFile(file, 'utf8', function (err, contents) {
+    fs.readFile(filename, 'utf8', function (err, data) {
         if (err) {
-            return next(err);
+            console.log("There was an error reading the storyboard file: ", err);
+            res.render('preview', {});
         }
 
-        const data = JSON.parse(contents);
+        const jsonData = JSON.parse(data);
 
         res.render('preview', {
-            nav: data.nav,
-            items: data.items,
-            meta: data.meta,
+            nav: jsonData.nav,
+            items: jsonData.items,
+            meta: jsonData.meta,
             partials: {
                 fb: 'partials/fb',
                 head: 'partials/head',

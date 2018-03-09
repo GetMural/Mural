@@ -4,7 +4,7 @@ var router = express.Router();
 var fs = require('fs');
 var Storyboard = require('../models/storyboard');
 
-var filename = './data/storyboard.json';
+var filename = path.join(__dirname, '../data/storyboard.json');
 var storyboard = new Storyboard(filename);
 // read file first
 storyboard.readFile(filename);
