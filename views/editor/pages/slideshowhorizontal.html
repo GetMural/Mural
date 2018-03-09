@@ -2,53 +2,26 @@
 
   <legend class="title">Slideshow Horizontal</legend>
 
-	{{#item}}
+  {{#item}}
 
-	  {{> inline}}
+    <fieldset>
+      <div class="form-group">
+        <input type="hidden" name="id" value="{{id}}">
+        <label for="title" class="control-label">Title</label>
+        <input name="title" type="text" class="form-control" value="{{title}}" placeholder="No title"/>
+      </div>
+    </fieldset>
 
-	  <fieldset>
+    <a href="#" class="js-AddSlide">Slide [+]</a>
 
-		<div class="form-group">
-		  <label for="show_title" class="control-label">Title</label>
-		  <input name="show_title" data-name="show_title" type="text" class="form-control" value="{{#title}}{{title}}{{/title}}"{{^title}} placeholder="No title"{{/title}} />
-		</div>
+    <div class="js-ContentDynamic">
+      {{#images}}
+        {{> slide}}
+      {{/images}}
+    </div>
 
-			{{> plaintext}}
-
-	  </fieldset>
-
-	  <a href="#" class="js-AddSlide">Slide [+]</a>
-
-	  <div class="js-ContentDynamic">
-			{{#images}}
-				{{> horizontalslide}}
-			{{/images}}
-		</div>
-
-	{{/item}}
-
-	{{^item}}
-
-	  {{> inline}}
-
-	  <fieldset>
-
-	    {{> title}}
-
-	    {{> plaintext}}
-
-	  </fieldset>
-
-	  <a href="#" class="js-AddSlide">Slide [+]</a>
-
-	  <div class="js-ContentDynamic"></div>
-
-	{{/item}}
+  {{/item}}
 
   {{> formcontrols}}
 
-
 </form>
-
-<script src="/js/slideshowhorizontal.js"></script>
-<script type="text/javascript" src="/js/itemeditor.js">

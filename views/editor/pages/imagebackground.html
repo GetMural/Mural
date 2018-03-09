@@ -2,56 +2,35 @@
 
   <legend class="title">Image Background</legend>
 
-	{{#item}}
+  {{#item}}
 
-	  {{> fullpage}}
+    {{> fullpage}}
 
-	  <fieldset>
+    <fieldset>
 
-	      <!--
-	        Nav Level
-	        Nav Thumb
-	      -->
+        <!--
+          Nav Level
+          Nav Thumb
+        -->
 
-	    {{> title}}
+      {{> title}}
 
-	    {{> subtitle}}
+      {{> subtitle}}
 
-	    {{> plaintext}}
+      {{> plaintext}}
 
-	  </fieldset>
+    </fieldset>
 
-		{{#image}}
-		  {{> imagesources}}
-		{{/image}}
+    {{#image}}
+      {{> imagesources}}
+    {{/image}}
 
-	{{/item}}
+    {{^image}}
+      {{> imagesources}}
+    {{/image}}
 
-	{{^item}}
-
-	  {{> fullpage}}
-
-	  <fieldset>
-
-	      <!--
-	        Nav Level
-	        Nav Thumb
-	      -->
-
-	    {{> title}}
-
-	    {{> subtitle}}
-
-	    {{> plaintext}}
-
-	  </fieldset>
-
-	  {{> imagesources}}
-
-	{{/item}}
+  {{/item}}
 
   {{> formcontrols}}
 
 </form>
-
-<script type="text/javascript" src="/js/itemeditor.js">

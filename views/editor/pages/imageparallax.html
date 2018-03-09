@@ -1,43 +1,30 @@
 <form id="frm-item-editor" class="js-ImageParallax" action="/editor/page/imageparallax/id/{{id}}" method="post">
 
-	<legend class="title">Image Background</legend>
+  <legend class="title">Image Background</legend>
 
-	{{#item}}
+  {{#item}}
 
-		{{> fullpage }}
+    {{> fullpage }}
 
-		<fieldset>
+    <fieldset>
 
-			{{> title}}
+      {{> title}}
 
-			{{> subtitle}}
+      {{> subtitle}}
 
-		</fieldset>
+    </fieldset>
 
-		{{#image}}
-			{{> imagesources}}
-		{{/image}}
+    {{#image}}
+      {{> imagesources}}
+    {{/image}}
 
-	{{/item}}
+    
+    {{^image}}
+      {{> imagesources}}
+    {{/image}}
 
-	{{^item}}
+  {{/item}}
 
-		{{> fullpage }}
-
-		<fieldset>
-
-			{{> title}}
-
-			{{> subtitle}}
-
-		</fieldset>
-
-		{{> imagesources}}
-
-	{{/item}}
-
-	{{> formcontrols}}
+  {{> formcontrols}}
 
 </form>
-
-<script type="text/javascript" src="/js/itemeditor.js">

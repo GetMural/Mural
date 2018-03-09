@@ -108,15 +108,9 @@ router.get('/fragment/fullpage', function (req, res) {
     });
 });
 
-// Horizontal Slide Fragment
-router.get('/fragment/horizontalslide', function (req, res) {
-    res.render('editor/fragments/horizontalslide', {
-        partials: {
-            image: 'editor/fragments/image',
-            credits: 'editor/fragments/credits',
-            title: 'editor/fragments/title'
-        }
-    });
+// Slide Fragment
+router.get('/fragment/slide', function (req, res) {
+    res.render('editor/fragments/slide');
 });
 
 // Image Fragment
@@ -168,17 +162,6 @@ router.get('/fragment/richtext', function (req, res) {
     });
 });
 
-// Vertical Slide Fragment
-router.get('/fragment/verticalslide', function (req, res) {
-    res.render('editor/fragments/verticalslide', {
-        partials: {
-            credits: 'editor/fragments/credits',
-            imagesources: 'editor/fragments/imagesources',
-            title: 'editor/fragments/title'
-        }
-    });
-});
-
 // Snippet Image Fragment
 router.get('/fragment/snippetimage', function (req, res) {
     res.render('editor/fragments/snippetimage', {
@@ -226,6 +209,7 @@ router.get('/page/meta', function (req, res) {
         }
     });
 });
+
 router.post('/page/meta', function (req, res) {
     storyboard.readFile(filename);
     var newMeta = req.body;
@@ -247,7 +231,7 @@ router.post('/page/meta', function (req, res) {
     // TODO: meta['twitter'] is missing from form
 
     // TODO: move this to a global file save function with its own button in the frontend
-    storyboard.writeFile(filename, JSON.stringify({ meta: meta, items: items }));
+    storyboard.writeFile(filename, { meta: meta, items: items });
 
     res.render('editor/editor', {
         meta: meta,
@@ -260,84 +244,62 @@ router.post('/page/meta', function (req, res) {
     });
 });
 
-// Textcentred Page
-router.get('/page/textcentred', function (req, res) {
-    res.render('editor/pages/textcentred', {
-        partials: {
-            credits: 'editor/fragments/credits',
-            formcontrols: 'editor/fragments/formcontrols',
-            image: 'editor/fragments/image',
-            intro: 'editor/fragments/intro',
-            richtext: 'editor/fragments/richtext',
-            snippetimage: 'editor/fragments/snippetimage',
-            subtitle: 'editor/fragments/subtitle',
-            title: 'editor/fragments/title'
-        }
-    });
-});
-
 // Textcentred Page with ID
 router.get('/page/textcentred/id/:id', function (req, res) {
     storyboard.readFile(filename);
-    var query = req || {};
-    var meta = storyboard.getMeta();
-    var items = storyboard.getItems();
-    if (query.params && query.params.id) {
-        var qId = query.params.id;
-        var item = items[qId].textcentred;
-    };
+    const meta = storyboard.getMeta();
+    const items = storyboard.getItems();
+    const qId = req.params.id;
+    const item = items[qId].textcentred;
+
+    //hack an image number in here for Hogan.... :'(
+    if (item.snippets) {
+        item.snippets.forEach((snippet, i) => {
+            snippet.index = i;
+            snippet.options = [
+                {
+                    value: 'left',
+                    txt: 'left',
+                    selected: (snippet.align === 'left')
+                },
+                {
+                    value: 'center',
+                    txt: 'center',
+                    selected: (snippet.align === 'center')
+                },
+                {
+                    value: 'right',
+                    txt: 'right',
+                    selected: (snippet.align === 'right')
+                }
+            ];
+        });
+    }
 
     res.render('editor/pages/textcentred', {
         id: qId,
         item: item,
         partials: {
-            credits: 'editor/fragments/credits',
             formcontrols: 'editor/fragments/formcontrols',
-            image: 'editor/fragments/image',
             intro: 'editor/fragments/intro',
-            richtext: 'editor/fragments/richtext',
             snippetimage: 'editor/fragments/snippetimage',
-            subtitle: 'editor/fragments/subtitle',
-            title: 'editor/fragments/title'
+            subtitle: 'editor/fragments/subtitle'
         }
     });
 });
+
 router.post('/page/textcentred/id/:id', function (req, res) {
     storyboard.readFile(filename);
-    var query = req || {};
-    var meta = storyboard.getMeta();
-    var items = storyboard.getItems();
-    if (query.params && query.params.id) {
-        var qId = query.params.id;
-        var item = items[qId].textcentred;
-        var newItem = req.body;
-    };
+    const meta = storyboard.getMeta();
+    const items = storyboard.getItems();
+    const qId = req.params.id;
+    const item = items[qId].textcentred;
+    const newItem = req.body;
 
+    console.log(newItem);
     // format and save new item
-    // TODO: item['format'] = { inline: true }; is missing from form
-    item['light'] = (newItem['light'] === 'on') ? true : false;
-    item['subtitle'] = newItem['subtitle'];
-    item['title'] = newItem['tc_title'];
-    // TODO: item['navlevel'] is missing from form
-    item['intro'] = newItem['intro'];
-
-    newSnippets = []
-    for(var i = 0; i < newItem['title'].length; ++i){
-
-        var newSnippet = {
-            title: newItem['title'][i],
-            credits: newItem['credits'][i],
-            src: newItem['src'][i],
-            text: newItem['text'][i],
-            align: newItem['align'][i]
-        };
-        newSnippets.push(newSnippet);
-    }
-    item['snippets'] = newSnippets;
-
-    // format and save new item
-    items[qId].textcentred = item;
-    storyboard.writeFile(filename, JSON.stringify({ meta: meta, items: items }));
+    items[qId].textcentred = newItem;
+    storyboard.writeFile(filename, { meta: meta, items: items });
 
     res.render('editor/editor', {
         meta: meta,
@@ -346,20 +308,6 @@ router.post('/page/textcentred/id/:id', function (req, res) {
         message: 'Text Centered Update',
         partials: {
             editornav: 'editor/fragments/editornav'
-        }
-    });
-});
-
-// Imagebackground Page
-router.get('/page/imagebackground', function (req, res) {
-    res.render('editor/pages/imagebackground', {
-        partials: {
-            formcontrols: 'editor/fragments/formcontrols',
-            fullpage: 'editor/fragments/fullpage',
-            imagesources: 'editor/fragments/imagesources',
-            text: 'editor/fragments/plaintext',
-            title: 'editor/fragments/title',
-            subtitle: 'editor/fragments/subtitle'
         }
     });
 });
@@ -416,7 +364,7 @@ router.post('/page/imagebackground/id/:id', function (req, res) {
     // save the file
     items[qId].imagebackground = item;
     // TODO: move this to a global file save function with its own button in the frontend
-    storyboard.writeFile(filename, JSON.stringify({ meta: meta, items: items }));
+    storyboard.writeFile(filename, { meta: meta, items: items });
 
     res.render('editor/editor', {
         meta: meta,
@@ -429,76 +377,42 @@ router.post('/page/imagebackground/id/:id', function (req, res) {
     });
 });
 
-// Slideshow Horizontal Page
-router.get('/page/slideshowhorizontal', function (req, res) {
-    res.render('editor/pages/slideshowhorizontal', {
-        partials: {
-            formcontrols: 'editor/fragments/formcontrols',
-            credits: 'editor/fragments/credits',
-            image: 'editor/fragments/image',
-            inline: 'editor/fragments/inline',
-            plaintext: 'editor/fragments/plaintext',
-            horizontalslide: 'editor/fragments/horizontalslide',
-            title: 'editor/fragments/title'
-        }
-    });
-});
-
 // Slideshow Horizontal Page with ID
 router.get('/page/slideshowhorizontal/id/:id', function (req, res) {
     storyboard.readFile(filename);
-    var query = req || {};
-    var meta = storyboard.getMeta();
-    var items = storyboard.getItems();
-    if (query.params && query.params.id) {
-        var qId = query.params.id;
-        var item = items[qId].slideshowhorizontal;
-    };
+    const meta = storyboard.getMeta();
+    const items = storyboard.getItems();
+    const qId = req.params.id;
+    const item = items[qId].slideshowhorizontal;
+
+    //hack an image number in here for Hogan.... :'(
+    if (item.images) {
+        item.images.forEach((image, i) => {
+            image.index = i;
+        });
+    }
+
     res.render('editor/pages/slideshowhorizontal', {
         id: qId,
         item: item,
         partials: {
-            credits: 'editor/fragments/credits',
             formcontrols: 'editor/fragments/formcontrols',
-            image: 'editor/fragments/image',
-            inline: 'editor/fragments/inline',
-            plaintext: 'editor/fragments/plaintext',
-            horizontalslide: 'editor/fragments/horizontalslide',
-            title: 'editor/fragments/title'
+            slide: 'editor/fragments/slide'
         }
     });
 });
+
 router.post('/page/slideshowhorizontal/id/:id', function (req, res) {
     storyboard.readFile(filename);
-    var query = req || {};
-    var meta = storyboard.getMeta();
-    var items = storyboard.getItems();
-    if (query.params && query.params.id) {
-        var qId = query.params.id;
-        var item = items[qId].slideshowhorizontal;
-        var newItem = req.body;
-    };
+    const meta = storyboard.getMeta();
+    const items = storyboard.getItems();
+    const qId = req.params.id;
+    var item = items[qId].slideshowhorizontal;
+    const newItem = req.body;
 
-    // format and save new slideshowhorizontal item
-    var newImages = [];
-    for(var i = 0; i < newItem['title'].length; ++i){
-        var newImage = {
-            title: newItem['title'][i],
-            credits: newItem['credits'][i],
-            src: newItem['src'][i],
-            type: 'image/jpeg'  // TODO: this needs to be dynamic or a form field
-        }
-        newImages.push(newImage);
-    }
-    item['images'] = newImages;
-    var inline = (newItem['inline'] === 'on') ? true : false;
-    item['format'] = { inline: inline };
-    item['title'] = newItem['show_title'];
-    item['text'] = newItem['text'];
+    items[qId].slideshowhorizontal = req.body;
 
-    items[qId].slideshowhorizontal = item;
-    // TODO: move this to a global file save function with its own button in the frontend
-    storyboard.writeFile(filename, JSON.stringify({ meta: meta, items: items }));
+    storyboard.writeFile(filename, { meta: meta, items: items });
 
     res.render('editor/editor', {
         meta: meta,
@@ -507,19 +421,6 @@ router.post('/page/slideshowhorizontal/id/:id', function (req, res) {
         message: 'Slideshow Horizontal Updated',
         partials: {
             editornav: 'editor/fragments/editornav'
-        }
-    });
-});
-
-// Slideshow Vertical Page
-router.get('/page/slideshowvertical', function (req, res) {
-    res.render('editor/pages/slideshowvertical', {
-        partials: {
-            credits: 'editor/fragments/credits',
-            formcontrols: 'editor/fragments/formcontrols',
-            imagesources: 'editor/fragments/imagesources',
-            title: 'editor/fragments/title',
-            verticalslide: 'editor/fragments/verticalslide'
         }
     });
 });
@@ -534,46 +435,32 @@ router.get('/page/slideshowvertical/id/:id', function (req, res) {
         var qId = query.params.id;
         var item = items[qId].slideshowvertical;
     };
+
+    //hack an image number in here for Hogan.... :'(
+    if (item.images) {
+        item.images.forEach((image, i) => {
+            image.index = i;
+        });
+    }
+
     res.render('editor/pages/slideshowvertical', {
         id: qId,
         item: item,
         partials: {
-            credits: 'editor/fragments/credits',
             formcontrols: 'editor/fragments/formcontrols',
-            imagesources: 'editor/fragments/imagesources',
-            title: 'editor/fragments/title',
-            verticalslide: 'editor/fragments/verticalslide'
+            slide: 'editor/fragments/slide'
         }
     });
 });
+
 router.post('/page/slideshowvertical/id/:id', function (req, res) {
     storyboard.readFile(filename);
-    var query = req || {};
-    var meta = storyboard.getMeta();
-    var items = storyboard.getItems();
-    if (query.params && query.params.id) {
-        var qId = query.params.id;
-        var item = items[qId].slideshowvertical;
-        var newItem = req.body;
-    };
+    const meta = storyboard.getMeta();
+    const items = storyboard.getItems();
+    const qId = req.params.id;
+    items[qId].slideshowvertical = req.body;
 
-    // format and save new slideshowvertical item
-    var newImages = [];
-    for(var i = 0; i < newItem['title'].length; ++i){
-        var newImage = {
-            title: newItem['title'][i],
-            credits: newItem['credits'][i],
-            srcmain: newItem['srcmain'][i],
-            srcmedium: newItem['srcmedium'][i],
-            srcphone: newItem['srcphone'][i]
-        }
-        newImages.push(newImage);
-    }
-    item['images'] = newImages;
-
-    items[qId].slideshowvertical = item;
-    // TODO: move this to a global file save function with its own button in the frontend
-    storyboard.writeFile(filename, JSON.stringify({ meta: meta, items: items }));
+    storyboard.writeFile(filename, { meta: meta, items: items });
 
     res.render('editor/editor', {
         meta: meta,
@@ -582,21 +469,6 @@ router.post('/page/slideshowvertical/id/:id', function (req, res) {
         message: 'Slideshow Vertical Updated',
         partials: {
             editornav: 'editor/fragments/editornav'
-        }
-    });
-});
-
-// Videobackground Page
-router.get('/page/videobackground', function (req, res, next) {
-    res.render('editor/pages/videobackground', {
-        partials: {
-            formcontrols: 'editor/fragments/formcontrols',
-            fullpage: 'editor/fragments/fullpage',
-            loadingimage: 'editor/fragments/loadingimage',
-            title: 'editor/fragments/title',
-            subtitle: 'editor/fragments/subtitle',
-            videobackground: 'editor/pages/videobackground',
-            videosources: 'editor/fragments/videosources'
         }
     });
 });
@@ -626,6 +498,7 @@ router.get('/page/videobackground/id/:id', function (req, res, next) {
         }
     });
 });
+
 router.post('/page/videobackground/id/:id', function (req, res, next) {
     storyboard.readFile(filename);
     var query = req || {};
@@ -653,7 +526,7 @@ router.post('/page/videobackground/id/:id', function (req, res, next) {
     // save the file
     items[qId].videobackground = item;
     // TODO: move this to a global file save function with its own button in the frontend
-    storyboard.writeFile(filename, JSON.stringify({ meta: meta, items: items }));
+    storyboard.writeFile(filename, { meta: meta, items: items });
 
     // render main editor window with a success message
     res.render('editor/editor', {
@@ -663,20 +536,6 @@ router.post('/page/videobackground/id/:id', function (req, res, next) {
         message: 'Video Background Updated',
         partials: {
             editornav: 'editor/fragments/editornav'
-        }
-    });
-});
-
-// Videofullpage Page
-router.get('/page/videofullpage', function (req, res) {
-    res.render('editor/pages/videofullpage', {
-        partials: {
-            formcontrols: 'editor/fragments/formcontrols',
-            fullpage: 'editor/fragments/fullpage',
-            loadingimage: 'editor/fragments/loadingimage',
-            text: 'editor/fragments/plaintext',
-            title: 'editor/fragments/title',
-            videosources: 'editor/fragments/videosources'
         }
     });
 });
@@ -704,6 +563,7 @@ router.get('/page/videofullpage/id/:id', function (req, res) {
         }
     });
 });
+
 router.post('/page/videofullpage/id/:id', function (req, res) {
     storyboard.readFile(filename);
     var query = req || {};
@@ -731,7 +591,7 @@ router.post('/page/videofullpage/id/:id', function (req, res) {
     // save the file
     items[qId].videofullpage = item;
     // TODO: move this to a global file save function with its own button in the frontend
-    storyboard.writeFile(filename, JSON.stringify({ meta: meta, items: items }));
+    storyboard.writeFile(filename, { meta: meta, items: items });
 
     res.render('editor/editor', {
         meta: meta,
@@ -740,19 +600,6 @@ router.post('/page/videofullpage/id/:id', function (req, res) {
         message: 'Video Full Page Updated',
         partials: {
             editornav: 'editor/fragments/editornav'
-        }
-    });
-});
-
-// Imageparallax Page
-router.get('/page/imageparallax', function (req, res) {
-    res.render('editor/pages/imageparallax', {
-        partials: {
-            formcontrols: 'editor/fragments/formcontrols',
-            fullpage: 'editor/fragments/fullpage',
-            imagesources: 'editor/fragments/imagesources',
-            subtitle: 'editor/fragments/subtitle',
-            title: 'editor/fragments/title'
         }
     });
 });
@@ -779,6 +626,7 @@ router.get('/page/imageparallax/id/:id', function (req, res) {
         }
     });
 });
+
 router.post('/page/imageparallax/id/:id', function (req, res) {
     storyboard.readFile(filename);
     var query = req || {};
@@ -804,13 +652,85 @@ router.post('/page/imageparallax/id/:id', function (req, res) {
 
     items[qId].imageparallax = item;
     // TODO: move this to a global file save function with its own button in the frontend
-    storyboard.writeFile(filename, JSON.stringify({ meta: meta, items: items }));
+    storyboard.writeFile(filename, { meta: meta, items: items });
 
     res.render('editor/editor', {
         meta: meta,
         items: items,
         editor: 'editor',
         message: 'Image Parallax Updated',
+        partials: {
+            editornav: 'editor/fragments/editornav'
+        }
+    });
+});
+
+router.post('/reorder', function (req, res) {
+    storyboard.readFile(filename);
+    var meta = storyboard.getMeta();
+    var items = storyboard.getItems();
+    var order = req.body.order;
+
+    const newItems = [];
+    order.forEach((value, i) => {
+        const oldItem = items[value];
+        // SO HACKY LOL
+        const [mediaType] = Object.keys(oldItem);
+        oldItem[mediaType].id = String(i);
+        newItems[i] = oldItem;
+    });
+
+    storyboard.writeFile(filename, { meta: meta, items: newItems });
+    res.json(data);
+});
+
+router.post('/add', function (req, res) {
+    storyboard.readFile(filename);
+    const meta = storyboard.getMeta();
+    const items = storyboard.getItems();
+    const mediaType = req.body.mediaType;
+
+    items.push({
+        [mediaType] : {
+            id: items.length
+        }
+    });
+
+    storyboard.writeFile(filename, { meta: meta, items: items });
+
+    res.render('editor/editor', {
+        meta: meta,
+        items: items,
+        editor: 'editor',
+        message: 'New Item Added',
+        partials: {
+            editornav: 'editor/fragments/editornav'
+        }
+    });
+});
+
+router.post('/delete/:id', function(req, res) {
+    storyboard.readFile(filename);
+    const meta = storyboard.getMeta();
+    const items = storyboard.getItems();
+    const id = req.params.id;
+
+    items.splice(id, 1);
+
+    for (let i=0; i < items.length; i++) {
+        const oldItem = items[i];
+        // SO HACKY LOL
+        const [mediaType] = Object.keys(oldItem);
+        oldItem[mediaType].id = String(i);
+    }
+
+    storyboard.writeFile(filename, { meta: meta, items: items });
+
+    res.render('editor/editor', {
+        meta: meta,
+        items: items,
+        editor: 'editor',
+        message: 'Item Deleted',
         partials: {
             editornav: 'editor/fragments/editornav'
         }

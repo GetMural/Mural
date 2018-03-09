@@ -19,9 +19,12 @@ router.get('/', function (req, res, next) {
             console.log("There was an error reading the storyboard file: ", err)
         }
 
+        const data = JSON.parse(contents);
+
         res.render('preview', {
-            items: items,
-            meta: meta,
+            nav: data.nav,
+            items: data.items,
+            meta: data.meta,
             partials: {
                 fb: 'partials/fb',
                 head: 'partials/head',

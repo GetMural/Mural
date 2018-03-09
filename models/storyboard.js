@@ -8,8 +8,27 @@ function Storyboard(filename) {
     this.filename = filename;
     this.data = {};
     this.meta = {};
+    this.nav = [];
     this.items = [];
 };
+
+
+function createNav(items) {
+    const nav = [];
+
+    items.forEach((item, id) => {
+        const [mediaType] = Object.keys(item);
+        // fallback for now until every type has a title field to fill in. (or something for nav)
+        const title = item[mediaType].title ? item[mediaType].title : `${id} ${mediaType}`;
+
+        nav.push({
+            id,
+            title
+        });
+    });
+
+    return nav;
+}
 
 Storyboard.prototype = {
 
@@ -21,8 +40,11 @@ Storyboard.prototype = {
         fs.readFile(filename, 'utf8', function (err, data) {
             if (!err) {
                 self.data = data;
-                self.meta = JSON.parse(data).meta;
-                self.items = JSON.parse(data).items;
+
+                const json = JSON.parse(data)
+                self.meta = json.meta;
+                self.items = json.items;
+                self.nav = json.nav;
 
                 console.log('Successfully read storyboard file.');
             }
@@ -32,7 +54,10 @@ Storyboard.prototype = {
     writeFile: function (filename, data) {
         var self = this;
 
-        fs.writeFile(filename, data, function (err) {
+        const fileData = Object.assign({}, data, {nav: createNav(data.items)});
+        const fileContents = JSON.stringify(fileData);
+
+        fs.writeFile(filename, fileContents, function (err) {
             if (err) {
                 console.log('Write Storyboard File Error: ' + err);
             } else {
@@ -48,6 +73,10 @@ Storyboard.prototype = {
 
     getItems: function () {
         return this.items;
+    },
+
+    getNav: function () {
+        return this.nav;
     }
 };
 

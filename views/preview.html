@@ -47,6 +47,23 @@
     <!-- main audio -->
     <audio id="master-audio" preload="none" autoplay="autoplay" loop="loop"></audio>
     <span class="mute">Mute</span>
+    <div class="menu_open">
+      <div class="sticks_wrapper">
+        <div class="stick -first" id="stick1"></div>
+        <div class="stick -second" id="stick2"></div>
+        <div class="stick -third" id="stick3"></div>
+      </div>
+    </div>
+
+    <div class="nav">
+      <nav>
+        <ol>
+          {{#nav}}
+            <li data-id="{{id}}">{{title}}</li>
+          {{/nav}}
+        </ol>
+      </nav>
+    </div>
 
     <article id="scrollytelling">
       {{#items}}
@@ -135,7 +152,19 @@
 
             <div class='slide-container'>
               {{#images}}
-                <a href='{{src}}' title='{{title}}' type='{{type}}' data-credits='{{credits}}'>{{title}}</a>
+                <a href='#'
+                  {{#srcmain}}
+                    data-src='{{srcmain}}'
+                  {{/srcmain}}
+                  {{#srcmedium}}
+                     data-src-medium='{{srcmedium}}'
+                  {{/srcmedium}}
+                  {{#srcphone}}
+                    data-src-phone='{{srcphone}}'
+                  {{/srcphone}}
+                  title='{{title}}'
+                  type='{{type}}'
+                  data-credits='{{credits}}'>{{title}}</a>
               {{/images}}
             </div>
           </section>
