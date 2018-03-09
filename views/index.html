@@ -2,12 +2,13 @@
 <html>
 <head>
   <link type="text/css" rel="stylesheet" href="css/home.css" />
-  <script type="application/javascript" src="/tools/jquery/dist/jquery.min.js"></script>
+  <script type="application/javascript" src="/js/jquery3.3.1.min.js"></script>
 </head>
 <body>
   <div id="toolbar">
     <button id="btn-refresh-preview" class="btn btn-default">Refresh Preview</button>
     <button id="btn-download" class="btn btn-default">Download Story</button>
+    <!-- TODO: add a button here to kick off the dist build -->
     <!-- TODO: add a hide button here that hides the toolbar or puts it out of the way of the preview -->
   </div>
 
@@ -15,7 +16,7 @@
 
   <iframe class="editor" src="/editor"></iframe>
 
-  <script type="application/javascript" src="/tools/jquery/dist/jquery.min.js"></script>
+  <script type="application/javascript" src="/js/jquery3.3.1.min.js"></script>
   <script type="application/javascript">
     var $ = jQuery;
     $(function() {
