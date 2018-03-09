@@ -6,14 +6,12 @@ var path = require('path');
 // TODO: refactor this to a storyboard model
 // Set up the data API
 var filename = path.join(__dirname, '../data/storyboard.json');
-var meta = {};
-var items = {};
 
 router.get('/', function (req, res, next) {
     // TODO: refactor this to use storyboard model
     fs.readFile(filename, 'utf8', function (err, data) {
         if (err) {
-            console.log("There was an error reading the storyboard file: ", err)
+            console.log("There was an error reading the storyboard file: ", err);
             res.render('preview', {});
         }
 

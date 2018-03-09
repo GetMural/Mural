@@ -680,7 +680,8 @@ router.post('/reorder', function (req, res) {
         newItems[i] = oldItem;
     });
 
-    storyboard.writeFile(filename, { meta: meta, items: newItems });
+    const data = { meta: meta, items: newItems };
+    storyboard.writeFile(filename, data);
     res.json(data);
 });
 
