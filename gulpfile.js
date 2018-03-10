@@ -1,9 +1,8 @@
 var gulp        = require('gulp');
 var rename      = require('gulp-rename');
 var hogan       = require('gulp-hogan');
-var Storyboard = require('../models/storyboard');
+var Storyboard = require('./models/storyboard');
 var storyboard = new Storyboard();
-//var data        = require('./data/stories/theme2.json');
 
 
 // Gulp Mustache Task

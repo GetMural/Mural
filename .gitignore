@@ -2,3 +2,4 @@ node_modules/
 yarn.lock
 .idea
 Mural-darwin-x64/
+public/dist
