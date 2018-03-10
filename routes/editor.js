@@ -12,6 +12,7 @@ router.get('/', function (req, res, next) {
         var meta = data.meta;
         var items = data.items;
         res.render('editor/editor', {
+            filename: storyboard.filename,
             meta: meta,
             items: items,
             editor: 'editor',

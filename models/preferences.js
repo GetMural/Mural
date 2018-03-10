@@ -32,17 +32,25 @@ Preferences.prototype = {
         });
     },
 
-    writeFile: function (filename, data) {
+    writeFile: function (filename, data, cb) {
         var self = this;
-
+        if (!filename) {
+            filename = self.filename;
+        }
         const fileContents = JSON.stringify(data);
 
         fs.writeFile(filename, fileContents, function (err) {
             if (err) {
                 console.log('Write Preferences File Error: ' + err);
+                if (cb) {
+                    cb(err, null);
+                }
             } else {
                 console.log('Write Preferences File Success');
                 self.data = data;
+                if (cb) {
+                    cb(null, data);
+                }
             }
         });
     },

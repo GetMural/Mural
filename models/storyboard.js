@@ -36,12 +36,14 @@ function createNav(items) {
 Storyboard.prototype = {
 
     getFilename: function(cb) {
+        var self = this;
         // get filename from preferences file
         preferences.readFile(null, function(err, data) {
             if (err) {
                 cb(err, null);
             }
             console.log("Reading from preferenes file", data.storyboard);
+            self.filename = data.storyboard;
             cb(null, path.join(__dirname, "../data/stories/", data.storyboard));
         })
     },

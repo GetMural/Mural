@@ -6,15 +6,24 @@
 </head>
 <body>
   <div id="toolbar">
-    <button id="btn-refresh-preview" class="btn btn-default">Refresh Preview</button>
-    <button id="btn-download" class="btn btn-default">Download Story</button>
-    <!-- TODO: add a button here to kick off the dist build -->
     <!-- TODO: add a hide button here that hides the toolbar or puts it out of the way of the preview -->
+    <select id="story-selector" name="storySelector">
+      <option>{{filename}}</option>
+      {{#files}}
+          <option>{{name}}</option>
+      {{/files}}
+    </select>
+    <button id="btn-copy-story" class="btn btn-default">Copy Story</button>
+    <button id="btn-delete-story" class="btn btn-default">Delete Story</button>
+    <button id="btn-new-story" class="btn btn-default">New Story</button>
+    <button id="btn-download" class="btn btn-default">Download Story</button>
+    <button id="btn-refresh-preview" class="btn btn-default">Refresh Preview</button>
+    <!-- TODO: add a button here to kick off the dist build -->
   </div>
 
   <iframe id="preview" src="/preview"></iframe>
 
-  <iframe class="editor" src="/editor"></iframe>
+  <iframe id="editor" class="editor" src="/editor"></iframe>
 
   <!-- TODO: figure out why jquery needs to be included in both <head> and <body> -->
   <script type="text/javascript" src="/node_modules/jquery/dist/jquery.min.js"></script>

@@ -32,6 +32,7 @@
     app.use('/preview', require('./routes/preview'));
     app.use('/editor', require('./routes/editor'));
     app.use('/public', require('./routes/public'));
+    app.use('/preferences', require('./routes/preferences'));
 
     // catch 404 and forward to error handler
     app.use(function (req, res, next) {

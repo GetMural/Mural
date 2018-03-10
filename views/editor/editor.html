@@ -8,9 +8,12 @@
   <link rel="stylesheet" type="text/css" href="/css/editor.css" />
 </head>
 <body>
+  <div class="message-container">
+    {{message}}
+  </div>
+  <!-- TODO: click Storyboard Editor to hide/show nav-contrainer -->
+  <h3>Storyboard Editor</h3>
   <div class="nav-container">
-    <h3>Storyboard Editor</h3>
-
     <div>
       <form method="post" action="/editor/add">
         <select name="mediaType">
@@ -30,10 +33,6 @@
     <div>
       <button disabled="disabled" id="reorder-save">Save Ordering</button>
     </div>
-  </div>
-
-  <div class="message-container">
-    {{message}}
   </div>
 
   <div class="container-fluid main">
