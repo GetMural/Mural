@@ -12,7 +12,7 @@
     app.use(favicon(path.join(__dirname, 'public/img', 'favicon.ico')))
 
     // Setup node_modules for templates
-    app.use('/tools', express.static('node_modules'));
+    app.use('/node_modules', express.static(path.join(__dirname, 'node_modules')));
 
     // view engine setup
     app.set('views', path.join(__dirname, 'views'));
@@ -31,7 +31,6 @@
     app.use('/', require('./routes/index'));
     app.use('/preview', require('./routes/preview'));
     app.use('/editor', require('./routes/editor'));
-    app.use('/data', require('./routes/data'));
     app.use('/public', require('./routes/public'));
 
     // catch 404 and forward to error handler

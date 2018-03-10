@@ -12,21 +12,20 @@ app.on('ready', function () {
     'use strict';
 
     var path = require('path');
-    //var iconPath = path.resolve(__dirname, './dist/myicon.ico');
-    //const appIcon = new Tray(iconPath);
+    var iconPath = path.join(__dirname, 'public/img', 'favicon.ico');
+    const appIcon = new Tray(iconPath);
     mainWindow = new Window({
         width: 1280,
         height: 1024,
         autoHideMenuBar: false,
         useContentSize: true,
         resizable: true,
-        //icon: iconPath
+        icon: iconPath
         //  'node-integration': false // otherwise various client-side things may break
     });
-    //appIcon.setToolTip('My Cool App');
+    appIcon.setToolTip('Mural');
     mainWindow.loadURL('http://localhost:3000/');
 
-    // remove this for production
     var template = [
         {
             label: 'Application',

@@ -2,7 +2,7 @@
 <html>
 <head>
   <link type="text/css" rel="stylesheet" href="css/home.css" />
-  <script type="application/javascript" src="/js/jquery3.3.1.min.js"></script>
+  <script type="text/javascript" src="/node_modules/jquery/dist/jquery.min.js"></script>
 </head>
 <body>
   <div id="toolbar">
@@ -16,24 +16,8 @@
 
   <iframe class="editor" src="/editor"></iframe>
 
-  <script type="application/javascript" src="/js/jquery3.3.1.min.js"></script>
-  <script type="application/javascript">
-    var $ = jQuery;
-    $(function() {
-        $('#btn-refresh-preview').on('click', function() {
-            console.log("Refreshing Preview");
-            $('#preview').attr( 'src', function ( i, val ) { return val; });
-        });
-        $('#btn-download').on('click', function() {
-            window.open('/editor/download', '_blank');
-        });
-
-        // Preview Refresh Event Listener
-        $(document).on('refresh-preview', function() {
-            console.log("Refreshing Preview");
-            $('#preview').attr( 'src', function ( i, val ) { return val; });
-        });
-    })
-  </script>
+  <!-- TODO: figure out why jquery needs to be included in both <head> and <body> -->
+  <script type="text/javascript" src="/node_modules/jquery/dist/jquery.min.js"></script>
+  <script type="text/javascript" src="js/index.js"></script>
 </body>
 </html>
