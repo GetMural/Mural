@@ -7,7 +7,7 @@ var archiver = require('archiver');
 
 
 // Main Editor View
-router.get('/', function (req, res, next) {
+router.get('/', function (req, res) {
     storyboard.readFile(function(err, data) {
         var meta = data.meta;
         var items = data.items;
@@ -25,12 +25,12 @@ router.get('/', function (req, res, next) {
 });
 
 // Editor Storyboard endpoint
-router.get('/storyboard', function (req, res, next) {
+router.get('/storyboard', function (req, res) {
     storyboard.readFile(function (err, data) {
         res.json(data);
     });
 });
-router.post('/storyboard', function (req, res, next) {
+router.post('/storyboard', function (req, res) {
     var newData = req.body;
     storyboard.writeFile(newData);
 
@@ -39,7 +39,7 @@ router.post('/storyboard', function (req, res, next) {
 
 const PUBLIC_FOLDER = path.resolve(__dirname, '..', 'public');
 
-router.get('/download', function (req, res, next) {
+router.get('/download', function (req, res) {
     // Tell the browser that this is a zip file.
     res.writeHead(200, {
         'Content-Type': 'application/zip',
@@ -77,7 +77,7 @@ router.get('/download', function (req, res, next) {
 });
 
 // Editor Fragments
-router.get('/fragment/editornav', function (req, res, next) {
+router.get('/fragment/editornav', function (req, res) {
     res.render('editor/fragments/editornav', {
         editornav: 'editornav'
     });
@@ -473,7 +473,7 @@ router.post('/page/slideshowvertical/id/:id', function (req, res) {
 });
 
 // Videobackground Page with ID
-router.get('/page/videobackground/id/:id', function (req, res, next) {
+router.get('/page/videobackground/id/:id', function (req, res) {
     storyboard.readFile(function (err, data) {
         var query = req || {};
         var items = data.items;
@@ -498,7 +498,7 @@ router.get('/page/videobackground/id/:id', function (req, res, next) {
     });
 });
 
-router.post('/page/videobackground/id/:id', function (req, res, next) {
+router.post('/page/videobackground/id/:id', function (req, res) {
     storyboard.readFile(function (err, data) {
         var query = req || {};
         var meta = data.meta;

@@ -3,6 +3,7 @@ $(function() {
     $('#btn-refresh-preview').on('click', function() {
         $('#preview').attr( 'src', function ( i, val ) { return val; });
     });
+
     $('#btn-download').on('click', function() {
         window.open('/editor/download');
     });
@@ -22,4 +23,14 @@ $(function() {
             $('#editor').attr( 'src', function ( i, val ) { return val; });
         });
     });
+
+    $('#btn-copy-story').on('click', function() {
+    });
+
+    $('#btn-delete-story').on('click', function() {
+    });
+
+    $('#btn-new-story').on('click', function() {
+    });
+
 })
