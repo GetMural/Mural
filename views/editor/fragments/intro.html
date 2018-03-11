@@ -1,4 +1,11 @@
 <div class="form-group">
   <label class="control-label">Intro</label>
-  <textarea name="intro" class="form-control js-RichText" placeholder="No intro">{{{intro}}}</textarea>
+  <textarea id="intro-area" name="intro" class="form-control js-RichText" placeholder="No intro">{{{intro}}}</textarea>
 </div>
+<script>
+jQuery(document).ready(function($) {
+    new EasyEditor('#intro-area', {
+        buttons: ['bold', 'italic', 'link', 'h2', 'h3', 'h4', 'alignleft', 'aligncenter', 'alignright', 'quote', 'code', 'list', 'x']
+    });
+});
+</script>

@@ -38,9 +38,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-
-
-
     function isReOrdered(items) {
         let reordered = false;
         for (let i = 0, length = items.length - 1; i < length; i++) {

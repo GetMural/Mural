@@ -1,4 +1,11 @@
 <div>
   <label for="text">Text</label>
-  <textarea name="text" class="form-control js-RichText" data-name="text" placeholder="No text">{{#text}}{{text}}{{/text}}</textarea>
+  <textarea id="plaintext-area" name="text" class="form-control js-RichText" data-name="text" placeholder="No text">{{#text}}{{text}}{{/text}}</textarea>
 </div>
+<script>
+jQuery(document).ready(function($) {
+    new EasyEditor('#plaintext-area', {
+        buttons: ['bold', 'italic', 'link', 'h2', 'h3', 'h4', 'alignleft', 'aligncenter', 'alignright', 'quote', 'code', 'list', 'x']
+    });
+});
+</script>
