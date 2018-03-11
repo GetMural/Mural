@@ -39,8 +39,7 @@ $(function() {
                     console.log('Filename', data.filename);
                     $.post('/copy-story', {filename: data.filename}, function(response) {
                         console.log('story has been copied', response);
-                        $('#preview').attr( 'src', function ( i, val ) { return val; });
-                        $('#editor').attr( 'src', function ( i, val ) { return val; });
+                        location.reload(true);
                     });
                 }
             }
@@ -61,12 +60,7 @@ $(function() {
                         type: 'DELETE',
                         success: function (response) {
                             console.log('Successfully deleted the story.')
-                            $('#preview').attr('src', function (i, val) {
-                                return val;
-                            });
-                            $('#editor').attr('src', function (i, val) {
-                                return val;
-                            });
+                            location.reload(true);
                         }
                     });
                 } else {

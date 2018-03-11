@@ -33,7 +33,12 @@ router.post('/copy-story', function (req, res) {
           .pipe(fs.createWriteStream(path.join(__dirname, "../data/stories/", newFileName)));
         data.storyboard = newFileName;
         preferences.writeFile(null, data, function(err, response) {
+            if (err) {
+                console.log('Error setting new preferences', err);
+                res.send("{status: 'error'}");
+            }
             console.log('New story set to preferences');
+            res.send("{status: 'ok'}");
         })
     });
 
@@ -48,9 +53,11 @@ router.delete('/delete-story', function (req, res) {
                 preferences.writeFile(null, data, function(err, response) {
                     console.log('New story set to preferences');
                     console.log("story deleted.")
+                    res.send("{status: 'ok'}");
                 })
             } else {
                 console.log("Error deleting story", filename)
+                res.send("{status: 'error'}");
             }
         });
     });
