@@ -73,5 +73,13 @@ $(function() {
     $('#btn-tools').on('click', function() {
         $('#btn-tools').toggleClass('collapsed');
         $('#toolbar').toggleClass('collapsed');
+        console.log($('#editor').width());
+        if ($('#editor').width() === 0) {
+            $('#editor').width('50vw');
+            $('#preview').width('50vw');
+        } else {
+            $('#editor').width('0vw');
+            $('#preview').width('100vw');
+        }
     });
 })
