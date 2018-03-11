@@ -2,7 +2,8 @@ var app = require('electron').app;
 var Window = require('electron').BrowserWindow; // jshint ignore:line
 var Tray = require('electron').Tray; // jshint ignore:line
 var Menu = require('electron').Menu; // jshint ignore:line
-var fs = require('fs');
+var path = require('path');
+var nativeImage = require('electron').nativeImage;
 
 var server = require('./app');
 
@@ -11,22 +12,21 @@ var mainWindow = null;
 app.on('ready', function () {
     'use strict';
 
-    var path = require('path');
-    //var iconPath = path.resolve(__dirname, './dist/myicon.ico');
-    //const appIcon = new Tray(iconPath);
+    var iconPath = path.join(__dirname, 'public', 'img', 'favicon.png');
+    let nimage = nativeImage.createFromPath(iconPath);
+    const appIcon = new Tray(nimage);
     mainWindow = new Window({
         width: 1280,
         height: 1024,
         autoHideMenuBar: false,
         useContentSize: true,
         resizable: true,
-        //icon: iconPath
+        icon: iconPath
         //  'node-integration': false // otherwise various client-side things may break
     });
-    //appIcon.setToolTip('My Cool App');
+
     mainWindow.loadURL('http://localhost:3000/');
 
-    // remove this for production
     var template = [
         {
             label: 'Application',
@@ -89,6 +89,8 @@ app.on('ready', function () {
     ];
 
     var menu = Menu.buildFromTemplate(template);
+    appIcon.setToolTip('Mural');
+    appIcon.setContextMenu(menu);
     Menu.setApplicationMenu(menu);
 
     mainWindow.focus();

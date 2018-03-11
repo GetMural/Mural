@@ -1,5 +1,5 @@
 body {
-  padding: 80px 20px 0;
+  padding: 15px 20px 0;
 }
 
 .pages > div {
@@ -10,6 +10,7 @@ body {
   left: 0;
   top: 0;
   z-index: 10;
+  padding-bottom: 15px;
 }
 
 .nav {
@@ -40,4 +41,11 @@ button#save
 }
 .js-Nav  form {
   float: right;
+}
+
+.message-container {
+}
+
+.item-editor-container {
+
 }
