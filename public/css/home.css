@@ -27,8 +27,8 @@ iframe {
 }
 
 #toolbar.collapsed {
-  width: 45px;
-  height: 15px;
+  width: 55px;
+  height: 44px;
   overflow: hidden;
 }
 
@@ -37,3 +37,11 @@ iframe {
 
 #btn-tools.collapsed {
 }
+
+.btn-xs, .btn-group-xs > .btn {
+  padding: 0.15rem 0.5rem;
+  font-size: 0.725rem;
+  line-height: 1.0;
+  border-radius: 0.2rem;
+}
+

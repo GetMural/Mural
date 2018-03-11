@@ -1,27 +1,35 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <link type="text/css" rel="stylesheet" href="css/home.css" />
+  <!-- jquery -->
   <script type="text/javascript" src="/node_modules/jquery/dist/jquery.min.js"></script>
+  <!-- vex-js -->
   <script src="/node_modules/vex-js/dist/js/vex.combined.min.js"></script>
   <script>vex.defaultOptions.className = 'vex-theme-os'</script>
   <link rel="stylesheet" href="/node_modules/vex-js/dist/css/vex.css" />
   <link rel="stylesheet" href="/node_modules/vex-js/dist/css/vex-theme-os.css" />
+  <!-- bootstrap -->
+  <script type="text/javascript" src="/node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
+  <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.css" />
+  <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap-grid.css" />
+  <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap-reboot.css" />
+
+  <!-- load our custom styles last -->
+  <link type="text/css" rel="stylesheet" href="css/home.css" />
 </head>
 <body>
   <div id="toolbar">
-    <!-- TODO: add a hide button here that hides the toolbar or puts it out of the way of the preview -->
-    <button id="btn-tools" class="btn btn-default">Tools</button>
-    <select id="story-selector" name="storySelector">
+    <button id="btn-tools" class="btn btn-xs" data-toggle="tooltip" title="Show / Hide Toolbar"><img src="/img/settings.png"></button>
+    <button id="btn-copy-story" class="btn btn-xs" data-toggle="tooltip" title="Copy Story"><img src="/img/copy.png"></button>
+    <button id="btn-delete-story" class="btn btn-xs"data-toggle="tooltip" title="Delete Story"><img src="/img/delete.png"></button>
+    <button id="btn-download" class="btn btn-xs" data-toggle="tooltip" title="Download Story"><img src="/img/download.png"></button>
+    <button id="btn-refresh-preview" class="btn btn-xs" data-toggle="tooltip" title="Refresh Preview"><img src="/img/refresh.png"></button>
+    <select id="story-selector" name="storySelector" data-toggle="tooltip" title="Choose Story">
       <option>{{filename}}</option>
       {{#files}}
           <option>{{name}}</option>
       {{/files}}
     </select>
-    <button id="btn-copy-story" class="btn btn-default">Copy Story</button>
-    <button id="btn-delete-story" class="btn btn-default">Delete Story</button>
-    <button id="btn-download" class="btn btn-default">Download Story</button>
-    <button id="btn-refresh-preview" class="btn btn-default">Refresh Preview</button>
     <!-- TODO: add a button here to kick off the dist build -->
   </div>
 
