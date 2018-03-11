@@ -329,7 +329,8 @@ router.get('/page/imagebackground/id/:id', function (req, res) {
                 imagesources: 'editor/fragments/imagesources',
                 text: 'editor/fragments/plaintext',
                 title: 'editor/fragments/title',
-                subtitle: 'editor/fragments/subtitle'
+                subtitle: 'editor/fragments/subtitle',
+                plaintext: 'editor/fragments/plaintext'
             }
         });
     });
@@ -350,7 +351,7 @@ router.post('/page/imagebackground/id/:id', function (req, res) {
         item['format'] = { fullpage: fullpage };
         item['title'] = newItem['title'];
         item['subtitle'] = newItem['subtitle'];
-        // TODO: item['text'] is missing from form
+        item['text'] = newItem['text'];
         // TODO: item['navthumb'] is missing from form
         // TODO: item['navlevel'] is missing from form
         item['image'] = {

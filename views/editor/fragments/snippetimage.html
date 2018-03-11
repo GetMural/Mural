@@ -34,7 +34,15 @@
 
   <div class="form-group">
     <label class="control-label">Text</label>
-    <textarea name="snippets[{{index}}][text]" class="form-control js-RichText" placeholder="No text">{{text}}</textarea>
+    <textarea id="snippet-img-text-{{index}}" name="snippets[{{index}}][text]" class="form-control js-RichText">{{text}}</textarea>
   </div>
 
 </fieldset>
+
+<script>
+jQuery(document).ready(function($) {
+    new EasyEditor('#snippet-img-text-{{index}}', {
+        buttons: ['bold', 'italic', 'link', 'h2', 'h3', 'h4', 'alignleft', 'aligncenter', 'alignright', 'quote', 'code', 'list', 'x']
+    });
+});
+</script>
