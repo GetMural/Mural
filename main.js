@@ -2,7 +2,7 @@ var app = require('electron').app;
 var Window = require('electron').BrowserWindow; // jshint ignore:line
 var Tray = require('electron').Tray; // jshint ignore:line
 var Menu = require('electron').Menu; // jshint ignore:line
-var fs = require('fs');
+var path = require('path');
 
 var server = require('./app');
 
@@ -11,8 +11,7 @@ var mainWindow = null;
 app.on('ready', function () {
     'use strict';
 
-    var path = require('path');
-    var iconPath = path.join(__dirname, 'public/img', 'favicon.ico');
+    var iconPath = path.join(__dirname, 'public/img', 'favicon.png');
     const appIcon = new Tray(iconPath);
     mainWindow = new Window({
         width: 1280,
