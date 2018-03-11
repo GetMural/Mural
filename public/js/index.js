@@ -25,12 +25,59 @@ $(function() {
     });
 
     $('#btn-copy-story').on('click', function() {
+        vex.dialog.open({
+            message: 'Enter the new story name:',
+            input: '<input name="filename" type="text" placeholder="new_story.json" required />',
+            buttons: [
+                $.extend({}, vex.dialog.buttons.YES, { text: 'Save' }),
+                $.extend({}, vex.dialog.buttons.NO, { text: 'Cancel' })
+            ],
+            callback: function (data) {
+                if (!data) {
+                    console.log('Cancelled');
+                } else {
+                    console.log('Filename', data.filename);
+                    $.post('/copy-story', {filename: data.filename}, function(response) {
+                        console.log('story has been copied', response);
+                        $('#preview').attr( 'src', function ( i, val ) { return val; });
+                        $('#editor').attr( 'src', function ( i, val ) { return val; });
+                    });
+                }
+            }
+        })
     });
 
     $('#btn-delete-story').on('click', function() {
+        if ($('#story-selector').val() === 'default.json') {
+            vex.dialog.alert('Sorry, you can not delete the default story!')
+            return false;
+        }
+        vex.dialog.confirm({
+            message: 'Are you absolutely sure you want to delete the current story?',
+            callback: function (value) {
+                if (value) {
+                    $.ajax({
+                        url: '/delete-story',
+                        type: 'DELETE',
+                        success: function (response) {
+                            console.log('Successfully deleted the story.')
+                            $('#preview').attr('src', function (i, val) {
+                                return val;
+                            });
+                            $('#editor').attr('src', function (i, val) {
+                                return val;
+                            });
+                        }
+                    });
+                } else {
+                    console.log('Delete cancelled.')
+                }
+            }
+        })
     });
 
-    $('#btn-new-story').on('click', function() {
+    $('#btn-tools').on('click', function() {
+        $('#btn-tools').toggleClass('collapsed');
+        $('#toolbar').toggleClass('collapsed');
     });
-
 })

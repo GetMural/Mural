@@ -22,6 +22,18 @@ iframe {
 #toolbar {
   padding: 5px;
   position: absolute;
-  top: 0;
+  top: 10px;
   z-index: 999;
+}
+
+#toolbar.collapsed {
+  width: 45px;
+  height: 15px;
+  overflow: hidden;
+}
+
+#btn-tools {
+}
+
+#btn-tools.collapsed {
 }

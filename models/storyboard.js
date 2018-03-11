@@ -92,6 +92,18 @@ Storyboard.prototype = {
         });
     },
 
+    deleteFile: function () {
+        var self = this;
+        self.getFilename(function (err, filename) {
+            fs.unlink(filename, (err) => {
+                if (err) {
+                    console.log('Error deleting file', filename);
+                }
+                console.log('path/file.txt was deleted');
+            });
+        });
+    },
+
     getMeta: function () {
         return this.meta;
     },

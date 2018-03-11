@@ -3,10 +3,15 @@
 <head>
   <link type="text/css" rel="stylesheet" href="css/home.css" />
   <script type="text/javascript" src="/node_modules/jquery/dist/jquery.min.js"></script>
+  <script src="/node_modules/vex-js/dist/js/vex.combined.min.js"></script>
+  <script>vex.defaultOptions.className = 'vex-theme-os'</script>
+  <link rel="stylesheet" href="/node_modules/vex-js/dist/css/vex.css" />
+  <link rel="stylesheet" href="/node_modules/vex-js/dist/css/vex-theme-os.css" />
 </head>
 <body>
   <div id="toolbar">
     <!-- TODO: add a hide button here that hides the toolbar or puts it out of the way of the preview -->
+    <button id="btn-tools" class="btn btn-default">Tools</button>
     <select id="story-selector" name="storySelector">
       <option>{{filename}}</option>
       {{#files}}
@@ -15,7 +20,6 @@
     </select>
     <button id="btn-copy-story" class="btn btn-default">Copy Story</button>
     <button id="btn-delete-story" class="btn btn-default">Delete Story</button>
-    <button id="btn-new-story" class="btn btn-default">New Story</button>
     <button id="btn-download" class="btn btn-default">Download Story</button>
     <button id="btn-refresh-preview" class="btn btn-default">Refresh Preview</button>
     <!-- TODO: add a button here to kick off the dist build -->

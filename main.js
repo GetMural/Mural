@@ -24,8 +24,7 @@ app.on('ready', function () {
         icon: iconPath
         //  'node-integration': false // otherwise various client-side things may break
     });
-    appIcon.setToolTip('Mural');
-    appIcon.setContextMenu(menu);
+
     mainWindow.loadURL('http://localhost:3000/');
 
     var template = [
@@ -90,6 +89,8 @@ app.on('ready', function () {
     ];
 
     var menu = Menu.buildFromTemplate(template);
+    appIcon.setToolTip('Mural');
+    appIcon.setContextMenu(menu);
     Menu.setApplicationMenu(menu);
 
     mainWindow.focus();
