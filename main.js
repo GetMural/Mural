@@ -3,6 +3,7 @@ var Window = require('electron').BrowserWindow; // jshint ignore:line
 var Tray = require('electron').Tray; // jshint ignore:line
 var Menu = require('electron').Menu; // jshint ignore:line
 var path = require('path');
+var nativeImage = require('electron').nativeImage;
 
 var server = require('./app');
 
@@ -11,8 +12,9 @@ var mainWindow = null;
 app.on('ready', function () {
     'use strict';
 
-    var iconPath = path.join(__dirname, 'public/img', 'favicon.png');
-    const appIcon = new Tray(iconPath);
+    var iconPath = path.join(__dirname, 'public', 'img', 'favicon.png');
+    let nimage = nativeImage.createFromPath(iconPath);
+    const appIcon = new Tray(nimage);
     mainWindow = new Window({
         width: 1280,
         height: 1024,
@@ -23,6 +25,7 @@ app.on('ready', function () {
         //  'node-integration': false // otherwise various client-side things may break
     });
     appIcon.setToolTip('Mural');
+    appIcon.setContextMenu(menu);
     mainWindow.loadURL('http://localhost:3000/');
 
     var template = [
