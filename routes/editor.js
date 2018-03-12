@@ -493,7 +493,8 @@ router.get('/page/videobackground/id/:id', function (req, res) {
                 title: 'editor/fragments/title',
                 subtitle: 'editor/fragments/subtitle',
                 videobackground: 'editor/pages/videobackground',
-                videosources: 'editor/fragments/videosources'
+                videosources: 'editor/fragments/videosources',
+                plaintext: 'editor/fragments/plaintext'
             }
         });
     });
@@ -515,6 +516,7 @@ router.post('/page/videobackground/id/:id', function (req, res) {
         item['format'] = { fullpage: fullpage };
         item['title'] = newItem['title'];
         item['subtitle'] = newItem['subtitle'];
+        item['text'] = newItem['text'];
         item['video'] = {
             mp4: newItem['mp4'],
             webm: newItem['webm']
@@ -557,7 +559,7 @@ router.get('/page/videofullpage/id/:id', function (req, res) {
                 formcontrols: 'editor/fragments/formcontrols',
                 fullpage: 'editor/fragments/fullpage',
                 loadingimage: 'editor/fragments/loadingimage',
-                text: 'editor/fragments/plaintext',
+                plaintext: 'editor/fragments/plaintext',
                 title: 'editor/fragments/title',
                 videosources: 'editor/fragments/videosources'
             }
@@ -581,6 +583,7 @@ router.post('/page/videofullpage/id/:id', function (req, res) {
         item['format'] = { fullpage: fullpage };
         item['title'] = newItem['title'];
         item['subtitle'] = newItem['subtitle'];
+        item['text'] = newItem['text'];
         item['video'] = {
             mp4: newItem['mp4'],
             webm: newItem['webm']
