@@ -4,6 +4,7 @@ var router = express.Router();
 var Storyboard = require('../models/storyboard');
 var storyboard = new Storyboard();
 var archiver = require('archiver');
+const { spawn } = require('child_process');
 
 
 // Main Editor View
@@ -40,6 +41,13 @@ router.post('/storyboard', function (req, res) {
 const PUBLIC_FOLDER = path.resolve(__dirname, '..', 'public');
 
 router.get('/download', function (req, res) {
+  const npmTask = spawn('npm', ['run', 'build:index']);
+
+  npmTask.stderr.on('data', (data) => {
+    console.log(`stderr: ${data}`);
+  });
+
+  npmTask.on('close', (code) => {
     // Tell the browser that this is a zip file.
     res.writeHead(200, {
         'Content-Type': 'application/zip',
@@ -74,6 +82,8 @@ router.get('/download', function (req, res) {
         .file(path.resolve(PUBLIC_FOLDER, 'app.js'), {name: 'app.js'})
         .directory(path.resolve(PUBLIC_FOLDER, 'img'), 'img')
         .finalize();
+
+  });
 });
 
 // Editor Fragments
