@@ -41,7 +41,7 @@ router.post('/storyboard', function (req, res) {
 const PUBLIC_FOLDER = path.resolve(__dirname, '..', 'public');
 
 router.get('/download', function (req, res) {
-  const npmTask = spawn('npm', ['run', 'build:index']);
+  const npmTask = spawn('npm', ['run', 'build:index'], {shell: true, windowsHide: true});
 
   npmTask.stderr.on('data', (data) => {
     console.log(`stderr: ${data}`);
