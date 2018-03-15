@@ -102,7 +102,7 @@ function loadItem (item) {
   }
 
   if (item.data.image) {
-    imageMedia.insertBackgroundImage(item.el, item.data[scrKey], false);
+    imageMedia.insertBackgroundImage(item.el, item.data[scrKey], item.active);
   }
 
   if (item.data.slideshow) {

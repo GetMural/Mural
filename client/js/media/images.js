@@ -1,7 +1,7 @@
 function insertBackgroundImage($el, src, active=false) {
   const styles = {
     'background-image': `url(${src})`,
-    position: active ? 'fixed' : ''
+     position: active ? 'fixed' : ''
   };
   $el.find('.bg-image').css(styles);
 }

@@ -7,7 +7,7 @@
     "start": "electron .",
     "clean": "rm -rf ./public/dist/index.html",
     "build": "npm run clean && npm run build:index && npm run build:client",
-    "build:index": "./node_modules/gulp/bin/gulp.js index",
+    "build:index": "gulp index",
     "build:client": "webpack",
     "webpack:server": "webpack-dev-server --content-base public/ --colors --host 0.0.0.0 --port 8081 --inline",
     "dev": "bnr dev"
