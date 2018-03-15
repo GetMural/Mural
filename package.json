@@ -1,6 +1,6 @@
 {
   "name": "Mural",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "Longform Storytelling",
   "main": "main.js",
   "scripts": {
@@ -28,6 +28,7 @@
     "blueimp-gallery": "^2.29.0",
     "body-parser": "~1.18.2",
     "bootstrap": "^4.0.0",
+    "connect-busboy": "0.0.2",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
     "easyeditor": "^1.1.0",
@@ -41,6 +42,7 @@
     "jquery": "^3.2.1",
     "json-fmt": "^1.1.2",
     "morgan": "~1.9.0",
+    "npm": "^5.7.1",
     "pouchdb": "^6.4.3",
     "scrollstory": "^1.0.0",
     "serve-favicon": "~2.4.5",

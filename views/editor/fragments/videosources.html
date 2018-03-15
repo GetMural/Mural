@@ -1,8 +1,12 @@
 <div>
   <label>MP4</label>
-  <input name="mp4" class="form-control" data-name="mp4" type="text" {{#video.mp4}}value="{{video.mp4}}" {{/video.mp4}} placeholder="No mp4 source" />
+  <video id='mp4-preview' src='' class='video-preview-thumb' controls="true"></video>
+  <input id="mp4" name="mp4" class="form-control src-input" data-for="mp4" type="text" {{#video.mp4}}value="{{video.mp4}}" {{/video.mp4}} placeholder="No mp4 source" />
+  <input data-for="mp4" class="fileupload-input" type="file" name="files[]">
 </div>
 <div>
   <label>Webm</label>
-  <input name="webm" class="form-control" data-name="webm" type="text" {{#video.webm}}value="{{video.webm}}" {{/video.webm}}placeholder="No webm source" />
+  <video id='webm-preview' src='' class='video-preview-thumb' controls="true"></video>
+  <input id="webm" name="webm" class="form-control src-input" data-for="webm" type="text" {{#video.webm}}value="{{video.webm}}" {{/video.webm}}placeholder="No webm source" />
+  <input data-for="webm" class="fileupload-input" type="file" name="files[]">
 </div>

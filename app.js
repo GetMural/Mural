@@ -7,9 +7,8 @@
     var bodyParser = require('body-parser');
     var debug = require('debug')('mural-new:server');
     var http = require('http');
-
+    var busboy = require('connect-busboy');
     var app = express();
-    app.use(favicon(path.join(__dirname, 'public/img', 'favicon.ico')))
 
     // Setup node_modules for templates
     app.use('/node_modules', express.static(path.join(__dirname, 'node_modules')));
@@ -18,14 +17,13 @@
     app.set('views', path.join(__dirname, 'views'));
     app.engine('html', require('hogan-express'));
     app.set('view engine', 'html');
-
-    // uncomment after placing your favicon in /public
-    //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+    app.use(favicon(path.join(__dirname, 'public', 'img', 'favicon.ico')));
     app.use(logger('dev'));
-    app.use(bodyParser.json());
-    app.use(bodyParser.urlencoded({extended: true}));
+    app.use(bodyParser.json({limit: '500mb'}));
+    app.use(bodyParser.urlencoded({limit: '500mb', extended: true}));
     app.use(cookieParser());
     app.use(express.static(path.join(__dirname, 'public')));
+    app.use(busboy()); // for file upload
 
     // load routes
     app.use('/', require('./routes/index'));
@@ -33,6 +31,7 @@
     app.use('/editor', require('./routes/editor'));
     app.use('/public', require('./routes/public'));
     app.use('/preferences', require('./routes/preferences'));
+    app.use('/upload', require('./routes/upload'));
 
     // catch 404 and forward to error handler
     app.use(function (req, res, next) {
