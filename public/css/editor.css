@@ -49,3 +49,15 @@ button#save
 .item-editor-container {
 
 }
+
+.img-preview-thumb {
+  width: 55px;
+  height: 55px;
+  padding: 5px;
+}
+
+.video-preview-thumb {
+  width: 250px;
+  height: 200px;
+  padding: 5px;
+}

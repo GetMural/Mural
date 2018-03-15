@@ -81,6 +81,7 @@ router.get('/download', function (req, res) {
         .file(path.resolve(PUBLIC_FOLDER, 'app.css'), {name: 'app.css'})
         .file(path.resolve(PUBLIC_FOLDER, 'app.js'), {name: 'app.js'})
         .directory(path.resolve(PUBLIC_FOLDER, 'img'), 'img')
+        .directory(path.resolve(PUBLIC_FOLDER, 'uploads'), 'uploads')
         .finalize();
 
   });

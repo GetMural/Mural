@@ -1,4 +1,6 @@
 <div>
   <label for="loading">Src</label>
-  <input name="loading" class="form-control" data-name="loading" type="text" {{#image.loading}}value="{{image.loading}}" {{/image.loading}}placeholder="No poster image" />
+  <img id='loading-preview' src='' class='img-preview-thumb' />
+  <input id='loading' name="loading" class="form-control src-input" data-for="loading" type="text" {{#image.loading}}value="{{image.loading}}" {{/image.loading}}placeholder="No poster image" />
+  <input data-for="loading" class="fileupload-input" type="file" name="files[]">
 </div>

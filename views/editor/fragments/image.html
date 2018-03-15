@@ -1,6 +1,8 @@
 <div>
   <label for="src">Src</label>
-  <input name="src" class="form-control" data-name="src" type="text" {{#src}}value="{{src}}" {{/src}}placeholder="No source" />
+  <img id='src-preview' src='' class='img-preview-thumb' />
+  <input name="src" class="form-control src-input" data-for="src" type="text" {{#src}}value="{{src}}" {{/src}}placeholder="No source" />
+  <input data-for="src" class="fileupload-input" type="file" name="files[]">
 </div>
 
 {{> credits}}
