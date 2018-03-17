@@ -257,6 +257,11 @@ $('.mute').click(function () {
 
       videoMedia.setMuted(item.index, muted);
     }
+
+    if (item.data.audio) {
+      const muted = (isSoundEnabled === false);
+      audioMedia.setMuted(item.index, muted);
+    }
   });
 });
 

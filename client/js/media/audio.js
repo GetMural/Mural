@@ -25,7 +25,13 @@ function removeBackgroundAudio ($el, id) {
   MEDIA[id] = null;
 }
 
+function setMuted (id, muted) {
+  const audio = MEDIA[id];
+  audio.muted = muted;
+}
+
 module.exports = {
   insertBackgroundAudio,
-  removeBackgroundAudio
+  removeBackgroundAudio,
+  setMuted
 };

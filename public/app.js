@@ -10697,6 +10697,11 @@ $('.mute').click(function () {
 
       videoMedia.setMuted(item.index, muted);
     }
+
+    if (item.data.audio) {
+      const muted = (isSoundEnabled === false);
+      audioMedia.setMuted(item.index, muted);
+    }
   });
 });
 
@@ -14365,9 +14370,15 @@ function removeBackgroundAudio ($el, id) {
   MEDIA[id] = null;
 }
 
+function setMuted (id, muted) {
+  const audio = MEDIA[id];
+  audio.muted = muted;
+}
+
 module.exports = {
   insertBackgroundAudio,
-  removeBackgroundAudio
+  removeBackgroundAudio,
+  setMuted
 };
 
 
