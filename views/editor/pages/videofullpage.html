@@ -22,6 +22,17 @@
 
     </fieldset>
 
+    <fieldset>
+       <legend>Playback</legend>
+      
+      <div>
+        <label>Loop</label>
+        <input name="playback" value="loop" type="radio" {{^autoAdvance}} checked {{/autoAdvance}} />
+        <label>Auto Advance</label>
+        <input name="playback" value="advance" type="radio" {{#autoAdvance}} checked{{/autoAdvance}} />
+      </div>
+    </fieldset>
+
     <fieldset class="js-PosterImage">
 
       <legend>Poster Image</legend>

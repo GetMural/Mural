@@ -287,17 +287,20 @@
         {{#videofullpage}}
           <section class="st-content-video part snap"
             name="story{{id}}"
+            {{#loop}}
+              data-loop="true"
+            {{/loop}}
+            {{#autoAdvance}}
+              data-auto-advance="true"
+            {{/autoAdvance}}
             {{#image}}
               data-poster="{{loading}}"
             {{/image}}
             {{#video}}
               data-video="true"
-              data-poster="{{loading}}"
-              data-loop="false",
-              data-auto-advance="true"
               data-autoplay="true"
               data-muted="false"
-              data-is-fullpage="true"
+              data-fullpage="true"
               {{#mp4}}
                 data-mp4="{{mp4}}"
               {{/mp4}}

@@ -591,6 +591,16 @@ router.post('/page/videofullpage/id/:id', function (req, res) {
 
         // format and save new values to videofullpage
         var fullpage = (newItem['fullpage'] === 'on') ? true : false;
+        var playback = newItem['playback'];
+
+        if (playback === 'advance') {
+            item['autoAdvance'] = true;
+            item['loop'] = false;
+        } else {
+            item['loop'] = true;
+            item['autoAdvance'] = false;
+        }
+
         item['format'] = { fullpage: fullpage };
         item['title'] = newItem['title'];
         item['subtitle'] = newItem['subtitle'];
