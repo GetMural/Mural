@@ -372,6 +372,11 @@ router.post('/page/imagebackground/id/:id', function (req, res) {
             srcmedium: newItem['srcmedium']
         };
 
+        item['audio'] = {
+            mp3: newItem['mp3'],
+            ogg: newItem['ogg']
+        };
+
         // save the file
         items[qId].imagebackground = item;
         // TODO: move this to a global file save function with its own button in the frontend

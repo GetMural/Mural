@@ -3,20 +3,20 @@
     <legend>Image Sources</legend>
     <div>
       <label for="scrphone">Small Image</label>
-      <img id='srcphone-preview' src='' class='img-preview-thumb' />
-      <input name="srcphone" class="form-control src-input" data-for="srcphone" id="srcphone" type="text" {{#srcphone}}value="{{srcphone}}" {{/srcphone}}placeholder="No small image source"/>
+      <img id='srcphone-preview' src="{{srcphone}}" class='img-preview-thumb' />
+      <input name="srcphone" class="form-control src-input" data-for="srcphone" id="srcphone" type="text" value="{{srcphone}}" placeholder="No small image source"/>
       <input data-for="srcphone" class="fileupload-input" type="file" name="files[]">
     </div>
     <div class="form-group">
       <label for="scrmedium">Medium Image</label>
-      <img id='srcmedium-preview' src='' class='img-preview-thumb' />
-      <input name="srcmedium" class="form-control src-input" data-for="srcmedium" id="srcmedium" type="text" {{#srcmedium}}value="{{srcmedium}}" {{/srcmedium}}placeholder="No medium image source"/>
+      <img id='srcmedium-preview' src="{{srcmedium}}" class='img-preview-thumb' />
+      <input name="srcmedium" class="form-control src-input" data-for="srcmedium" id="srcmedium" type="text" value="{{srcmedium}}" placeholder="No medium image source"/>
       <input data-for="srcmedium" class="fileupload-input" type="file" name="files[]">
     </div>
     <div class="form-group">
       <label for="scrmain">Large Image</label>
-      <img id='srcmain-preview' src='' class='img-preview-thumb' />
-      <input name="srcmain" class="form-control src-input" data-for="srcmain" id="srcmain" type="text"{{#srcmain}}value="{{srcmain}}" {{/srcmain}}placeholder="No main image source"/>
+      <img id='srcmain-preview' src="{{srcmain}}" class='img-preview-thumb' />
+      <input name="srcmain" class="form-control src-input" data-for="srcmain" id="srcmain" type="text" value="{{srcmain}}" placeholder="No main image source"/>
       <input data-for="srcmain" class="fileupload-input" type="file" name="files[]">
     </div>
   </fieldset>
