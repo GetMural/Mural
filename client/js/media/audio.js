@@ -2,9 +2,8 @@ const MEDIA = [];
 const DATA = [];
 
 function insertBackgroundAudio (scrollStory, $el, id, srcs, attrs) {
-  MEDIA[id] = MEDIA[id] || new Audio();
-
-  const audio = MEDIA[id];
+  const audio = new Audio();
+  MEDIA[id] = audio;
   audio.loop = true;
 
   srcs.forEach((src) => {
@@ -14,11 +13,18 @@ function insertBackgroundAudio (scrollStory, $el, id, srcs, attrs) {
     audio.appendChild(source);
   });
 
-  audio.load();
+  audio.play();
 }
 
 function removeBackgroundAudio ($el, id) {
   const audio = MEDIA[id];
+  audio.pause();
   audio.innerHTML = '';
   audio.load();
+  MEDIA[id] = null;
 }
+
+module.exports = {
+  insertBackgroundAudio,
+  removeBackgroundAudio
+};

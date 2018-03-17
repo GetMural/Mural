@@ -105,10 +105,10 @@ function loadItem (item) {
   }
 
   if (item.data.audio) {
-    audioMedia.insertBackgroundImage(
+    audioMedia.insertBackgroundAudio(
       scrollStory,
       item.el,
-      item.index
+      item.index,
       [
         {
           type: 'audio/mp3',
@@ -118,7 +118,9 @@ function loadItem (item) {
           type: 'audio/ogg',
           src: item.data.ogg
         }
-      ]);
+      ],
+      {}
+    );
   }
 
   if (item.data.image) {
@@ -196,7 +198,11 @@ $story.on('itemexitviewport', function(ev, item) {
   }
 
   if (item.data.video) {
-    const data = videoMedia.removeBackgroundVideo(item.el, item.index);
+    videoMedia.removeBackgroundVideo(item.el, item.index);
+  }
+
+  if (item.data.audio) {
+    audioMedia.removeBackgroundAudio(item.el, item.index);
   }
 });
 
