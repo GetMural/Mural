@@ -35,6 +35,7 @@ const stickybits = require('stickybits/src/jquery.stickybits');
 const blueimp = require('blueimp-gallery/js/blueimp-gallery');
 const videoMedia = require('./media/video');
 const imageMedia = require('./media/images');
+const audioMedia = require('./media/audio');
 const isMobile = window.isMobile;
 
 const WINDOW_WIDTH = $(window).width();
@@ -76,6 +77,7 @@ function loadItem (item) {
     }
 
     videoMedia.insertBackgroundVideo(
+      scrollStory,
       item.el,
       item.index,
       [
@@ -92,13 +94,35 @@ function loadItem (item) {
         poster: item.data.poster,
         autoplay: autoplay,
         muted: muted,
-        loop: item.data.loop
+        loop: item.data.loop,
+        autoAdvance: item.data.autoAdvance
       }
     );
   }
 
   if (LOADED_STORY_SECTIONS[item.index] !== undefined) {
     return;
+  }
+
+  if (item.data.audio && item.active) {
+    audioMedia.insertBackgroundAudio(
+      scrollStory,
+      item.el,
+      item.index,
+      [
+        {
+          type: 'audio/mp3',
+          src: item.data.mp3
+        },
+        {
+          type: 'audio/ogg',
+          src: item.data.ogg
+        }
+      ],
+      {
+        muted: (isSoundEnabled === false)
+      }
+    );
   }
 
   if (item.data.image) {
@@ -154,6 +178,27 @@ $story.on('itemfocus', function(ev, item) {
   if (item.data.video) {
     videoMedia.fixBackgroundVideo(item.el);
   }
+
+  if (item.data.audio) {
+    audioMedia.insertBackgroundAudio(
+      scrollStory,
+      item.el,
+      item.index,
+      [
+        {
+          type: 'audio/mp3',
+          src: item.data.mp3
+        },
+        {
+          type: 'audio/ogg',
+          src: item.data.ogg
+        }
+      ],
+      {
+        muted: (isSoundEnabled === false)
+      }
+    );
+  }
 });
 
 $story.on('itemblur', function(ev, item) {
@@ -176,7 +221,11 @@ $story.on('itemexitviewport', function(ev, item) {
   }
 
   if (item.data.video) {
-    const data = videoMedia.removeBackgroundVideo(item.el, item.index);
+    videoMedia.removeBackgroundVideo(item.el, item.index);
+  }
+
+  if (item.data.audio) {
+    audioMedia.removeBackgroundAudio(item.el, item.index);
   }
 });
 
@@ -207,6 +256,11 @@ $('.mute').click(function () {
       }
 
       videoMedia.setMuted(item.index, muted);
+    }
+
+    if (item.data.audio) {
+      const muted = (isSoundEnabled === false);
+      audioMedia.setMuted(item.index, muted);
     }
   });
 });

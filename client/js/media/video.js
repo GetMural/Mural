@@ -1,8 +1,12 @@
 const MEDIA = [];
 const DATA = [];
 
-function insertBackgroundVideo ($el, id, srcs, attrs) {
-  const video = prepareVideo($el, id, srcs, attrs);
+function insertBackgroundVideo (scrollStory, $el, id, srcs, attrs) {
+  const video = prepareVideo(scrollStory, $el, id, srcs, attrs);
+
+  console.log(DATA[video]);
+
+
   video.loop = attrs.loop;
   video.autoplay = (DATA[video].paused !== undefined) ? !DATA[video].paused : attrs.autoplay;
   video.muted = attrs.muted;
@@ -33,7 +37,7 @@ function unfixBackgroundVideo ($el) {
   $container.css('position', '');
 }
 
-function prepareVideo ($el, id, srcs, attrs) {
+function prepareVideo (scrollStory, $el, id, srcs, attrs) {
   let video;
 
   if (MEDIA[id]) {
@@ -51,6 +55,7 @@ function prepareVideo ($el, id, srcs, attrs) {
     });
 
     $el.find('.pause').click(function() {
+      // TODO check for cancelling problems with promises
       video.pause();
       DATA[video].paused = true;
       $(this).hide();
@@ -61,6 +66,20 @@ function prepareVideo ($el, id, srcs, attrs) {
       $el.find('.play').hide();
     } else {
       $el.find('.pause').hide();
+    }
+
+    if (attrs.autoAdvance) {
+      video.addEventListener('ended', () => {
+        const count = scrollStory.getItems().length;
+        const next = id + 1;
+
+        if (next < count) {
+          scrollStory.index(id + 1);
+        }
+
+        // Allow it to restart from the beginning.
+        video.currentTime = 0;
+      });
     }
   }
 

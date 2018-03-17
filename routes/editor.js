@@ -337,6 +337,7 @@ router.get('/page/imagebackground/id/:id', function (req, res) {
             partials: {
                 formcontrols: 'editor/fragments/formcontrols',
                 fullpage: 'editor/fragments/fullpage',
+                audiosources: 'editor/fragments/audiosources',
                 imagesources: 'editor/fragments/imagesources',
                 text: 'editor/fragments/plaintext',
                 title: 'editor/fragments/title',
@@ -369,6 +370,11 @@ router.post('/page/imagebackground/id/:id', function (req, res) {
             srcmain: newItem['srcmain'],
             srcphone: newItem['srcphone'],
             srcmedium: newItem['srcmedium']
+        };
+
+        item['audio'] = {
+            mp3: newItem['mp3'],
+            ogg: newItem['ogg']
         };
 
         // save the file
@@ -591,6 +597,16 @@ router.post('/page/videofullpage/id/:id', function (req, res) {
 
         // format and save new values to videofullpage
         var fullpage = (newItem['fullpage'] === 'on') ? true : false;
+        var playback = newItem['playback'];
+
+        if (playback === 'advance') {
+            item['autoAdvance'] = true;
+            item['loop'] = false;
+        } else {
+            item['loop'] = true;
+            item['autoAdvance'] = false;
+        }
+
         item['format'] = { fullpage: fullpage };
         item['title'] = newItem['title'];
         item['subtitle'] = newItem['subtitle'];

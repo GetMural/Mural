@@ -10475,6 +10475,7 @@ const stickybits = __webpack_require__(5);
 const blueimp = __webpack_require__(7);
 const videoMedia = __webpack_require__(9);
 const imageMedia = __webpack_require__(10);
+const audioMedia = __webpack_require__(11);
 const isMobile = window.isMobile;
 
 const WINDOW_WIDTH = $(window).width();
@@ -10516,6 +10517,7 @@ function loadItem (item) {
     }
 
     videoMedia.insertBackgroundVideo(
+      scrollStory,
       item.el,
       item.index,
       [
@@ -10532,13 +10534,35 @@ function loadItem (item) {
         poster: item.data.poster,
         autoplay: autoplay,
         muted: muted,
-        loop: item.data.loop
+        loop: item.data.loop,
+        autoAdvance: item.data.autoAdvance
       }
     );
   }
 
   if (LOADED_STORY_SECTIONS[item.index] !== undefined) {
     return;
+  }
+
+  if (item.data.audio && item.active) {
+    audioMedia.insertBackgroundAudio(
+      scrollStory,
+      item.el,
+      item.index,
+      [
+        {
+          type: 'audio/mp3',
+          src: item.data.mp3
+        },
+        {
+          type: 'audio/ogg',
+          src: item.data.ogg
+        }
+      ],
+      {
+        muted: (isSoundEnabled === false)
+      }
+    );
   }
 
   if (item.data.image) {
@@ -10594,6 +10618,27 @@ $story.on('itemfocus', function(ev, item) {
   if (item.data.video) {
     videoMedia.fixBackgroundVideo(item.el);
   }
+
+  if (item.data.audio) {
+    audioMedia.insertBackgroundAudio(
+      scrollStory,
+      item.el,
+      item.index,
+      [
+        {
+          type: 'audio/mp3',
+          src: item.data.mp3
+        },
+        {
+          type: 'audio/ogg',
+          src: item.data.ogg
+        }
+      ],
+      {
+        muted: (isSoundEnabled === false)
+      }
+    );
+  }
 });
 
 $story.on('itemblur', function(ev, item) {
@@ -10616,7 +10661,11 @@ $story.on('itemexitviewport', function(ev, item) {
   }
 
   if (item.data.video) {
-    const data = videoMedia.removeBackgroundVideo(item.el, item.index);
+    videoMedia.removeBackgroundVideo(item.el, item.index);
+  }
+
+  if (item.data.audio) {
+    audioMedia.removeBackgroundAudio(item.el, item.index);
   }
 });
 
@@ -10647,6 +10696,11 @@ $('.mute').click(function () {
       }
 
       videoMedia.setMuted(item.index, muted);
+    }
+
+    if (item.data.audio) {
+      const muted = (isSoundEnabled === false);
+      audioMedia.setMuted(item.index, muted);
     }
   });
 });
@@ -14146,8 +14200,12 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/*
 const MEDIA = [];
 const DATA = [];
 
-function insertBackgroundVideo ($el, id, srcs, attrs) {
-  const video = prepareVideo($el, id, srcs, attrs);
+function insertBackgroundVideo (scrollStory, $el, id, srcs, attrs) {
+  const video = prepareVideo(scrollStory, $el, id, srcs, attrs);
+
+  console.log(DATA[video]);
+
+
   video.loop = attrs.loop;
   video.autoplay = (DATA[video].paused !== undefined) ? !DATA[video].paused : attrs.autoplay;
   video.muted = attrs.muted;
@@ -14178,7 +14236,7 @@ function unfixBackgroundVideo ($el) {
   $container.css('position', '');
 }
 
-function prepareVideo ($el, id, srcs, attrs) {
+function prepareVideo (scrollStory, $el, id, srcs, attrs) {
   let video;
 
   if (MEDIA[id]) {
@@ -14196,6 +14254,7 @@ function prepareVideo ($el, id, srcs, attrs) {
     });
 
     $el.find('.pause').click(function() {
+      // TODO check for cancelling problems with promises
       video.pause();
       DATA[video].paused = true;
       $(this).hide();
@@ -14206,6 +14265,20 @@ function prepareVideo ($el, id, srcs, attrs) {
       $el.find('.play').hide();
     } else {
       $el.find('.pause').hide();
+    }
+
+    if (attrs.autoAdvance) {
+      video.addEventListener('ended', () => {
+        const count = scrollStory.getItems().length;
+        const next = id + 1;
+
+        if (next < count) {
+          scrollStory.index(id + 1);
+        }
+
+        // Allow it to restart from the beginning.
+        video.currentTime = 0;
+      });
     }
   }
 
@@ -14263,6 +14336,49 @@ module.exports = {
   insertBackgroundImage,
   fixBackgroundImage,
   unfixBackgroundImage
+};
+
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports) {
+
+const MEDIA = [];
+const DATA = [];
+
+function insertBackgroundAudio (scrollStory, $el, id, srcs, attrs) {
+  const audio = new Audio();
+  MEDIA[id] = audio;
+  audio.loop = true;
+  audio.muted = attrs.muted;
+
+  srcs.forEach((src) => {
+    const source = document.createElement('source'); 
+    source.type = src.type;
+    source.src = src.src;
+    audio.appendChild(source);
+  });
+
+  audio.play();
+}
+
+function removeBackgroundAudio ($el, id) {
+  const audio = MEDIA[id];
+  audio.pause();
+  audio.innerHTML = '';
+  audio.load();
+  MEDIA[id] = null;
+}
+
+function setMuted (id, muted) {
+  const audio = MEDIA[id];
+  audio.muted = muted;
+}
+
+module.exports = {
+  insertBackgroundAudio,
+  removeBackgroundAudio,
+  setMuted
 };
 
 

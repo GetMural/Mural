@@ -21,6 +21,7 @@
 
     </fieldset>
 
+    <fieldset>
     {{#image}}
       {{> imagesources}}
     {{/image}}
@@ -29,9 +30,22 @@
       {{> imagesources}}
     {{/image}}
 
+    </fieldset>
+
+    <fieldset>
+
+    {{#audio}}
+      {{> audiosources}}
+    {{/audio}}
+
+    {{^audio}}
+      {{> audiosources}}
+    {{/audio}}
+
+   </fieldset>
+
   {{/item}}
 
   {{> formcontrols}}
 
 </form>
-<script type="text/javascript" src="/js/src-input.js"></script>
