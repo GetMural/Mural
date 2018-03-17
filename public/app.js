@@ -14150,6 +14150,10 @@ const DATA = [];
 
 function insertBackgroundVideo (scrollStory, $el, id, srcs, attrs) {
   const video = prepareVideo(scrollStory, $el, id, srcs, attrs);
+
+  console.log(DATA[video]);
+
+
   video.loop = attrs.loop;
   video.autoplay = (DATA[video].paused !== undefined) ? !DATA[video].paused : attrs.autoplay;
   video.muted = attrs.muted;
@@ -14209,6 +14213,20 @@ function prepareVideo (scrollStory, $el, id, srcs, attrs) {
     } else {
       $el.find('.pause').hide();
     }
+
+    if (attrs.autoAdvance) {
+      video.addEventListener('ended', () => {
+        const count = scrollStory.getItems().length;
+        const next = id + 1;
+
+        if (next < count) {
+          scrollStory.index(id + 1);
+        }
+
+        // Allow it to restart from the beginning.
+        video.currentTime = 0;
+      });
+    }
   }
 
   srcs.forEach((src) => {
@@ -14220,17 +14238,6 @@ function prepareVideo (scrollStory, $el, id, srcs, attrs) {
 
   video.preload = 'auto';
   MEDIA[id] = video;
-
-  if (attrs.autoAdvance) {
-    video.addEventListener('ended', () => {
-      const count = scrollStory.getItems().length;
-      const next = id + 1;
-
-      if (next < count) {
-        scrollStory.index(id + 1);
-      } 
-    });
-  }
 
   return video;
 }
