@@ -76,6 +76,7 @@ function loadItem (item) {
     }
 
     videoMedia.insertBackgroundVideo(
+      scrollStory,
       item.el,
       item.index,
       [
@@ -92,7 +93,8 @@ function loadItem (item) {
         poster: item.data.poster,
         autoplay: autoplay,
         muted: muted,
-        loop: item.data.loop
+        loop: item.data.loop,
+        autoAdvance: item.data.autoAdvance
       }
     );
   }

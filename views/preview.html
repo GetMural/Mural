@@ -243,9 +243,11 @@
         {{#videobackground}}
           <section class="st-video part"
             name="story{{id}}"
+            {{#image}}
+              data-poster="{{loading}}"
+            {{/image}}
             {{#video}}
               data-video="true"
-              data-poster="{{loading}}"
               data-loop="true"
               data-autoplay="true"
               data-muted="false"
@@ -285,10 +287,14 @@
         {{#videofullpage}}
           <section class="st-content-video part snap"
             name="story{{id}}"
+            {{#image}}
+              data-poster="{{loading}}"
+            {{/image}}
             {{#video}}
               data-video="true"
               data-poster="{{loading}}"
-              data-loop="true"
+              data-loop="false",
+              data-auto-advance="true"
               data-autoplay="true"
               data-muted="false"
               data-is-fullpage="true"

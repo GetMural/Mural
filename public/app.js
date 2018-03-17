@@ -10516,6 +10516,7 @@ function loadItem (item) {
     }
 
     videoMedia.insertBackgroundVideo(
+      scrollStory,
       item.el,
       item.index,
       [
@@ -10532,7 +10533,8 @@ function loadItem (item) {
         poster: item.data.poster,
         autoplay: autoplay,
         muted: muted,
-        loop: item.data.loop
+        loop: item.data.loop,
+        autoAdvance: item.data.autoAdvance
       }
     );
   }
@@ -14146,8 +14148,8 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/*
 const MEDIA = [];
 const DATA = [];
 
-function insertBackgroundVideo ($el, id, srcs, attrs) {
-  const video = prepareVideo($el, id, srcs, attrs);
+function insertBackgroundVideo (scrollStory, $el, id, srcs, attrs) {
+  const video = prepareVideo(scrollStory, $el, id, srcs, attrs);
   video.loop = attrs.loop;
   video.autoplay = (DATA[video].paused !== undefined) ? !DATA[video].paused : attrs.autoplay;
   video.muted = attrs.muted;
@@ -14178,7 +14180,7 @@ function unfixBackgroundVideo ($el) {
   $container.css('position', '');
 }
 
-function prepareVideo ($el, id, srcs, attrs) {
+function prepareVideo (scrollStory, $el, id, srcs, attrs) {
   let video;
 
   if (MEDIA[id]) {
@@ -14218,6 +14220,17 @@ function prepareVideo ($el, id, srcs, attrs) {
 
   video.preload = 'auto';
   MEDIA[id] = video;
+
+  if (attrs.autoAdvance) {
+    video.addEventListener('ended', () => {
+      const count = scrollStory.getItems().length;
+      const next = id + 1;
+
+      if (next < count) {
+        scrollStory.index(id + 1);
+      } 
+    });
+  }
 
   return video;
 }
