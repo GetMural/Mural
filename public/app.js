@@ -10559,7 +10559,9 @@ function loadItem (item) {
           src: item.data.ogg
         }
       ],
-      {}
+      {
+        muted: (isSoundEnabled === false)
+      }
     );
   }
 
@@ -10615,6 +10617,27 @@ $story.on('itemfocus', function(ev, item) {
 
   if (item.data.video) {
     videoMedia.fixBackgroundVideo(item.el);
+  }
+
+  if (item.data.audio) {
+    audioMedia.insertBackgroundAudio(
+      scrollStory,
+      item.el,
+      item.index,
+      [
+        {
+          type: 'audio/mp3',
+          src: item.data.mp3
+        },
+        {
+          type: 'audio/ogg',
+          src: item.data.ogg
+        }
+      ],
+      {
+        muted: (isSoundEnabled === false)
+      }
+    );
   }
 });
 
@@ -14322,6 +14345,7 @@ function insertBackgroundAudio (scrollStory, $el, id, srcs, attrs) {
   const audio = new Audio();
   MEDIA[id] = audio;
   audio.loop = true;
+  audio.muted = attrs.muted;
 
   srcs.forEach((src) => {
     const source = document.createElement('source'); 

@@ -119,7 +119,9 @@ function loadItem (item) {
           src: item.data.ogg
         }
       ],
-      {}
+      {
+        muted: (isSoundEnabled === false)
+      }
     );
   }
 
@@ -175,6 +177,27 @@ $story.on('itemfocus', function(ev, item) {
 
   if (item.data.video) {
     videoMedia.fixBackgroundVideo(item.el);
+  }
+
+  if (item.data.audio) {
+    audioMedia.insertBackgroundAudio(
+      scrollStory,
+      item.el,
+      item.index,
+      [
+        {
+          type: 'audio/mp3',
+          src: item.data.mp3
+        },
+        {
+          type: 'audio/ogg',
+          src: item.data.ogg
+        }
+      ],
+      {
+        muted: (isSoundEnabled === false)
+      }
+    );
   }
 });
 

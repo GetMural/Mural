@@ -5,6 +5,7 @@ function insertBackgroundAudio (scrollStory, $el, id, srcs, attrs) {
   const audio = new Audio();
   MEDIA[id] = audio;
   audio.loop = true;
+  audio.muted = attrs.muted;
 
   srcs.forEach((src) => {
     const source = document.createElement('source'); 
