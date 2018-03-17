@@ -69,6 +69,15 @@
       {{#items}}
         {{#imagebackground}}
           <section class="part sticky-image" name="story{{id}}"
+            {{#audio}}
+              data-audio=true
+              {{#mp3}}
+                data-mp3="{{mp3}}"
+              {{/mp3}}
+              {{#ogg}}
+                data-ogg="{{ogg}}"
+              {{/ogg}}
+            {{/audio}}
             {{#image}}
               data-image=true
               {{#srcmain}}
