@@ -21,6 +21,7 @@
 
     </fieldset>
 
+    <fieldset>
     {{#image}}
       {{> imagesources}}
     {{/image}}
@@ -28,6 +29,20 @@
     {{^image}}
       {{> imagesources}}
     {{/image}}
+
+    </fieldset>
+
+    <fieldset>
+
+    {{#audio}}
+      {{> audiosources}}
+    {{/audio}}
+
+    {{^audio}}
+      {{> audiosources}}
+    {{/audio}}
+
+   </fieldset>
 
   {{/item}}
 

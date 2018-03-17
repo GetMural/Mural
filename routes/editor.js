@@ -337,6 +337,7 @@ router.get('/page/imagebackground/id/:id', function (req, res) {
             partials: {
                 formcontrols: 'editor/fragments/formcontrols',
                 fullpage: 'editor/fragments/fullpage',
+                audiosources: 'editor/fragments/audiosources',
                 imagesources: 'editor/fragments/imagesources',
                 text: 'editor/fragments/plaintext',
                 title: 'editor/fragments/title',

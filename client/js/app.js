@@ -35,6 +35,7 @@ const stickybits = require('stickybits/src/jquery.stickybits');
 const blueimp = require('blueimp-gallery/js/blueimp-gallery');
 const videoMedia = require('./media/video');
 const imageMedia = require('./media/images');
+const audioMedia = require('./media/audio');
 const isMobile = window.isMobile;
 
 const WINDOW_WIDTH = $(window).width();
@@ -101,6 +102,23 @@ function loadItem (item) {
 
   if (LOADED_STORY_SECTIONS[item.index] !== undefined) {
     return;
+  }
+
+  if (item.data.audio) {
+    audioMedia.insertBackgroundImage(
+      scrollStory,
+      item.el,
+      item.index
+      [
+        {
+          type: 'audio/mp3',
+          src: item.data.mp3
+        },
+        {
+          type: 'audio/ogg',
+          src: item.data.ogg
+        }
+      ]);
   }
 
   if (item.data.image) {

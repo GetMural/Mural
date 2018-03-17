@@ -1,0 +1,13 @@
+<legend>Audio Sources</legend>
+<div>
+  <label>MP3</label>
+  <audio id='mp3-preview' src='' class='audio-preview-thumb' controls="true"></audio>
+  <input id="mp3" name="mp3" class="form-control src-input" data-for="mp3" type="text" {{#audio.mp3}}value="{{audio.mp3}}" {{/audio.mp3}} placeholder="No mp3 source" />
+  <input data-for="mp4" class="fileupload-input" type="file" name="files[]">
+</div>
+<div>
+  <label>Ogg</label>
+  <audio id='ogg-preview' src='' class='audio-preview-thumb' controls="true"></audio>
+  <input id="ogg" name="webm" class="form-control src-input" data-for="ogg" type="text" {{#audio.ogg}}value="{{audio.ogg}}" {{/audio.ogg}} placeholder="No ogg source" />
+  <input data-for="ogg" class="fileupload-input" type="file" name="files[]">
+</div>
