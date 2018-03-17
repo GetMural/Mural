@@ -104,7 +104,7 @@ function loadItem (item) {
     return;
   }
 
-  if (item.data.audio) {
+  if (item.data.audio && item.active) {
     audioMedia.insertBackgroundAudio(
       scrollStory,
       item.el,
