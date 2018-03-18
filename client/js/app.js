@@ -212,7 +212,6 @@ $story.on('itemblur', function(ev, item) {
 
   if (item.data.audio) {
     audioMedia.removeBackgroundAudio(item.el, item.index);
-    console.log(item);
   }
 });
 

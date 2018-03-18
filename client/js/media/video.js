@@ -4,9 +4,6 @@ const DATA = [];
 function insertBackgroundVideo (scrollStory, $el, id, srcs, attrs) {
   const video = prepareVideo(scrollStory, $el, id, srcs, attrs);
 
-  console.log(DATA[video]);
-
-
   video.loop = attrs.loop;
   video.autoplay = (DATA[video].paused !== undefined) ? !DATA[video].paused : attrs.autoplay;
   video.muted = attrs.muted;
