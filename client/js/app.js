@@ -209,6 +209,11 @@ $story.on('itemblur', function(ev, item) {
   if (item.data.video) {
     videoMedia.unfixBackgroundVideo(item.el);
   }
+
+  if (item.data.audio) {
+    audioMedia.removeBackgroundAudio(item.el, item.index);
+    console.log(item);
+  }
 });
 
 $story.on('itementerviewport', function(ev, item) {
@@ -222,10 +227,6 @@ $story.on('itemexitviewport', function(ev, item) {
 
   if (item.data.video) {
     videoMedia.removeBackgroundVideo(item.el, item.index);
-  }
-
-  if (item.data.audio) {
-    audioMedia.removeBackgroundAudio(item.el, item.index);
   }
 });
 

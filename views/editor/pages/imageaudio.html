@@ -1,0 +1,40 @@
+<form id="frm-item-editor" class="js-Audio" action="/editor/page/imageaudio/id/{{id}}" method="post">
+
+  <legend class="title">Image Audio</legend>
+
+  {{#item}}
+
+    <fieldset>
+
+      {{> title}}
+
+    </fieldset>
+
+    <fieldset>
+    {{#image}}
+      {{> imagesources}}
+    {{/image}}
+
+    {{^image}}
+      {{> imagesources}}
+    {{/image}}
+
+    </fieldset>
+
+    <fieldset>
+
+    {{#audio}}
+      {{> audiosources}}
+    {{/audio}}
+
+    {{^audio}}
+      {{> audiosources}}
+    {{/audio}}
+
+   </fieldset>
+
+  {{/item}}
+
+  {{> formcontrols}}
+
+</form>

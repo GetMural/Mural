@@ -16,6 +16,14 @@
           <button type="submit">Delete</button>
         </form>
       {{/imagebackground}}
+      {{#imageaudio}}
+        <a href="/editor/page/imageaudio/id/{{id}}">
+          Image Audio{{#title}}: {{title}}{{/title}}
+        </a>
+        <form action="/editor/delete/{{id}}" method="post">
+          <button type="submit">Delete</button>
+        </form>
+      {{/imageaudio}}
   	  {{#imageparallax}}
         <a href="/editor/page/imageparallax/id/{{id}}">
           Parallax Image{{#title}}: {{title}}{{/title}}

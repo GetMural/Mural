@@ -394,6 +394,71 @@ router.post('/page/imagebackground/id/:id', function (req, res) {
     });
 });
 
+
+router.get('/page/imageaudio/id/:id', function (req, res) {
+    storyboard.readFile(function (err, data) {
+        var query = req || {};
+        var items = data.items;
+        if (query.params && query.params.id) {
+            var qId = query.params.id;
+            var item = items[qId].imageaudio;
+        };
+
+        res.render('editor/pages/imageaudio', {
+            id: qId,
+            item: item,
+            partials: {
+                formcontrols: 'editor/fragments/formcontrols',
+                audiosources: 'editor/fragments/audiosources',
+                imagesources: 'editor/fragments/imagesources',
+                title: 'editor/fragments/title'
+            }
+        });
+    });
+});
+
+router.post('/page/imageaudio/id/:id', function (req, res) {
+    storyboard.readFile(function (err, data) {
+        var query = req || {};
+        var meta = data.meta;
+        var items = data.items;
+        if (query.params && query.params.id) {
+            var qId = query.params.id;
+            var item = items[qId].imageaudio;
+            var newItem = req.body;
+        };
+
+        // format and save new item
+        item['title'] = newItem['title'];
+
+        item['image'] = {
+            srcmain: newItem['srcmain'],
+            srcphone: newItem['srcphone'],
+            srcmedium: newItem['srcmedium']
+        };
+
+        item['audio'] = {
+            mp3: newItem['mp3'],
+            ogg: newItem['ogg']
+        };
+
+        // save the file
+        items[qId].imageaudio = item;
+        // TODO: move this to a global file save function with its own button in the frontend
+        storyboard.writeFile({ meta: meta, items: items });
+
+        res.render('editor/editor', {
+            meta: meta,
+            items: items,
+            editor: 'editor',
+            message: 'Image Audio Updated',
+            partials: {
+                editornav: 'editor/fragments/editornav'
+            }
+        });
+    });
+});
+
 // Slideshow Horizontal Page with ID
 router.get('/page/slideshowhorizontal/id/:id', function (req, res) {
     storyboard.readFile(function (err, data) {
