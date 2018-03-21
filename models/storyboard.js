@@ -1,7 +1,6 @@
 var fs = require('fs');
 var path = require('path');
-var Prefernces = require('./preferences');
-var preferences = new Prefernces(path.join(__dirname, '../data/preferences.json'));
+var Preferences = require('./preferences');
 
 /**
  *  IMPORTANT:  This model saves a storyboard JSON object to local filesystem
@@ -36,6 +35,7 @@ function createNav(items) {
 Storyboard.prototype = {
 
     getFilename: function(cb) {
+        var preferences = new Preferences(path.join(__dirname, '../data/preferences.json'));
         var self = this;
         // get filename from preferences file
         preferences.readFile(null, function(err, data) {

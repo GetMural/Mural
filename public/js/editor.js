@@ -8,7 +8,7 @@ $(function() {
     // load initial storyboard from server filesystem
     $.get('/editor/storyboard', function (data, status) {
         console.log('Loaded storyboard from server');
-        var data = JSON.parse(data);
+        //var data = JSON.parse(data);
         var dataDoc = data;
         // TODO: replace with a better unique _id
         dataDoc._id = data.meta.title;
@@ -26,7 +26,7 @@ $(function() {
             db.put(doc).then(function() {
                 db.get(doc._id).then(function(doc) {
                     storyboard = doc;
-                    console.log('Loaded storyboard from server', doc);
+                    console.log('Loaded storyboard from server');
                 });
             });
         }).catch(function (err) {
