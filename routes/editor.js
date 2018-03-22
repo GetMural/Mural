@@ -1,10 +1,10 @@
 var express = require('express');
 const path = require('path');
+const fs = require('fs');
 var router = express.Router();
 var Storyboard = require('../models/storyboard');
 var storyboard = new Storyboard();
 var archiver = require('archiver');
-const { spawn } = require('child_process');
 
 
 // Main Editor View
@@ -41,49 +41,82 @@ router.post('/storyboard', function (req, res) {
 const PUBLIC_FOLDER = path.resolve(__dirname, '..', 'public');
 
 router.get('/download', function (req, res) {
-  const npmTask = spawn('npm', ['run', 'build:index'], {shell: true, windowsHide: true});
-
-  npmTask.stderr.on('data', (data) => {
-    console.log(`stderr: ${data}`);
-  });
-
-  npmTask.on('close', (code) => {
-    // Tell the browser that this is a zip file.
-    res.writeHead(200, {
-        'Content-Type': 'application/zip',
-        'Content-disposition': 'attachment; filename=mural.zip'
-    });
-
-    var archive = archiver('zip', {
-      zlib: { level: 9 } // Sets the compression level.
-    });
-
-    // can decide in a bit how Mural wants to handle errors in requests.
-    // (ie stat failures and other non-blocking errors)
-    archive.on('warning', function(err) {
-      if (err.code === 'ENOENT') {
-        // log warning
+  storyboard.readFile(function (err, data) {
+    if (err) {
         console.log(err);
-      } else {
-        // throw error
-        console.error(err);
+        return res.send(err);
+    }
+    res.render('preview', {
+      nav: data.nav,
+      items: data.items,
+      meta: data.meta,
+      partials: {
+          fb: 'partials/fb',
+          head: 'partials/head',
+          header: 'partials/header',
+          imagebackground: 'partials/imagebackground',
+          imageparallax: 'partials/imageparallax',
+          intro: 'partials/intro',
+          loader: 'partials/loader',
+          textcentered: 'partials/textcentred',
+          title: 'partials/title',
+          slideshowhorizontal: 'partials/slideshowhorizontal',
+          slideshowvertical: 'partials/slideshowvertical',
+          snippets: 'partials/snippets',
+          social: 'partials/social',
+          subdataposterloadingimage: 'partials/subdataposterloadingimage',
+          subvideosource: 'partials/subvideosource',
+          videobackground: 'partials/videobackground',
+          videofullpage: 'partials/videofullpage'
       }
+    }, function (err, html) {
+      if (err) {
+          console.log(err);
+          return res.send(err);
+      }
+      // write to dist/index.html
+      fs.writeFile(path.resolve(PUBLIC_FOLDER, 'dist', 'index.html'), html, function (err) {
+        if (err) {
+            console.log(err);
+            return res.send(err);
+        }
+        // Tell the browser that this is a zip file.
+        res.writeHead(200, {
+            'Content-Type': 'application/zip',
+            'Content-disposition': 'attachment; filename=mural.zip'
+        });
+
+        var archive = archiver('zip', {
+            zlib: { level: 9 } // Sets the compression level.
+        });
+
+        // can decide in a bit how Mural wants to handle errors in requests.
+        // (ie stat failures and other non-blocking errors)
+        archive.on('warning', function(err) {
+          if (err.code === 'ENOENT') {
+            // log warning
+            console.log(err);
+          } else {
+            // throw error
+            console.error(err);
+          }
+        });
+
+        archive.on('error', function(err) {
+            console.error(err);
+        });
+
+        archive.pipe(res);
+
+        archive
+            .file(path.resolve(PUBLIC_FOLDER, 'dist', 'index.html'), {name: 'index.html'})
+            .file(path.resolve(PUBLIC_FOLDER, 'app.css'), {name: 'app.css'})
+            .file(path.resolve(PUBLIC_FOLDER, 'app.js'), {name: 'app.js'})
+            .directory(path.resolve(PUBLIC_FOLDER, 'img'), 'img')
+            .directory(path.resolve(PUBLIC_FOLDER, 'uploads'), 'uploads')
+            .finalize();
+      });
     });
-
-    archive.on('error', function(err) {
-      console.error(err);
-    });
- 
-    archive.pipe(res);
-
-    archive
-        .file(path.resolve(PUBLIC_FOLDER, 'dist', 'index.html'), {name: 'index.html'})
-        .file(path.resolve(PUBLIC_FOLDER, 'app.css'), {name: 'app.css'})
-        .file(path.resolve(PUBLIC_FOLDER, 'app.js'), {name: 'app.js'})
-        .directory(path.resolve(PUBLIC_FOLDER, 'img'), 'img')
-        .directory(path.resolve(PUBLIC_FOLDER, 'uploads'), 'uploads')
-        .finalize();
-
   });
 });
 

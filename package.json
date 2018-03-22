@@ -1,13 +1,12 @@
 {
   "name": "Mural",
-  "version": "0.0.5",
+  "version": "0.0.7",
   "description": "Longform Storytelling",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
     "clean": "rm -rf ./public/dist/index.html",
-    "build": "npm run clean && npm run build:index && npm run build:client",
-    "build:index": "gulp index",
+    "build": "npm run clean && npm run build:client",
     "build:client": "webpack",
     "webpack:server": "webpack-dev-server --content-base public/ --colors --host 0.0.0.0 --port 8081 --inline",
     "dev": "bnr dev"
@@ -34,9 +33,6 @@
     "easyeditor": "^1.1.0",
     "electron": "^1.8.2",
     "express": "~4.15.5",
-    "gulp": "^3.9.1",
-    "gulp-hogan": "^2.0.0",
-    "gulp-rename": "^1.2.2",
     "hogan-express": "^0.5.2",
     "ismobilejs": "^0.4.1",
     "jquery": "^3.2.1",
