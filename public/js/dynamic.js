@@ -39,7 +39,7 @@ itemEditor.on('change', '.fileupload-input', function (){
   var filename = $(this).val().split('\\').pop();
   var textFieldId = '#' + $(this).data('for');
   var previewImg = '#' + $(this).data('for').replace('[\[\]]', '-') + '-preview';
-  var srcPath = '/uploads/' + filename;
+  var srcPath = 'uploads/' + filename;
   var data = new FormData();
   console.log(filename, textFieldId);
   data.append('upload-file', $(this).prop('files')[0]);
