@@ -61,22 +61,35 @@ const scrollStory = $story.scrollStory({
 const LOADED_STORY_SECTIONS = [];
 let isSoundEnabled = true;
 
+function getVideoAttrs(item) {
+  let muted;
+  let autoplay;
+
+  if (item.data.isFullpage) {
+    muted = (isSoundEnabled === false) || (item.data.muted === true);
+    autoplay = !isMobile.any;
+  } else {
+    muted = (isSoundEnabled === false) || (isMobile.any === true) || (item.data.muted === true);
+    autoplay = item.data.autoplay;
+  }
+
+  return {
+    poster: item.data.poster,
+    autoplay: autoplay,
+    muted: muted,
+    loop: item.data.loop,
+    autoAdvance: item.data.autoAdvance
+  };
+}
+
 
 function loadItem (item) {
-  // have to load videos as we remove the src and reload to prevent downloading unwatched media.
+  if (LOADED_STORY_SECTIONS[item.index] !== undefined) {
+    return;
+  }
+
   if (item.data.video) {
-    let muted;
-    let autoplay;
-
-    if (item.data.isFullpage) {
-      muted = (isSoundEnabled === false) || (item.data.muted === true);
-      autoplay = !isMobile.any;
-    } else {
-      muted = (isSoundEnabled === false) || (isMobile.any === true) || (item.data.muted === true);
-      autoplay = item.data.autoplay;
-    }
-
-    videoMedia.insertBackgroundVideo(
+    videoMedia.prepareVideo(
       scrollStory,
       item.el,
       item.index,
@@ -90,28 +103,21 @@ function loadItem (item) {
           src: item.data.webm
         }
       ],
-      {
-        poster: item.data.poster,
-        autoplay: autoplay,
-        muted: muted,
-        loop: item.data.loop,
-        autoAdvance: item.data.autoAdvance
-      }
+      getVideoAttrs(item)
     );
 
     if (item.active) {
+      videoMedia.playBackgroundVideo(
+        item.index,
+        getVideoAttrs(item)
+      );
+
       videoMedia.fixBackgroundVideo(item.el);
     }
   }
 
-  if (LOADED_STORY_SECTIONS[item.index] !== undefined) {
-    return;
-  }
-
-  if (item.data.audio && item.active) {
-    audioMedia.insertBackgroundAudio(
-      scrollStory,
-      item.el,
+  if (item.data.audio) {
+    audioMedia.prepareAudio(
       item.index,
       [
         {
@@ -122,11 +128,17 @@ function loadItem (item) {
           type: 'audio/ogg',
           src: item.data.ogg
         }
-      ],
-      {
-        muted: (isSoundEnabled === false)
-      }
+      ]
     );
+
+    if (item.active) {
+      audioMedia.playBackgroundAudio(
+        item.index,
+        {
+          muted: (isSoundEnabled === false)
+        }
+      );
+    }
   }
 
   if (item.data.image) {
@@ -180,24 +192,13 @@ $story.on('itemfocus', function(ev, item) {
   }
 
   if (item.data.video) {
+    videoMedia.playBackgroundVideo(item.index, getVideoAttrs(item));
     videoMedia.fixBackgroundVideo(item.el);
   }
 
   if (item.data.audio) {
-    audioMedia.insertBackgroundAudio(
-      scrollStory,
-      item.el,
+    audioMedia.playBackgroundAudio(
       item.index,
-      [
-        {
-          type: 'audio/mp3',
-          src: item.data.mp3
-        },
-        {
-          type: 'audio/ogg',
-          src: item.data.ogg
-        }
-      ],
       {
         muted: (isSoundEnabled === false)
       }
@@ -211,11 +212,11 @@ $story.on('itemblur', function(ev, item) {
   }
 
   if (item.data.video) {
-    videoMedia.unfixBackgroundVideo(item.el);
+    videoMedia.removeBackgroundVideo(item.el, item.index);
   }
 
   if (item.data.audio) {
-    audioMedia.removeBackgroundAudio(item.el, item.index);
+    audioMedia.removeBackgroundAudio(item.index);
   }
 });
 
@@ -231,10 +232,6 @@ $story.on('itemexitviewport', function(ev, item) {
   if (item.data.video) {
     videoMedia.removeBackgroundVideo(item.el, item.index);
   }
-});
-
-scrollStory.getItemsInViewport().forEach(function (item) {
-  loadItem(item);
 });
 
 $('[data-scroll-speed]').moveIt();
@@ -275,4 +272,8 @@ $('.sticks_wrapper').click(function() {
 
 $('nav').on('click', 'li', function() {
   scrollStory.index(parseInt(this.dataset.id, 10));
+});
+
+scrollStory.getItemsInViewport().forEach(function (item) {
+  loadItem(item);
 });

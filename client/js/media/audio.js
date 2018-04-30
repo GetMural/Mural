@@ -1,11 +1,11 @@
 const MEDIA = [];
 const DATA = [];
 
-function insertBackgroundAudio (scrollStory, $el, id, srcs, attrs) {
+function prepareAudio (id, srcs) {
   const audio = new Audio();
   MEDIA[id] = audio;
   audio.loop = true;
-  audio.muted = attrs.muted;
+  audio.preload = 'auto';
 
   srcs.forEach((src) => {
     const source = document.createElement('source'); 
@@ -14,15 +14,12 @@ function insertBackgroundAudio (scrollStory, $el, id, srcs, attrs) {
     audio.appendChild(source);
   });
 
-  audio.play();
+  return audio;
 }
 
-function removeBackgroundAudio ($el, id) {
+function removeBackgroundAudio (id) {
   const audio = MEDIA[id];
   audio.pause();
-  audio.innerHTML = '';
-  audio.load();
-  MEDIA[id] = null;
 }
 
 function setMuted (id, muted) {
@@ -30,8 +27,15 @@ function setMuted (id, muted) {
   audio.muted = muted;
 }
 
+function playBackgroundAudio (id, attrs) {
+  const audio = MEDIA[id];
+  audio.muted = attrs.muted;
+  audio.play();
+}
+
 module.exports = {
-  insertBackgroundAudio,
+  playBackgroundAudio,
+  prepareAudio,
   removeBackgroundAudio,
   setMuted
 };
