@@ -6,9 +6,10 @@ require('scrollstory/jquery.scrollstory.js');
 require('stickybits/src/jquery.stickybits');
 
 const $overlay = $('<div/>', {
-  class: 'loading',
-  text: 'LOADING'
+  class: 'loading'
 });
+
+$overlay.html(`<img src="img/logo.svg" alt="Mural is Loading..." class="logo"><div class="loading-text">LOADING</div>`)
 
 $(document.body).append($overlay);
 document.body.classList.add('frozen');
@@ -245,7 +246,7 @@ $story.on('itemexitviewport', function(ev, item) {
 $('[data-scroll-speed]').moveIt();
 
 $('.mute').click(function () {
-  $this = $(this);
+  const $this = $(this);
   if ($this.hasClass('muted')) {
     isSoundEnabled = true;
     $this.removeClass('muted');

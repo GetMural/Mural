@@ -9212,9 +9212,9 @@ __webpack_require__(7);
 __webpack_require__(8);
 
 var $overlay = $('<div/>', {
-  class: 'loading',
-  text: 'LOADING'
+  class: 'loading'
 });
+$overlay.html("<img src=\"img/logo.svg\" alt=\"Mural is Loading...\" class=\"logo\"><div class=\"loading-text\">LOADING</div>");
 $(document.body).append($overlay);
 document.body.classList.add('frozen');
 
@@ -9419,7 +9419,7 @@ $story.on('itemexitviewport', function (ev, item) {
 });
 $('[data-scroll-speed]').moveIt();
 $('.mute').click(function () {
-  $this = $(this);
+  var $this = $(this);
 
   if ($this.hasClass('muted')) {
     isSoundEnabled = true;
