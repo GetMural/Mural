@@ -14,11 +14,13 @@ function prepareAudio (id, srcs) {
     audio.appendChild(source);
   });
 
-  audio.addEventListener('canplaythrough', () => {
-    console.log(`Can Play Audio ${id}`);
+  const canPlayThrough = new Promise(function(resolve, reject) {
+    audio.addEventListener('canplaythrough', () => {
+      resolve();
+    });
   });
 
-  return audio;
+  return canPlayThrough;
 }
 
 function removeBackgroundAudio (id) {

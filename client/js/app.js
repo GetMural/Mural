@@ -5,6 +5,14 @@ const $ = require("expose-loader?$!jquery");
 require('scrollstory/jquery.scrollstory.js');
 require('stickybits/src/jquery.stickybits');
 
+const $overlay = $('<div/>', {
+  class: 'loading',
+  text: 'LOADING'
+});
+
+$(document.body).append($overlay);
+document.body.classList.add('frozen');
+
 $.fn.moveIt = function(){
   var $window = $(window);
   var instances = [];
@@ -61,6 +69,7 @@ const scrollStory = $story.scrollStory({
 
 const storyItems = scrollStory.getItems();
 
+const LOAD_PROMISES = [];
 const LOADED_STORY_SECTIONS = [];
 let isSoundEnabled = true;
 
@@ -92,7 +101,7 @@ function loadItem (item) {
   }
 
   if (item.data.video) {
-    videoMedia.prepareVideo(
+    LOAD_PROMISES.push(videoMedia.prepareVideo(
       scrollStory,
       item.el,
       item.index,
@@ -107,20 +116,20 @@ function loadItem (item) {
         }
       ],
       getVideoAttrs(item)
-    );
+    ));
 
-    if (item.active) {
-      videoMedia.playBackgroundVideo(
-        item.index,
-        getVideoAttrs(item)
-      );
+    // if (item.active) {
+    //   videoMedia.playBackgroundVideo(
+    //     item.index,
+    //     getVideoAttrs(item)
+    //   );
 
-      videoMedia.fixBackgroundVideo(item.el);
-    }
+    //   videoMedia.fixBackgroundVideo(item.el);
+    // }
   }
 
   if (item.data.audio) {
-    audioMedia.prepareAudio(
+    LOAD_PROMISES.push(audioMedia.prepareAudio(
       item.index,
       [
         {
@@ -132,16 +141,16 @@ function loadItem (item) {
           src: item.data.ogg
         }
       ]
-    );
+    ));
 
-    if (item.active) {
-      audioMedia.playBackgroundAudio(
-        item.index,
-        {
-          muted: (isSoundEnabled === false)
-        }
-      );
-    }
+    // if (item.active) {
+    //   audioMedia.playBackgroundAudio(
+    //     item.index,
+    //     {
+    //       muted: (isSoundEnabled === false)
+    //     }
+    //   );
+    // }
   }
 
   if (item.data.image) {
@@ -275,4 +284,28 @@ $('nav').on('click', 'li', function() {
 
 storyItems.forEach(function (item) {
   loadItem(item);
+});
+
+Promise.all(LOAD_PROMISES).then(() => {
+  $overlay.remove();
+  document.body.classList.remove('frozen');
+  const active = scrollStory.getActiveItem();
+
+  if (active.data.video) {
+    videoMedia.playBackgroundVideo(
+      active.index,
+      getVideoAttrs(active)
+    );
+
+    videoMedia.fixBackgroundVideo(active.el);
+  }
+
+  if (active.data.audio) {
+    audioMedia.playBackgroundAudio(
+      active.index,
+      {
+        muted: (isSoundEnabled === false)
+      }
+    );
+  }
 });

@@ -84,11 +84,13 @@ function prepareVideo (scrollStory, $el, id, srcs, attrs) {
     });
   }
 
-  video.addEventListener('canplaythrough', () => {
-    console.log(`Can Play Video ${id}`);
+  const canPlayThrough = new Promise(function(resolve, reject) {
+    video.addEventListener('canplaythrough', () => {
+      resolve();
+    });
   });
 
-  return video;
+  return canPlayThrough;
 }
 
 function setMuted (id, muted) {
