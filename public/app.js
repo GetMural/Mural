@@ -10495,8 +10495,11 @@ if (WINDOW_WIDTH > 1024) {
 
 const $story = $('#scrollytelling');
 const scrollStory = $story.scrollStory({
-  contentSelector: '.part'
+  contentSelector: '.part',
+  triggerOffset: 50
 }).data('plugin_scrollStory');
+
+const storyItems = scrollStory.getItems();
 
 const LOADED_STORY_SECTIONS = [];
 let isSoundEnabled = true;
@@ -10644,9 +10647,6 @@ $story.on('itemfocus', function(ev, item) {
       }
     );
   }
-
-  console.log("focus");
-  console.log(item);
 });
 
 $story.on('itemblur', function(ev, item) {
@@ -10661,13 +10661,6 @@ $story.on('itemblur', function(ev, item) {
   if (item.data.audio) {
     audioMedia.removeBackgroundAudio(item.index);
   }
-
-  console.log("blur");
-  console.log(item);
-});
-
-$story.on('itementerviewport', function(ev, item) {
-  loadItem(item);
 });
 
 $story.on('itemexitviewport', function(ev, item) {
@@ -10692,7 +10685,7 @@ $('.mute').click(function () {
     $this.addClass('muted');
   }
 
-  scrollStory.getItemsInViewport().forEach(function (item) {
+  storyItems.forEach(function (item) {
     if (item.data.video) {
       let muted;
 
@@ -10720,7 +10713,7 @@ $('nav').on('click', 'li', function() {
   scrollStory.index(parseInt(this.dataset.id, 10));
 });
 
-scrollStory.getItemsInViewport().forEach(function (item) {
+storyItems.forEach(function (item) {
   loadItem(item);
 });
 
@@ -14215,10 +14208,11 @@ function playBackgroundVideo (id, attrs) {
   const video = MEDIA[id];
 
   video.loop = attrs.loop;
-  video.autoplay = (DATA[video].paused !== undefined) ? !DATA[video].paused : attrs.autoplay;
   video.muted = attrs.muted;
-  video.currentTime = DATA[video].currentTime || 0;
-  video.play();
+
+  if (!DATA[id].paused && attrs.autoplay) {
+    video.play();
+  }
 }
 
 // store current time that had been reached.
@@ -14226,7 +14220,6 @@ function removeBackgroundVideo ($el, id) {
   const $container = $el.find('.video-container');
   $container.css('position', '');
   const video = MEDIA[id];
-  DATA[video].currentTime = video.currentTime;
   video.removeAttribute('autoplay');
   video.pause();
 }
@@ -14246,7 +14239,7 @@ function prepareVideo (scrollStory, $el, id, srcs, attrs) {
   video.poster = attrs.poster;
   video.preload = 'auto';
   MEDIA[id] = video;
-  DATA[video] = {};
+  DATA[id] = {};
 
   srcs.forEach((src) => {
     const source = document.createElement('source'); 
@@ -14259,7 +14252,7 @@ function prepareVideo (scrollStory, $el, id, srcs, attrs) {
 
   $el.find('.play').click(function() {
     video.play();
-    DATA[video].paused = false;
+    DATA[id].paused = false;
     $(this).hide();
     $el.find('.pause').show();
   });
@@ -14267,7 +14260,7 @@ function prepareVideo (scrollStory, $el, id, srcs, attrs) {
   $el.find('.pause').click(function() {
     // TODO check for cancelling problems with promises
     video.pause();
-    DATA[video].paused = true;
+    DATA[id].paused = true;
     $(this).hide();
     $el.find('.play').show();
   });

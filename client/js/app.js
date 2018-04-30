@@ -55,8 +55,11 @@ if (WINDOW_WIDTH > 1024) {
 
 const $story = $('#scrollytelling');
 const scrollStory = $story.scrollStory({
-  contentSelector: '.part'
+  contentSelector: '.part',
+  triggerOffset: 50
 }).data('plugin_scrollStory');
+
+const storyItems = scrollStory.getItems();
 
 const LOADED_STORY_SECTIONS = [];
 let isSoundEnabled = true;
@@ -220,10 +223,6 @@ $story.on('itemblur', function(ev, item) {
   }
 });
 
-$story.on('itementerviewport', function(ev, item) {
-  loadItem(item);
-});
-
 $story.on('itemexitviewport', function(ev, item) {
   if (item.data.image) {
     imageMedia.unfixBackgroundImage(item.el);
@@ -246,7 +245,7 @@ $('.mute').click(function () {
     $this.addClass('muted');
   }
 
-  scrollStory.getItemsInViewport().forEach(function (item) {
+  storyItems.forEach(function (item) {
     if (item.data.video) {
       let muted;
 
@@ -274,6 +273,6 @@ $('nav').on('click', 'li', function() {
   scrollStory.index(parseInt(this.dataset.id, 10));
 });
 
-scrollStory.getItemsInViewport().forEach(function (item) {
+storyItems.forEach(function (item) {
   loadItem(item);
 });
