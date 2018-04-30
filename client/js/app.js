@@ -98,6 +98,10 @@ function loadItem (item) {
         autoAdvance: item.data.autoAdvance
       }
     );
+
+    if (item.active) {
+      videoMedia.fixBackgroundVideo(item.el);
+    }
   }
 
   if (LOADED_STORY_SECTIONS[item.index] !== undefined) {
