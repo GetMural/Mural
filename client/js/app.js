@@ -1,8 +1,9 @@
 require('blueimp-gallery/css/blueimp-gallery.css');
 require('../css/style.scss');
 
-$ = require('jquery');
+const $ = require("expose-loader?$!jquery");
 require('scrollstory/jquery.scrollstory.js');
+require('stickybits/src/jquery.stickybits');
 
 $.fn.moveIt = function(){
   var $window = $(window);
@@ -31,7 +32,6 @@ MoveItItem.prototype.update = function(scrollTop){
   this.el.css('transform', 'translateY(' + -(top / this.speed) + 'px)');
 };
 
-const stickybits = require('stickybits/src/jquery.stickybits');
 const blueimp = require('blueimp-gallery/js/blueimp-gallery');
 const videoMedia = require('./media/video');
 const imageMedia = require('./media/images');
@@ -56,7 +56,7 @@ if (WINDOW_WIDTH > 1024) {
 const $story = $('#scrollytelling');
 const scrollStory = $story.scrollStory({
   contentSelector: '.part',
-  triggerOffset: 50
+  triggerOffset: 30
 }).data('plugin_scrollStory');
 
 const storyItems = scrollStory.getItems();

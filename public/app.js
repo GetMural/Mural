@@ -10438,49 +10438,58 @@ return jQuery;
 /* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
+"use strict";
+
+
 __webpack_require__(2);
+
 __webpack_require__(3);
 
-$ = __webpack_require__(0);
-__webpack_require__(4);
+var $ = __webpack_require__(4);
 
-$.fn.moveIt = function(){
+__webpack_require__(6);
+
+__webpack_require__(7);
+
+$.fn.moveIt = function () {
   var $window = $(window);
   var instances = [];
-  
-  $(this).each(function() {
+  $(this).each(function () {
     instances.push(new MoveItItem($(this)));
   });
-  
-  window.addEventListener('scroll', function(){
-    const scrollTop = $window.scrollTop();
-    instances.forEach(function(inst){
+  window.addEventListener('scroll', function () {
+    var scrollTop = $window.scrollTop();
+    instances.forEach(function (inst) {
       inst.update(scrollTop);
     });
-  }, {passive: true}); // TODO check compatibility
-}
+  }, {
+    passive: true
+  }); // TODO check compatibility
+};
 
-const MoveItItem = function(el){
+var MoveItItem = function MoveItItem(el) {
   this.el = $(el);
   this.container = this.el.parent('.part');
   this.speed = parseInt(this.el.attr('data-scroll-speed'));
 };
 
-MoveItItem.prototype.update = function(scrollTop){
-  const top = scrollTop - this.container.offset().top;
+MoveItItem.prototype.update = function (scrollTop) {
+  var top = scrollTop - this.container.offset().top;
   this.el.css('transform', 'translateY(' + -(top / this.speed) + 'px)');
 };
 
-const stickybits = __webpack_require__(5);
-const blueimp = __webpack_require__(7);
-const videoMedia = __webpack_require__(9);
-const imageMedia = __webpack_require__(10);
-const audioMedia = __webpack_require__(11);
-const isMobile = window.isMobile;
+var blueimp = __webpack_require__(9);
 
-const WINDOW_WIDTH = $(window).width();
-let scrKey;
-let attrKey;
+var videoMedia = __webpack_require__(11);
+
+var imageMedia = __webpack_require__(12);
+
+var audioMedia = __webpack_require__(13);
+
+var isMobile = window.isMobile;
+var WINDOW_WIDTH = $(window).width();
+var scrKey;
+var attrKey;
 
 if (WINDOW_WIDTH > 1024) {
   scrKey = 'src';
@@ -10493,26 +10502,24 @@ if (WINDOW_WIDTH > 1024) {
   attrKey = 'src-phone';
 }
 
-const $story = $('#scrollytelling');
-const scrollStory = $story.scrollStory({
+var $story = $('#scrollytelling');
+var scrollStory = $story.scrollStory({
   contentSelector: '.part',
-  triggerOffset: 50
+  triggerOffset: 30
 }).data('plugin_scrollStory');
-
-const storyItems = scrollStory.getItems();
-
-const LOADED_STORY_SECTIONS = [];
-let isSoundEnabled = true;
+var storyItems = scrollStory.getItems();
+var LOADED_STORY_SECTIONS = [];
+var isSoundEnabled = true;
 
 function getVideoAttrs(item) {
-  let muted;
-  let autoplay;
+  var muted;
+  var autoplay;
 
   if (item.data.isFullpage) {
-    muted = (isSoundEnabled === false) || (item.data.muted === true);
+    muted = isSoundEnabled === false || item.data.muted === true;
     autoplay = !isMobile.any;
   } else {
-    muted = (isSoundEnabled === false) || (isMobile.any === true) || (item.data.muted === true);
+    muted = isSoundEnabled === false || isMobile.any === true || item.data.muted === true;
     autoplay = item.data.autoplay;
   }
 
@@ -10525,62 +10532,39 @@ function getVideoAttrs(item) {
   };
 }
 
-
-function loadItem (item) {
+function loadItem(item) {
   if (LOADED_STORY_SECTIONS[item.index] !== undefined) {
     return;
   }
 
   if (item.data.video) {
-    videoMedia.prepareVideo(
-      scrollStory,
-      item.el,
-      item.index,
-      [
-        {
-          type: 'video/mp4',
-          src: item.data.mp4
-        },
-        {
-          type: 'video/webm',
-          src: item.data.webm
-        }
-      ],
-      getVideoAttrs(item)
-    );
+    videoMedia.prepareVideo(scrollStory, item.el, item.index, [{
+      type: 'video/mp4',
+      src: item.data.mp4
+    }, {
+      type: 'video/webm',
+      src: item.data.webm
+    }], getVideoAttrs(item));
 
     if (item.active) {
-      videoMedia.playBackgroundVideo(
-        item.index,
-        getVideoAttrs(item)
-      );
-
+      videoMedia.playBackgroundVideo(item.index, getVideoAttrs(item));
       videoMedia.fixBackgroundVideo(item.el);
     }
   }
 
   if (item.data.audio) {
-    audioMedia.prepareAudio(
-      item.index,
-      [
-        {
-          type: 'audio/mp3',
-          src: item.data.mp3
-        },
-        {
-          type: 'audio/ogg',
-          src: item.data.ogg
-        }
-      ]
-    );
+    audioMedia.prepareAudio(item.index, [{
+      type: 'audio/mp3',
+      src: item.data.mp3
+    }, {
+      type: 'audio/ogg',
+      src: item.data.ogg
+    }]);
 
     if (item.active) {
-      audioMedia.playBackgroundAudio(
-        item.index,
-        {
-          muted: (isSoundEnabled === false)
-        }
-      );
+      audioMedia.playBackgroundAudio(item.index, {
+        muted: isSoundEnabled === false
+      });
     }
   }
 
@@ -10589,39 +10573,35 @@ function loadItem (item) {
   }
 
   if (item.data.slideshow) {
-    blueimp(
-      item.el.find('.slide-container a').get(),
-      {
-        container: item.el.find('.blueimp-gallery')[0],
-        urlProperty: attrKey,
-        carousel: true,
-        titleElement: '.slide-caption',
-        startSlideshow: false,
-        onslide: function (index, slide) {
-          const text = this.list[index].getAttribute('data-credits');
-          const node = this.container.find('.credits');
-          node.empty();
-          if (text) {
-            node[0].appendChild(document.createTextNode(text));
-          }
+    blueimp(item.el.find('.slide-container a').get(), {
+      container: item.el.find('.blueimp-gallery')[0],
+      urlProperty: attrKey,
+      carousel: true,
+      titleElement: '.slide-caption',
+      startSlideshow: false,
+      onslide: function onslide(index, slide) {
+        var text = this.list[index].getAttribute('data-credits');
+        var node = this.container.find('.credits');
+        node.empty();
+
+        if (text) {
+          node[0].appendChild(document.createTextNode(text));
         }
       }
-    );
+    });
   }
 
   if (item.data.slides) {
-    item.el.find('.bg-image')
-      .each(function(i) {
-        const $el = $(this);
-        const src = $el.data(scrKey);
-        $el.css('background-image', `url(${src})`);
-      })
-      .stickybits();
+    item.el.find('.bg-image').each(function (i) {
+      var $el = $(this);
+      var src = $el.data(scrKey);
+      $el.css('background-image', "url(".concat(src, ")"));
+    }).stickybits();
   }
 
   if (item.data.parallax) {
-    const src = item.data[scrKey];
-    item.el.find('.bg-image').css('background-image', `url(${src})`);
+    var src = item.data[scrKey];
+    item.el.find('.bg-image').css('background-image', "url(".concat(src, ")"));
   }
 
   LOADED_STORY_SECTIONS[item.index] = {
@@ -10629,7 +10609,7 @@ function loadItem (item) {
   };
 }
 
-$story.on('itemfocus', function(ev, item) {
+$story.on('itemfocus', function (ev, item) {
   if (item.data.image) {
     imageMedia.fixBackgroundImage(item.el, item.data[scrKey], true);
   }
@@ -10640,16 +10620,12 @@ $story.on('itemfocus', function(ev, item) {
   }
 
   if (item.data.audio) {
-    audioMedia.playBackgroundAudio(
-      item.index,
-      {
-        muted: (isSoundEnabled === false)
-      }
-    );
+    audioMedia.playBackgroundAudio(item.index, {
+      muted: isSoundEnabled === false
+    });
   }
 });
-
-$story.on('itemblur', function(ev, item) {
+$story.on('itemblur', function (ev, item) {
   if (item.data.image) {
     imageMedia.unfixBackgroundImage(item.el);
   }
@@ -10662,8 +10638,7 @@ $story.on('itemblur', function(ev, item) {
     audioMedia.removeBackgroundAudio(item.index);
   }
 });
-
-$story.on('itemexitviewport', function(ev, item) {
+$story.on('itemexitviewport', function (ev, item) {
   if (item.data.image) {
     imageMedia.unfixBackgroundImage(item.el);
   }
@@ -10672,11 +10647,10 @@ $story.on('itemexitviewport', function(ev, item) {
     videoMedia.removeBackgroundVideo(item.el, item.index);
   }
 });
-
 $('[data-scroll-speed]').moveIt();
-
 $('.mute').click(function () {
   $this = $(this);
+
   if ($this.hasClass('muted')) {
     isSoundEnabled = true;
     $this.removeClass('muted');
@@ -10687,36 +10661,33 @@ $('.mute').click(function () {
 
   storyItems.forEach(function (item) {
     if (item.data.video) {
-      let muted;
+      var muted;
 
       if (item.data.isFullpage) {
-        muted = (isSoundEnabled === false) || (item.data.muted === true);
+        muted = isSoundEnabled === false || item.data.muted === true;
       } else {
-        muted = (isSoundEnabled === false) || (isMobile.any === true) || (item.data.muted === true);
+        muted = isSoundEnabled === false || isMobile.any === true || item.data.muted === true;
       }
 
       videoMedia.setMuted(item.index, muted);
     }
 
     if (item.data.audio) {
-      const muted = (isSoundEnabled === false);
-      audioMedia.setMuted(item.index, muted);
+      var _muted = isSoundEnabled === false;
+
+      audioMedia.setMuted(item.index, _muted);
     }
   });
 });
-
-$('.sticks_wrapper').click(function() {
+$('.sticks_wrapper').click(function () {
   $('body').toggleClass('paneOpen');
 });
-
-$('nav').on('click', 'li', function() {
+$('nav').on('click', 'li', function () {
   scrollStory.index(parseInt(this.dataset.id, 10));
 });
-
 storyItems.forEach(function (item) {
   loadItem(item);
 });
-
 
 /***/ }),
 /* 2 */
@@ -10732,6 +10703,40 @@ storyItems.forEach(function (item) {
 
 /***/ }),
 /* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["$"] = __webpack_require__(0);
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports) {
+
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || Function("return this")() || (1,eval)("this");
+} catch(e) {
+	// This works if the window reference is available
+	if(typeof window === "object")
+		g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
+
+
+/***/ }),
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -12206,18 +12211,18 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 }));
 
 /***/ }),
-/* 5 */
+/* 7 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__stickybits__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__stickybits__ = __webpack_require__(8);
 
 
 if (typeof window !== 'undefined') {
   const plugin = window.$ || window.jQuery || window.Zepto
   if (plugin) {
-    plugin.fn.stickybits = function stickybitsPlugin(opts) {
+    plugin.fn.stickybits = function stickybitsPlugin (opts) {
       Object(__WEBPACK_IMPORTED_MODULE_0__stickybits__["a" /* default */])(this, opts)
     }
   }
@@ -12225,7 +12230,7 @@ if (typeof window !== 'undefined') {
 
 
 /***/ }),
-/* 6 */
+/* 8 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -12282,295 +12287,315 @@ if (typeof window !== 'undefined') {
   - .removeInstance = removes an instance
   - .cleanup = removes all Stickybits instances and cleans up dom from stickybits
 */
-function Stickybits(target, obj) {
-  const o = typeof obj !== 'undefined' ? obj : {}
-  this.version = '__VERSION__'
-  this.userAgent = window.navigator.userAgent || 'no `userAgent` provided by the browser'
-  this.props = {
-    noStyles: o.noStyles || false,
-    stickyBitStickyOffset: o.stickyBitStickyOffset || 0,
-    parentClass: o.parentClass || 'js-stickybit-parent',
-    scrollEl: o.scrollEl || window,
-    stickyClass: o.stickyClass || 'js-is-sticky',
-    stuckClass: o.stuckClass || 'js-is-stuck',
-    useStickyClasses: o.useStickyClasses || false,
-    verticalPosition: o.verticalPosition || 'top',
-  }
-  const p = this.props
-  /*
-    define positionVal
-    ----
-    -  uses a computed (`.definePosition()`)
-    -  defined the position
-  */
-  p.positionVal = this.definePosition() || 'fixed'
-  const vp = p.verticalPosition
-  const ns = p.noStyles
-  const pv = p.positionVal
-  this.els = typeof target === 'string' ? document.querySelectorAll(target) : target
-  if (!('length' in this.els)) this.els = [this.els]
-  this.instances = []
-  for (let i = 0; i < this.els.length; i += 1) {
-    const el = this.els[i]
-    const styles = el.style
-    if (vp === 'top' && !ns) styles[vp] = `${p.stickyBitStickyOffset}px`
-    if (pv !== 'fixed' && p.useStickyClasses === false) {
-      styles.position = pv
-    } else {
-      // const stickyManager = new ManageSticky(el, p)
-      if (pv !== 'fixed') styles.position = pv
-      const instance = this.addInstance(el, p)
-      // instances are an array of objects
-      this.instances.push(instance)
+class Stickybits {
+  constructor (target, obj) {
+    const o = typeof obj !== 'undefined' ? obj : {}
+    this.version = 'VERSION'
+    this.userAgent = window.navigator.userAgent || 'no `userAgent` provided by the browser'
+    this.props = {
+      customStickyChangeNumber: o.customStickyChangeNumber || null,
+      noStyles: o.noStyles || false,
+      stickyBitStickyOffset: o.stickyBitStickyOffset || 0,
+      parentClass: o.parentClass || 'js-stickybit-parent',
+      scrollEl: document.querySelector(o.scrollEl) || window,
+      stickyClass: o.stickyClass || 'js-is-sticky',
+      stuckClass: o.stuckClass || 'js-is-stuck',
+      stickyChangeClass: o.stickyChangeClass || 'js-is-sticky--change',
+      useStickyClasses: o.useStickyClasses || false,
+      verticalPosition: o.verticalPosition || 'top',
     }
-  }
-  return this
-}
-
-/*
-  setStickyPosition ✔️
-  --------
-  —  most basic thing stickybits does
-  => checks to see if position sticky is supported
-  => defined the position to be used
-  => stickybits works accordingly
-*/
-Stickybits.prototype.definePosition = () => {
-  const prefix = ['', '-o-', '-webkit-', '-moz-', '-ms-']
-  const test = document.head.style
-  for (let i = 0; i < prefix.length; i += 1) {
-    test.position = `${prefix[i]}sticky`
-  }
-  let stickyProp = 'fixed'
-  if (typeof test.position !== 'undefined') stickyProp = test.position
-  test.position = ''
-  return stickyProp
-}
-
-/*
-  addInstance ✔️
-  --------
-  — manages instances of items
-  - takes in an el and props
-  - returns an item object
-  ---
-  - target = el
-  - o = {object} = props
-    - scrollEl = 'string'
-    - verticalPosition = number
-    - off = boolean
-    - parentClass = 'string'
-    - stickyClass = 'string'
-    - stuckClass = 'string'
-  ---
-  - defined later
-    - parent = dom element
-    - state = 'string'
-    - offset = number
-    - stickyStart = number
-    - stickyStop = number
-  - returns an instance object
-*/
-Stickybits.prototype.addInstance = function addInstance(el, props) {
-  const item = {
-    el,
-    parent: el.parentNode,
-    props,
-  }
-  const p = item.props
-  item.parent.className += ` ${props.parentClass}`
-  let se = p.scrollEl
-  item.isWin = se === window
-  if (!item.isWin) se = this.getClosestParent(item.el, se)
-  this.computeScrollOffsets(item)
-  item.state = 'default'
-  item.stateContainer = () => {
-    this.manageState(item)
-  }
-  se.addEventListener('scroll', item.stateContainer)
-  return item
-}
-
-/*
-  --------
-  getParent 👨‍
-  --------
-  - a helper function that gets the target element's parent selected el
-  - only used for non `window` scroll elements
-  - supports older browsers
-*/
-Stickybits.prototype.getClosestParent = function getClosestParent(el, matchSelector) {
-  // p = parent element
-  const p = document.querySelector(matchSelector)
-  let e = el
-  if (e.parentElement === p) return p
-  // traverse up the dom tree until we get to the parent
-  while (e.parentElement !== p) e = e.parentElement
-  // return parent element
-  return p
-}
-
-/*
-  computeScrollOffsets 📊
-  ---
-  computeScrollOffsets for Stickybits
-  - defines
-    - offset
-    - start
-    - stop
-*/
-Stickybits.prototype.computeScrollOffsets = function computeScrollOffsets(item) {
-  const it = item
-  const p = it.props
-  const parent = it.parent
-  const iw = it.isWin
-  let scrollElOffset = 0
-  let stickyStart = parent.getBoundingClientRect().top
-  if (!iw && p.positionVal === 'fixed') {
-    scrollElOffset = p.scrollEl.getBoundingClientRect().top
-    stickyStart = parent.getBoundingClientRect().top - scrollElOffset
-  }
-  it.offset = scrollElOffset + p.stickyBitStickyOffset
-  if (p.verticalPosition !== 'bottom') {
-    it.stickyStart = stickyStart - it.offset
-    it.stickyStop = (stickyStart + parent.offsetHeight) - (it.el.offsetHeight + it.offset)
-  } else {
-    it.stickyStart = 0
-    it.stickyStop = stickyStart + parent.offsetHeight
-  }
-  return it
-}
-
-/*
-  toggleClasses ⚖️
-  ---
-  toggles classes (for older browser support)
-  r = removed class
-  a = added class
-*/
-Stickybits.prototype.toggleClasses = function toggleClasses(el, r, a) {
-  const e = el
-  const cArray = e.className.split(' ')
-  if (a && cArray.indexOf(a) === -1) cArray.push(a)
-  const rItem = cArray.indexOf(r)
-  if (rItem !== -1) cArray.splice(rItem, 1)
-  e.className = cArray.join(' ')
-}
-
-/*
-  manageState 📝
-  ---
-  - defines the state
-    - normal
-    - sticky
-    - stuck
-*/
-Stickybits.prototype.manageState = function manageState(item) {
-  // cache object
-  const it = item
-  const e = it.el
-  const p = it.props
-  const state = it.state
-  const start = it.stickyStart
-  const stop = it.stickyStop
-  const stl = e.style
-  // cache props
-  const ns = p.noStyles
-  const pv = p.positionVal
-  const se = p.scrollEl
-  const sticky = p.stickyClass
-  const stuck = p.stuckClass
-  const vp = p.verticalPosition
-  /*
-    requestAnimationFrame
-    ---
-    - use rAF
-    - or stub rAF
-  */
-  let rAF = se.requestAnimationFrame
-  if (!it.isWin || typeof rAF === 'undefined') {
-    rAF = function rAFDummy(f) {
-      f()
+    const p = this.props
+    /*
+      define positionVal
+      ----
+      -  uses a computed (`.definePosition()`)
+      -  defined the position
+    */
+    p.positionVal = this.definePosition() || 'fixed'
+    const vp = p.verticalPosition
+    const ns = p.noStyles
+    const pv = p.positionVal
+    this.els = typeof target === 'string' ? document.querySelectorAll(target) : target
+    if (!('length' in this.els)) this.els = [this.els]
+    this.instances = []
+    for (let i = 0; i < this.els.length; i += 1) {
+      const el = this.els[i]
+      const styles = el.style
+      // set vertical position
+      styles[vp] = vp === 'top' && !ns ? `${p.stickyBitStickyOffset}px` : ''
+      styles.position = pv !== 'fixed' ? pv : ''
+      if (pv === 'fixed' || p.useStickyClasses) {
+        const instance = this.addInstance(el, p)
+        // instances are an array of objects
+        this.instances.push(instance)
+      }
     }
+    return this
   }
-  /*
-    define scroll vars
-    ---
-    - scroll
-    - notSticky
-    - isSticky
-    - isStuck
-  */
-  const tC = this.toggleClasses
-  const scroll = it.isWin ? se.scrollY || se.pageYOffset : se.scrollTop
-  const notSticky = scroll > start && scroll < stop && (state === 'default' || state === 'stuck')
-  const isSticky = scroll <= start && state === 'sticky'
-  const isStuck = scroll >= stop && state === 'sticky'
-  /*
-    Unnamed arrow functions within this block
-    ---
-    - help wanted or discussion
-    - view test.stickybits.js
-      - `stickybits .manageState  `position: fixed` interface` for more awareness 👀
-  */
-  if (notSticky) {
-    it.state = 'sticky'
-    rAF(() => {
-      tC(e, stuck, sticky)
-      stl.position = pv
-      if (ns) return
-      stl.bottom = ''
-      stl[vp] = `${p.stickyBitStickyOffset}px`
-    })
-  } else if (isSticky) {
-    it.state = 'default'
-    rAF(() => {
-      tC(e, sticky)
-      if (pv === 'fixed') stl.position = ''
-    })
-  } else if (isStuck) {
-    it.state = 'stuck'
-    rAF(() => {
-      tC(e, sticky, stuck)
-      if (pv !== 'fixed' || ns) return
-      stl.top = ''
-      stl.bottom = '0'
-      stl.position = 'absolute'
-    })
-  }
-  return it
-}
 
-/*
-  removes an instance 👋
-  --------
-  - cleanup instance
-*/
-Stickybits.prototype.removeInstance = function removeInstance(instance) {
-  const e = instance.el
-  const p = instance.props
-  const tC = this.toggleClasses
-  e.style.position = ''
-  e.style[p.verticalPosition] = ''
-  tC(e, p.stickyClass)
-  tC(e, p.stuckClass)
-  tC(e.parentNode, p.parentClass)
-}
-
-/*
-  cleanup 🛁
-  --------
-  - cleans up each instance
-  - clears instance
-*/
-Stickybits.prototype.cleanup = function cleanup() {
-  for (let i = 0; i < this.instances.length; i += 1) {
-    const instance = this.instances[i]
-    instance.props.scrollEl.removeEventListener('scroll', instance.stateContainer)
-    this.removeInstance(instance)
+  /*
+    setStickyPosition ✔️
+    --------
+    —  most basic thing stickybits does
+    => checks to see if position sticky is supported
+    => defined the position to be used
+    => stickybits works accordingly
+  */
+  definePosition () {
+    const prefix = ['', '-o-', '-webkit-', '-moz-', '-ms-']
+    const test = document.head.style
+    for (let i = 0; i < prefix.length; i += 1) {
+      test.position = `${prefix[i]}sticky`
+    }
+    const stickyProp = test.position ? test.position : 'fixed'
+    test.position = ''
+    return stickyProp
   }
-  this.manageState = false
-  this.instances = []
+
+  /*
+    addInstance ✔️
+    --------
+    — manages instances of items
+    - takes in an el and props
+    - returns an item object
+    ---
+    - target = el
+    - o = {object} = props
+      - scrollEl = 'string'
+      - verticalPosition = number
+      - off = boolean
+      - parentClass = 'string'
+      - stickyClass = 'string'
+      - stuckClass = 'string'
+    ---
+    - defined later
+      - parent = dom element
+      - state = 'string'
+      - offset = number
+      - stickyStart = number
+      - stickyStop = number
+    - returns an instance object
+  */
+  addInstance (el, props) {
+    const item = {
+      el,
+      parent: el.parentNode,
+      props,
+    }
+    this.isWin = this.props.scrollEl === window
+    const se = this.isWin ? window : this.getClosestParent(item.el, item.props.scrollEl)
+    this.computeScrollOffsets(item)
+    item.parent.className += ` ${props.parentClass}`
+    item.state = 'default'
+    item.stateContainer = () => this.manageState(item)
+    se.addEventListener('scroll', item.stateContainer)
+    return item
+  }
+
+  /*
+    --------
+    getParent 👨‍
+    --------
+    - a helper function that gets the target element's parent selected el
+    - only used for non `window` scroll elements
+    - supports older browsers
+  */
+  getClosestParent (el, match) {
+    // p = parent element
+    const p = match
+    let e = el
+    if (e.parentElement === p) return p
+    // traverse up the dom tree until we get to the parent
+    while (e.parentElement !== p) e = e.parentElement
+    // return parent element
+    return p
+  }
+
+  /*
+    computeScrollOffsets 📊
+    ---
+    computeScrollOffsets for Stickybits
+    - defines
+      - offset
+      - start
+      - stop
+  */
+  computeScrollOffsets (item) {
+    const it = item
+    const p = it.props
+    const el = it.el
+    const parent = it.parent
+    const isCustom = !this.isWin && p.positionVal === 'fixed'
+    const isBottom = p.verticalPosition !== 'bottom'
+    const scrollElOffset = isCustom ? p.scrollEl.getBoundingClientRect().top : 0
+    const stickyStart = isCustom
+      ? parent.getBoundingClientRect().top - scrollElOffset
+      : parent.getBoundingClientRect().top
+    const stickyChangeOffset = p.customStickyChangeNumber !== null
+      ? p.customStickyChangeNumber
+      : el.offsetHeight
+    it.offset = scrollElOffset + p.stickyBitStickyOffset
+    it.stickyStart = isBottom ? stickyStart - it.offset : 0
+    it.stickyChange = it.stickyStart + stickyChangeOffset
+    it.stickyStop = isBottom
+      ? (stickyStart + parent.offsetHeight) - (it.el.offsetHeight + it.offset)
+      : stickyStart + parent.offsetHeight
+    return it
+  }
+
+  /*
+    toggleClasses ⚖️
+    ---
+    toggles classes (for older browser support)
+    r = removed class
+    a = added class
+  */
+  toggleClasses (el, r, a) {
+    const e = el
+    const cArray = e.className.split(' ')
+    if (a && cArray.indexOf(a) === -1) cArray.push(a)
+    const rItem = cArray.indexOf(r)
+    if (rItem !== -1) cArray.splice(rItem, 1)
+    e.className = cArray.join(' ')
+  }
+
+  /*
+    manageState 📝
+    ---
+    - defines the state
+      - normal
+      - sticky
+      - stuck
+  */
+  manageState (item) {
+    // cache object
+    const it = item
+    const e = it.el
+    const p = it.props
+    const state = it.state
+    const start = it.stickyStart
+    const change = it.stickyChange
+    const stop = it.stickyStop
+    const stl = e.style
+    // cache props
+    const ns = p.noStyles
+    const pv = p.positionVal
+    const se = p.scrollEl
+    const sticky = p.stickyClass
+    const stickyChange = p.stickyChangeClass
+    const stuck = p.stuckClass
+    const vp = p.verticalPosition
+    /*
+      requestAnimationFrame
+      ---
+      - use rAF
+      - or stub rAF
+    */
+    const rAFStub = function rAFDummy (f) { f() }
+    const rAF = !this.isWin
+      ? rAFStub
+      : window.requestAnimationFrame ||
+      window.mozRequestAnimationFrame ||
+      window.webkitRequestAnimationFrame ||
+      window.msRequestAnimationFrame ||
+      rAFStub
+
+    /*
+      define scroll vars
+      ---
+      - scroll
+      - notSticky
+      - isSticky
+      - isStuck
+    */
+    const tC = this.toggleClasses
+    const scroll = this.isWin ? (window.scrollY || window.pageYOffset) : se.scrollTop
+    const notSticky = scroll > start && scroll < stop && (state === 'default' || state === 'stuck')
+    const isSticky = scroll <= start && state === 'sticky'
+    const isStuck = scroll >= stop && state === 'sticky'
+    /*
+      Unnamed arrow functions within this block
+      ---
+      - help wanted or discussion
+      - view test.stickybits.js
+        - `stickybits .manageState  `position: fixed` interface` for more awareness 👀
+    */
+    if (notSticky) {
+      it.state = 'sticky'
+      rAF(() => {
+        tC(e, stuck, sticky)
+        stl.position = pv
+        if (ns) return
+        stl.bottom = ''
+        stl[vp] = `${p.stickyBitStickyOffset}px`
+      })
+    } else if (isSticky) {
+      it.state = 'default'
+      rAF(() => {
+        tC(e, sticky)
+        if (pv === 'fixed') stl.position = ''
+      })
+    } else if (isStuck) {
+      it.state = 'stuck'
+      rAF(() => {
+        tC(e, sticky, stuck)
+        if (pv !== 'fixed' || ns) return
+        stl.top = ''
+        stl.bottom = '0'
+        stl.position = 'absolute'
+      })
+    }
+
+    const isStickyChange = scroll >= change && scroll <= stop
+    const isNotStickyChange = scroll < change || scroll > stop
+    const stub = 'stub' // a stub css class to remove
+    if (isNotStickyChange) {
+      rAF(() => { tC(e, stickyChange) })
+    } else if (isStickyChange) {
+      rAF(() => { tC(e, stub, stickyChange) })
+    }
+    return it
+  }
+
+  update () {
+    for (let i = 0; i < this.instances.length; i += 1) {
+      const instance = this.instances[i]
+      this.computeScrollOffsets(instance)
+    }
+    return this
+  }
+
+  /*
+    removes an instance 👋
+    --------
+    - cleanup instance
+  */
+  removeInstance (instance) {
+    const e = instance.el
+    const p = instance.props
+    const tC = this.toggleClasses
+    e.style.position = ''
+    e.style[p.verticalPosition] = ''
+    tC(e, p.stickyClass)
+    tC(e, p.stuckClass)
+    tC(e.parentNode, p.parentClass)
+  }
+
+  /*
+    cleanup 🛁
+    --------
+    - cleans up each instance
+    - clears instance
+  */
+  cleanup () {
+    for (let i = 0; i < this.instances.length; i += 1) {
+      const instance = this.instances[i]
+      instance.props.scrollEl.removeEventListener('scroll', instance.stateContainer)
+      this.removeInstance(instance)
+    }
+    this.manageState = false
+    this.instances = []
+  }
 }
 
 /*
@@ -12578,13 +12603,13 @@ Stickybits.prototype.cleanup = function cleanup() {
   --------
   exports StickBits to be used 🏁
 */
-function stickybits(target, o) {
+function stickybits (target, o) {
   return new Stickybits(target, o)
 }
 
 
 /***/ }),
-/* 7 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -12607,7 +12632,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
   'use strict'
   if (true) {
     // Register as an anonymous AMD module:
-    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(8)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(10)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__))
@@ -14001,7 +14026,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 
 /***/ }),
-/* 8 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -14198,66 +14223,66 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 
 /***/ }),
-/* 9 */
-/***/ (function(module, exports) {
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
 
-const MEDIA = [];
-const DATA = [];
+"use strict";
 
-function playBackgroundVideo (id, attrs) {
-  const video = MEDIA[id];
 
+var $ = __webpack_require__(0);
+
+var MEDIA = [];
+var DATA = [];
+
+function playBackgroundVideo(id, attrs) {
+  var video = MEDIA[id];
   video.loop = attrs.loop;
   video.muted = attrs.muted;
 
   if (!DATA[id].paused && attrs.autoplay) {
     video.play();
   }
-}
+} // store current time that had been reached.
 
-// store current time that had been reached.
-function removeBackgroundVideo ($el, id) {
-  const $container = $el.find('.video-container');
+
+function removeBackgroundVideo($el, id) {
+  var $container = $el.find('.video-container');
   $container.css('position', '');
-  const video = MEDIA[id];
+  var video = MEDIA[id];
   video.removeAttribute('autoplay');
   video.pause();
 }
 
-function fixBackgroundVideo ($el) {
-  const $container = $el.find('.video-container');
+function fixBackgroundVideo($el) {
+  var $container = $el.find('.video-container');
   $container.css('position', 'fixed');
 }
 
-function unfixBackgroundVideo ($el) {
-  const $container = $el.find('.video-container');
+function unfixBackgroundVideo($el) {
+  var $container = $el.find('.video-container');
   $container.css('position', '');
 }
 
-function prepareVideo (scrollStory, $el, id, srcs, attrs) {
-  const video = document.createElement('video');
+function prepareVideo(scrollStory, $el, id, srcs, attrs) {
+  var video = document.createElement('video');
   video.poster = attrs.poster;
   video.preload = 'auto';
   MEDIA[id] = video;
   DATA[id] = {};
-
-  srcs.forEach((src) => {
-    const source = document.createElement('source'); 
+  srcs.forEach(function (src) {
+    var source = document.createElement('source');
     source.type = src.type;
     source.src = src.src;
     video.appendChild(source);
   });
-
   $el.find('.video-container').html(video);
-
-  $el.find('.play').click(function() {
+  $el.find('.play').click(function () {
     video.play();
     DATA[id].paused = false;
     $(this).hide();
     $el.find('.pause').show();
   });
-
-  $el.find('.pause').click(function() {
+  $el.find('.pause').click(function () {
     // TODO check for cancelling problems with promises
     video.pause();
     DATA[id].paused = true;
@@ -14272,112 +14297,120 @@ function prepareVideo (scrollStory, $el, id, srcs, attrs) {
   }
 
   if (attrs.autoAdvance) {
-    video.addEventListener('ended', () => {
-      const count = scrollStory.getItems().length;
-      const next = id + 1;
+    video.addEventListener('ended', function () {
+      var count = scrollStory.getItems().length;
+      var next = id + 1;
 
       if (next < count) {
         scrollStory.index(id + 1);
-      }
+      } // Allow it to restart from the beginning.
 
-      // Allow it to restart from the beginning.
+
       video.currentTime = 0;
     });
   }
 
+  video.addEventListener('canplaythrough', function () {
+    console.log("Can Play Video ".concat(id));
+  });
   return video;
 }
 
-function setMuted (id, muted) {
-  const video = MEDIA[id];
+function setMuted(id, muted) {
+  var video = MEDIA[id];
   video.muted = muted;
 }
 
 module.exports = {
-  playBackgroundVideo,
-  prepareVideo,
-  removeBackgroundVideo,
-  fixBackgroundVideo,
-  unfixBackgroundVideo,
-  setMuted
+  playBackgroundVideo: playBackgroundVideo,
+  prepareVideo: prepareVideo,
+  removeBackgroundVideo: removeBackgroundVideo,
+  fixBackgroundVideo: fixBackgroundVideo,
+  unfixBackgroundVideo: unfixBackgroundVideo,
+  setMuted: setMuted
 };
 
-
 /***/ }),
-/* 10 */
-/***/ (function(module, exports) {
+/* 12 */
+/***/ (function(module, exports, __webpack_require__) {
 
-function insertBackgroundImage($el, src, active=false) {
-  const styles = {
-    'background-image': `url(${src})`,
-     position: active ? 'fixed' : ''
+"use strict";
+
+
+function insertBackgroundImage($el, src) {
+  var active = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+  var styles = {
+    'background-image': "url(".concat(src, ")"),
+    position: active ? 'fixed' : ''
   };
   $el.find('.bg-image').css(styles);
 }
 
 function fixBackgroundImage($el) {
-  const $container = $el.find('.bg-image');
+  var $container = $el.find('.bg-image');
   $container.css('position', 'fixed');
 }
 
 function unfixBackgroundImage($el) {
-  const $container = $el.find('.bg-image');
+  var $container = $el.find('.bg-image');
   $container.css('position', '');
 }
 
 module.exports = {
-  insertBackgroundImage,
-  fixBackgroundImage,
-  unfixBackgroundImage
+  insertBackgroundImage: insertBackgroundImage,
+  fixBackgroundImage: fixBackgroundImage,
+  unfixBackgroundImage: unfixBackgroundImage
 };
 
-
 /***/ }),
-/* 11 */
-/***/ (function(module, exports) {
+/* 13 */
+/***/ (function(module, exports, __webpack_require__) {
 
-const MEDIA = [];
-const DATA = [];
+"use strict";
 
-function prepareAudio (id, srcs) {
-  const audio = new Audio();
+
+var MEDIA = [];
+var DATA = [];
+
+function prepareAudio(id, srcs) {
+  var audio = new Audio();
   MEDIA[id] = audio;
   audio.loop = true;
   audio.preload = 'auto';
-
-  srcs.forEach((src) => {
-    const source = document.createElement('source'); 
+  srcs.forEach(function (src) {
+    var source = document.createElement('source');
     source.type = src.type;
     source.src = src.src;
     audio.appendChild(source);
   });
-
+  audio.addEventListener('canplaythrough', function () {
+    console.log("Can Play Audio ".concat(id));
+  });
   return audio;
 }
 
-function removeBackgroundAudio (id) {
-  const audio = MEDIA[id];
+function removeBackgroundAudio(id) {
+  var audio = MEDIA[id];
   audio.pause();
 }
 
-function setMuted (id, muted) {
-  const audio = MEDIA[id];
+function setMuted(id, muted) {
+  var audio = MEDIA[id];
   audio.muted = muted;
 }
 
-function playBackgroundAudio (id, attrs) {
-  const audio = MEDIA[id];
+function playBackgroundAudio(id, attrs) {
+  var audio = MEDIA[id];
   audio.muted = attrs.muted;
   audio.play();
 }
 
 module.exports = {
-  playBackgroundAudio,
-  prepareAudio,
-  removeBackgroundAudio,
-  setMuted
+  playBackgroundAudio: playBackgroundAudio,
+  prepareAudio: prepareAudio,
+  removeBackgroundAudio: removeBackgroundAudio,
+  setMuted: setMuted
 };
-
 
 /***/ })
 /******/ ]);

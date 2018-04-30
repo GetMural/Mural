@@ -1,3 +1,5 @@
+const $ = require('jquery');
+
 const MEDIA = [];
 const DATA = [];
 
@@ -81,6 +83,10 @@ function prepareVideo (scrollStory, $el, id, srcs, attrs) {
       video.currentTime = 0;
     });
   }
+
+  video.addEventListener('canplaythrough', () => {
+    console.log(`Can Play Video ${id}`);
+  });
 
   return video;
 }

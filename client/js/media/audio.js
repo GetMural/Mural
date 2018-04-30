@@ -14,6 +14,10 @@ function prepareAudio (id, srcs) {
     audio.appendChild(source);
   });
 
+  audio.addEventListener('canplaythrough', () => {
+    console.log(`Can Play Audio ${id}`);
+  });
+
   return audio;
 }
 
