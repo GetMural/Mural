@@ -9444,6 +9444,9 @@ storyItems.forEach(function (item) {
     loadItem(item);
   }
 });
+scrollStory.getItemsInViewport().forEach(function (item) {
+  loadItem(item);
+});
 Promise.all(LOAD_PROMISES).then(function () {
   var overlay = document.getElementById('loading_overlay');
   document.body.removeChild(overlay);

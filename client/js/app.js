@@ -268,6 +268,10 @@ storyItems.forEach(function (item) {
   }
 });
 
+scrollStory.getItemsInViewport().forEach(function (item) {
+  loadItem(item);
+});
+
 Promise.all(LOAD_PROMISES).then(() => {
   const overlay = document.getElementById('loading_overlay');
   document.body.removeChild(overlay);
