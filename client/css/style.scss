@@ -1779,12 +1779,10 @@ body{font-family:'Roboto Slab',arial,serif}h1,h2,h3,h4,h5,h6{font-family:'Roboto
 }
 
 .st-content-video .caption .button-container {
-  display:table-cell;
-  text-align:center;
-  vertical-align:middle;
   width:70px;
   height:70px;
   border:none;
+  cursor:pointer;
 
   &.pause {
     background:transparent url('img/pause.png') center center no-repeat;
@@ -1795,7 +1793,7 @@ body{font-family:'Roboto Slab',arial,serif}h1,h2,h3,h4,h5,h6{font-family:'Roboto
   }
 }
 
-.st-content-video .caption .button-container .st-content-video .caption .text{
+.st-content-video .caption .text{
   display:table-cell;
   vertical-align:middle;
   width:100%;
@@ -1915,7 +1913,7 @@ body{font-family:'Roboto Slab',arial,serif}h1,h2,h3,h4,h5,h6{font-family:'Roboto
 }
 .slideshow-horizontal .credits{
   display:block;
-  font-size:0.6em;
+  font-size:0.9em;
   position:absolute;
   right:0px;
   left:0px;

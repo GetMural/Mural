@@ -14,7 +14,6 @@ function playBackgroundVideo (id, attrs) {
   }
 }
 
-// store current time that had been reached.
 function removeBackgroundVideo ($el, id) {
   const $container = $el.find('.video-container');
   $container.css('position', '');
@@ -40,11 +39,19 @@ function prepareVideo (scrollStory, $el, id, srcs, attrs) {
   MEDIA[id] = video;
   DATA[id] = {};
 
+  const canPlayThrough = new Promise(function(resolve, reject) {
+    video.addEventListener('canplaythrough', () => {
+      resolve();
+    });
+  });
+
   srcs.forEach((src) => {
-    const source = document.createElement('source'); 
-    source.type = src.type;
-    source.src = src.src;
-    video.appendChild(source);
+    if (src.src !== undefined) {
+      const source = document.createElement('source'); 
+      source.type = src.type;
+      source.src = src.src;
+      video.appendChild(source);
+    }
   });
 
   $el.find('.video-container').html(video);
@@ -84,11 +91,7 @@ function prepareVideo (scrollStory, $el, id, srcs, attrs) {
     });
   }
 
-  const canPlayThrough = new Promise(function(resolve, reject) {
-    video.addEventListener('canplaythrough', () => {
-      resolve();
-    });
-  });
+  video.load();
 
   return canPlayThrough;
 }

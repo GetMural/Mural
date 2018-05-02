@@ -5,15 +5,6 @@ const $ = require("expose-loader?$!jquery");
 require('scrollstory/jquery.scrollstory.js');
 require('stickybits/src/jquery.stickybits');
 
-const $overlay = $('<div/>', {
-  class: 'loading'
-});
-
-$overlay.html(`<img src="img/logo.svg" alt="Mural is Loading..." class="logo"><div class="loading-text">LOADING</div>`)
-
-$(document.body).append($overlay);
-document.body.classList.add('frozen');
-
 $.fn.moveIt = function(){
   var $window = $(window);
   var instances = [];
@@ -288,8 +279,10 @@ storyItems.forEach(function (item) {
 });
 
 Promise.all(LOAD_PROMISES).then(() => {
-  $overlay.remove();
+  const overlay = document.getElementById('loading_overlay');
+  document.body.removeChild(overlay);
   document.body.classList.remove('frozen');
+
   const active = scrollStory.getActiveItem();
 
   if (active.data.video) {
@@ -309,4 +302,6 @@ Promise.all(LOAD_PROMISES).then(() => {
       }
     );
   }
+}).catch((e) => {
+  console.error(e);
 });

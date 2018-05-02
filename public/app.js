@@ -9211,13 +9211,6 @@ __webpack_require__(7);
 
 __webpack_require__(8);
 
-var $overlay = $('<div/>', {
-  class: 'loading'
-});
-$overlay.html("<img src=\"img/logo.svg\" alt=\"Mural is Loading...\" class=\"logo\"><div class=\"loading-text\">LOADING</div>");
-$(document.body).append($overlay);
-document.body.classList.add('frozen');
-
 $.fn.moveIt = function () {
   var $window = $(window);
   var instances = [];
@@ -9459,7 +9452,8 @@ storyItems.forEach(function (item) {
   loadItem(item);
 });
 Promise.all(LOAD_PROMISES).then(function () {
-  $overlay.remove();
+  var overlay = document.getElementById('loading_overlay');
+  document.body.removeChild(overlay);
   document.body.classList.remove('frozen');
   var active = scrollStory.getActiveItem();
 
@@ -9473,6 +9467,8 @@ Promise.all(LOAD_PROMISES).then(function () {
       muted: isSoundEnabled === false
     });
   }
+}).catch(function (e) {
+  console.error(e);
 });
 
 /***/ }),
@@ -12975,8 +12971,7 @@ function playBackgroundVideo(id, attrs) {
   if (!DATA[id].paused && attrs.autoplay) {
     video.play();
   }
-} // store current time that had been reached.
-
+}
 
 function removeBackgroundVideo($el, id) {
   var $container = $el.find('.video-container');
@@ -13002,11 +12997,18 @@ function prepareVideo(scrollStory, $el, id, srcs, attrs) {
   video.preload = 'auto';
   MEDIA[id] = video;
   DATA[id] = {};
+  var canPlayThrough = new Promise(function (resolve, reject) {
+    video.addEventListener('canplaythrough', function () {
+      resolve();
+    });
+  });
   srcs.forEach(function (src) {
-    var source = document.createElement('source');
-    source.type = src.type;
-    source.src = src.src;
-    video.appendChild(source);
+    if (src.src !== undefined) {
+      var source = document.createElement('source');
+      source.type = src.type;
+      source.src = src.src;
+      video.appendChild(source);
+    }
   });
   $el.find('.video-container').html(video);
   $el.find('.play').click(function () {
@@ -13043,11 +13045,7 @@ function prepareVideo(scrollStory, $el, id, srcs, attrs) {
     });
   }
 
-  var canPlayThrough = new Promise(function (resolve, reject) {
-    video.addEventListener('canplaythrough', function () {
-      resolve();
-    });
-  });
+  video.load();
   return canPlayThrough;
 }
 
@@ -13112,17 +13110,20 @@ function prepareAudio(id, srcs) {
   MEDIA[id] = audio;
   audio.loop = true;
   audio.preload = 'auto';
-  srcs.forEach(function (src) {
-    var source = document.createElement('source');
-    source.type = src.type;
-    source.src = src.src;
-    audio.appendChild(source);
-  });
   var canPlayThrough = new Promise(function (resolve, reject) {
     audio.addEventListener('canplaythrough', function () {
       resolve();
     });
   });
+  srcs.forEach(function (src) {
+    if (src.src !== undefined) {
+      var source = document.createElement('source');
+      source.type = src.type;
+      source.src = src.src;
+      audio.appendChild(source);
+    }
+  });
+  audio.load();
   return canPlayThrough;
 }
 

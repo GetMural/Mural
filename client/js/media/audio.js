@@ -7,18 +7,22 @@ function prepareAudio (id, srcs) {
   audio.loop = true;
   audio.preload = 'auto';
 
-  srcs.forEach((src) => {
-    const source = document.createElement('source'); 
-    source.type = src.type;
-    source.src = src.src;
-    audio.appendChild(source);
-  });
-
   const canPlayThrough = new Promise(function(resolve, reject) {
     audio.addEventListener('canplaythrough', () => {
       resolve();
     });
   });
+
+  srcs.forEach((src) => {
+    if (src.src !== undefined) {
+      const source = document.createElement('source'); 
+      source.type = src.type;
+      source.src = src.src;
+      audio.appendChild(source);
+    }
+  });
+
+  audio.load();
 
   return canPlayThrough;
 }
