@@ -9,7 +9,8 @@ function playBackgroundVideo (id, attrs) {
   video.loop = attrs.loop;
   video.muted = attrs.muted;
 
-  if (!DATA[id].paused && attrs.autoplay) {
+  if ((!DATA[id].paused && attrs.autoplay) ||
+      (DATA[id].playTriggered && !DATA[id].paused)) {
     video.play();
   }
 }
@@ -59,6 +60,7 @@ function prepareVideo (scrollStory, $el, id, srcs, attrs) {
   $el.find('.play').click(function() {
     video.play();
     DATA[id].paused = false;
+    DATA[id].playTriggered = true;
     $(this).hide();
     $el.find('.pause').show();
   });

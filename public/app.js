@@ -9274,14 +9274,23 @@ var isSoundEnabled = true;
 
 function getVideoAttrs(item) {
   var muted;
-  var autoplay;
+  var autoplay; // TODO we only have full page videos atm.
+  // if (item.data.isFullpage) {
+  //   muted = (isSoundEnabled === false) || (item.data.muted === true);
+  //   autoplay = !isMobile.any;
+  // } else {
+  //   muted = (isSoundEnabled === false) || (isMobile.any === true) || (item.data.muted === true);
+  //   autoplay = item.data.autoplay;
+  // }
+  // st-video
+  // st-content-video
 
-  if (item.data.isFullpage) {
-    muted = isSoundEnabled === false || item.data.muted === true;
+  if (item.el.hasClass('st-content-video')) {
+    muted = isSoundEnabled === false;
     autoplay = !isMobile.any;
   } else {
-    muted = isSoundEnabled === false || isMobile.any === true || item.data.muted === true;
-    autoplay = item.data.autoplay;
+    muted = isMobile.any || !isSoundEnabled;
+    autoplay = true;
   }
 
   return {
@@ -9305,13 +9314,7 @@ function loadItem(item) {
     }, {
       type: 'video/webm',
       src: item.data.webm
-    }], getVideoAttrs(item))); // if (item.active) {
-    //   videoMedia.playBackgroundVideo(
-    //     item.index,
-    //     getVideoAttrs(item)
-    //   );
-    //   videoMedia.fixBackgroundVideo(item.el);
-    // }
+    }], getVideoAttrs(item)));
   }
 
   if (item.data.audio) {
@@ -9321,14 +9324,7 @@ function loadItem(item) {
     }, {
       type: 'audio/ogg',
       src: item.data.ogg
-    }])); // if (item.active) {
-    //   audioMedia.playBackgroundAudio(
-    //     item.index,
-    //     {
-    //       muted: (isSoundEnabled === false)
-    //     }
-    //   );
-    // }
+    }]));
   }
 
   if (item.data.image) {
@@ -12968,7 +12964,7 @@ function playBackgroundVideo(id, attrs) {
   video.loop = attrs.loop;
   video.muted = attrs.muted;
 
-  if (!DATA[id].paused && attrs.autoplay) {
+  if (!DATA[id].paused && attrs.autoplay || DATA[id].playTriggered && !DATA[id].paused) {
     video.play();
   }
 }
@@ -13014,6 +13010,7 @@ function prepareVideo(scrollStory, $el, id, srcs, attrs) {
   $el.find('.play').click(function () {
     video.play();
     DATA[id].paused = false;
+    DATA[id].playTriggered = true;
     $(this).hide();
     $el.find('.pause').show();
   });

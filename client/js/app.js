@@ -69,12 +69,24 @@ function getVideoAttrs(item) {
   let muted;
   let autoplay;
 
-  if (item.data.isFullpage) {
-    muted = (isSoundEnabled === false) || (item.data.muted === true);
+  // TODO we only have full page videos atm.
+  // if (item.data.isFullpage) {
+  //   muted = (isSoundEnabled === false) || (item.data.muted === true);
+  //   autoplay = !isMobile.any;
+  // } else {
+  //   muted = (isSoundEnabled === false) || (isMobile.any === true) || (item.data.muted === true);
+  //   autoplay = item.data.autoplay;
+  // }
+
+  // st-video
+  // st-content-video
+
+  if (item.el.hasClass('st-content-video')) {
+    muted = (isSoundEnabled === false);
     autoplay = !isMobile.any;
   } else {
-    muted = (isSoundEnabled === false) || (isMobile.any === true) || (item.data.muted === true);
-    autoplay = item.data.autoplay;
+    muted = isMobile.any || !isSoundEnabled;
+    autoplay = true;
   }
 
   return {
@@ -109,15 +121,6 @@ function loadItem (item) {
       ],
       getVideoAttrs(item)
     ));
-
-    // if (item.active) {
-    //   videoMedia.playBackgroundVideo(
-    //     item.index,
-    //     getVideoAttrs(item)
-    //   );
-
-    //   videoMedia.fixBackgroundVideo(item.el);
-    // }
   }
 
   if (item.data.audio) {
@@ -134,15 +137,6 @@ function loadItem (item) {
         }
       ]
     ));
-
-    // if (item.active) {
-    //   audioMedia.playBackgroundAudio(
-    //     item.index,
-    //     {
-    //       muted: (isSoundEnabled === false)
-    //     }
-    //   );
-    // }
   }
 
   if (item.data.image) {
