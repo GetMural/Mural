@@ -11,6 +11,12 @@ function prepareAudio (id, srcs) {
     audio.addEventListener('canplaythrough', () => {
       resolve();
     });
+
+    audio.addEventListener('loadeddata', function (e) {
+      if (this.readyState > 3) {
+        resolve();
+      }
+    });
   });
 
   srcs.forEach((src) => {

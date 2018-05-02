@@ -34,17 +34,6 @@
 
   <body class="longform" name="top">
 
-    <div id='fb-root'></div>
-    <script>
-      (function(d, s, id) {
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) return;
-        js = d.createElement(s); js.id = id;
-        js.src = '//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.3';
-        fjs.parentNode.insertBefore(js, fjs);
-      }(document, 'script', 'facebook-jssdk'));
-    </script>
-
     <div id="loading_overlay" class="loading">
       <img src="img/logo.svg" alt="Mural is Loading..." class="logo"><div class="loading-text">LOADING...</div>
     </div>
@@ -363,9 +352,6 @@
         {{/videofullpage}}
       {{/items}}
     </article>
-
-    {{> partials/social}}
-
     <script type="text/javascript" src="app.js"></script>
   </body>
 </html>

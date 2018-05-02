@@ -263,7 +263,7 @@ $('nav').on('click', 'li', function() {
 
 // preload audio & video.
 storyItems.forEach(function (item) {
-  if (item.data.video || item.data.audio) {
+  if (item.data.video) {
     loadItem(item);
   }
 });

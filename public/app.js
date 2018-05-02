@@ -9440,7 +9440,7 @@ $('nav').on('click', 'li', function () {
 }); // preload audio & video.
 
 storyItems.forEach(function (item) {
-  if (item.data.video || item.data.audio) {
+  if (item.data.video) {
     loadItem(item);
   }
 });
@@ -12994,6 +12994,11 @@ function prepareVideo(scrollStory, $el, id, srcs, attrs) {
     video.addEventListener('canplaythrough', function () {
       resolve();
     });
+    video.addEventListener('loadeddata', function (e) {
+      if (this.readyState > 3) {
+        resolve();
+      }
+    });
   });
   srcs.forEach(function (src) {
     if (src.src !== undefined) {
@@ -13107,6 +13112,11 @@ function prepareAudio(id, srcs) {
   var canPlayThrough = new Promise(function (resolve, reject) {
     audio.addEventListener('canplaythrough', function () {
       resolve();
+    });
+    audio.addEventListener('loadeddata', function (e) {
+      if (this.readyState > 3) {
+        resolve();
+      }
     });
   });
   srcs.forEach(function (src) {

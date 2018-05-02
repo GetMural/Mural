@@ -44,6 +44,12 @@ function prepareVideo (scrollStory, $el, id, srcs, attrs) {
     video.addEventListener('canplaythrough', () => {
       resolve();
     });
+
+    video.addEventListener('loadeddata', function (e) {
+      if (this.readyState > 3) {
+        resolve();
+      }
+    });
   });
 
   srcs.forEach((src) => {
