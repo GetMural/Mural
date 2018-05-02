@@ -70,17 +70,6 @@ function getVideoAttrs(item) {
   let autoplay;
 
   // TODO we only have full page videos atm.
-  // if (item.data.isFullpage) {
-  //   muted = (isSoundEnabled === false) || (item.data.muted === true);
-  //   autoplay = !isMobile.any;
-  // } else {
-  //   muted = (isSoundEnabled === false) || (isMobile.any === true) || (item.data.muted === true);
-  //   autoplay = item.data.autoplay;
-  // }
-
-  // st-video
-  // st-content-video
-
   if (item.el.hasClass('st-content-video')) {
     muted = (isSoundEnabled === false);
     autoplay = !isMobile.any;
@@ -218,6 +207,10 @@ $story.on('itemblur', function(ev, item) {
   }
 });
 
+$story.on('itementerviewport', function(ev, item) {
+  loadItem(item);
+});
+
 $story.on('itemexitviewport', function(ev, item) {
   if (item.data.image) {
     imageMedia.unfixBackgroundImage(item.el);
@@ -268,8 +261,11 @@ $('nav').on('click', 'li', function() {
   scrollStory.index(parseInt(this.dataset.id, 10));
 });
 
+// preload audio & video.
 storyItems.forEach(function (item) {
-  loadItem(item);
+  if (item.data.video || item.data.audio) {
+    loadItem(item);
+  }
 });
 
 Promise.all(LOAD_PROMISES).then(() => {
