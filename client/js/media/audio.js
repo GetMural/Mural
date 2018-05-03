@@ -30,15 +30,23 @@ function prepareAudio (id, srcs) {
         resolve();
       }
     });
-  });
 
-  srcs.forEach((src) => {
-    if (src.src !== undefined) {
-      const source = document.createElement('source'); 
-      source.type = src.type;
-      source.src = src.src;
-      audio.appendChild(source);
-    }
+    srcs.forEach((src, i) => {
+      if (src.src !== undefined) {
+        const source = document.createElement('source'); 
+        source.type = src.type;
+        source.src = src.src;
+        audio.appendChild(source);
+
+        // resolve if error on sources (404)
+        if (i === srcs.length - 1) {
+          source.addEventListener('error', function(e) {
+            console.error(e);
+            resolve();
+          });
+        }
+      }
+    });
   });
 
   audio.load();

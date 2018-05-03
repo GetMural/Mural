@@ -3,6 +3,12 @@ const $ = require('jquery');
 const MEDIA = [];
 const DATA = [];
 
+// function loadVideo(url) {
+//   return fetch(url)
+//     .then(resp => resp.blob())
+//     .then(blob => URL.createObjectURL(blob));
+// }
+
 function stopVideo(id) {
   const video = MEDIA[id];
 
@@ -56,20 +62,28 @@ function prepareVideo (scrollStory, $el, id, srcs, attrs) {
       resolve();
     });
 
-    video.addEventListener('loadeddata', function (e) {
+    video.addEventListener('loadeddata', function () {
       if (this.readyState > 3) {
         resolve();
       }
     });
-  });
 
-  srcs.forEach((src) => {
-    if (src.src !== undefined) {
-      const source = document.createElement('source'); 
-      source.type = src.type;
-      source.src = src.src;
-      video.appendChild(source);
-    }
+    srcs.forEach((src, i) => {
+      if (src.src !== undefined) {
+        const source = document.createElement('source'); 
+        source.type = src.type;
+        source.src = src.src;
+        video.appendChild(source);
+
+        // resolve if error on sources (404)
+        if (i === srcs.length - 1) {
+          source.addEventListener('error', function(e) {
+            console.error(e);
+            resolve();
+          });
+        }
+      }
+    });
   });
 
   $el.find('.video-container').html(video);

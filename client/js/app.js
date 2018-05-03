@@ -91,10 +91,112 @@ function getVideoAttrs(item) {
 function loadItem (item) {
   if (LOADED_STORY_SECTIONS[item.index] !== undefined) {
     return;
+  } else {
+    LOADED_STORY_SECTIONS[item.index] = {
+      loaded: true
+    };
+  }
+
+  const returnPromises = [];
+
+  if (item.data.image) {
+    const imageLoaded = imageMedia.insertBackgroundImage(item.el, item.data[scrKey], item.active);
+    returnPromises.push(imageLoaded);
+  }
+
+  if (item.data.slideshow) {
+    const slides = item.el.find('.slide-container a').get();
+    const slidePromises = [];
+
+    for (let i = 0; i < slides.length; i++) {
+      const a = slides[i];
+      const src = $(a).data(scrKey);
+
+      const loadPromise = new Promise((resolve) => {
+        const image = new Image();
+
+        image.onload = () => {
+          resolve();
+        }
+
+        image.src = src;
+      });
+
+      slidePromises.push(loadPromise);
+    }
+
+    const horizontalSlidePromise = Promise.all(slidePromises).then(() => {
+      blueimp(
+        slides,
+        {
+          container: item.el.find('.blueimp-gallery')[0],
+          urlProperty: attrKey,
+          carousel: true,
+          titleElement: '.slide-caption',
+          startSlideshow: false,
+          onslide: function (index, slide) {
+            const text = this.list[index].getAttribute('data-credits');
+            const node = this.container.find('.credits');
+            node.empty();
+            if (text) {
+              node[0].appendChild(document.createTextNode(text));
+            }
+          }
+        }
+      );
+    });
+
+    returnPromises.push(horizontalSlidePromise);
+  }
+
+  if (item.data.slides) {
+    item.el.find('.bg-image')
+      .each(function(i) {
+        const $el = $(this);
+        const src = $el.data(scrKey);
+
+        const loadPromise = new Promise((resolve) => {
+          const image = new Image();
+
+          image.onload = () => {
+            $el.css('background-image', `url(${src})`);
+            resolve();
+          }
+
+          image.src = src;
+        });
+
+        returnPromises.push(loadPromise);
+      })
+      .stickybits();
+  }
+
+  if (item.data.parallax) {
+    const src = item.data[scrKey];
+    const loadPromise = new Promise((resolve) => {
+      const image = new Image();
+
+      image.onload = () => {
+        item.el.find('.bg-image').css('background-image', `url(${src})`);
+        resolve();
+      }
+
+      image.src = src;
+    });
+
+    returnPromises.push(loadPromise);
+  }
+
+  if (item.data.dynamicImage) {
+    const imagesInserted = imageMedia.loadImages(item.el).then(() => {
+      scrollStory.updateOffsets();
+    });
+
+    returnPromises.push(imagesInserted);
   }
 
   if (item.data.video) {
-    LOAD_PROMISES.push(videoMedia.prepareVideo(
+    const videoLoaded = videoMedia.prepareVideo(
       scrollStory,
       item.el,
       item.index,
@@ -109,11 +211,13 @@ function loadItem (item) {
         }
       ],
       getVideoAttrs(item)
-    ));
+    );
+
+    returnPromises.push(videoLoaded);
   }
 
   if (item.data.audio) {
-    audioMedia.prepareAudio(
+    const audioLoaded = audioMedia.prepareAudio(
       item.index,
       [
         {
@@ -126,55 +230,11 @@ function loadItem (item) {
         }
       ]
     );
+
+    returnPromises.push(audioLoaded);
   }
 
-  if (item.data.image) {
-    imageMedia.insertBackgroundImage(item.el, item.data[scrKey], item.active);
-  }
-
-  if (item.data.slideshow) {
-    blueimp(
-      item.el.find('.slide-container a').get(),
-      {
-        container: item.el.find('.blueimp-gallery')[0],
-        urlProperty: attrKey,
-        carousel: true,
-        titleElement: '.slide-caption',
-        startSlideshow: false,
-        onslide: function (index, slide) {
-          const text = this.list[index].getAttribute('data-credits');
-          const node = this.container.find('.credits');
-          node.empty();
-          if (text) {
-            node[0].appendChild(document.createTextNode(text));
-          }
-        }
-      }
-    );
-  }
-
-  if (item.data.slides) {
-    item.el.find('.bg-image')
-      .each(function(i) {
-        const $el = $(this);
-        const src = $el.data(scrKey);
-        $el.css('background-image', `url(${src})`);
-      })
-      .stickybits();
-  }
-
-  if (item.data.parallax) {
-    const src = item.data[scrKey];
-    item.el.find('.bg-image').css('background-image', `url(${src})`);
-  }
-
-  if (item.data.dynamicImage) {
-    imageMedia.loadImages(item.el);
-  }
-
-  LOADED_STORY_SECTIONS[item.index] = {
-    loaded: true
-  };
+  return Promise.all(returnPromises);
 }
 
 $story.on('itemfocus', function(ev, item) {
@@ -213,6 +273,16 @@ $story.on('itemblur', function(ev, item) {
 
 $story.on('itementerviewport', function(ev, item) {
   loadItem(item);
+
+  // load another in advance
+  if ((item.index + 1) < storyItems.length) {
+    loadItem(storyItems[item.index + 1]);
+  }
+
+  // load another in advance
+  if ((item.index + 2) < storyItems.length) {
+    loadItem(storyItems[item.index + 2]);
+  }
 });
 
 $story.on('itemexitviewport', function(ev, item) {
@@ -265,23 +335,38 @@ $('nav').on('click', 'li', function() {
   scrollStory.index(parseInt(this.dataset.id, 10));
 });
 
-// preload audio & video.
-storyItems.forEach(function (item) {
-  if (item.data.video) {
-    loadItem(item);
+const active = scrollStory.getActiveItem();
+
+scrollStory.getItemsInViewport().forEach(function (item) {
+  const loadPromise = loadItem(item);
+
+  if (loadPromise) {
+    LOAD_PROMISES.push(loadPromise);
   }
 });
 
-scrollStory.getItemsInViewport().forEach(function (item) {
-  loadItem(item);
-});
+// push two in advance
+if ((active.index + 1) < storyItems.length) {
+  const loadPromise = loadItem(storyItems[active.index + 1]);
+
+  if (loadPromise) {
+    LOAD_PROMISES.push(loadPromise);
+  }
+}
+
+// push two in advance
+if ((active.index + 2) < storyItems.length) {
+  const loadPromise = loadItem(storyItems[active.index + 2]);
+
+  if (loadPromise) {
+    LOAD_PROMISES.push(loadPromise);
+  }
+}
 
 Promise.all(LOAD_PROMISES).then(() => {
   const overlay = document.getElementById('loading_overlay');
   document.body.removeChild(overlay);
   document.body.classList.remove('frozen');
-
-  const active = scrollStory.getActiveItem();
 
   if (active.data.video) {
     videoMedia.playBackgroundVideo(

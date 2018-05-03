@@ -9296,71 +9296,126 @@ function getVideoAttrs(item) {
 function loadItem(item) {
   if (LOADED_STORY_SECTIONS[item.index] !== undefined) {
     return;
+  } else {
+    LOADED_STORY_SECTIONS[item.index] = {
+      loaded: true
+    };
   }
 
-  if (item.data.video) {
-    LOAD_PROMISES.push(videoMedia.prepareVideo(scrollStory, item.el, item.index, [{
-      type: 'video/mp4',
-      src: item.data.mp4
-    }, {
-      type: 'video/webm',
-      src: item.data.webm
-    }], getVideoAttrs(item)));
-  }
-
-  if (item.data.audio) {
-    audioMedia.prepareAudio(item.index, [{
-      type: 'audio/mp3',
-      src: item.data.mp3
-    }, {
-      type: 'audio/ogg',
-      src: item.data.ogg
-    }]);
-  }
+  var returnPromises = [];
 
   if (item.data.image) {
-    imageMedia.insertBackgroundImage(item.el, item.data[scrKey], item.active);
+    var imageLoaded = imageMedia.insertBackgroundImage(item.el, item.data[scrKey], item.active);
+    returnPromises.push(imageLoaded);
   }
 
   if (item.data.slideshow) {
-    blueimp(item.el.find('.slide-container a').get(), {
-      container: item.el.find('.blueimp-gallery')[0],
-      urlProperty: attrKey,
-      carousel: true,
-      titleElement: '.slide-caption',
-      startSlideshow: false,
-      onslide: function onslide(index, slide) {
-        var text = this.list[index].getAttribute('data-credits');
-        var node = this.container.find('.credits');
-        node.empty();
+    var slides = item.el.find('.slide-container a').get();
+    var slidePromises = [];
 
-        if (text) {
-          node[0].appendChild(document.createTextNode(text));
+    var _loop = function _loop(i) {
+      var a = slides[i];
+      var src = $(a).data(scrKey);
+      var loadPromise = new Promise(function (resolve) {
+        var image = new Image();
+
+        image.onload = function () {
+          resolve();
+        };
+
+        image.src = src;
+      });
+      slidePromises.push(loadPromise);
+    };
+
+    for (var i = 0; i < slides.length; i++) {
+      _loop(i);
+    }
+
+    var horizontalSlidePromise = Promise.all(slidePromises).then(function () {
+      blueimp(slides, {
+        container: item.el.find('.blueimp-gallery')[0],
+        urlProperty: attrKey,
+        carousel: true,
+        titleElement: '.slide-caption',
+        startSlideshow: false,
+        onslide: function onslide(index, slide) {
+          var text = this.list[index].getAttribute('data-credits');
+          var node = this.container.find('.credits');
+          node.empty();
+
+          if (text) {
+            node[0].appendChild(document.createTextNode(text));
+          }
         }
-      }
+      });
     });
+    returnPromises.push(horizontalSlidePromise);
   }
 
   if (item.data.slides) {
     item.el.find('.bg-image').each(function (i) {
       var $el = $(this);
       var src = $el.data(scrKey);
-      $el.css('background-image', "url(".concat(src, ")"));
+      var loadPromise = new Promise(function (resolve) {
+        var image = new Image();
+
+        image.onload = function () {
+          $el.css('background-image', "url(".concat(src, ")"));
+          resolve();
+        };
+
+        image.src = src;
+      });
+      returnPromises.push(loadPromise);
     }).stickybits();
   }
 
   if (item.data.parallax) {
     var src = item.data[scrKey];
-    item.el.find('.bg-image').css('background-image', "url(".concat(src, ")"));
+    var loadPromise = new Promise(function (resolve) {
+      var image = new Image();
+
+      image.onload = function () {
+        item.el.find('.bg-image').css('background-image', "url(".concat(src, ")"));
+        resolve();
+      };
+
+      image.src = src;
+    });
+    returnPromises.push(loadPromise);
   }
 
   if (item.data.dynamicImage) {
-    imageMedia.loadImages(item.el);
+    var imagesInserted = imageMedia.loadImages(item.el).then(function () {
+      scrollStory.updateOffsets();
+    });
+    returnPromises.push(imagesInserted);
   }
 
-  LOADED_STORY_SECTIONS[item.index] = {
-    loaded: true
-  };
+  if (item.data.video) {
+    var videoLoaded = videoMedia.prepareVideo(scrollStory, item.el, item.index, [{
+      type: 'video/mp4',
+      src: item.data.mp4
+    }, {
+      type: 'video/webm',
+      src: item.data.webm
+    }], getVideoAttrs(item));
+    returnPromises.push(videoLoaded);
+  }
+
+  if (item.data.audio) {
+    var audioLoaded = audioMedia.prepareAudio(item.index, [{
+      type: 'audio/mp3',
+      src: item.data.mp3
+    }, {
+      type: 'audio/ogg',
+      src: item.data.ogg
+    }]);
+    returnPromises.push(audioLoaded);
+  }
+
+  return Promise.all(returnPromises);
 }
 
 $story.on('itemfocus', function (ev, item) {
@@ -9393,7 +9448,16 @@ $story.on('itemblur', function (ev, item) {
   }
 });
 $story.on('itementerviewport', function (ev, item) {
-  loadItem(item);
+  loadItem(item); // load another in advance
+
+  if (item.index + 1 < storyItems.length) {
+    loadItem(storyItems[item.index + 1]);
+  } // load another in advance
+
+
+  if (item.index + 2 < storyItems.length) {
+    loadItem(storyItems[item.index + 2]);
+  }
 });
 $story.on('itemexitviewport', function (ev, item) {
   if (item.data.image) {
@@ -9441,21 +9505,37 @@ $('.sticks_wrapper').click(function () {
 });
 $('nav').on('click', 'li', function () {
   scrollStory.index(parseInt(this.dataset.id, 10));
-}); // preload audio & video.
-
-storyItems.forEach(function (item) {
-  if (item.data.video) {
-    loadItem(item);
-  }
 });
+var active = scrollStory.getActiveItem();
 scrollStory.getItemsInViewport().forEach(function (item) {
-  loadItem(item);
-});
+  var loadPromise = loadItem(item);
+
+  if (loadPromise) {
+    LOAD_PROMISES.push(loadPromise);
+  }
+}); // push two in advance
+
+if (active.index + 1 < storyItems.length) {
+  var loadPromise = loadItem(storyItems[active.index + 1]);
+
+  if (loadPromise) {
+    LOAD_PROMISES.push(loadPromise);
+  }
+} // push two in advance
+
+
+if (active.index + 2 < storyItems.length) {
+  var _loadPromise = loadItem(storyItems[active.index + 2]);
+
+  if (_loadPromise) {
+    LOAD_PROMISES.push(_loadPromise);
+  }
+}
+
 Promise.all(LOAD_PROMISES).then(function () {
   var overlay = document.getElementById('loading_overlay');
   document.body.removeChild(overlay);
   document.body.classList.remove('frozen');
-  var active = scrollStory.getActiveItem();
 
   if (active.data.video) {
     videoMedia.playBackgroundVideo(active.index, getVideoAttrs(active));
@@ -12961,7 +13041,11 @@ var __WEBPACK_AMD_DEFINE_RESULT__;
 var $ = __webpack_require__(0);
 
 var MEDIA = [];
-var DATA = [];
+var DATA = []; // function loadVideo(url) {
+//   return fetch(url)
+//     .then(resp => resp.blob())
+//     .then(blob => URL.createObjectURL(blob));
+// }
 
 function stopVideo(id) {
   var video = MEDIA[id];
@@ -13012,19 +13096,26 @@ function prepareVideo(scrollStory, $el, id, srcs, attrs) {
     video.addEventListener('canplaythrough', function () {
       resolve();
     });
-    video.addEventListener('loadeddata', function (e) {
+    video.addEventListener('loadeddata', function () {
       if (this.readyState > 3) {
         resolve();
       }
     });
-  });
-  srcs.forEach(function (src) {
-    if (src.src !== undefined) {
-      var source = document.createElement('source');
-      source.type = src.type;
-      source.src = src.src;
-      video.appendChild(source);
-    }
+    srcs.forEach(function (src, i) {
+      if (src.src !== undefined) {
+        var source = document.createElement('source');
+        source.type = src.type;
+        source.src = src.src;
+        video.appendChild(source); // resolve if error on sources (404)
+
+        if (i === srcs.length - 1) {
+          source.addEventListener('error', function (e) {
+            console.error(e);
+            resolve();
+          });
+        }
+      }
+    });
   });
   $el.find('.video-container').html(video);
   $el.find('.play').click(function () {
@@ -13088,11 +13179,21 @@ module.exports = {
 
 function insertBackgroundImage($el, src) {
   var active = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
-  var styles = {
-    'background-image': "url(".concat(src, ")"),
-    position: active ? 'fixed' : ''
-  };
-  $el.find('.bg-image').css(styles);
+  var loadPromise = new Promise(function (resolve) {
+    var image = new Image();
+
+    image.onload = function () {
+      var styles = {
+        'background-image': "url(".concat(src, ")"),
+        position: active ? 'fixed' : ''
+      };
+      $el.find('.bg-image').css(styles);
+      resolve();
+    };
+
+    image.src = src;
+  });
+  return loadPromise;
 }
 
 function fixBackgroundImage($el) {
@@ -13106,9 +13207,19 @@ function unfixBackgroundImage($el) {
 }
 
 function loadImages($el) {
+  var loadPromises = [];
   $el.find('img').each(function () {
+    var _this = this;
+
+    var loadPromise = new Promise(function (resolve) {
+      _this.onload = function () {
+        resolve();
+      };
+    });
     this.src = this.dataset.src;
+    loadPromises.push(loadPromise);
   });
+  return Promise.all(loadPromises);
 }
 
 module.exports = {
@@ -13155,14 +13266,21 @@ function prepareAudio(id, srcs) {
         resolve();
       }
     });
-  });
-  srcs.forEach(function (src) {
-    if (src.src !== undefined) {
-      var source = document.createElement('source');
-      source.type = src.type;
-      source.src = src.src;
-      audio.appendChild(source);
-    }
+    srcs.forEach(function (src, i) {
+      if (src.src !== undefined) {
+        var source = document.createElement('source');
+        source.type = src.type;
+        source.src = src.src;
+        audio.appendChild(source); // resolve if error on sources (404)
+
+        if (i === srcs.length - 1) {
+          source.addEventListener('error', function (e) {
+            console.error(e);
+            resolve();
+          });
+        }
+      }
+    });
   });
   audio.load();
   return canPlayThrough;
