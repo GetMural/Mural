@@ -3,6 +3,18 @@ const $ = require('jquery');
 const MEDIA = [];
 const DATA = [];
 
+function stopVideo(id) {
+  const video = MEDIA[id];
+
+  if (DATA[id].playPromise) {
+    DATA[id].playPromise.then(() => {
+      video.pause();
+    });
+  } else {
+    video.pause();
+  }
+}
+
 function playBackgroundVideo (id, attrs) {
   const video = MEDIA[id];
 
@@ -11,7 +23,7 @@ function playBackgroundVideo (id, attrs) {
 
   if ((!DATA[id].paused && attrs.autoplay) ||
       (DATA[id].playTriggered && !DATA[id].paused)) {
-    video.play();
+    DATA[id].playPromise = video.play();
   }
 }
 
@@ -19,8 +31,7 @@ function removeBackgroundVideo ($el, id) {
   const $container = $el.find('.video-container');
   $container.css('position', '');
   const video = MEDIA[id];
-  video.removeAttribute('autoplay');
-  video.pause();
+  stopVideo(id);
 }
 
 function fixBackgroundVideo ($el) {
@@ -64,7 +75,7 @@ function prepareVideo (scrollStory, $el, id, srcs, attrs) {
   $el.find('.video-container').html(video);
 
   $el.find('.play').click(function() {
-    video.play();
+    DATA[id].playPromise = video.play();
     DATA[id].paused = false;
     DATA[id].playTriggered = true;
     $(this).hide();
@@ -72,8 +83,7 @@ function prepareVideo (scrollStory, $el, id, srcs, attrs) {
   });
 
   $el.find('.pause').click(function() {
-    // TODO check for cancelling problems with promises
-    video.pause();
+    stopVideo(id);
     DATA[id].paused = true;
     $(this).hide();
     $el.find('.play').show();

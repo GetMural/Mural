@@ -19,7 +19,6 @@ function unfixBackgroundImage($el) {
 function loadImages($el) {
   $el.find('img').each(function () {
     this.src = this.dataset.src;
-    this.load();
   });
 }
 

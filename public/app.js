@@ -12963,13 +12963,25 @@ var $ = __webpack_require__(0);
 var MEDIA = [];
 var DATA = [];
 
+function stopVideo(id) {
+  var video = MEDIA[id];
+
+  if (DATA[id].playPromise) {
+    DATA[id].playPromise.then(function () {
+      video.pause();
+    });
+  } else {
+    video.pause();
+  }
+}
+
 function playBackgroundVideo(id, attrs) {
   var video = MEDIA[id];
   video.loop = attrs.loop;
   video.muted = attrs.muted;
 
   if (!DATA[id].paused && attrs.autoplay || DATA[id].playTriggered && !DATA[id].paused) {
-    video.play();
+    DATA[id].playPromise = video.play();
   }
 }
 
@@ -12977,8 +12989,7 @@ function removeBackgroundVideo($el, id) {
   var $container = $el.find('.video-container');
   $container.css('position', '');
   var video = MEDIA[id];
-  video.removeAttribute('autoplay');
-  video.pause();
+  stopVideo(id);
 }
 
 function fixBackgroundVideo($el) {
@@ -13017,15 +13028,14 @@ function prepareVideo(scrollStory, $el, id, srcs, attrs) {
   });
   $el.find('.video-container').html(video);
   $el.find('.play').click(function () {
-    video.play();
+    DATA[id].playPromise = video.play();
     DATA[id].paused = false;
     DATA[id].playTriggered = true;
     $(this).hide();
     $el.find('.pause').show();
   });
   $el.find('.pause').click(function () {
-    // TODO check for cancelling problems with promises
-    video.pause();
+    stopVideo(id);
     DATA[id].paused = true;
     $(this).hide();
     $el.find('.play').show();
@@ -13098,7 +13108,6 @@ function unfixBackgroundImage($el) {
 function loadImages($el) {
   $el.find('img').each(function () {
     this.src = this.dataset.src;
-    this.load();
   });
 }
 
@@ -13119,9 +13128,22 @@ module.exports = {
 var MEDIA = [];
 var DATA = [];
 
+function stopAudio(id) {
+  var audio = MEDIA[id];
+
+  if (DATA[id].playPromise) {
+    DATA[id].playPromise.then(function () {
+      audio.pause();
+    });
+  } else {
+    audio.pause();
+  }
+}
+
 function prepareAudio(id, srcs) {
   var audio = new Audio();
   MEDIA[id] = audio;
+  DATA[id] = {};
   audio.loop = true;
   audio.preload = 'auto';
   var canPlayThrough = new Promise(function (resolve, reject) {
@@ -13147,8 +13169,7 @@ function prepareAudio(id, srcs) {
 }
 
 function removeBackgroundAudio(id) {
-  var audio = MEDIA[id];
-  audio.pause();
+  stopAudio(id);
 }
 
 function setMuted(id, muted) {
@@ -13159,7 +13180,7 @@ function setMuted(id, muted) {
 function playBackgroundAudio(id, attrs) {
   var audio = MEDIA[id];
   audio.muted = attrs.muted;
-  audio.play();
+  DATA[id].playPromise = audio.play();
 }
 
 module.exports = {

@@ -1,9 +1,22 @@
 const MEDIA = [];
 const DATA = [];
 
+function stopAudio(id) {
+  const audio = MEDIA[id];
+
+  if (DATA[id].playPromise) {
+    DATA[id].playPromise.then(() => {
+      audio.pause();
+    });
+  } else {
+    audio.pause();
+  }
+}
+
 function prepareAudio (id, srcs) {
   const audio = new Audio();
   MEDIA[id] = audio;
+  DATA[id] = {};
   audio.loop = true;
   audio.preload = 'auto';
 
@@ -34,8 +47,7 @@ function prepareAudio (id, srcs) {
 }
 
 function removeBackgroundAudio (id) {
-  const audio = MEDIA[id];
-  audio.pause();
+  stopAudio(id);
 }
 
 function setMuted (id, muted) {
@@ -46,7 +58,7 @@ function setMuted (id, muted) {
 function playBackgroundAudio (id, attrs) {
   const audio = MEDIA[id];
   audio.muted = attrs.muted;
-  audio.play();
+  DATA[id].playPromise = audio.play();
 }
 
 module.exports = {
