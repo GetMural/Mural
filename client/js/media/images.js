@@ -16,8 +16,16 @@ function unfixBackgroundImage($el) {
   $container.css('position', '');
 }
 
+function loadImages($el) {
+  $el.find('img').each(function () {
+    this.src = this.dataset.src;
+    this.load();
+  });
+}
+
 module.exports = {
   insertBackgroundImage,
   fixBackgroundImage,
-  unfixBackgroundImage
+  unfixBackgroundImage,
+  loadImages
 };

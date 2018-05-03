@@ -9309,13 +9309,13 @@ function loadItem(item) {
   }
 
   if (item.data.audio) {
-    LOAD_PROMISES.push(audioMedia.prepareAudio(item.index, [{
+    audioMedia.prepareAudio(item.index, [{
       type: 'audio/mp3',
       src: item.data.mp3
     }, {
       type: 'audio/ogg',
       src: item.data.ogg
-    }]));
+    }]);
   }
 
   if (item.data.image) {
@@ -9352,6 +9352,10 @@ function loadItem(item) {
   if (item.data.parallax) {
     var src = item.data[scrKey];
     item.el.find('.bg-image').css('background-image', "url(".concat(src, ")"));
+  }
+
+  if (item.data.dynamicImage) {
+    imageMedia.loadImages(item.el);
   }
 
   LOADED_STORY_SECTIONS[item.index] = {
@@ -13091,10 +13095,18 @@ function unfixBackgroundImage($el) {
   $container.css('position', '');
 }
 
+function loadImages($el) {
+  $el.find('img').each(function () {
+    this.src = this.dataset.src;
+    this.load();
+  });
+}
+
 module.exports = {
   insertBackgroundImage: insertBackgroundImage,
   fixBackgroundImage: fixBackgroundImage,
-  unfixBackgroundImage: unfixBackgroundImage
+  unfixBackgroundImage: unfixBackgroundImage,
+  loadImages: loadImages
 };
 
 /***/ }),

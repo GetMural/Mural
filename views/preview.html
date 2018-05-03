@@ -23,8 +23,8 @@
       <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
       <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     {{/meta}}
-    <link rel="shortcut icon" href="/img/favicon.ico">
-    <link rel="apple-touch-icon" href="/img/touch-icon.png">
+    <link rel="shortcut icon" href="img/favicon.ico">
+    <link rel="apple-touch-icon" href="img/touch-icon.png">
     <link rel="stylesheet" type="text/css" href="app.css">
 
     <script type="text/javascript">
@@ -229,11 +229,11 @@
         {{/slideshowvertical}}
 
         {{#textcentred}}
-          <section class="no-effects part text_align-center
-                    {{#light}}
-                      reverse_colors
-                    {{/light}}"
-                   name="story{{id}}">
+          <section class="no-effects part text_align-center {{#light}} reverse_colors {{/light}}"
+                   name="story{{id}}"
+                   {{#snippets}}
+                    data-dynamic-image="true"
+                   {{/snippets}}>
                 <div class="content container-fluid">
                   <div class="row">
                     <div class="col-sm-12 header">
@@ -252,8 +252,8 @@
                       {{/intro}}
                       {{#snippets}}
                         {{#src}}
-                          <figure class="cms-image {{align}}" style="max-width: 360px;">
-                            <img src="{{src}}" style="max-width: 100%" rel="resizable" alt="{{alt}}" />
+                          <figure class="cms-image {{align}}">
+                            <img data-src="{{src}}" rel="resizable" alt="{{alt}}" />
                             <figcaption>{{title}}
                                <span class="photographer">
                                  {{{credits}}}

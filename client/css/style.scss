@@ -1679,8 +1679,16 @@ article .header-fullpage h2{
 
 article a.nextPart{display:inline-block;padding:3px 6px;background:#222;color:#fff}article a.nextPart:hover{color:#7fc8e8;text-decoration:none}blockquote{border-left:3px solid #fff;margin:1.5em 10px;padding:0.5em 10px;font-size:1.2em;font-weight:200;font-style:italic;quotes:"\201C" "\201D" "\2018" "\2019"}pre{font-family:Menlo,Monaco,Consolas,"Courier New",monospace;display:block;padding:9.5px;margin:0px 0px 10px;font-size:1em;line-height:1.4em;word-break:break-all;word-wrap:break-word;color:#333;background-color:#f5f5f5;border:1px solid #ccc;border-radius:4px}u{text-decoration:underline}s{text-decoration:line-through}
 
-.cms-image{margin:10px 0}
-.cms-image figcaption{
+.cms-image {
+  margin:10px 0;
+  max-width: 360px;
+}
+
+.cms-image img {
+  max-width: 100%;
+}
+
+.cms-image figcaption{ 
   display:block;
   text-align:left;
   padding:6px 8px;
