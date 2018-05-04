@@ -9365,23 +9365,11 @@ function loadItem(item) {
     var slides = item.el.find('.slide-container a').get();
     var slidePromises = [];
 
-    var _loop = function _loop(i) {
+    for (var i = 0; i < slides.length; i++) {
       var a = slides[i];
       var src = $(a).data(scrKey);
-      var loadPromise = new Promise(function (resolve) {
-        var image = new Image();
-
-        image.onload = function () {
-          resolve();
-        };
-
-        image.src = src;
-      });
+      var loadPromise = imageMedia.imageLoadPromise(src);
       slidePromises.push(loadPromise);
-    };
-
-    for (var i = 0; i < slides.length; i++) {
-      _loop(i);
     }
 
     var horizontalSlidePromise = Promise.all(slidePromises).then(function () {
@@ -9409,33 +9397,21 @@ function loadItem(item) {
     item.el.find('.bg-image').each(function (i) {
       var $el = $(this);
       var src = $el.data(scrKey);
-      var loadPromise = new Promise(function (resolve) {
-        var image = new Image();
-
-        image.onload = function () {
-          $el.css('background-image', "url(".concat(src, ")"));
-          resolve();
-        };
-
-        image.src = src;
+      var loadPromise = imageMedia.imageLoadPromise(src).then(function () {
+        $el.css('background-image', "url(".concat(src, ")"));
       });
       returnPromises.push(loadPromise);
     }).stickybits();
   }
 
   if (item.data.parallax) {
-    var src = item.data[scrKey];
-    var loadPromise = new Promise(function (resolve) {
-      var image = new Image();
+    var _src = item.data[scrKey];
 
-      image.onload = function () {
-        item.el.find('.bg-image').css('background-image', "url(".concat(src, ")"));
-        resolve();
-      };
-
-      image.src = src;
+    var _loadPromise = imageMedia.imageLoadPromise(_src).then(function () {
+      item.el.find('.bg-image').css('background-image', "url(".concat(_src, ")"));
     });
-    returnPromises.push(loadPromise);
+
+    returnPromises.push(_loadPromise);
   }
 
   if (item.data.dynamicImage) {
@@ -9577,10 +9553,10 @@ if (active.index + 1 < storyItems.length) {
 
 
 if (active.index + 2 < storyItems.length) {
-  var _loadPromise = loadItem(storyItems[active.index + 2]);
+  var _loadPromise2 = loadItem(storyItems[active.index + 2]);
 
-  if (_loadPromise) {
-    LOAD_PROMISES.push(_loadPromise);
+  if (_loadPromise2) {
+    LOAD_PROMISES.push(_loadPromise2);
   }
 }
 
@@ -13214,23 +13190,32 @@ module.exports = {
 "use strict";
 
 
-function insertBackgroundImage($el, src) {
-  var active = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+function imageLoadPromise(src) {
   var loadPromise = new Promise(function (resolve) {
     var image = new Image();
 
     image.onload = function () {
-      var styles = {
-        'background-image': "url(".concat(src, ")"),
-        position: active ? 'fixed' : ''
-      };
-      $el.find('.bg-image').css(styles);
+      resolve();
+    };
+
+    image.onerror = function () {
       resolve();
     };
 
     image.src = src;
   });
   return loadPromise;
+}
+
+function insertBackgroundImage($el, src) {
+  var active = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+  return imageLoadPromise(src).then(function () {
+    var styles = {
+      'background-image': "url(".concat(src, ")"),
+      position: active ? 'fixed' : ''
+    };
+    $el.find('.bg-image').css(styles);
+  });
 }
 
 function fixBackgroundImage($el) {
@@ -13248,12 +13233,10 @@ function loadImages($el) {
   $el.find('img').each(function () {
     var _this = this;
 
-    var loadPromise = new Promise(function (resolve) {
-      _this.onload = function () {
-        resolve();
-      };
+    var src = this.dataset.src;
+    var loadPromise = imageLoadPromise(src).then(function () {
+      _this.src = _this.dataset.src;
     });
-    this.src = this.dataset.src;
     loadPromises.push(loadPromise);
   });
   return Promise.all(loadPromises);
@@ -13263,7 +13246,8 @@ module.exports = {
   insertBackgroundImage: insertBackgroundImage,
   fixBackgroundImage: fixBackgroundImage,
   unfixBackgroundImage: unfixBackgroundImage,
-  loadImages: loadImages
+  loadImages: loadImages,
+  imageLoadPromise: imageLoadPromise
 };
 
 /***/ }),

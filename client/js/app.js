@@ -111,17 +111,7 @@ function loadItem (item) {
     for (let i = 0; i < slides.length; i++) {
       const a = slides[i];
       const src = $(a).data(scrKey);
-
-      const loadPromise = new Promise((resolve) => {
-        const image = new Image();
-
-        image.onload = () => {
-          resolve();
-        }
-
-        image.src = src;
-      });
-
+      const loadPromise = imageMedia.imageLoadPromise(src);
       slidePromises.push(loadPromise);
     }
 
@@ -155,15 +145,8 @@ function loadItem (item) {
         const $el = $(this);
         const src = $el.data(scrKey);
 
-        const loadPromise = new Promise((resolve) => {
-          const image = new Image();
-
-          image.onload = () => {
-            $el.css('background-image', `url(${src})`);
-            resolve();
-          }
-
-          image.src = src;
+        const loadPromise = imageMedia.imageLoadPromise(src).then(() => {
+          $el.css('background-image', `url(${src})`);
         });
 
         returnPromises.push(loadPromise);
@@ -173,15 +156,8 @@ function loadItem (item) {
 
   if (item.data.parallax) {
     const src = item.data[scrKey];
-    const loadPromise = new Promise((resolve) => {
-      const image = new Image();
-
-      image.onload = () => {
-        item.el.find('.bg-image').css('background-image', `url(${src})`);
-        resolve();
-      }
-
-      image.src = src;
+    const loadPromise = imageMedia.imageLoadPromise(src).then(() => {
+      item.el.find('.bg-image').css('background-image', `url(${src})`);
     });
 
     returnPromises.push(loadPromise);

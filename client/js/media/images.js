@@ -1,13 +1,12 @@
-function insertBackgroundImage($el, src, active=false) {
+function imageLoadPromise(src) {
   const loadPromise = new Promise((resolve) => {
     const image = new Image();
 
     image.onload = () => {
-      const styles = {
-        'background-image': `url(${src})`,
-         position: active ? 'fixed' : ''
-      };
-      $el.find('.bg-image').css(styles);
+      resolve();
+    }
+
+    image.onerror = () => {
       resolve();
     }
 
@@ -15,6 +14,16 @@ function insertBackgroundImage($el, src, active=false) {
   });
 
   return loadPromise;
+}
+
+function insertBackgroundImage($el, src, active=false) {
+  return imageLoadPromise(src).then(() => {
+    const styles = {
+      'background-image': `url(${src})`,
+       position: active ? 'fixed' : ''
+    };
+    $el.find('.bg-image').css(styles);
+  });
 }
 
 function fixBackgroundImage($el) {
@@ -30,13 +39,11 @@ function unfixBackgroundImage($el) {
 function loadImages($el) {
   const loadPromises = [];
   $el.find('img').each(function () {
-    const loadPromise = new Promise((resolve) => {
-      this.onload = () => {
-        resolve();
-      }
+    const src = this.dataset.src;
+    const loadPromise = imageLoadPromise(src).then(() => {
+      this.src = this.dataset.src;
     });
-
-    this.src = this.dataset.src;
+  
     loadPromises.push(loadPromise);
   });
 
@@ -47,5 +54,6 @@ module.exports = {
   insertBackgroundImage,
   fixBackgroundImage,
   unfixBackgroundImage,
-  loadImages
+  loadImages,
+  imageLoadPromise
 };
