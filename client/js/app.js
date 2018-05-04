@@ -364,27 +364,39 @@ if ((active.index + 2) < storyItems.length) {
 }
 
 Promise.all(LOAD_PROMISES).then(() => {
-  const overlay = document.getElementById('loading_overlay');
-  document.body.removeChild(overlay);
-  document.body.classList.remove('frozen');
+  let overlay = document.getElementById('loading_overlay');
+  let playStart = document.createElement('img');
+  playStart.src = "img/play.svg";
 
-  if (active.data.video) {
-    videoMedia.playBackgroundVideo(
-      active.index,
-      getVideoAttrs(active)
-    );
+  let text = overlay.querySelector('.loading-text');
+  text.innerHTML = "Click to Start";
+  overlay.appendChild(playStart);
 
-    videoMedia.fixBackgroundVideo(active.el);
-  }
+  playStart.addEventListener('click', () => {
+    document.body.removeChild(overlay);
+    document.body.classList.remove('frozen');
 
-  if (active.data.audio) {
-    audioMedia.playBackgroundAudio(
-      active.index,
-      {
-        muted: (isSoundEnabled === false)
-      }
-    );
-  }
+    if (active.data.video) {
+      videoMedia.playBackgroundVideo(
+        active.index,
+        getVideoAttrs(active)
+      );
+
+      videoMedia.fixBackgroundVideo(active.el);
+    }
+
+    if (active.data.audio) {
+      audioMedia.playBackgroundAudio(
+        active.index,
+        {
+          muted: (isSoundEnabled === false)
+        }
+      );
+    }
+
+    overlay = null;
+    playStart = null;
+  });
 }).catch((e) => {
   console.error(e);
 });
