@@ -13111,19 +13111,19 @@ function prepareVideo(scrollStory, $el, id, srcs, attrs) {
         resolve();
       }
     });
-    srcs.forEach(function (src, i) {
-      if (src.src !== undefined) {
-        var source = document.createElement('source');
-        source.type = src.type;
-        source.src = src.src;
-        video.appendChild(source); // resolve if error on sources (404)
+    var sources = srcs.filter(function (src) {
+      return src.src !== undefined;
+    });
+    sources.forEach(function (src, i) {
+      var source = document.createElement('source');
+      source.type = src.type;
+      source.src = src.src;
+      video.appendChild(source); // resolve if error on sources (404)
 
-        if (i === srcs.length - 1) {
-          source.addEventListener('error', function (e) {
-            console.error(e);
-            resolve();
-          });
-        }
+      if (i === sources.length - 1) {
+        source.addEventListener('error', function (e) {
+          resolve();
+        });
       }
     });
   });
@@ -13276,19 +13276,19 @@ function prepareAudio(id, srcs) {
         resolve();
       }
     });
-    srcs.forEach(function (src, i) {
-      if (src.src !== undefined) {
-        var source = document.createElement('source');
-        source.type = src.type;
-        source.src = src.src;
-        audio.appendChild(source); // resolve if error on sources (404)
+    var sources = srcs.filter(function (src) {
+      return src.src !== undefined;
+    });
+    sources.forEach(function (src, i) {
+      var source = document.createElement('source');
+      source.type = src.type;
+      source.src = src.src;
+      audio.appendChild(source); // resolve if error on sources (404)
 
-        if (i === srcs.length - 1) {
-          source.addEventListener('error', function (e) {
-            console.error(e);
-            resolve();
-          });
-        }
+      if (i === sources.length - 1) {
+        source.addEventListener('error', function (e) {
+          resolve();
+        });
       }
     });
   });

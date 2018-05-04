@@ -68,20 +68,18 @@ function prepareVideo (scrollStory, $el, id, srcs, attrs) {
       }
     });
 
-    srcs.forEach((src, i) => {
-      if (src.src !== undefined) {
-        const source = document.createElement('source'); 
-        source.type = src.type;
-        source.src = src.src;
-        video.appendChild(source);
+    const sources = srcs.filter(src => src.src !== undefined);
+    sources.forEach((src, i) => {
+      const source = document.createElement('source'); 
+      source.type = src.type;
+      source.src = src.src;
+      video.appendChild(source);
 
-        // resolve if error on sources (404)
-        if (i === srcs.length - 1) {
-          source.addEventListener('error', function(e) {
-            console.error(e);
-            resolve();
-          });
-        }
+      // resolve if error on sources (404)
+      if (i === sources.length - 1) {
+        source.addEventListener('error', function(e) {
+          resolve();
+        });
       }
     });
   });
