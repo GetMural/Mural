@@ -1,13 +1,8 @@
 const $ = require('jquery');
+const mediaUtils = require('./media');
 
 const MEDIA = [];
 const DATA = [];
-
-// function loadVideo(url) {
-//   return fetch(url)
-//     .then(resp => resp.blob())
-//     .then(blob => URL.createObjectURL(blob));
-// }
 
 function stopVideo(id) {
   const video = MEDIA[id];
@@ -57,32 +52,7 @@ function prepareVideo (scrollStory, $el, id, srcs, attrs) {
   MEDIA[id] = video;
   DATA[id] = {};
 
-  const canPlayThrough = new Promise(function(resolve, reject) {
-    video.addEventListener('canplaythrough', () => {
-      resolve();
-    });
-
-    video.addEventListener('loadeddata', function () {
-      if (this.readyState > 3) {
-        resolve();
-      }
-    });
-
-    const sources = srcs.filter(src => src.src !== undefined);
-    sources.forEach((src, i) => {
-      const source = document.createElement('source'); 
-      source.type = src.type;
-      source.src = src.src;
-      video.appendChild(source);
-
-      // resolve if error on sources (404)
-      if (i === sources.length - 1) {
-        source.addEventListener('error', function(e) {
-          resolve();
-        });
-      }
-    });
-  });
+  const canPlayThrough = mediaUtils.canPlayThroughPromise(video, srcs);
 
   $el.find('.video-container').html(video);
 

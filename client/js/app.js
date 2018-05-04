@@ -366,6 +366,7 @@ if ((active.index + 2) < storyItems.length) {
 Promise.all(LOAD_PROMISES).then(() => {
   let overlay = document.getElementById('loading_overlay');
   let playStart = document.createElement('img');
+  playStart.classList.add('play-start');
   playStart.src = "img/play.svg";
 
   let text = overlay.querySelector('.loading-text');

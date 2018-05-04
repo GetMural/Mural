@@ -1,3 +1,5 @@
+const mediaUtils = require('./media');
+
 const MEDIA = [];
 const DATA = [];
 
@@ -20,33 +22,7 @@ function prepareAudio (id, srcs) {
   audio.loop = true;
   audio.preload = 'auto';
 
-  const canPlayThrough = new Promise(function(resolve, reject) {
-    audio.addEventListener('canplaythrough', () => {
-      resolve();
-    });
-
-    audio.addEventListener('loadeddata', function (e) {
-      if (this.readyState > 3) {
-        resolve();
-      }
-    });
-
-    const sources = srcs.filter(src => src.src !== undefined);
-    sources.forEach((src, i) => {
-      const source = document.createElement('source'); 
-      source.type = src.type;
-      source.src = src.src;
-      audio.appendChild(source);
-
-      // resolve if error on sources (404)
-      if (i === sources.length - 1) {
-        source.addEventListener('error', function(e) {
-          resolve();
-        });
-      }
-    });
-  });
-
+  const canPlayThrough = mediaUtils.canPlayThroughPromise(audio, srcs);
   audio.load();
 
   return canPlayThrough;

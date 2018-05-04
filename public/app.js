@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 1);
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -9192,7 +9192,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
   return jQuery;
 });
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7)(module)))
 
 /***/ }),
 /* 1 */
@@ -9201,15 +9201,67 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 "use strict";
 
 
-__webpack_require__(2);
+function canPlayThroughPromise(media, srcs) {
+  return new Promise(function (resolve, reject) {
+    function canPlayThrough() {
+      media.removeEventListener('canplaythrough', canPlayThrough);
+      media.removeEventListener('loadeddata', loadedMetaData);
+      resolve();
+    }
+
+    function loadedMetaData() {
+      // media is in browser cache
+      if (media.readyState > 3) {
+        media.removeEventListener('canplaythrough', canPlayThrough);
+        media.removeEventListener('loadeddata', loadedMetaData);
+        resolve();
+      }
+    }
+
+    media.addEventListener('canplaythrough', canPlayThrough);
+    media.addEventListener('loadeddata', loadedMetaData);
+    var sources = srcs.filter(function (src) {
+      return src.src !== undefined;
+    });
+    sources.forEach(function (src, i) {
+      var source = document.createElement('source');
+      source.type = src.type;
+      source.src = src.src;
+      media.appendChild(source); // resolve if error on sources (404)
+
+      if (i === sources.length - 1) {
+        source.addEventListener('error', function (e) {
+          resolve();
+        });
+      }
+    }); // resolve incase of invalid sources.
+
+    if (!sources.length) {
+      resolve();
+    }
+  });
+}
+
+module.exports = {
+  canPlayThroughPromise: canPlayThroughPromise
+};
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
 
 __webpack_require__(3);
 
-var $ = __webpack_require__(4);
+__webpack_require__(4);
 
-__webpack_require__(7);
+var $ = __webpack_require__(5);
 
 __webpack_require__(8);
+
+__webpack_require__(9);
 
 $.fn.moveIt = function () {
   var $window = $(window);
@@ -9238,13 +9290,13 @@ MoveItItem.prototype.update = function (scrollTop) {
   this.el.css('transform', 'translateY(' + -(top / this.speed) + 'px)');
 };
 
-var blueimp = __webpack_require__(10);
+var blueimp = __webpack_require__(11);
 
-var videoMedia = __webpack_require__(12);
+var videoMedia = __webpack_require__(13);
 
-var imageMedia = __webpack_require__(13);
+var imageMedia = __webpack_require__(14);
 
-var audioMedia = __webpack_require__(14);
+var audioMedia = __webpack_require__(15);
 
 var isMobile = window.isMobile;
 var WINDOW_WIDTH = $(window).width();
@@ -9535,6 +9587,7 @@ if (active.index + 2 < storyItems.length) {
 Promise.all(LOAD_PROMISES).then(function () {
   var overlay = document.getElementById('loading_overlay');
   var playStart = document.createElement('img');
+  playStart.classList.add('play-start');
   playStart.src = "img/play.svg";
   var text = overlay.querySelector('.loading-text');
   text.innerHTML = "Click to Start";
@@ -9562,12 +9615,6 @@ Promise.all(LOAD_PROMISES).then(function () {
 });
 
 /***/ }),
-/* 2 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
 /* 3 */
 /***/ (function(module, exports) {
 
@@ -9575,13 +9622,19 @@ Promise.all(LOAD_PROMISES).then(function () {
 
 /***/ }),
 /* 4 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["$"] = __webpack_require__(0);
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+// removed by extract-text-webpack-plugin
 
 /***/ }),
 /* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["$"] = __webpack_require__(0);
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)))
+
+/***/ }),
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9609,7 +9662,7 @@ try {
 module.exports = g;
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9641,7 +9694,7 @@ module.exports = function (module) {
 };
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11022,13 +11075,13 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 });
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _stickybits = _interopRequireDefault(__webpack_require__(9));
+var _stickybits = _interopRequireDefault(__webpack_require__(10));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -11043,7 +11096,7 @@ if (typeof window !== 'undefined') {
 }
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11475,7 +11528,7 @@ function stickybits(target, o) {
 }
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11503,7 +11556,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
   if (true) {
     // Register as an anonymous AMD module:
-    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(11)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(12)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -12822,7 +12875,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 });
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13042,7 +13095,7 @@ var __WEBPACK_AMD_DEFINE_RESULT__;
 })();
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13050,12 +13103,10 @@ var __WEBPACK_AMD_DEFINE_RESULT__;
 
 var $ = __webpack_require__(0);
 
+var mediaUtils = __webpack_require__(1);
+
 var MEDIA = [];
-var DATA = []; // function loadVideo(url) {
-//   return fetch(url)
-//     .then(resp => resp.blob())
-//     .then(blob => URL.createObjectURL(blob));
-// }
+var DATA = [];
 
 function stopVideo(id) {
   var video = MEDIA[id];
@@ -13102,31 +13153,7 @@ function prepareVideo(scrollStory, $el, id, srcs, attrs) {
   video.preload = 'auto';
   MEDIA[id] = video;
   DATA[id] = {};
-  var canPlayThrough = new Promise(function (resolve, reject) {
-    video.addEventListener('canplaythrough', function () {
-      resolve();
-    });
-    video.addEventListener('loadeddata', function () {
-      if (this.readyState > 3) {
-        resolve();
-      }
-    });
-    var sources = srcs.filter(function (src) {
-      return src.src !== undefined;
-    });
-    sources.forEach(function (src, i) {
-      var source = document.createElement('source');
-      source.type = src.type;
-      source.src = src.src;
-      video.appendChild(source); // resolve if error on sources (404)
-
-      if (i === sources.length - 1) {
-        source.addEventListener('error', function (e) {
-          resolve();
-        });
-      }
-    });
-  });
+  var canPlayThrough = mediaUtils.canPlayThroughPromise(video, srcs);
   $el.find('.video-container').html(video);
   $el.find('.play').click(function () {
     DATA[id].playPromise = video.play();
@@ -13181,7 +13208,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13240,11 +13267,13 @@ module.exports = {
 };
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
+
+var mediaUtils = __webpack_require__(1);
 
 var MEDIA = [];
 var DATA = [];
@@ -13267,31 +13296,7 @@ function prepareAudio(id, srcs) {
   DATA[id] = {};
   audio.loop = true;
   audio.preload = 'auto';
-  var canPlayThrough = new Promise(function (resolve, reject) {
-    audio.addEventListener('canplaythrough', function () {
-      resolve();
-    });
-    audio.addEventListener('loadeddata', function (e) {
-      if (this.readyState > 3) {
-        resolve();
-      }
-    });
-    var sources = srcs.filter(function (src) {
-      return src.src !== undefined;
-    });
-    sources.forEach(function (src, i) {
-      var source = document.createElement('source');
-      source.type = src.type;
-      source.src = src.src;
-      audio.appendChild(source); // resolve if error on sources (404)
-
-      if (i === sources.length - 1) {
-        source.addEventListener('error', function (e) {
-          resolve();
-        });
-      }
-    });
-  });
+  var canPlayThrough = mediaUtils.canPlayThroughPromise(audio, srcs);
   audio.load();
   return canPlayThrough;
 }
