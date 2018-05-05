@@ -99,12 +99,14 @@ router.get('/download', function (req, res) {
 
         archive.pipe(res);
 
+        const storyName = storyboard.filename.split('.')[0];
+
         archive
             .file(path.resolve(PUBLIC_FOLDER, 'dist', 'index.html'), {name: 'index.html'})
             .file(path.resolve(PUBLIC_FOLDER, 'app.css'), {name: 'app.css'})
             .file(path.resolve(PUBLIC_FOLDER, 'app.js'), {name: 'app.js'})
             .directory(path.resolve(PUBLIC_FOLDER, 'img'), 'img')
-            .directory(path.resolve(PUBLIC_FOLDER, 'uploads'), 'uploads')
+            .directory(path.resolve(PUBLIC_FOLDER, 'uploads', storyName), 'uploads')
             .finalize();
       });
     });

@@ -24,7 +24,7 @@
 
   <div class="form-group">
     <label>Src</label>
-    <img id='snippets-{{index}}-src-preview' src='' class='img-preview-thumb' />
+    <img id='snippets-{{index}}-src-preview' data-src="{{src}}" class='img-preview-thumb' />
     <input id="snippets-{{index}}-src" name="snippets[{{index}}][src]" data-for="snippets-{{index}}-src" class="form-control src-input" type="text" value="{{src}}" placeholder="No source" />
     <input data-for="snippets-{{index}}-src" class="fileupload-input" type="file" name="files[]">
   </div>
@@ -47,4 +47,17 @@ jQuery(document).ready(function($) {
         buttons: ['bold', 'italic', 'link', 'h2', 'h3', 'h4', 'alignleft', 'aligncenter', 'alignright', 'quote', 'code', 'list', 'x']
     });
 });
+
+(function() {
+    const preview = document.getElementById('snippets-{{index}}-src-preview');
+
+    [preview].forEach((media) => {
+        const file = media.dataset.src;
+        if (/^uploads\//.test(file)) {
+            media.src = `/${file}`;
+        } else {
+            media.src = file;
+        }
+    });
+})();
 </script>
