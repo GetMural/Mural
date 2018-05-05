@@ -1,13 +1,29 @@
 <legend>Audio Sources</legend>
 <div>
   <label>MP3</label>
-  <audio id='mp3-preview' src="/{{audio.mp3}}" class='audio-preview-thumb' controls="true"></audio>
+  <audio id='mp3-preview' data-src="{{audio.mp3}}" class='audio-preview-thumb' controls="true"></audio>
   <input id="mp3" name="mp3" class="form-control src-input" data-for="mp3" type="text" value="{{audio.mp3}}" placeholder="No mp3 source" />
   <input data-for="mp3" class="fileupload-input" type="file" name="files[]">
 </div>
 <div>
   <label>Ogg</label>
-  <audio id='ogg-preview' src="/{{audio.ogg}}" class='audio-preview-thumb' controls="true"></audio>
+  <audio id='ogg-preview' data-src="{{audio.ogg}}" class='audio-preview-thumb' controls="true"></audio>
   <input id="ogg" name="ogg" class="form-control src-input" data-for="ogg" type="text" value="{{audio.ogg}}" placeholder="No ogg source" />
   <input data-for="ogg" class="fileupload-input" type="file" name="files[]">
 </div>
+
+<script type="text/javascript">
+    (function() {
+        const mp3 = document.getElementById('mp3-preview');
+        const ogg = document.getElementById('ogg-preview');
+
+        [mp3, ogg].forEach((media) => {
+            const file = media.dataset.src;
+            if (/^uploads\//.test(file)) {
+                media.src = `/${file}`;
+            } else {
+                media.src = file;
+            }
+        });
+    })();
+</script>

@@ -13,7 +13,6 @@ router.get('/', function (req, res) {
         var items = data.items;
         res.render('editor/editor', {
             filename: storyboard.filename,
-            foldername: storyboard.filename.split('.')[0],
             meta: meta,
             items: items,
             editor: 'editor',

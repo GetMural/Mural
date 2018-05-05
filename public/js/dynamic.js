@@ -54,7 +54,7 @@ itemEditor.on('change', '.fileupload-input', function (){
               // update the corresponding src text field with the relative path
               $(textFieldId).val(response.path);
               // and add a thumbnail to the preview
-              $(previewImg).attr('src', `/${response.path}`);
+              $(previewImg).attr('src', `${response.path}`);
           } else {
               console.log('Error uploading file');
               console.log(response.error);
