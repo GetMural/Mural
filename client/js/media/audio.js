@@ -1,28 +1,35 @@
+const mediaUtils = require('./media');
+
 const MEDIA = [];
 const DATA = [];
 
-function insertBackgroundAudio (scrollStory, $el, id, srcs, attrs) {
-  const audio = new Audio();
-  MEDIA[id] = audio;
-  audio.loop = true;
-  audio.muted = attrs.muted;
+function stopAudio(id) {
+  const audio = MEDIA[id];
 
-  srcs.forEach((src) => {
-    const source = document.createElement('source'); 
-    source.type = src.type;
-    source.src = src.src;
-    audio.appendChild(source);
-  });
-
-  audio.play();
+  if (DATA[id].playPromise) {
+    DATA[id].playPromise.then(() => {
+      audio.pause();
+    });
+  } else {
+    audio.pause();
+  }
 }
 
-function removeBackgroundAudio ($el, id) {
-  const audio = MEDIA[id];
-  audio.pause();
-  audio.innerHTML = '';
+function prepareAudio (id, srcs) {
+  const audio = new Audio();
+  MEDIA[id] = audio;
+  DATA[id] = {};
+  audio.loop = true;
+  audio.preload = 'auto';
+
+  const canPlayThrough = mediaUtils.canPlayThroughPromise(audio, srcs);
   audio.load();
-  MEDIA[id] = null;
+
+  return canPlayThrough;
+}
+
+function removeBackgroundAudio (id) {
+  stopAudio(id);
 }
 
 function setMuted (id, muted) {
@@ -30,8 +37,15 @@ function setMuted (id, muted) {
   audio.muted = muted;
 }
 
+function playBackgroundAudio (id, attrs) {
+  const audio = MEDIA[id];
+  audio.muted = attrs.muted;
+  DATA[id].playPromise = audio.play();
+}
+
 module.exports = {
-  insertBackgroundAudio,
+  playBackgroundAudio,
+  prepareAudio,
   removeBackgroundAudio,
   setMuted
 };

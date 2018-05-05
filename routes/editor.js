@@ -405,10 +405,14 @@ router.post('/page/imagebackground/id/:id', function (req, res) {
             srcmedium: newItem['srcmedium']
         };
 
-        item['audio'] = {
-            mp3: newItem['mp3'],
-            ogg: newItem['ogg']
-        };
+        if (newItem['mp3'] || newItem['ogg']) {
+            item['audio'] = {
+                mp3: newItem['mp3'],
+                ogg: newItem['ogg']
+            };
+        } else {
+            delete item['audio'];
+        }
 
         // save the file
         items[qId].imagebackground = item;
@@ -470,10 +474,14 @@ router.post('/page/imageaudio/id/:id', function (req, res) {
             srcmedium: newItem['srcmedium']
         };
 
-        item['audio'] = {
-            mp3: newItem['mp3'],
-            ogg: newItem['ogg']
-        };
+        if (newItem['mp3'] || newItem['ogg']) {
+            item['audio'] = {
+                mp3: newItem['mp3'],
+                ogg: newItem['ogg']
+            };
+        } else {
+            delete item['audio'];
+        }
 
         // save the file
         items[qId].imageaudio = item;

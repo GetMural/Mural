@@ -1,8 +1,9 @@
 require('blueimp-gallery/css/blueimp-gallery.css');
 require('../css/style.scss');
 
-$ = require('jquery');
+const $ = require("expose-loader?$!jquery");
 require('scrollstory/jquery.scrollstory.js');
+require('stickybits/src/jquery.stickybits');
 
 $.fn.moveIt = function(){
   var $window = $(window);
@@ -31,7 +32,6 @@ MoveItItem.prototype.update = function(scrollTop){
   this.el.css('transform', 'translateY(' + -(top / this.speed) + 'px)');
 };
 
-const stickybits = require('stickybits/src/jquery.stickybits');
 const blueimp = require('blueimp-gallery/js/blueimp-gallery');
 const videoMedia = require('./media/video');
 const imageMedia = require('./media/images');
@@ -55,28 +55,124 @@ if (WINDOW_WIDTH > 1024) {
 
 const $story = $('#scrollytelling');
 const scrollStory = $story.scrollStory({
-  contentSelector: '.part'
+  contentSelector: '.part',
+  triggerOffset: 30
 }).data('plugin_scrollStory');
 
+const storyItems = scrollStory.getItems();
+
+const LOAD_PROMISES = [];
 const LOADED_STORY_SECTIONS = [];
 let isSoundEnabled = true;
 
+function getVideoAttrs(item) {
+  let muted;
+  let autoplay;
+
+  // TODO we only have full page videos atm.
+  if (item.el.hasClass('st-content-video')) {
+    muted = (isSoundEnabled === false);
+    autoplay = !isMobile.any;
+  } else {
+    muted = isMobile.any || !isSoundEnabled;
+    autoplay = true;
+  }
+
+  return {
+    poster: item.data.poster,
+    autoplay: autoplay,
+    muted: muted,
+    loop: item.data.loop,
+    autoAdvance: item.data.autoAdvance
+  };
+}
+
 
 function loadItem (item) {
-  // have to load videos as we remove the src and reload to prevent downloading unwatched media.
-  if (item.data.video) {
-    let muted;
-    let autoplay;
+  if (LOADED_STORY_SECTIONS[item.index] !== undefined) {
+    return;
+  } else {
+    LOADED_STORY_SECTIONS[item.index] = {
+      loaded: true
+    };
+  }
 
-    if (item.data.isFullpage) {
-      muted = (isSoundEnabled === false) || (item.data.muted === true);
-      autoplay = !isMobile.any;
-    } else {
-      muted = (isSoundEnabled === false) || (isMobile.any === true) || (item.data.muted === true);
-      autoplay = item.data.autoplay;
+  const returnPromises = [];
+
+  if (item.data.image) {
+    const imageLoaded = imageMedia.insertBackgroundImage(item.el, item.data[scrKey], item.active);
+    returnPromises.push(imageLoaded);
+  }
+
+  if (item.data.slideshow) {
+    const slides = item.el.find('.slide-container a').get();
+    const slidePromises = [];
+
+    for (let i = 0; i < slides.length; i++) {
+      const a = slides[i];
+      const src = $(a).data(scrKey);
+      const loadPromise = imageMedia.imageLoadPromise(src);
+      slidePromises.push(loadPromise);
     }
 
-    videoMedia.insertBackgroundVideo(
+    const horizontalSlidePromise = Promise.all(slidePromises).then(() => {
+      blueimp(
+        slides,
+        {
+          container: item.el.find('.blueimp-gallery')[0],
+          urlProperty: attrKey,
+          carousel: true,
+          titleElement: '.slide-caption',
+          startSlideshow: false,
+          onslide: function (index, slide) {
+            const text = this.list[index].getAttribute('data-credits');
+            const node = this.container.find('.credits');
+            node.empty();
+            if (text) {
+              node[0].appendChild(document.createTextNode(text));
+            }
+          }
+        }
+      );
+    });
+
+    returnPromises.push(horizontalSlidePromise);
+  }
+
+  if (item.data.slides) {
+    item.el.find('.bg-image')
+      .each(function(i) {
+        const $el = $(this);
+        const src = $el.data(scrKey);
+
+        const loadPromise = imageMedia.imageLoadPromise(src).then(() => {
+          $el.css('background-image', `url(${src})`);
+        });
+
+        returnPromises.push(loadPromise);
+      })
+      .stickybits();
+  }
+
+  if (item.data.parallax) {
+    const src = item.data[scrKey];
+    const loadPromise = imageMedia.imageLoadPromise(src).then(() => {
+      item.el.find('.bg-image').css('background-image', `url(${src})`);
+    });
+
+    returnPromises.push(loadPromise);
+  }
+
+  if (item.data.dynamicImage) {
+    const imagesInserted = imageMedia.loadImages(item.el).then(() => {
+      scrollStory.updateOffsets();
+    });
+
+    returnPromises.push(imagesInserted);
+  }
+
+  if (item.data.video) {
+    const videoLoaded = videoMedia.prepareVideo(
       scrollStory,
       item.el,
       item.index,
@@ -90,24 +186,14 @@ function loadItem (item) {
           src: item.data.webm
         }
       ],
-      {
-        poster: item.data.poster,
-        autoplay: autoplay,
-        muted: muted,
-        loop: item.data.loop,
-        autoAdvance: item.data.autoAdvance
-      }
+      getVideoAttrs(item)
     );
+
+    returnPromises.push(videoLoaded);
   }
 
-  if (LOADED_STORY_SECTIONS[item.index] !== undefined) {
-    return;
-  }
-
-  if (item.data.audio && item.active) {
-    audioMedia.insertBackgroundAudio(
-      scrollStory,
-      item.el,
+  if (item.data.audio) {
+    const audioLoaded = audioMedia.prepareAudio(
       item.index,
       [
         {
@@ -118,56 +204,13 @@ function loadItem (item) {
           type: 'audio/ogg',
           src: item.data.ogg
         }
-      ],
-      {
-        muted: (isSoundEnabled === false)
-      }
+      ]
     );
+
+    returnPromises.push(audioLoaded);
   }
 
-  if (item.data.image) {
-    imageMedia.insertBackgroundImage(item.el, item.data[scrKey], item.active);
-  }
-
-  if (item.data.slideshow) {
-    blueimp(
-      item.el.find('.slide-container a').get(),
-      {
-        container: item.el.find('.blueimp-gallery')[0],
-        urlProperty: attrKey,
-        carousel: true,
-        titleElement: '.slide-caption',
-        startSlideshow: false,
-        onslide: function (index, slide) {
-          const text = this.list[index].getAttribute('data-credits');
-          const node = this.container.find('.credits');
-          node.empty();
-          if (text) {
-            node[0].appendChild(document.createTextNode(text));
-          }
-        }
-      }
-    );
-  }
-
-  if (item.data.slides) {
-    item.el.find('.bg-image')
-      .each(function(i) {
-        const $el = $(this);
-        const src = $el.data(scrKey);
-        $el.css('background-image', `url(${src})`);
-      })
-      .stickybits();
-  }
-
-  if (item.data.parallax) {
-    const src = item.data[scrKey];
-    item.el.find('.bg-image').css('background-image', `url(${src})`);
-  }
-
-  LOADED_STORY_SECTIONS[item.index] = {
-    loaded: true
-  };
+  return Promise.all(returnPromises);
 }
 
 $story.on('itemfocus', function(ev, item) {
@@ -176,24 +219,13 @@ $story.on('itemfocus', function(ev, item) {
   }
 
   if (item.data.video) {
+    videoMedia.playBackgroundVideo(item.index, getVideoAttrs(item));
     videoMedia.fixBackgroundVideo(item.el);
   }
 
   if (item.data.audio) {
-    audioMedia.insertBackgroundAudio(
-      scrollStory,
-      item.el,
+    audioMedia.playBackgroundAudio(
       item.index,
-      [
-        {
-          type: 'audio/mp3',
-          src: item.data.mp3
-        },
-        {
-          type: 'audio/ogg',
-          src: item.data.ogg
-        }
-      ],
       {
         muted: (isSoundEnabled === false)
       }
@@ -207,16 +239,26 @@ $story.on('itemblur', function(ev, item) {
   }
 
   if (item.data.video) {
-    videoMedia.unfixBackgroundVideo(item.el);
+    videoMedia.removeBackgroundVideo(item.el, item.index);
   }
 
   if (item.data.audio) {
-    audioMedia.removeBackgroundAudio(item.el, item.index);
+    audioMedia.removeBackgroundAudio(item.index);
   }
 });
 
 $story.on('itementerviewport', function(ev, item) {
   loadItem(item);
+
+  // load another in advance
+  if ((item.index + 1) < storyItems.length) {
+    loadItem(storyItems[item.index + 1]);
+  }
+
+  // load another in advance
+  if ((item.index + 2) < storyItems.length) {
+    loadItem(storyItems[item.index + 2]);
+  }
 });
 
 $story.on('itemexitviewport', function(ev, item) {
@@ -229,14 +271,10 @@ $story.on('itemexitviewport', function(ev, item) {
   }
 });
 
-scrollStory.getItemsInViewport().forEach(function (item) {
-  loadItem(item);
-});
-
 $('[data-scroll-speed]').moveIt();
 
 $('.mute').click(function () {
-  $this = $(this);
+  const $this = $(this);
   if ($this.hasClass('muted')) {
     isSoundEnabled = true;
     $this.removeClass('muted');
@@ -245,7 +283,7 @@ $('.mute').click(function () {
     $this.addClass('muted');
   }
 
-  scrollStory.getItemsInViewport().forEach(function (item) {
+  storyItems.forEach(function (item) {
     if (item.data.video) {
       let muted;
 
@@ -271,4 +309,71 @@ $('.sticks_wrapper').click(function() {
 
 $('nav').on('click', 'li', function() {
   scrollStory.index(parseInt(this.dataset.id, 10));
+});
+
+const active = scrollStory.getActiveItem();
+
+scrollStory.getItemsInViewport().forEach(function (item) {
+  const loadPromise = loadItem(item);
+
+  if (loadPromise) {
+    LOAD_PROMISES.push(loadPromise);
+  }
+});
+
+// push two in advance
+if ((active.index + 1) < storyItems.length) {
+  const loadPromise = loadItem(storyItems[active.index + 1]);
+
+  if (loadPromise) {
+    LOAD_PROMISES.push(loadPromise);
+  }
+}
+
+// push two in advance
+if ((active.index + 2) < storyItems.length) {
+  const loadPromise = loadItem(storyItems[active.index + 2]);
+
+  if (loadPromise) {
+    LOAD_PROMISES.push(loadPromise);
+  }
+}
+
+Promise.all(LOAD_PROMISES).then(() => {
+  let overlay = document.getElementById('loading_overlay');
+  let playStart = document.createElement('img');
+  playStart.classList.add('play-start');
+  playStart.src = "img/play.svg";
+
+  let text = overlay.querySelector('.loading-text');
+  text.innerHTML = "Click to Start";
+  overlay.appendChild(playStart);
+
+  playStart.addEventListener('click', () => {
+    document.body.removeChild(overlay);
+    document.body.classList.remove('frozen');
+
+    if (active.data.video) {
+      videoMedia.playBackgroundVideo(
+        active.index,
+        getVideoAttrs(active)
+      );
+
+      videoMedia.fixBackgroundVideo(active.el);
+    }
+
+    if (active.data.audio) {
+      audioMedia.playBackgroundAudio(
+        active.index,
+        {
+          muted: (isSoundEnabled === false)
+        }
+      );
+    }
+
+    overlay = null;
+    playStart = null;
+  });
+}).catch((e) => {
+  console.error(e);
 });
