@@ -143,7 +143,10 @@ router.get('/fragment/fullpage', function (req, res) {
 
 // Slide Fragment
 router.get('/fragment/slide', function (req, res) {
-    res.render('editor/fragments/slide');
+    const index = req.query.index;
+    res.render('editor/fragments/slide', {
+        index
+    });
 });
 
 // Image Fragment

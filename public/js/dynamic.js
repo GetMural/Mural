@@ -9,20 +9,19 @@ itemEditor.on('click', '.js-Remove', function (e) {
 
 itemEditor.on('click', '.js-AddSlide', function (e) {
   e.preventDefault();
-  addDynamic('slide', 'images');
+  addDynamic('slide', 'images', $('.js-Slide').length);
 });
 
 itemEditor.on('click', '.js-AddImage', function (e) {
   e.preventDefault();
-  addDynamic('snippetimage', 'snippets');
+  addDynamic('snippetimage', 'snippets', $('.js-SnippetImage').length);
 });
 
-function addDynamic(template, name) {
+function addDynamic(template, name, index) {
   const el = document.createElement('div');
-  const fragment = `/editor/fragment/${template}`;
+  const fragment = `/editor/fragment/${template}?index=${index}`;
   $(el).load(fragment, function () {
     itemEditor.find('.js-ContentDynamic').append($(el).html());
-    updateIndices(name);
   });
 }
 
