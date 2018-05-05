@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 const path = require('path');
 const fs = require('fs');
+const rimraf = require('rimraf');
+
 var Prefernces = require('../models/preferences');
 var preferences = new Prefernces(path.join(__dirname, '../data/preferences.json'));
 
@@ -46,9 +48,16 @@ router.post('/copy-story', function (req, res) {
 
 router.delete('/delete-story', function (req, res) {
     preferences.readFile(null, function(err, data) {
+        const story = data.storyboard.split('.')[0];
         console.log("deleting story", data.storyboard);
         fs.unlink(path.join(__dirname, "../data/stories/", data.storyboard), function(err) {
             if (!err) {
+                const uploadPath = path.join(__dirname,'../public/uploads/', story);
+                rimraf(uploadPath, function(err) {
+                    if (err) {
+                        console.log(err);
+                    }
+                });
                 data.storyboard = 'default.json'
                 preferences.writeFile(null, data, function(err, response) {
                     console.log('New story set to preferences');
