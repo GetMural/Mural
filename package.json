@@ -37,6 +37,7 @@
     "ismobilejs": "^0.4.1",
     "jquery": "^3.2.1",
     "json-fmt": "^1.1.2",
+    "mkdirp": "^0.5.1",
     "morgan": "~1.9.0",
     "npm": "^5.7.1",
     "pouchdb": "^6.4.3",

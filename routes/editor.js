@@ -6,7 +6,6 @@ var Storyboard = require('../models/storyboard');
 var storyboard = new Storyboard();
 var archiver = require('archiver');
 
-
 // Main Editor View
 router.get('/', function (req, res) {
     storyboard.readFile(function(err, data) {
@@ -14,6 +13,7 @@ router.get('/', function (req, res) {
         var items = data.items;
         res.render('editor/editor', {
             filename: storyboard.filename,
+            foldername: storyboard.filename.split('.')[0],
             meta: meta,
             items: items,
             editor: 'editor',
@@ -51,21 +51,13 @@ router.get('/download', function (req, res) {
       items: data.items,
       meta: data.meta,
       partials: {
-          fb: 'partials/fb',
           head: 'partials/head',
-          header: 'partials/header',
           imagebackground: 'partials/imagebackground',
           imageparallax: 'partials/imageparallax',
-          intro: 'partials/intro',
-          loader: 'partials/loader',
           textcentered: 'partials/textcentred',
-          title: 'partials/title',
           slideshowhorizontal: 'partials/slideshowhorizontal',
           slideshowvertical: 'partials/slideshowvertical',
           snippets: 'partials/snippets',
-          social: 'partials/social',
-          subdataposterloadingimage: 'partials/subdataposterloadingimage',
-          subvideosource: 'partials/subvideosource',
           videobackground: 'partials/videobackground',
           videofullpage: 'partials/videofullpage'
       }

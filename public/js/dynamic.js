@@ -39,9 +39,8 @@ itemEditor.on('change', '.fileupload-input', function (){
   var filename = $(this).val().split('\\').pop();
   var textFieldId = '#' + $(this).data('for');
   var previewImg = '#' + $(this).data('for').replace('[\[\]]', '-') + '-preview';
-  var srcPath = 'uploads/' + filename;
   var data = new FormData();
-  console.log(filename, textFieldId);
+
   data.append('upload-file', $(this).prop('files')[0]);
   $.ajax({
       url: '/upload',
@@ -52,13 +51,13 @@ itemEditor.on('change', '.fileupload-input', function (){
       dataType: 'json',
       success: function (response) {
           if (response.status === 'ok') {
-              console.log('Success upload', response);
-              // update the corresponding src text field with the relateive path
-              $(textFieldId).val(srcPath);
+              // update the corresponding src text field with the relative path
+              $(textFieldId).val(response.path);
               // and add a thumbnail to the preview
-              $(previewImg).attr('src', srcPath);
+              $(previewImg).attr('src', `/${response.path}`);
           } else {
-              console.log('Error uploading file', response);
+              console.log('Error uploading file');
+              console.log(response.error);
           }
       }
   })
