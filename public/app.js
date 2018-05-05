@@ -9220,6 +9220,12 @@ function canPlayThroughPromise(media, srcs) {
 
     media.addEventListener('canplaythrough', canPlayThrough);
     media.addEventListener('loadeddata', loadedMetaData);
+
+    media.onerror = function (e) {
+      media.onerror = null;
+      resolve();
+    };
+
     var sources = srcs.filter(function (src) {
       return src.src !== undefined;
     });
