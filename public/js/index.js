@@ -5,7 +5,7 @@ $(function() {
     });
 
     $('#btn-download').on('click', function() {
-        window.open('/editor/buyusbeer', '', 'width=620,height=480');
+        window.open('/editor/buyusbeer', '', 'width=620,height=700');
     });
 
     // Preview Refresh Event Listener
