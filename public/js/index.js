@@ -5,7 +5,7 @@ $(function() {
     });
 
     $('#btn-download').on('click', function() {
-        window.open('/editor/download');
+        window.open('/editor/buyusbeer');
     });
 
     // Preview Refresh Event Listener

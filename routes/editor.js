@@ -39,6 +39,10 @@ router.post('/storyboard', function (req, res) {
 
 const PUBLIC_FOLDER = path.resolve(__dirname, '..', 'public');
 
+router.get('/buyusbeer', function (req, res) {
+    res.render('beer');
+});
+
 router.get('/download', function (req, res) {
   storyboard.readFile(function (err, data) {
     if (err) {
@@ -65,6 +69,9 @@ router.get('/download', function (req, res) {
           console.log(err);
           return res.send(err);
       }
+
+      const storyName = storyboard.filename.split('.')[0];
+
       // write to dist/index.html
       fs.writeFile(path.resolve(PUBLIC_FOLDER, 'dist', 'index.html'), html, function (err) {
         if (err) {
@@ -74,7 +81,7 @@ router.get('/download', function (req, res) {
         // Tell the browser that this is a zip file.
         res.writeHead(200, {
             'Content-Type': 'application/zip',
-            'Content-disposition': 'attachment; filename=mural.zip'
+            'Content-disposition': `attachment; filename=${storyName}.zip`
         });
 
         var archive = archiver('zip', {
@@ -87,19 +94,20 @@ router.get('/download', function (req, res) {
           if (err.code === 'ENOENT') {
             // log warning
             console.log(err);
+            return res.send(err);
           } else {
             // throw error
             console.error(err);
+            return res.send(err);
           }
         });
 
         archive.on('error', function(err) {
             console.error(err);
+            return res.send(err);
         });
 
         archive.pipe(res);
-
-        const storyName = storyboard.filename.split('.')[0];
 
         archive
             .file(path.resolve(PUBLIC_FOLDER, 'dist', 'index.html'), {name: 'index.html'})
