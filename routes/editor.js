@@ -6,7 +6,6 @@ var Storyboard = require('../models/storyboard');
 var storyboard = new Storyboard();
 var archiver = require('archiver');
 
-
 // Main Editor View
 router.get('/', function (req, res) {
     storyboard.readFile(function(err, data) {
@@ -51,21 +50,13 @@ router.get('/download', function (req, res) {
       items: data.items,
       meta: data.meta,
       partials: {
-          fb: 'partials/fb',
           head: 'partials/head',
-          header: 'partials/header',
           imagebackground: 'partials/imagebackground',
           imageparallax: 'partials/imageparallax',
-          intro: 'partials/intro',
-          loader: 'partials/loader',
           textcentered: 'partials/textcentred',
-          title: 'partials/title',
           slideshowhorizontal: 'partials/slideshowhorizontal',
           slideshowvertical: 'partials/slideshowvertical',
           snippets: 'partials/snippets',
-          social: 'partials/social',
-          subdataposterloadingimage: 'partials/subdataposterloadingimage',
-          subvideosource: 'partials/subvideosource',
           videobackground: 'partials/videobackground',
           videofullpage: 'partials/videofullpage'
       }
@@ -108,12 +99,14 @@ router.get('/download', function (req, res) {
 
         archive.pipe(res);
 
+        const storyName = storyboard.filename.split('.')[0];
+
         archive
             .file(path.resolve(PUBLIC_FOLDER, 'dist', 'index.html'), {name: 'index.html'})
             .file(path.resolve(PUBLIC_FOLDER, 'app.css'), {name: 'app.css'})
             .file(path.resolve(PUBLIC_FOLDER, 'app.js'), {name: 'app.js'})
             .directory(path.resolve(PUBLIC_FOLDER, 'img'), 'img')
-            .directory(path.resolve(PUBLIC_FOLDER, 'uploads'), 'uploads')
+            .directory(path.resolve(PUBLIC_FOLDER, 'uploads', storyName), path.join('uploads', storyName))
             .finalize();
       });
     });
@@ -150,7 +143,10 @@ router.get('/fragment/fullpage', function (req, res) {
 
 // Slide Fragment
 router.get('/fragment/slide', function (req, res) {
-    res.render('editor/fragments/slide');
+    const index = req.query.index;
+    res.render('editor/fragments/slide', {
+        index
+    });
 });
 
 // Image Fragment
