@@ -34,6 +34,11 @@ function updateIndices(prefix) {
   });
 }
 
+itemEditor.on('change', '.src-input', function () {
+  var previewImg = '#' + $(this).data('for').replace('[\[\]]', '-') + '-preview';
+  $(previewImg).attr('src', $(this).val());
+});
+
 itemEditor.on('change', '.fileupload-input', function (){
   var filename = $(this).val().split('\\').pop();
   var textFieldId = '#' + $(this).data('for');
