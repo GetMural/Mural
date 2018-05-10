@@ -208,7 +208,9 @@ router.get('/fragment/richtext', function (req, res) {
 
 // Snippet Image Fragment
 router.get('/fragment/snippetimage', function (req, res) {
+    const index = req.query.index;
     res.render('editor/fragments/snippetimage', {
+        index,
         partials: {
             credits: 'editor/fragments/credits',
             image: 'editor/fragments/image',
