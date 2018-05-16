@@ -1775,8 +1775,7 @@ article a.nextPart{display:inline-block;padding:3px 6px;background:#222;color:#f
 
 .st-video .video-container video[poster] {
   object-fit: cover;
-  min-width:100%;
-  min-height:100vh;
+  height:100vh;
 }
 .st-video .content{position:relative;z-index:10;padding-top:10vh;padding-bottom:10vh}
 .st-video .content .text{font-size:1.4em;line-height:1.8em;font-weight:300;padding:20px}.mobile .st-video .video-container{height:auto;position:static}.mobile .st-video .video-container video{min-width:0;min-height:0;width:100%;height:auto}.mobile .st-video .content{padding-top:3vh;padding-bottom:3vh}.mobile .st-video .content .text{background:none}
@@ -1808,8 +1807,7 @@ article a.nextPart{display:inline-block;padding:3px 6px;background:#222;color:#f
 
 .st-content-video .video-container video[poster] {
   object-fit: cover;
-  min-width:100%;
-  min-height:100vh;
+  height:100vh;
 }
 
 .st-content-video .caption{
