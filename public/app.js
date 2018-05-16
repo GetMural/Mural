@@ -9323,7 +9323,7 @@ if (WINDOW_WIDTH > 1024) {
 var $story = $('#scrollytelling');
 var scrollStory = $story.scrollStory({
   contentSelector: '.part',
-  triggerOffset: 30
+  triggerOffset: 0
 }).data('plugin_scrollStory');
 var storyItems = scrollStory.getItems();
 var LOAD_PROMISES = [];

@@ -56,7 +56,7 @@ if (WINDOW_WIDTH > 1024) {
 const $story = $('#scrollytelling');
 const scrollStory = $story.scrollStory({
   contentSelector: '.part',
-  triggerOffset: 30
+  triggerOffset: 0
 }).data('plugin_scrollStory');
 
 const storyItems = scrollStory.getItems();
