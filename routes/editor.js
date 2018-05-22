@@ -38,6 +38,7 @@ router.post('/storyboard', function (req, res) {
 })
 
 const PUBLIC_FOLDER = path.resolve(__dirname, '..', 'public');
+const DATA_FOLDER = path.resolve(__dirname, '..', 'data');
 
 router.get('/buyusbeer', function (req, res) {
     res.render('beer');
@@ -113,6 +114,7 @@ router.get('/download', function (req, res) {
             .file(path.resolve(PUBLIC_FOLDER, 'dist', 'index.html'), {name: 'index.html'})
             .file(path.resolve(PUBLIC_FOLDER, 'app.css'), {name: 'app.css'})
             .file(path.resolve(PUBLIC_FOLDER, 'app.js'), {name: 'app.js'})
+            .file(path.resolve(DATA_FOLDER, 'stories', `${storyName}.json`), {name: `${storyName}.json`})
             .directory(path.resolve(PUBLIC_FOLDER, 'img'), 'img')
             .directory(path.resolve(PUBLIC_FOLDER, 'uploads', storyName), path.join('uploads', storyName))
             .finalize();
