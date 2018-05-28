@@ -1,21 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <!-- jquery -->
-  <script type="text/javascript" src="/node_modules/jquery/dist/jquery.min.js"></script>
-  <!-- vex-js -->
-  <script src="/node_modules/vex-js/dist/js/vex.combined.min.js"></script>
-  <script>vex.defaultOptions.className = 'vex-theme-os'</script>
   <link rel="stylesheet" href="/node_modules/vex-js/dist/css/vex.css" />
   <link rel="stylesheet" href="/node_modules/vex-js/dist/css/vex-theme-os.css" />
-  <!-- bootstrap -->
-  <script type="text/javascript" src="/node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
-  <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.css" />
-  <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap-grid.css" />
-  <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap-reboot.css" />
 
   <!-- load our custom styles last -->
   <link type="text/css" rel="stylesheet" href="css/home.css" />
+
+  <script type="text/javascript" src="/node_modules/jquery/dist/jquery.min.js"></script>
+
 </head>
 <body>
   <div id="toolbar">
@@ -30,15 +23,16 @@
           <option>{{name}}</option>
       {{/files}}
     </select>
-    <!-- TODO: add a button here to kick off the dist build -->
   </div>
 
   <iframe id="preview" src="/preview"></iframe>
-
   <iframe id="editor" class="editor" src="/editor"></iframe>
 
-  <!-- TODO: figure out why jquery needs to be included in both <head> and <body> -->
   <script type="text/javascript" src="/node_modules/jquery/dist/jquery.min.js"></script>
-  <script type="text/javascript" src="js/index.js"></script>
+
+  <!-- vex-js -->
+  <script src="/node_modules/vex-js/dist/js/vex.combined.min.js"></script>
+  <script>vex.defaultOptions.className = 'vex-theme-os'</script>
+  <script type="text/javascript" src="/js/index.js"></script>
 </body>
 </html>

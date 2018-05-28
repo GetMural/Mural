@@ -1,4 +1,3 @@
-var $ = jQuery;
 $(function() {
     $('#btn-refresh-preview').on('click', function() {
         $('#preview').attr( 'src', function ( i, val ) { return val; });
@@ -81,4 +80,4 @@ $(function() {
             $('#preview').width('100vw');
         }
     });
-})
+});
