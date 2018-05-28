@@ -43,6 +43,21 @@ button#save
   float: right;
 }
 
+legend {
+  width: auto;
+  margin-left: 1em;
+}
+
+fieldset {
+  margin-bottom: 2em;
+  border: 1px solid grey;
+  padding: 1em;
+}
+
+input {
+  margin-bottom: 0.5em;
+}
+
 .img-preview-thumb,
 .video-preview-thumb {
   max-width: 250px;

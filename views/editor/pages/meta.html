@@ -1,8 +1,6 @@
-<script src="/js/meta.js"></script>
-
 <form id="frm-item-editor" class="form-horizontal js-Meta" method="POST" action="/editor/page/meta" method="post">
 
-  <legend class="title">Meta Information</legend>
+  <h4>Meta Information</h4>
 
   <fieldset>
 
@@ -25,11 +23,6 @@
       <div class="form-group">
         <label for="author" class="control-label">Author</label>
         <input name="author" data-name="author"type="text" class="form-control" value="{{#author}}{{author}}{{/author}}" />
-      </div>
-
-      <div class="form-group">
-        <label for="keywords" class="control-label">Keywords</label>
-        <textarea name="keywords" data-name="keywords" class="form-control">{{#keywords}}{{keywords}}{{/keywords}}</textarea>
       </div>
 
       <div class="form-group">
