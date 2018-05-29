@@ -1,8 +1,19 @@
 <div>
   <label for="text" class="control-label">Text</label>
-  <textarea id="rich_text" name="text" class="form-control" placeholder="No text">{{text}}</textarea>
+  <textarea id="summernote" name="text" class="form-control" placeholder="No text">{{text}}</textarea>
 </div>
 
 <script>
-    $('#rich_text').summernote();
+    $('#summernote').summernote({
+      toolbar: [
+        // [groupName, [list of button]]
+        ['style', ['bold', 'italic', 'underline', 'clear']],
+        ['font', ['strikethrough', 'superscript', 'subscript']],
+        ['fontsize', ['fontsize']],
+        ['color', ['color']],
+        ['para', ['style', 'ul', 'ol', 'paragraph']],
+        ['height', ['height']],
+        ['tools', ['link', 'hr', 'codeview', 'undo', 'redo']]
+      ]
+    });
 </script>
