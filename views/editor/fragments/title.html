@@ -1,4 +1,15 @@
 <div class="form-group">
   <label for="title" class="control-label">Title</label>
-  <input name="title" type="text" class="form-control" value="{{title}}" placeholder="No title"/>
+  <textarea id="title" name="title" class="form-control" placeholder="No title">{{title}}</textarea>
 </div>
+
+<script>
+    $('#title').summernote({
+      toolbar: [
+        ['style', ['bold', 'italic', 'underline', 'clear']],
+        ['font', ['strikethrough', 'superscript', 'subscript']],
+        ['fontsize', ['fontsize']],
+        ['color', ['color']]
+      ]
+    });
+</script>
