@@ -1,19 +1,19 @@
-<ul class="js-Nav">
+<ul class="js-Nav list-group">
   {{#meta}}
-    <li>
+    <li class="list-group-item">
       <a href="/editor/page/meta">Meta Information{{#title}}: {{title}}{{/title}}</a>
     </li>
   {{/meta}}
 </ul>
-<ul id="sortable-items" class="js-Nav">
+<ul id="sortable-items" class="js-Nav list-group">
   {{#items}}
-    <li>
+    <li class="list-group-item">
       {{#imagebackground}}
         <a href="/editor/page/imagebackground/id/{{id}}">
           Image Background{{#title}}: {{title}}{{/title}}
         </a>
         <form action="/editor/delete/{{id}}" method="post">
-          <button type="submit">Delete</button>
+          <button class="btn btn-danger" type="submit">Delete</button>
         </form>
       {{/imagebackground}}
       {{#imageaudio}}
@@ -21,7 +21,7 @@
           Image Audio{{#title}}: {{title}}{{/title}}
         </a>
         <form action="/editor/delete/{{id}}" method="post">
-          <button type="submit">Delete</button>
+          <button class="btn btn-danger" type="submit">Delete</button>
         </form>
       {{/imageaudio}}
   	  {{#imageparallax}}
@@ -29,7 +29,7 @@
           Parallax Image{{#title}}: {{title}}{{/title}}
         </a>
         <form action="/editor/delete/{{id}}" method="post">
-          <button type="submit">Delete</button>
+          <button class="btn btn-danger" type="submit">Delete</button>
         </form>
       {{/imageparallax}}
       {{#slideshowhorizontal}}
@@ -37,7 +37,7 @@
           Horizontal Slideshow{{#title}}: {{title}}{{/title}}
         </a>
         <form action="/editor/delete/{{id}}" method="post">
-          <button type="submit">Delete</button>
+          <button class="btn btn-danger" type="submit">Delete</button>
         </form>
       {{/slideshowhorizontal}}
   	  {{#slideshowvertical}}
@@ -45,7 +45,7 @@
           Vertical Slideshow{{#title}}: {{title}}{{/title}}
         </a>
         <form action="/editor/delete/{{id}}" method="post">
-          <button type="submit">Delete</button>
+          <button class="btn btn-danger" type="submit">Delete</button>
         </form>
       {{/slideshowvertical}}
       {{#textcentred}}
@@ -53,7 +53,7 @@
           Centred Text{{#title}}: {{title}}{{/title}}
         </a>
         <form action="/editor/delete/{{id}}" method="post">
-          <button type="submit">Delete</button>
+          <button class="btn btn-danger" type="submit">Delete</button>
         </form>
       {{/textcentred}}
       {{#videobackground}}
@@ -61,7 +61,7 @@
           Background Video{{#title}}: {{title}}{{/title}}
         </a>
         <form action="/editor/delete/{{id}}" method="post">
-          <button type="submit">Delete</button>
+          <button class="btn btn-danger" type="submit">Delete</button>
         </form>
       {{/videobackground}}
       {{#videofullpage}}
@@ -69,7 +69,7 @@
           Fullpage Video{{#title}}: {{title}}{{/title}}
         </a>
         <form action="/editor/delete/{{id}}" method="post">
-          <button type="submit">Delete</button>
+          <button class="btn btn-danger" type="submit">Delete</button>
         </form>
       {{/videofullpage}}
     </li>

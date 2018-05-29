@@ -46,6 +46,7 @@ button#save
 legend {
   width: auto;
   margin-left: 1em;
+  border: none;
 }
 
 fieldset {
@@ -56,6 +57,10 @@ fieldset {
 
 input {
   margin-bottom: 0.5em;
+}
+
+.ctrls {
+  margin-bottom: 1em;
 }
 
 .img-preview-thumb,
