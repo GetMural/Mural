@@ -1663,14 +1663,6 @@ article .part{
   min-height:100vh;
   position: relative;
 }
-article .part .background_gradient {
-  background:linear-gradient(to right, rgba(0,0,0,0.8) 0, rgba(0,0,0,0) 100%);
-  position:absolute;
-  top:0;
-  bottom:0;
-  width:100%;
-  z-index:2
-}
 
 article .header{font-weight:200;z-index:2;margin-bottom:2vh}
 article .header h1{margin:0;font-size:3em;line-height:1.4em}
@@ -1846,7 +1838,6 @@ article .part.no_gradient_background .slide_caption{background:none}article .par
   z-index:10;
   padding-top:80vh;
   font-size:1.4em;
-  background:linear-gradient(to bottom, rgba(0,0,0,0) 0, rgba(0,0,0,0.8) 100%);
 }
 
 .st-content-video .caption .button-container {
@@ -1921,7 +1912,6 @@ article .part.no_gradient_background .slide_caption{background:none}article .par
   padding:30px 30px 80px 30px;
   font-size:1.4em;
   z-index:9999;
-  background:linear-gradient(to top, rgba(0,0,0,0) 0, rgba(0,0,0,0.8) 100%);
 }
 
 .slideshow .caption span{
@@ -1946,7 +1936,6 @@ article .part.no_gradient_background .slide_caption{background:none}article .par
   z-index:10;
   padding:80px 30px 50px 30px;
   font-size:1.4em;
-  background:linear-gradient(to bottom, rgba(0,0,0,0) 0, rgba(0,0,0,0.8) 100%);
 }
 .slideshow-horizontal .credits{
   display:block;
@@ -1988,26 +1977,10 @@ article .part.no_gradient_background .slide_caption{background:none}article .par
 .blueimp-gallery>.next{font-family:Tahoma,Arial,sans-serif;font-size:70px;border:none;background:none}
 
 article .part.reverse_colors{background:#fff;color:#222}
-article .part.reverse_colors .background_gradient{
-  background:linear-gradient(to right, rgba(255,255,255,0.8) 0, rgba(255,255,255,0) 100%);
-}
 article .part.reverse_colors blockquote{border-color:#222}
-article .part.reverse_colors .caption{
-  background:linear-gradient(to top, rgba(255,255,255,0) 0, rgba(255,255,255,0.8) 100%);
-}
-article .part.reverse_colors .slide-caption{
-  background:linear-gradient(to bottom, rgba(255,255,255,0) 0, rgba(255,255,255,0.8) 100%);
-}
-article .part.text_align-right .background_gradient{
-  left:auto;
-  right:0;
-  background:linear-gradient(to left, rgba(0,0,0,0.8) 0, rgba(0,0,0,0) 100%)
-}
+
 article .part.text_align-right .header{text-align:right}
 article .part.text_align-right .text{float:right;text-align:justify;text-justify:inter-word}
-article .part.text_align-right.reverse_colors .background_gradient{
-  background:linear-gradient(to left, rgba(255,255,255,0.8) 0, rgba(255,255,255,0) 100%)
-}
 
 article .part.header_align-right .header-fullpage{text-align:right}
 article .part.header_align-center .header-fullpage{text-align:center}
