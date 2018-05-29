@@ -1,4 +1,3 @@
-var $ = jQuery;
 const itemEditor = $('#item-editor');
 
 itemEditor.on('click', '.js-Remove', function (e) {

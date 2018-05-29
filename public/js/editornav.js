@@ -1,5 +1,3 @@
-var $ = jQuery;
-// handle nav change event
 document.addEventListener('DOMContentLoaded', function () {
 
 	$('.js-Nav a').on('click', function (e) {
