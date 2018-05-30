@@ -1,11 +1,18 @@
 <div class="form-group">
-  <label class="control-label">Intro</label>
+  <label class="control-label" for="intro-area">Intro</label>
   <textarea id="intro-area" name="intro" class="form-control js-RichText" placeholder="No intro">{{{intro}}}</textarea>
 </div>
+
 <script>
-jQuery(document).ready(function($) {
-    new EasyEditor('#intro-area', {
-        buttons: ['bold', 'italic', 'link', 'h2', 'h3', 'h4', 'alignleft', 'aligncenter', 'alignright', 'quote', 'code', 'list', 'x']
-    });
+$('#intro-area').summernote({
+  toolbar: [
+    ['style', ['bold', 'italic', 'underline', 'clear']],
+    ['font', ['strikethrough', 'superscript', 'subscript']],
+    ['fontsize', ['fontsize']],
+    ['color', ['color']],
+    ['para', ['style', 'ul', 'ol', 'paragraph']],
+    ['height', ['height']],
+    ['tools', ['link', 'hr', 'codeview', 'undo', 'redo']]
+  ]
 });
 </script>

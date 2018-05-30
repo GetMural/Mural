@@ -1,8 +1,6 @@
 <fieldset class="js-SnippetImage js-Dynamic">
   <legend>Image</legend>
 
-	<a href="#" class="js-Remove">Remove</a>
-
     <div class="form-group">
         <label class="control-label">Align:</label>
         <select name="snippets[{{index}}][align]">
@@ -35,18 +33,27 @@
   </div>
 
   <div class="form-group">
-    <label class="control-label">Text</label>
-    <textarea id="snippet-img-text-{{index}}" name="snippets[{{index}}][text]" class="form-control js-RichText">{{text}}</textarea>
+    <label class="control-label" for="snippet-img-text-{{index}}">Text</label>
+    <textarea id="snippet-img-text-{{index}}" name="snippets[{{index}}][text]" class="form-control">{{text}}</textarea>
   </div>
+
+  <button type="button" class="js-Remove btn btn-danger pull-right">Delete</button>
 
 </fieldset>
 
 <script>
-jQuery(document).ready(function($) {
-    new EasyEditor('#snippet-img-text-{{index}}', {
-        buttons: ['bold', 'italic', 'link', 'h2', 'h3', 'h4', 'alignleft', 'aligncenter', 'alignright', 'quote', 'code', 'list', 'x']
-    });
-});
+  $('#snippet-img-text-{{index}}').summernote({
+    toolbar: [
+      // [groupName, [list of button]]
+      ['style', ['bold', 'italic', 'underline', 'clear']],
+      ['font', ['strikethrough', 'superscript', 'subscript']],
+      ['fontsize', ['fontsize']],
+      ['color', ['color']],
+      ['para', ['style', 'ul', 'ol', 'paragraph']],
+      ['height', ['height']],
+      ['tools', ['link', 'hr', 'codeview', 'undo', 'redo']]
+    ]
+  });
 
 (function() {
     const preview = document.getElementById('snippets-{{index}}-src-preview');
