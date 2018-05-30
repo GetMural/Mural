@@ -68,3 +68,12 @@ input {
   max-width: 250px;
   padding: 5px;
 }
+
+/*Needed to fix overlapping issue with font colour picker.*/
+.note-toolbar {
+  z-index: auto;
+}
+
+.note-editor .note-editing-area {
+  top: 8px;
+}
