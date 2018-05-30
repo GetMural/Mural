@@ -6,7 +6,10 @@
 
     {{#meta}}
 
-      {{> title}}
+      <div class="form-group">
+        <label for="title" class="control-label">Title</label>
+        <input name="title" type="text" class="form-control" value="{{title}}" />
+      </div>
 
       <div class="form-group">
         <label for="site_name" class="control-label">Site Name</label>
@@ -17,8 +20,6 @@
         <label for="site_img" class="control-label">Site Image (Full URI)</label>
         <input name="site_img" type="text" class="form-control" value="{{site_img}}" placeholder="https://..." />
       </div>
-
-      {{> subtitle}}
 
       <div class="form-group">
         <label for="author" class="control-label">Author</label>
@@ -32,7 +33,7 @@
 
       <div class="form-group">
         <label for="description" class="control-label">Description</label>
-        <textarea name="description" class="form-control js-RichText">{{description}}</textarea>
+        <textarea name="description" class="form-control">{{description}}</textarea>
       </div>
 
       <div class="form-group">
