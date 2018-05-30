@@ -4,11 +4,11 @@ document.addEventListener('DOMContentLoaded', function () {
 		var link = $(this).attr('href');
 		e.preventDefault();
 
-		$('#item-editor').load(link);
-        
-        $('body').animate({
-            scrollTop: $("#item-editor").offset().top - 50
-        }, 500);
+		$('#item-editor').load(link, function () {
+            $('body').animate({
+                scrollTop: $('#item-editor').offset().top - 50
+            }, 100);
+        });
 	});
 
     var el = document.getElementById('sortable-items');
