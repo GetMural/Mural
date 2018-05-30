@@ -1,4 +1,4 @@
-<form id="frm-item-editor" class="form-horizontal js-Meta" method="POST" action="/editor/page/meta" method="post">
+<form method="POST" action="/editor/page/meta" method="post">
 
   <h4>Meta Information</h4>
 
@@ -10,45 +10,39 @@
 
       <div class="form-group">
         <label for="site_name" class="control-label">Site Name</label>
-        <input name="site_name" data-name="site_name" type="text" class="form-control" value="{{#site_name}}{{site_name}}{{/site_name}}" />
+        <input name="site_name" type="text" class="form-control" value="{{site_name}}" />
       </div>
 
       <div class="form-group">
-        <label for="site_img" class="control-label">Site Image</label>
-        <input name="site_img" data-name="site_img" type="text" class="form-control" value="{{#site_img}}{{site_img}}{{/site_img}}" />
+        <label for="site_img" class="control-label">Site Image (Full URI)</label>
+        <input name="site_img" type="text" class="form-control" value="{{site_img}}" placeholder="https://..." />
       </div>
 
       {{> subtitle}}
 
       <div class="form-group">
         <label for="author" class="control-label">Author</label>
-        <input name="author" data-name="author"type="text" class="form-control" value="{{#author}}{{author}}{{/author}}" />
+        <input name="author" type="text" class="form-control" value="{{author}}" />
       </div>
 
       <div class="form-group">
         <label for="rsspingback" class="control-label">RSS Pingback</label>
-        <input name="rsspingback" data-name="rsspingback" type="text" class="form-control" value="{{#rsspingback}}{{rsspingback}}{{/rsspingback}}" />
+        <input name="rsspingback" type="text" class="form-control" value="{{rsspingback}}" />
       </div>
 
       <div class="form-group">
         <label for="description" class="control-label">Description</label>
-        <textarea name="description" data-name="description" class="form-control js-RichText">{{#description}}{{description}}{{/description}}</textarea>
+        <textarea name="description" class="form-control js-RichText">{{description}}</textarea>
       </div>
 
       <div class="form-group">
-        <label for="src" class="control-label">Src</label>
-        <input name="src" data-name="src" type="text" class="form-control src-input" value="{{#src}}{{src}}{{/src}}" />
+        <label for="src" class="control-label">Canonical URI</label>
+        <input name="src" type="text" class="form-control src-input" value="{{src}}" placeholder="https://..." />
       </div>
 
     {{/meta}}
 
-    <!--
-    share
-    facebook
-    twitter
-    -->
-
-    {{> formcontrols}}
-
   </fieldset>
+  {{> formcontrols}}
+
 </form>

@@ -19,18 +19,17 @@
       }
     }
   },
-  "author": "Pete Haughie",
+  "author": "Pete Haughie, Mark Lewis, Naomi Aro",
   "license": "LGPL",
   "dependencies": {
     "archiver": "^2.1.1",
     "better-npm-run": "^0.1.0",
     "blueimp-gallery": "^2.29.0",
     "body-parser": "~1.18.2",
-    "bootstrap": "^4.0.0",
+    "bootstrap": "^3.3.7",
     "connect-busboy": "0.0.2",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
-    "easyeditor": "^1.1.0",
     "electron": "^1.8.2",
     "express": "~4.15.5",
     "hogan-express": "^0.5.2",
@@ -39,13 +38,12 @@
     "json-fmt": "^1.1.2",
     "mkdirp": "^0.5.1",
     "morgan": "~1.9.0",
-    "npm": "^5.7.1",
-    "pouchdb": "^6.4.3",
     "rimraf": "^2.6.2",
     "scrollstory": "^1.0.0",
     "serve-favicon": "~2.4.5",
     "sortablejs": "^1.7.0",
     "stickybits": "^3.3.1",
+    "summernote": "^0.8.10",
     "vex-js": "^4.1.0"
   },
   "repository": {

@@ -5,9 +5,8 @@
   <link rel="stylesheet" type="text/css" href="/css/fonts.css" />
   <link rel="stylesheet" type="text/css" href="/css/icon.css" />
 
-  <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css" />
-  <link rel="stylesheet" href="/node_modules/easyeditor/src/easyeditor.css" />
-  <!-- load our custom styles last -->
+  <link rel="stylesheet" type="text/css" href="/node_modules/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="/node_modules/summernote/dist/summernote.css">
   <link rel="stylesheet" type="text/css" href="/css/editor.css" />
 </head>
 <body>
@@ -17,25 +16,29 @@
   <!-- TODO: click Storyboard Editor to hide/show nav-contrainer -->
   <h3>Storyboard Editor</h3>
   <div class="nav-container">
-    <div>
+    <div class="ctrls">
       <form method="post" action="/editor/add">
-        <select name="mediaType">
-          <option value="videobackground">Background Video</option>
-          <option value="videofullpage">Fullpage Video</option>
-          <option value="imageparallax">Image Parallax</option>
-          <option value="imageaudio">Image Audio</option>
-          <option value="imagebackground">Image Background</option>
-          <option value="slideshowvertical">Vertical Slideshow</option>
-          <option value="slideshowhorizontal">Horizontal Slideshow</option>
-          <option value="textcentred">Centred Text</option>
-        </select>
-        <button id="add-story-page" type="submit">Add</button>
+        <div class="input-group">
+          <select name="mediaType" class="form-control">
+            <option value="videobackground">Background Video</option>
+            <option value="videofullpage">Fullpage Video</option>
+            <option value="imageparallax">Image Parallax</option>
+            <option value="imageaudio">Image Audio</option>
+            <option value="imagebackground">Image Background</option>
+            <option value="slideshowvertical">Vertical Slideshow</option>
+            <option value="slideshowhorizontal">Horizontal Slideshow</option>
+            <option value="textcentred">Centred Text</option>
+          </select>
+          <span class="input-group-btn">
+            <button class="btn btn-primary" type="submit">Add!</button>
+          </span>
+        </div>
       </form>
     </div>
 
     {{> editornav}}
     <div>
-      <button disabled="disabled" id="reorder-save">Save Ordering</button>
+      <button class="btn btn-primary pull-right" disabled="disabled" id="reorder-save">Save Ordering</button>
     </div>
   </div>
 
@@ -50,7 +53,9 @@
   </div>
 
   <script type="text/javascript" src="/node_modules/jquery/dist/jquery.min.js"></script>
-  <script type="text/javascript" src="/node_modules/easyeditor/src/jquery.easyeditor.js"></script>
+  <script type="text/javascript" src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="/node_modules/summernote/dist/summernote.min.js"></script>
+
   <script type="text/javascript" src="/node_modules/sortablejs/Sortable.min.js"></script>
   <script type="text/javascript" src="/js/editornav.js"></script>
   <script type="text/javascript" src="/js/dynamic.js"></script>

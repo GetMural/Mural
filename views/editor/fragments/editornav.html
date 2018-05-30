@@ -1,75 +1,75 @@
-<ul class="js-Nav">
+<ul class="js-Nav list-group">
   {{#meta}}
-    <li>
+    <li class="list-group-item">
       <a href="/editor/page/meta">Meta Information{{#title}}: {{title}}{{/title}}</a>
     </li>
   {{/meta}}
 </ul>
-<ul id="sortable-items" class="js-Nav">
+<ul id="sortable-items" class="js-Nav list-group">
   {{#items}}
-    <li>
+    <li class="list-group-item">
       {{#imagebackground}}
         <a href="/editor/page/imagebackground/id/{{id}}">
-          Image Background{{#title}}: {{title}}{{/title}}
+          Image Background{{#title}}: {{{title}}}{{/title}}
         </a>
         <form action="/editor/delete/{{id}}" method="post">
-          <button type="submit">Delete</button>
+          <button class="btn btn-danger btn-xs" type="submit">Delete</button>
         </form>
       {{/imagebackground}}
       {{#imageaudio}}
         <a href="/editor/page/imageaudio/id/{{id}}">
-          Image Audio{{#title}}: {{title}}{{/title}}
+          Image Audio{{#title}}: {{{title}}}{{/title}}
         </a>
         <form action="/editor/delete/{{id}}" method="post">
-          <button type="submit">Delete</button>
+          <button class="btn btn-danger btn-xs" type="submit">Delete</button>
         </form>
       {{/imageaudio}}
   	  {{#imageparallax}}
         <a href="/editor/page/imageparallax/id/{{id}}">
-          Parallax Image{{#title}}: {{title}}{{/title}}
+          Parallax Image{{#title}}: {{{title}}}{{/title}}
         </a>
         <form action="/editor/delete/{{id}}" method="post">
-          <button type="submit">Delete</button>
+          <button class="btn btn-danger btn-xs" type="submit">Delete</button>
         </form>
       {{/imageparallax}}
       {{#slideshowhorizontal}}
         <a href="/editor/page/slideshowhorizontal/id/{{id}}">
-          Horizontal Slideshow{{#title}}: {{title}}{{/title}}
+          Horizontal Slideshow{{#title}}: {{{title}}}{{/title}}
         </a>
         <form action="/editor/delete/{{id}}" method="post">
-          <button type="submit">Delete</button>
+          <button class="btn btn-danger btn-xs" type="submit">Delete</button>
         </form>
       {{/slideshowhorizontal}}
   	  {{#slideshowvertical}}
         <a href="/editor/page/slideshowvertical/id/{{id}}">
-          Vertical Slideshow{{#title}}: {{title}}{{/title}}
+          Vertical Slideshow{{#title}}: {{{title}}}{{/title}}
         </a>
         <form action="/editor/delete/{{id}}" method="post">
-          <button type="submit">Delete</button>
+          <button class="btn btn-danger btn-xs" type="submit">Delete</button>
         </form>
       {{/slideshowvertical}}
       {{#textcentred}}
         <a href="/editor/page/textcentred/id/{{id}}">
-          Centred Text{{#title}}: {{title}}{{/title}}
+          Centred Text{{#title}}: {{{title}}}{{/title}}
         </a>
         <form action="/editor/delete/{{id}}" method="post">
-          <button type="submit">Delete</button>
+          <button class="btn btn-danger btn-xs" type="submit">Delete</button>
         </form>
       {{/textcentred}}
       {{#videobackground}}
         <a href="/editor/page/videobackground/id/{{id}}">
-          Background Video{{#title}}: {{title}}{{/title}}
+          Background Video{{#title}}: {{{title}}}{{/title}}
         </a>
         <form action="/editor/delete/{{id}}" method="post">
-          <button type="submit">Delete</button>
+          <button class="btn btn-danger btn-xs" type="submit">Delete</button>
         </form>
       {{/videobackground}}
       {{#videofullpage}}
         <a href="/editor/page/videofullpage/id/{{id}}">
-          Fullpage Video{{#title}}: {{title}}{{/title}}
+          Fullpage Video{{#title}}: {{{title}}}{{/title}}
         </a>
         <form action="/editor/delete/{{id}}" method="post">
-          <button type="submit">Delete</button>
+          <button class="btn btn-danger btn-xs" type="submit">Delete</button>
         </form>
       {{/videofullpage}}
     </li>

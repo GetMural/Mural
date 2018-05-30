@@ -1,6 +1,6 @@
-<form id="frm-item-editor" class="js-SlideshowHorizontal" action="/editor/page/slideshowhorizontal/id/{{id}}" method="post">
+<form action="/editor/page/slideshowhorizontal/id/{{id}}" method="post">
 
-  <h4>Slideshow Horizontal</h4>
+  <h4>Horizontal Slideshow</h4>
 
   {{#item}}
 
@@ -10,9 +10,8 @@
         <label for="title" class="control-label">Title</label>
         <input name="title" type="text" class="form-control" value="{{title}}" placeholder="No title"/>
       </div>
+      <button type="button" class="js-AddSlide btn btn-success pull-right">Add Slide [+]</button>
     </fieldset>
-
-    <a href="#" class="js-AddSlide">Slide [+]</a>
 
     <div class="js-ContentDynamic">
       {{#images}}

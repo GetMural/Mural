@@ -1,4 +1,4 @@
-<form id="frm-item-editor" class="js-SlideshowVertical" data-id="" action="/editor/page/slideshowvertical/id/{{id}}" method="post">
+<form action="/editor/page/slideshowvertical/id/{{id}}" method="post">
 
   <h4>Vertical Slideshow</h4>
 
@@ -10,9 +10,8 @@
         <label for="title" class="control-label">Title</label>
         <input name="title" type="text" class="form-control" value="{{title}}" placeholder="No title"/>
       </div>
+      <button type="button" class="js-AddSlide btn btn-success pull-right">Add Slide [+]</button>
     </fieldset>
-
-    <a href="#" class="js-AddSlide">Slide [+]</a>
 
     <div class="js-ContentDynamic">
       {{#images}}

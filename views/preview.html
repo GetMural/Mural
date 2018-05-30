@@ -67,7 +67,7 @@
       <nav>
         <ol>
           {{#nav}}
-            <li data-id="{{id}}">{{title}}</li>
+            <li data-id="{{id}}">{{{title}}}</li>
           {{/nav}}
         </ol>
       </nav>
@@ -106,10 +106,10 @@
                 <div class="col-sm-12 header-fullpage">
                   <div class="middle">
                   {{#title}}
-                    <h1>{{title}}</h1>
+                    <h1>{{{title}}}</h1>
                   {{/title}}
                   {{#subtitle}}
-                    <h2>{{subtitle}}</h2>
+                    <h2>{{{subtitle}}}</h2>
                   {{/subtitle}}
                   </div>
                 </div>
@@ -122,7 +122,6 @@
               </div>
               {{/text}}
             </div>
-            <div class="background_gradient"></div>
           </section>
         {{/imagebackground}}
 
@@ -152,7 +151,6 @@
             {{#image}}
               <div class="bg-image"></div>
             {{/image}}
-            <div class="background_gradient"></div>
           </section>
         {{/imageaudio}}
 
@@ -178,9 +176,9 @@
               <div class="content container" data-scroll-speed="-0.8">
                 <div class="row">
                   <div class="col-sm-12 header-fullpage">
-                    <h1>{{title}}</h1>
+                    <h1>{{{title}}}</h1>
                     {{#subtitle}}
-                      <h2>{{subtitle}}</h2>
+                      <h2>{{{subtitle}}}</h2>
                     {{/subtitle}}
                   </div>
                 </div>
@@ -257,10 +255,10 @@
                   <div class="row">
                     <div class="col-sm-12 header">
                       {{#title}}
-                        <h1>{{title}}</h1>
+                        <h1>{{{title}}}</h1>
                       {{/title}}
                       {{#subtitle}}
-                        <h2>{{subtitle}}</h2>
+                        <h2>{{{subtitle}}}</h2>
                       {{/subtitle}}
                     </div>
                   </div>
@@ -286,7 +284,6 @@
                   </div>
                 </div>
               </div>
-              <div class="background_gradient"></div>
           </section>
         {{/textcentred}}
 
@@ -314,10 +311,10 @@
                 <div class="col-sm-12 {{#format}}{{#fullpage}}header-fullpage{{/fullpage}}{{/format}}">
                   <div class="middle">
                   {{#title}}
-                    <h1>{{title}}</h1>
+                    <h1>{{{title}}}</h1>
                   {{/title}}
                   {{#subtitle}}
-                    <h2>{{subtitle}}</h2>
+                    <h2>{{{subtitle}}}</h2>
                   {{/subtitle}}
                   </div>
                 </div>
@@ -330,7 +327,6 @@
               </div>
               {{/text}}
             </div>
-
           </section>
         {{/videobackground}}
 
@@ -363,7 +359,7 @@
               <div class="button-container play"></div>
               <div class="button-container pause"></div>
               <div class="text">
-                <h3>{{title}}</h3>
+                <h3>{{{title}}}</h3>
                 {{{text}}}
               </div>
             </div>

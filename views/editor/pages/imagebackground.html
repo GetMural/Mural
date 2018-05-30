@@ -1,4 +1,4 @@
-<form id="frm-item-editor" class="js-ImageBackground" action="/editor/page/imagebackground/id/{{id}}" method="post">
+<form action="/editor/page/imagebackground/id/{{id}}" method="post">
 
   <h4>Image Background</h4>
 
@@ -7,42 +7,30 @@
     {{> fullpage}}
 
     <fieldset>
-
-        <!--
-          Nav Level
-          Nav Thumb
-        -->
-
       {{> title}}
-
       {{> subtitle}}
-
       {{> plaintext}}
-
     </fieldset>
 
     <fieldset>
-    {{#image}}
-      {{> imagesources}}
-    {{/image}}
+      {{#image}}
+        {{> imagesources}}
+      {{/image}}
 
-    {{^image}}
-      {{> imagesources}}
-    {{/image}}
-
+      {{^image}}
+        {{> imagesources}}
+      {{/image}}
     </fieldset>
 
     <fieldset>
+      {{#audio}}
+        {{> audiosources}}
+      {{/audio}}
 
-    {{#audio}}
-      {{> audiosources}}
-    {{/audio}}
-
-    {{^audio}}
-      {{> audiosources}}
-    {{/audio}}
-
-   </fieldset>
+      {{^audio}}
+        {{> audiosources}}
+      {{/audio}}
+    </fieldset>
 
   {{/item}}
 

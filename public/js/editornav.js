@@ -2,11 +2,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
 	$('.js-Nav a').on('click', function (e) {
 		var link = $(this).attr('href');
-
 		e.preventDefault();
-		e.stopPropagation();
 
-		$('#item-editor').load(link);
+		$('#item-editor').load(link, function () {
+            $('body').animate({
+                scrollTop: $('#item-editor').offset().top - 50
+            }, 100);
+        });
 	});
 
     var el = document.getElementById('sortable-items');

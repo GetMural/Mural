@@ -1,4 +1,4 @@
-<form id="frm-item-editor" class="js-TextCentred" action="/editor/page/textcentred/id/{{id}}" method="post">
+<form action="/editor/page/textcentred/id/{{id}}" method="post">
 
   <h4>Text Centred</h4>
 
@@ -12,24 +12,12 @@
       <input name="light" type="checkbox" {{#light}} checked{{/light}} />
     </div>
 
-    <div class="form-group">
-        <label class="control-label">Title</label>
-        <input name="title" type="text" class="form-control" value="{{title}}" placeholder="No title" />
-    </div>
-
+    {{> title}}
     {{> subtitle}}
-
     {{> intro}}
 
+    <button type="button" class="js-AddImage btn btn-success pull-right">Add Image [+]</button>
   </fieldset>
-
-  <legend>Content Blocks</legend>
-
-  <ul class="js-ContentBlockSelector">
-    <li>
-      <a href="#" class="js-AddImage">Image [+]</a>
-    </li>
-  </ul>
 
   <div class="js-ContentDynamic">
     {{#snippets}}

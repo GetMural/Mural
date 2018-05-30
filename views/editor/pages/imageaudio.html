@@ -1,37 +1,32 @@
-<form id="frm-item-editor" class="js-Audio" action="/editor/page/imageaudio/id/{{id}}" method="post">
+<form action="/editor/page/imageaudio/id/{{id}}" method="post">
 
   <h4>Image Audio</h4>
 
   {{#item}}
 
     <fieldset>
-
       {{> title}}
-
     </fieldset>
 
     <fieldset>
-    {{#image}}
-      {{> imagesources}}
-    {{/image}}
+      {{#image}}
+        {{> imagesources}}
+      {{/image}}
 
-    {{^image}}
-      {{> imagesources}}
-    {{/image}}
-
+      {{^image}}
+        {{> imagesources}}
+      {{/image}}
     </fieldset>
 
     <fieldset>
+      {{#audio}}
+        {{> audiosources}}
+      {{/audio}}
 
-    {{#audio}}
-      {{> audiosources}}
-    {{/audio}}
-
-    {{^audio}}
-      {{> audiosources}}
-    {{/audio}}
-
-   </fieldset>
+      {{^audio}}
+        {{> audiosources}}
+      {{/audio}}
+     </fieldset>
 
   {{/item}}
 

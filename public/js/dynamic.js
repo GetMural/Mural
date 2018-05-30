@@ -21,6 +21,10 @@ function addDynamic(template, name, index) {
   const fragment = `/editor/fragment/${template}?index=${index}`;
   $(el).load(fragment, function () {
     itemEditor.find('.js-ContentDynamic').append($(el).html());
+
+    $('body').animate({
+      scrollTop: $(".js-Dynamic").last().offset().top - 50
+    }, 100);
   });
 }
 

@@ -1,11 +1,19 @@
 <div>
-  <label for="text" class="control-label">Text</label>
-  <textarea id="plaintext-area" name="text" class="form-control js-RichText" data-name="text" placeholder="No text">{{#text}}{{text}}{{/text}}</textarea>
+  <label for="rich_text" class="control-label">Text</label>
+  <textarea id="rich_text" name="text" class="form-control" placeholder="No text">{{text}}</textarea>
 </div>
+
 <script>
-jQuery(document).ready(function($) {
-    new EasyEditor('#plaintext-area', {
-        buttons: ['bold', 'italic', 'link', 'h2', 'h3', 'h4', 'alignleft', 'aligncenter', 'alignright', 'quote', 'code', 'list', 'x']
+    $('#rich_text').summernote({
+      toolbar: [
+        // [groupName, [list of button]]
+        ['style', ['bold', 'italic', 'underline', 'clear']],
+        ['font', ['strikethrough', 'superscript', 'subscript']],
+        ['fontsize', ['fontsize']],
+        ['color', ['color']],
+        ['para', ['style', 'ul', 'ol', 'paragraph']],
+        ['height', ['height']],
+        ['tools', ['link', 'hr', 'codeview', 'undo', 'redo']]
+      ]
     });
-});
 </script>

@@ -46,6 +46,7 @@ button#save
 legend {
   width: auto;
   margin-left: 1em;
+  border: none;
 }
 
 fieldset {
@@ -58,8 +59,21 @@ input {
   margin-bottom: 0.5em;
 }
 
+.ctrls {
+  margin-bottom: 1em;
+}
+
 .img-preview-thumb,
 .video-preview-thumb {
   max-width: 250px;
   padding: 5px;
+}
+
+/*Needed to fix overlapping issue with font colour picker.*/
+.note-toolbar {
+  z-index: auto;
+}
+
+.note-editor .note-editing-area {
+  top: 8px;
 }
