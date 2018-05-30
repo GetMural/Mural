@@ -11,9 +11,12 @@ var preferences = new Prefernces(path.join(__dirname, '../data/preferences.json'
 /* GET home page. */
 router.get('/', function (req, res) {
     fs.readdir(path.join(__dirname, "../data/stories/"), function (err, files) {
+        const storyFiles = files.filter((name) => {
+            return /\.json$/.test(name);
+        });
         const jsonFiles = [];
         preferences.readFile(null, function(err, data) {
-            files.forEach(function (file) {
+            storyFiles.forEach(function (file) {
                 if (file !== data.storyboard) {
                     jsonFiles.push({'name':file});
                 }
