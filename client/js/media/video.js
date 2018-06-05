@@ -49,6 +49,8 @@ function prepareVideo (scrollStory, $el, id, srcs, attrs) {
   const video = document.createElement('video');
   video.poster = attrs.poster;
   video.preload = 'auto';
+  video.setAttribute('webkit-playsinline', '');
+  video.setAttribute('playsinline', '');
   MEDIA[id] = video;
   DATA[id] = {};
 

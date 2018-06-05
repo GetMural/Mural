@@ -13133,6 +13133,8 @@ function prepareVideo(scrollStory, $el, id, srcs, attrs) {
   var video = document.createElement('video');
   video.poster = attrs.poster;
   video.preload = 'auto';
+  video.setAttribute('webkit-playsinline', '');
+  video.setAttribute('playsinline', '');
   MEDIA[id] = video;
   DATA[id] = {};
   var canPlayThrough = mediaUtils.canPlayThroughPromise(video, srcs);
