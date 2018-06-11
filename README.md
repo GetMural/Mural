@@ -22,7 +22,22 @@ Once a Mural story is ready to be published, the user clicks the 'Download' butt
 
 ## Installation and running the app
 
+**Pre-compiled binaries are available:**
+
+**Ubuntu Linux:** https://www.getmural.io/Mural-Ubuntu-0.2.5.gz
+
+**Windows 64bit:** https://www.getmural.io/Mural-0.2.5-win32-x64.zip
+
+**Windows 32bit:** https://www.getmural.io/Mural-0.2.5-win32-ia32.zip
+
+**Mac OSX:** https://www.getmural.io/Mural-Ubuntu-0.2.5.gz
+
+
+
+**Compiling from source:**
+
 So far it's as easy as `npm install` but you'll also need to have a global installation of https://github.com/electron/electron and https://github.com/electron-userland/electron-packager to build the app.
+
 
 ## Build dist index.html
 
