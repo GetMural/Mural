@@ -1,24 +1,24 @@
-# Storyteller Standalone
+# Mural
 
-An attempt at creating a simple to use interface for the Storyteller long-form storytelling project as created and funded by Sourcefabric.
+Mural is a tool for visual storytelling. It’s a program that helps you sequence your visual story, and then generates everything needed for that story to be displayed on most modern web browsers and served from any web server.
 
-## Dashboard
+You can see the way your story will look, test out all of the elements, and make changes if necessary before it’s uploaded to the web.
 
-The dashboard should be able to create entries from scratch or be able to populate fields from an existing Storyteller project.
+When a story is made with Mural, its visual elements are displayed at full screen by default, letting the strength and richness of your work shine through. Images can be combined with sound, videos combined with text, and numerous other combinations are possible.
 
-Each type of possible storyteller entry should be catered for. MVP should be a single type.
+Mural uses the metaphor of a storyboard to lay out the different elements of your story. With Mural, you can easily rearrange the sequence of the different items that make up your story.
 
-So far the Storyteller editor supports the following types:
+You don’t have to know how to code in order to use Mural. But if you do know how to code, you’ll appreciate being able to go into the web standard code that Mural generates and make the changes you want using standard tools.
 
-* Full page video background
-* The text centred
-* Image Background
-* Slideshow Horizontal
-* Video Full Page
+Funding for Mural was provided in Round 3 of Google’s Digital News Initiative Prototype Fund.
+
+Mural is released as open source under the GNU Affero General Public License. See Appendix 2 for the text of this license.
+
+Mural is written in NodeJS and uses Electron. 
 
 ## Site Output
 
-On site generation the build process should copy the contents of the src folder, story json (for sharing and editing after the fact), images, video, and audio (no idea yet) ~~along with the php (urgh)~~ and js files to a new folder in sites with the name of the project.  
+Once a Mural story is ready to be published, the user clicks the 'Download' button and the program sends a .ZIP file which contains all the files needed to publish the story on a standard web server (HTML, CSS, JavaScript and media files, in addition to the JSON file used by Mural internally). 
 
 ## Installation and running the app
 
