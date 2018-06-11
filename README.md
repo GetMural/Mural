@@ -22,7 +22,7 @@ Once a Mural story is ready to be published, the user clicks the 'Download' butt
 
 ## Installation and running the app
 
-So far it's as easy as `npm install` but you'll also need to have a global installation of ![cordova](https://cordova.apache.org/) to build the app outside of the context of the browser.
+So far it's as easy as `npm install` but you'll also need to have a global installation of ![electron (https://github.com/electron/electron)] and ![electron-packager (https://github.com/electron-userland/electron-packager) to build the app.
 
 ## Build dist index.html
 
