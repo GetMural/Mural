@@ -1,4 +1,4 @@
-# Contributing to Draft.js
+# Contributing to Mural
 We want to make contributing to this project as easy and transparent as
 possible.
 
