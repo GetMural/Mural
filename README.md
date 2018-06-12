@@ -14,7 +14,9 @@ Funding for Mural was provided in Round 3 of Google’s Digital News Initiative 
 
 Mural is released as open source under the GNU Affero General Public License. See Appendix 2 for the text of this license.
 
-Mural is written in NodeJS and uses Electron. 
+Mural is written in NodeJS and uses Electron.
+
+An end-user manual is available here: https://www.getmural.io/Mural_0.2.5_manual.pdf
 
 ## Site Output
 
