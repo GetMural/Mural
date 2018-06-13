@@ -32,7 +32,7 @@ Once a Mural story is ready to be published, the user clicks the 'Download' butt
 
 **Windows 32bit:** https://www.getmural.io/Mural-0.2.5-win32-ia32.zip
 
-**Mac OSX:** https://www.getmural.io/Mural-Ubuntu-0.2.5.gz
+**Mac OSX:** https://www.getmural.io/Mural-OSX-x64-0.2.5.zip
 
 
 
