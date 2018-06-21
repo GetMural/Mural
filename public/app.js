@@ -9201,6 +9201,27 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 "use strict";
 
 
+var $ = __webpack_require__(0);
+
+var FADE_DURATION = 500;
+
+function fadeout(media) {
+  $(media).animate({
+    volume: 0
+  }, FADE_DURATION, function () {
+    media.pause();
+  });
+}
+
+function fadein(media) {
+  media.volume = 0;
+  var playPromise = media.play();
+  $(media).animate({
+    volume: 1
+  }, FADE_DURATION);
+  return playPromise;
+}
+
 function canPlayThroughPromise(media, srcs) {
   return new Promise(function (resolve, reject) {
     function canPlayThrough() {
@@ -9249,7 +9270,9 @@ function canPlayThroughPromise(media, srcs) {
 }
 
 module.exports = {
-  canPlayThroughPromise: canPlayThroughPromise
+  canPlayThroughPromise: canPlayThroughPromise,
+  fadeout: fadeout,
+  fadein: fadein
 };
 
 /***/ }),
@@ -13095,10 +13118,10 @@ function stopVideo(id) {
 
   if (DATA[id].playPromise) {
     DATA[id].playPromise.then(function () {
-      video.pause();
+      mediaUtils.fadeout(video);
     });
   } else {
-    video.pause();
+    mediaUtils.fadeout(video);
   }
 }
 
@@ -13108,7 +13131,7 @@ function playBackgroundVideo(id, attrs) {
   video.muted = attrs.muted;
 
   if (!DATA[id].paused && attrs.autoplay || DATA[id].playTriggered && !DATA[id].paused) {
-    DATA[id].playPromise = video.play();
+    DATA[id].playPromise = mediaUtils.fadein(video);
   }
 }
 
@@ -13140,7 +13163,7 @@ function prepareVideo(scrollStory, $el, id, srcs, attrs) {
   var canPlayThrough = mediaUtils.canPlayThroughPromise(video, srcs);
   $el.find('.video-container').html(video);
   $el.find('.play').click(function () {
-    DATA[id].playPromise = video.play();
+    DATA[id].playPromise = mediaUtils.fadein(video);
     DATA[id].paused = false;
     DATA[id].playTriggered = true;
     $(this).hide();
@@ -13275,10 +13298,10 @@ function stopAudio(id) {
 
   if (DATA[id].playPromise) {
     DATA[id].playPromise.then(function () {
-      audio.pause();
+      mediaUtils.fadeout(audio);
     });
   } else {
-    audio.pause();
+    mediaUtils.fadeout(audio);
   }
 }
 
@@ -13305,7 +13328,7 @@ function setMuted(id, muted) {
 function playBackgroundAudio(id, attrs) {
   var audio = MEDIA[id];
   audio.muted = attrs.muted;
-  DATA[id].playPromise = audio.play();
+  DATA[id].playPromise = mediaUtils.fadein(audio);
 }
 
 module.exports = {

@@ -8,10 +8,10 @@ function stopAudio(id) {
 
   if (DATA[id].playPromise) {
     DATA[id].playPromise.then(() => {
-      audio.pause();
+      mediaUtils.fadeout(audio);
     });
   } else {
-    audio.pause();
+    mediaUtils.fadeout(audio);
   }
 }
 
@@ -40,7 +40,7 @@ function setMuted (id, muted) {
 function playBackgroundAudio (id, attrs) {
   const audio = MEDIA[id];
   audio.muted = attrs.muted;
-  DATA[id].playPromise = audio.play();
+  DATA[id].playPromise = mediaUtils.fadein(audio);
 }
 
 module.exports = {
