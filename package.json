@@ -5,7 +5,7 @@
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "clean": "rm -rf ./public/dist/index.html",
+    "clean": "rm -rf ./public/dist/index.html && rm ./public/app*",
     "build": "npm run clean && npm run build:client",
     "build:client": "webpack",
     "webpack:server": "webpack-dev-server --content-base public/ --colors --host 0.0.0.0 --port 8081 --inline",
@@ -65,6 +65,8 @@
     "svg-loader": "0.0.2",
     "watch": "^1.0.2",
     "webpack": "^3.11.0",
-    "webpack-dev-server": "^2.9.7"
+    "webpack-dev-server": "^2.9.7",
+    "webpack-manifest-plugin": "^2.0.3",
+    "webpack-md5-hash": "0.0.6"
   }
 }

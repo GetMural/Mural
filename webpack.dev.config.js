@@ -1,10 +1,8 @@
 const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const ManifestPlugin = require('webpack-manifest-plugin');
-const WebpackMd5Hash = require('webpack-md5-hash');
 
 const extractSass = new ExtractTextPlugin({
-  filename: "[name].[contenthash].css"
+  filename: "[name].css"
 });
 
 module.exports = {
@@ -12,9 +10,10 @@ module.exports = {
     app: path.resolve(__dirname, 'client', 'js', 'app.js')
   },
   output: {
-    filename: "[name].[chunkhash].js",
+    filename: "[name].js",
     path: path.resolve(__dirname, 'public')
   },
+  devtool: 'source-map',
   module: {
     rules: [
       {
@@ -29,13 +28,13 @@ module.exports = {
                 // See https://github.com/webpack-contrib/css-loader#url
                 url: false,
                 minimize: true,
-                sourceMap: false
+                sourceMap: true
               }
             }, 
             {
               loader: 'sass-loader',
               options: {
-                sourceMap: false,
+                sourceMap: true,
                 includePaths: [
                   path.resolve(__dirname, 'node_modules'),
                   path.resolve(__dirname, 'client', 'css')
@@ -69,8 +68,6 @@ module.exports = {
     ]
   },
   plugins: [
-    extractSass,
-    new ManifestPlugin(),
-    new WebpackMd5Hash()
+    extractSass
   ]
 };
