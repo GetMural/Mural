@@ -1,3 +1,20 @@
+const $ = require('jquery');
+const FADE_DURATION = 500;
+
+function fadeout(media) {
+  $(media).animate({volume: 0}, FADE_DURATION, function() {
+    media.pause();
+  });
+}
+
+function fadein(media) {
+  media.volume = 0;
+  const playPromise = media.play();
+  $(media).animate({volume: 1}, FADE_DURATION);
+
+  return playPromise;
+}
+
 function canPlayThroughPromise(media, srcs) {
   return new Promise(function(resolve, reject) {
     function canPlayThrough() {
@@ -47,5 +64,7 @@ function canPlayThroughPromise(media, srcs) {
 
 
 module.exports = {
-  canPlayThroughPromise
+  canPlayThroughPromise,
+  fadeout,
+  fadein
 };

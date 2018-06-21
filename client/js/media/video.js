@@ -9,10 +9,10 @@ function stopVideo(id) {
 
   if (DATA[id].playPromise) {
     DATA[id].playPromise.then(() => {
-      video.pause();
+      mediaUtils.fadeout(video);
     });
   } else {
-    video.pause();
+    mediaUtils.fadeout(video);
   }
 }
 
@@ -24,7 +24,7 @@ function playBackgroundVideo (id, attrs) {
 
   if ((!DATA[id].paused && attrs.autoplay) ||
       (DATA[id].playTriggered && !DATA[id].paused)) {
-    DATA[id].playPromise = video.play();
+    DATA[id].playPromise = mediaUtils.fadein(video);
   }
 }
 
@@ -59,7 +59,7 @@ function prepareVideo (scrollStory, $el, id, srcs, attrs) {
   $el.find('.video-container').html(video);
 
   $el.find('.play').click(function() {
-    DATA[id].playPromise = video.play();
+    DATA[id].playPromise = mediaUtils.fadein(video);
     DATA[id].paused = false;
     DATA[id].playTriggered = true;
     $(this).hide();
