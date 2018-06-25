@@ -1,7 +1,11 @@
 var express = require('express');
+const path = require('path');
 var router = express.Router();
 var Storyboard = require('../models/storyboard');
 var storyboard = new Storyboard();
+
+const PUBLIC_FOLDER = path.resolve(__dirname, '..', 'public');
+const MANIFEST = require(path.resolve(PUBLIC_FOLDER, 'manifest'));
 
 router.get('/', function (req, res, next) {
     // TODO: refactor this to use storyboard model
@@ -15,6 +19,10 @@ router.get('/', function (req, res, next) {
             nav: data.nav,
             items: data.items,
             meta: data.meta,
+            manifest: {
+                js: MANIFEST['app.js'],
+                css: MANIFEST['app.css']
+            },
             partials: {
                 fb: 'partials/fb',
                 head: 'partials/head',
