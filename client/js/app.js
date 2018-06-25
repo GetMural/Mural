@@ -343,7 +343,7 @@ Promise.all(LOAD_PROMISES).then(() => {
   let overlay = document.getElementById('loading_overlay');
   let playStart = document.createElement('img');
   playStart.classList.add('play-start');
-  playStart.src = "img/play.svg";
+  playStart.src = "img/play.png";
 
   let text = overlay.querySelector('.loading-text');
   text.innerHTML = "Click to Start";

@@ -2011,7 +2011,7 @@ article .part.box_text p{background:rgba(0,0,0,0.3);display:inline}
   top: 0;
   background: white;
   text-align: center;
-  color: black;
+  color: white;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -2028,4 +2028,15 @@ article .part.box_text p{background:rgba(0,0,0,0.3);display:inline}
 
 .play-start {
   cursor: pointer;
+}
+
+.opacity-pane {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: black;
+  z-index: -1;
+  opacity: 0.5;
 }

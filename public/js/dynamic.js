@@ -39,7 +39,14 @@ function updateIndices(prefix) {
 
 itemEditor.on('change', '.src-input', function () {
   var previewImg = '#' + $(this).data('for').replace('[\[\]]', '-') + '-preview';
-  $(previewImg).attr('src', $(this).val());
+  var path = $(this).val();
+
+  // and add a thumbnail to the preview
+  if (/^uploads\//.test(path)) {
+    $(previewImg).attr('src', `/${path}`);
+  } else {
+    $(previewImg).attr('src', `${path}`);
+  }
 });
 
 itemEditor.on('change', '.fileupload-input', function (){

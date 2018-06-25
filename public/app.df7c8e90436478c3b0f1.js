@@ -9593,7 +9593,7 @@ Promise.all(LOAD_PROMISES).then(function () {
   var overlay = document.getElementById('loading_overlay');
   var playStart = document.createElement('img');
   playStart.classList.add('play-start');
-  playStart.src = "img/play.svg";
+  playStart.src = "img/play.png";
   var text = overlay.querySelector('.loading-text');
   text.innerHTML = "Click to Start";
   overlay.appendChild(playStart);
