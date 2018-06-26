@@ -1759,10 +1759,15 @@ article .part.no_gradient_background .slide_caption{background:none}article .par
   ol {
     overflow: auto;
     list-style-type: decimal;
+    height: 100%;
   }
 }
 
-.longform .nav nav{margin:60px 0 10px}.longform .nav nav>ul>li:first-child>a{padding-left:10px}.longform .nav nav ul{float:left;margin:0;padding:0}.longform .nav nav ul li:hover ul{display:block}.longform .nav nav ul li ul.active{display:block !important}.longform .nav nav ul ul{display:none;position:absolute;top:0px;right:149px;width:215px;background:rgba(85,85,85,0.95);font-weight:300}.longform .nav nav ul ul li a{padding-left:20px;float:none}.longform .nav nav ul ul li a:hover,.longform .nav nav ul ul li a.active{background:rgba(255,255,255,0.1)}.longform .nav nav ul ul figure{margin-bottom:0px}.longform .nav nav ul ul figure a{padding:0px}
+.longform .nav nav{
+  margin:60px 0 10px;
+  height: 100%;
+}
+.longform .nav nav>ul>li:first-child>a{padding-left:10px}.longform .nav nav ul{float:left;margin:0;padding:0}.longform .nav nav ul li:hover ul{display:block}.longform .nav nav ul li ul.active{display:block !important}.longform .nav nav ul ul{display:none;position:absolute;top:0px;right:149px;width:215px;background:rgba(85,85,85,0.95);font-weight:300}.longform .nav nav ul ul li a{padding-left:20px;float:none}.longform .nav nav ul ul li a:hover,.longform .nav nav ul ul li a.active{background:rgba(255,255,255,0.1)}.longform .nav nav ul ul figure{margin-bottom:0px}.longform .nav nav ul ul figure a{padding:0px}
 .longform .nav nav li{
   position:relative;
   line-height:1.8em;
