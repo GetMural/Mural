@@ -1671,17 +1671,29 @@ article .header-fullpage{font-weight:200;height:100vh;margin:-10vh auto 0 auto;d
 article .header-fullpage .middle{vertical-align:bottom;display:table-cell;padding-bottom:10vw}
 
 article .header-fullpage h1{
+  font-size:2.5em;
+  line-height:1.4em;
   margin:0;
   margin-bottom:10px;
-  font-size:5em;
-  line-height:1.2em
 }
 
 article .header-fullpage h2{
-  margin:0;
-  font-size:2.2em;
+  font-size:1.5em;
   line-height:1.2em;
-  font-weight:300
+  margin:0;
+  font-weight:300;
+}
+
+@media (min-width:475px){
+  article .header-fullpage h1{
+    font-size:5em;
+    line-height:1.2em
+  }
+
+  article .header-fullpage h2{
+    font-size:2.2em;
+    line-height:1.2em;
+  }
 }
 
 article a.nextPart{display:inline-block;padding:3px 6px;background:#222;color:#fff}
@@ -1759,10 +1771,15 @@ article .part.no_gradient_background .slide_caption{background:none}article .par
   ol {
     overflow: auto;
     list-style-type: decimal;
+    height: 100%;
   }
 }
 
-.longform .nav nav{margin:60px 0 10px}.longform .nav nav>ul>li:first-child>a{padding-left:10px}.longform .nav nav ul{float:left;margin:0;padding:0}.longform .nav nav ul li:hover ul{display:block}.longform .nav nav ul li ul.active{display:block !important}.longform .nav nav ul ul{display:none;position:absolute;top:0px;right:149px;width:215px;background:rgba(85,85,85,0.95);font-weight:300}.longform .nav nav ul ul li a{padding-left:20px;float:none}.longform .nav nav ul ul li a:hover,.longform .nav nav ul ul li a.active{background:rgba(255,255,255,0.1)}.longform .nav nav ul ul figure{margin-bottom:0px}.longform .nav nav ul ul figure a{padding:0px}
+.longform .nav nav{
+  margin:60px 0 10px;
+  height: 90%;
+}
+.longform .nav nav>ul>li:first-child>a{padding-left:10px}.longform .nav nav ul{float:left;margin:0;padding:0}.longform .nav nav ul li:hover ul{display:block}.longform .nav nav ul li ul.active{display:block !important}.longform .nav nav ul ul{display:none;position:absolute;top:0px;right:149px;width:215px;background:rgba(85,85,85,0.95);font-weight:300}.longform .nav nav ul ul li a{padding-left:20px;float:none}.longform .nav nav ul ul li a:hover,.longform .nav nav ul ul li a.active{background:rgba(255,255,255,0.1)}.longform .nav nav ul ul figure{margin-bottom:0px}.longform .nav nav ul ul figure a{padding:0px}
 .longform .nav nav li{
   position:relative;
   line-height:1.8em;
@@ -2011,7 +2028,7 @@ article .part.box_text p{background:rgba(0,0,0,0.3);display:inline}
   top: 0;
   background: white;
   text-align: center;
-  color: black;
+  color: white;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -2028,4 +2045,15 @@ article .part.box_text p{background:rgba(0,0,0,0.3);display:inline}
 
 .play-start {
   cursor: pointer;
+}
+
+.opacity-pane {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: black;
+  z-index: -1;
+  opacity: 0.5;
 }

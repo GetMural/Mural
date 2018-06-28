@@ -50,7 +50,9 @@
   </head>
 
   <body class="longform" name="top">
-    <div id="loading_overlay" class="loading">
+    <div id="loading_overlay" class="loading" {{#meta}}{{#site_img}} style="background-image:url('{{site_img}}');background-position:center center;background-size:cover;" {{/site_img}}{{/meta}}>
+      <div class="opacity-pane"></div>
+
       <img src="img/logo.svg" alt="Mural is Loading...">
       <h3>{{#meta}}{{title}}{{/meta}}</h3>
       <div class="loading-text">LOADING...</div>
@@ -105,7 +107,7 @@
             {{/image}}
             <div class="content container-fluid">
               <div class="row">
-                <div class="col-sm-12 header-fullpage">
+                <div class="col-sm-12 {{#format}}{{#fullpage}}header-fullpage{{/fullpage}}{{/format}}">
                   <div class="middle">
                   {{#title}}
                     <h1>{{{title}}}</h1>
