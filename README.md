@@ -26,15 +26,13 @@ Once a Mural story is ready to be published, the user clicks the 'Download' butt
 
 **Pre-compiled binaries are available:**
 
-**Ubuntu Linux:** https://www.getmural.io/Mural-Ubuntu-0.2.5.gz
+**Windows 64bit:** https://www.getmural.io/Mural_0.2.6-win32-x64.zip
 
-**Windows 64bit:** https://www.getmural.io/Mural-0.2.5-win32-x64.zip
+**Windows 32bit:** https://www.getmural.io/Mural_0.2.6-win32-ia32.zip
 
-**Windows 32bit:** https://www.getmural.io/Mural-0.2.5-win32-ia32.zip
+**Mac OSX:** https://www.getmural.io/Mural_0.2.6-mac.zip
 
-**Mac OSX:** https://www.getmural.io/Mural-OSX-x64-0.2.5.zip
-
-
+Linux builds are coming soon.
 
 **Compiling from source:**
 
