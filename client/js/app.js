@@ -184,6 +184,10 @@ function loadItem (item) {
         {
           type: 'video/webm',
           src: item.data.webm
+        },
+        {
+          type: 'application/vnd.apple.mpegurl',
+          src: item.data.hsl
         }
       ],
       getVideoAttrs(item)
