@@ -22,7 +22,8 @@ function prepareAudio (id, srcs) {
   audio.loop = true;
   audio.preload = 'auto';
 
-  const canPlayThrough = mediaUtils.canPlayThroughPromise(audio, srcs);
+  const sources = srcs.filter(src => src.src !== undefined);
+  const canPlayThrough = mediaUtils.canPlayThroughPromise(audio, sources);
   audio.load();
 
   return canPlayThrough;

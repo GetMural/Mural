@@ -8,8 +8,9 @@
     "clean": "rm -rf ./public/dist/index.html && rm ./public/app*",
     "build": "npm run clean && npm run build:client",
     "build:client": "webpack",
+    "build:dev": "webpack --config webpack.dev.config.js",
     "webpack:server": "webpack-dev-server --content-base public/ --colors --host 0.0.0.0 --port 8081 --inline",
-    "dev": "bnr dev"
+    "dev": "npm run clean && npm run build:dev"
   },
   "betterScripts": {
     "dev": {
@@ -32,6 +33,7 @@
     "debug": "~2.6.9",
     "electron": "^1.8.2",
     "express": "~4.15.5",
+    "hls.js": "^0.10.1",
     "hogan-express": "^0.5.2",
     "ismobilejs": "^0.4.1",
     "jquery": "^3.2.1",

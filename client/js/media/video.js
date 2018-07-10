@@ -1,8 +1,11 @@
 const $ = require('jquery');
 const mediaUtils = require('./media');
+const Hls = require('hls.js');
 
 const MEDIA = [];
 const DATA = [];
+
+const HSL_TYPE = 'application/vnd.apple.mpegurl';
 
 function stopVideo(id) {
   const video = MEDIA[id];
@@ -53,8 +56,31 @@ function prepareVideo (scrollStory, $el, id, srcs, attrs) {
   video.setAttribute('playsinline', '');
   MEDIA[id] = video;
   DATA[id] = {};
+  let canPlayThrough
 
-  const canPlayThrough = mediaUtils.canPlayThroughPromise(video, srcs);
+  const sources = srcs.filter(src => src.src !== undefined);
+  const hslSource = sources.filter(src => src.type === HSL_TYPE)[0];
+  const normalSources = sources.filter(src => src.type !== HSL_TYPE);
+
+  if (hslSource && Hls.isSupported()) {
+    canPlayThrough = new Promise(function(resolve, reject) {
+      const hls = new Hls();
+        hls.loadSource(hslSource.src);
+        hls.attachMedia(video);
+        hls.on(Hls.Events.MANIFEST_PARSED,function() {
+          resolve();
+        });
+    });
+  } else if (video.canPlayType(HSL_TYPE)) {
+    canPlayThrough = new Promise(function(resolve, reject) {
+      video.src = hslSource.src;
+      video.addEventListener('loadedmetadata',function() {
+        resolve();
+      });
+    });
+  } else {
+    canPlayThrough = mediaUtils.canPlayThroughPromise(video, normalSources);
+  }
 
   $el.find('.video-container').html(video);
 
