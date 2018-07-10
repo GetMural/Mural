@@ -187,7 +187,7 @@ function loadItem (item) {
         },
         {
           type: 'application/vnd.apple.mpegurl',
-          src: item.data.hsl
+          src: item.data.hls
         }
       ],
       getVideoAttrs(item)
