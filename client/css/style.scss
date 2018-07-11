@@ -1667,32 +1667,36 @@ article .part{
 article .header{font-weight:200;z-index:2;margin-bottom:2vh}
 article .header h1{margin:0;font-size:3em;line-height:1.4em}
 article .header h2{margin:0;font-size:1.6em;line-height:1.2em;font-style:italic}
-article .header-fullpage{font-weight:200;height:100vh;margin:-10vh auto 0 auto;display:table}
-article .header-fullpage .middle{vertical-align:bottom;display:table-cell;padding-bottom:10vw}
+article .header-fullpage {font-weight: 200; height: 100vh; margin: -10vh auto 0 auto; display: table;}
+article .header-fullpage .middle { vertical-align: bottom; display: table-cell; padding-bottom: 10vw;}
 
 article .header-fullpage h1{
   font-size:2.5em;
-  line-height:1.4em;
   margin:0;
   margin-bottom:10px;
+  line-height:1.4em;
+  text-align: center;
 }
 
-article .header-fullpage h2{
+article .header-fullpage h2 {
   font-size:1.5em;
+  font-weight:300;
   line-height:1.2em;
   margin:0;
-  font-weight:300;
+  text-align: center;
 }
 
 @media (min-width:475px){
-  article .header-fullpage h1{
+  article .header-fullpage h1 {
     font-size:5em;
-    line-height:1.2em
+    line-height:1.2em;
+    text-align: left;
   }
 
-  article .header-fullpage h2{
+  article .header-fullpage h2 {
     font-size:2.2em;
     line-height:1.2em;
+    text-align: left;
   }
 }
 
@@ -1712,7 +1716,7 @@ s{text-decoration:line-through}
   max-width: 100%;
 }
 
-.cms-image figcaption{ 
+.cms-image figcaption{
   display:block;
   text-align:left;
   padding:6px 8px;
@@ -1866,8 +1870,8 @@ article .part.no_gradient_background .slide_caption{background:none}article .par
 
   &.pause {
     background:transparent url('img/pause.png') center center no-repeat;
-  } 
-  
+  }
+
   &.play {
     background:transparent url('img/play.png') center center no-repeat;
   }
