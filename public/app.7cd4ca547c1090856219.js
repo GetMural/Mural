@@ -11095,7 +11095,7 @@ if (typeof window !== 'undefined') {
 
   if (plugin) {
     plugin.fn.stickybits = function stickybitsPlugin(opts) {
-      (0, _stickybits.default)(this, opts);
+      return (0, _stickybits.default)(this, opts);
     };
   }
 }
@@ -11137,10 +11137,11 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
   - noStyles = boolean
   - offset = number
   - parentClass = 'string'
-  - scrollEl = window || DOM element selector
+  - scrollEl = window || DOM element selector || DOM element
   - stickyClass = 'string'
   - stuckClass = 'string'
   - useStickyClasses = boolean
+  - useFixed = boolean
   - verticalPosition = 'string'
   --------
   props🔌
@@ -11163,6 +11164,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
   - .definePosition = defines sticky or fixed
   - .addInstance = an array of objects for each Stickybits Target
   - .getClosestParent = gets the parent for non-window scroll
+  - .getOffsetTop = gets the element offsetTop from the top level of the DOM
   - .computeScrollOffsets = computes scroll position
   - .toggleClasses = older browser toggler
   - .manageState = manages sticky state
@@ -11184,11 +11186,12 @@ function () {
       noStyles: o.noStyles || false,
       stickyBitStickyOffset: o.stickyBitStickyOffset || 0,
       parentClass: o.parentClass || 'js-stickybit-parent',
-      scrollEl: document.querySelector(o.scrollEl) || window,
+      scrollEl: typeof o.scrollEl === 'string' ? document.querySelector(o.scrollEl) : o.scrollEl || window,
       stickyClass: o.stickyClass || 'js-is-sticky',
       stuckClass: o.stuckClass || 'js-is-stuck',
       stickyChangeClass: o.stickyChangeClass || 'js-is-sticky--change',
       useStickyClasses: o.useStickyClasses || false,
+      useFixed: o.useFixed || false,
       verticalPosition: o.verticalPosition || 'top'
     };
     var p = this.props;
@@ -11236,15 +11239,22 @@ function () {
   _createClass(Stickybits, [{
     key: "definePosition",
     value: function definePosition() {
-      var prefix = ['', '-o-', '-webkit-', '-moz-', '-ms-'];
-      var test = document.head.style;
+      var stickyProp;
 
-      for (var i = 0; i < prefix.length; i += 1) {
-        test.position = "".concat(prefix[i], "sticky");
+      if (this.props.useFixed) {
+        stickyProp = 'fixed';
+      } else {
+        var prefix = ['', '-o-', '-webkit-', '-moz-', '-ms-'];
+        var test = document.head.style;
+
+        for (var i = 0; i < prefix.length; i += 1) {
+          test.position = "".concat(prefix[i], "sticky");
+        }
+
+        stickyProp = test.position ? test.position : 'fixed';
+        test.position = '';
       }
 
-      var stickyProp = test.position ? test.position : 'fixed';
-      test.position = '';
       return stickyProp;
     }
     /*
@@ -11256,7 +11266,7 @@ function () {
       ---
       - target = el
       - o = {object} = props
-        - scrollEl = 'string'
+        - scrollEl = 'string' | object
         - verticalPosition = number
         - off = boolean
         - parentClass = 'string'
@@ -11320,6 +11330,25 @@ function () {
       return p;
     }
     /*
+      --------
+      getOffsetTop
+      --------
+      - a helper function that gets the offsetTop of the element
+      - from the top level of the DOM
+    */
+
+  }, {
+    key: "getOffsetTop",
+    value: function getOffsetTop(el) {
+      var offsetTop = 0;
+
+      do {
+        offsetTop = el.offsetTop + offsetTop;
+      } while (el = el.offsetParent);
+
+      return offsetTop;
+    }
+    /*
       computeScrollOffsets 📊
       ---
       computeScrollOffsets for Stickybits
@@ -11338,8 +11367,8 @@ function () {
       var parent = it.parent;
       var isCustom = !this.isWin && p.positionVal === 'fixed';
       var isBottom = p.verticalPosition !== 'bottom';
-      var scrollElOffset = isCustom ? p.scrollEl.getBoundingClientRect().top : 0;
-      var stickyStart = isCustom ? parent.getBoundingClientRect().top - scrollElOffset : parent.getBoundingClientRect().top;
+      var scrollElOffset = isCustom ? this.getOffsetTop(p.scrollEl) : 0;
+      var stickyStart = isCustom ? this.getOffsetTop(parent) - scrollElOffset : this.getOffsetTop(parent);
       var stickyChangeOffset = p.customStickyChangeNumber !== null ? p.customStickyChangeNumber : el.offsetHeight;
       it.offset = scrollElOffset + p.stickyBitStickyOffset;
       it.stickyStart = isBottom ? stickyStart - it.offset : 0;
@@ -11638,6 +11667,8 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
       typeProperty: 'type',
       // The list object property (or data attribute) with the object title:
       titleProperty: 'title',
+      // The list object property (or data attribute) with the object alt text:
+      altTextProperty: 'alt',
       // The list object property (or data attribute) with the object URL:
       urlProperty: 'href',
       // The list object property (or data attribute) with the object srcset URL(s):
@@ -12069,8 +12100,8 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
     },
     onmousedown: function onmousedown(event) {
       // Trigger on clicks of the left mouse button only
-      // and exclude video elements:
-      if (event.which && event.which === 1 && event.target.nodeName !== 'VIDEO') {
+      // and exclude video & audio elements:
+      if (event.which && event.which === 1 && event.target.nodeName !== 'VIDEO' && event.target.nodeName !== 'AUDIO') {
         // Preventing the default mousedown action is required
         // to make touch emulation work with Firefox:
         event.preventDefault();
@@ -12476,6 +12507,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
       var called;
       var element;
       var title;
+      var altText;
 
       function callbackWrapper(event) {
         if (!called) {
@@ -12508,6 +12540,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
       if (typeof url !== 'string') {
         url = this.getItemProperty(obj, this.options.urlProperty);
         title = this.getItemProperty(obj, this.options.titleProperty);
+        altText = this.getItemProperty(obj, this.options.altTextProperty) || title;
       }
 
       if (backgroundSize === true) {
@@ -12525,6 +12558,10 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
       if (title) {
         element.title = title;
+      }
+
+      if (altText) {
+        element.alt = altText;
       }
 
       $(img).on('load error', callbackWrapper);
@@ -12625,8 +12662,8 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
         clearSlides = this.options.clearSlides || this.slides.length !== this.num;
       }
 
-      this.slideWidth = this.container[0].offsetWidth;
-      this.slideHeight = this.container[0].offsetHeight;
+      this.slideWidth = this.container[0].clientWidth;
+      this.slideHeight = this.container[0].clientHeight;
       this.slidesContainer[0].style.width = this.num * this.slideWidth + 'px';
 
       if (clearSlides) {

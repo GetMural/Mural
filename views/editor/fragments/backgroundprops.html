@@ -1,9 +1,8 @@
-<legend>Text Bounding Box Properties</legend>
 <div>
-  <label for="bg-colour">Colour (RGB)</label>
-  <input name="bg-colour" class="form-control" data-for="bg-colour" id="bgColour" type="text" placeholder="eg: 255, 0, 0"></input>
+  <label for="bg-colour">Colour (R, G, B)</label>
+  <input name="bg-colour" class="form-control" data-for="bg-colour" id="bgColour" type="text" placeholder="eg: 255, 0, 0"{{#backgroundprops}} value="{{value}}"{{/backgroundprops}}></input>
 </div>
 <div>
-  <label for="bg-trans">Transparency Level (0 — 1)</label>
-  <input name="bg-trans" class="form-control" data-for="bg-trans" id="bgTrans" type="text" placeholder="eg: 0.5"></input>
+  <label for="bg-opacity">Opacity Level (0 — 1)</label>
+  <input name="bg-opacity" class="form-control" data-for="bg-opacity" id="bgOpacity" type="text" placeholder="eg: 0.5"{{#backgroundprops}} value="{{opacity}}"{{/backgroundprops}}></input>
 </div>
