@@ -1664,6 +1664,17 @@ article .part{
   position: relative;
 }
 
+article .article-wrapper {
+  position: relative;
+  top: 50vh;
+  padding-bottom: 50vh;
+}
+
+article .article-wrapper .header-fullpage {
+  position: relative;
+  top: -50vh;
+}
+
 article .header{font-weight:200;z-index:2;margin-bottom:2vh}
 article .header h1{margin:0;font-size:3em;line-height:1.4em}
 article .header h2{margin:0;font-size:1.6em;line-height:1.2em;font-style:italic}
