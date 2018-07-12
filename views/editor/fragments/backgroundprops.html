@@ -1,4 +1,8 @@
 <div>
+  <label for="bg-active">Active</label>
+  <input id="bgActive" name="bg-active" type="checkbox" {{#backgroundprops.active}} checked="checked"{{/backgroundprops.active}} />
+</div>
+<div>
   <label for="bg-colour">Colour (R, G, B)</label>
   <input name="bg-colour" class="form-control" data-for="bg-colour" id="bgColour" type="text" placeholder="eg: 255, 0, 0"{{#backgroundprops}} value="{{value}}"{{/backgroundprops}}></input>
 </div>
