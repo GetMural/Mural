@@ -659,8 +659,9 @@ router.post('/page/videobackground/id/:id', function (req, res) {
 
         // format and save new values to videobackground
         var fullpage = (newItem['fullpage'] === 'on') ? true : false;
-        var active = (newItem['bg-active'] === 'on') ? true : false;
+        var active = (newItem['active'] === 'on') ? true : false;
         item['format'] = { fullpage: fullpage };
+        item['bg-active'] = { active: active };
         item['backgroundprops'] = {
           value: newItem['bg-colour'],
           opacity: newItem['bg-opacity']

@@ -312,9 +312,9 @@
             <div class="video-container"><video></video></div>
             <div class="content container-fluid">
 
-                {{#backgroundprops.active}}
+                {{#bg-active}}
                 <div class="col-xs-12 col-sm-10 col-md-8 col-lg-6 article-wrapper" style="background-color: rgba({{backgroundprops.value}},{{backgroundprops.opacity}})">
-                {{/backgroundprops.active}}
+                {{/bg-active}}
                   <div class="row">
                     <div class="{{#format}}{{#fullpage}}header-fullpage{{/fullpage}}{{/format}}">
                       <div class="middle">
@@ -329,24 +329,24 @@
                   </div>
                   {{#text}}
                   <div class="row">
-                    {{^backgroundprops.active}}
+                    {{^bg-active}}
                     <div class="col-xs-12 col-sm-10 col-md-8 col-lg-6 text">
-                    {{/backgroundprops.active}}
-                    {{#backgroundprops.active}}
+                    {{/bg-active}}
+                    {{#bg-active}}
                       <div class="text">
-                    {{/backgroundprops.active}}
+                    {{/bg-active}}
                         {{{text}}}
-                    {{#backgroundprops.active}}
+                    {{#bg-active}}
                       </div>
-                    {{/backgroundprops.active}}
-                    {{^backgroundprops.active}}
+                    {{/bg-active}}
+                    {{^bg-active}}
                     </div>
-                    {{/backgroundprops.active}}
+                    {{/bg-active}}
                   </div>
                   {{/text}}
-                {{#backgroundprops.active}}
+                {{#bg-active}}
                 </div>
-                {{/backgroundprops.active}}
+                {{/bg-active}}
 
             </div>
           </section>
