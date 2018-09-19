@@ -312,9 +312,12 @@
             <div class="video-container"><video></video></div>
             <div class="content container-fluid">
 
-                {{#bg-active}}
-                <div class="col-xs-12 col-sm-10 col-md-8 col-lg-6 article-wrapper" style="background-color: rgba({{backgroundprops.value}},{{backgroundprops.opacity}})">
-                {{/bg-active}}
+              {{#backgroundprops}}
+              {{#active}}
+                <div class="col-xs-12 col-sm-10 col-md-8 col-lg-6 article-wrapper">
+                  <span class="text-bg-colour" style="background-color: rgba({{value}},{{opacity}})">
+              {{/active}}
+              {{/backgroundprops}}
                   <div class="row">
                     <div class="{{#format}}{{#fullpage}}header-fullpage{{/fullpage}}{{/format}}">
                       <div class="middle">
@@ -329,24 +332,40 @@
                   </div>
                   {{#text}}
                   <div class="row">
-                    {{^bg-active}}
+                    {{#backgroundprops}}
+                    {{^active}}
                     <div class="col-xs-12 col-sm-10 col-md-8 col-lg-6 text">
-                    {{/bg-active}}
-                    {{#bg-active}}
+                    {{/active}}
+                    {{/backgroundprops}}
+
+                    {{#backgroundprops}}
+                    {{#active}}
                       <div class="text">
-                    {{/bg-active}}
+                    {{/active}}
+                    {{/backgroundprops}}
+
                         {{{text}}}
-                    {{#bg-active}}
+
+                    {{#backgroundprops}}
+                    {{#active}}
                       </div>
-                    {{/bg-active}}
-                    {{^bg-active}}
+                    {{/active}}
+                    {{/backgroundprops}}
+
+                    {{#backgroundprops}}
+                    {{^active}}
                     </div>
-                    {{/bg-active}}
+                    {{/active}}
+                    {{/backgroundprops}}
+
                   </div>
                   {{/text}}
-                {{#bg-active}}
+                {{#backgroundprops}}
+                {{#active}}
+                </span>
                 </div>
-                {{/bg-active}}
+                {{/active}}
+                {{/backgroundprops}}
 
             </div>
           </section>
