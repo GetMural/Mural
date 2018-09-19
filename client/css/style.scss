@@ -723,6 +723,13 @@ address {
   padding-left: 6vw;
   padding-right: 6vw;
 }
+/* this currently is only used by the videobackground element */
+.text-bg-colour {
+    margin-left: -15px;
+    margin-right: -15px;
+    padding-left: 30px;
+    padding-right: 30px;
+}
 .row {
   margin-left: -15px;
   margin-right: -15px;
