@@ -11,7 +11,11 @@
 
   <div class="content container-fluid">
     <div class="col-xs-12 col-sm-10 col-md-8 col-lg-6">
+      {{#backgroundprops}}
+      {{#active}}
       <span class="text-bg-colour" style="background-color: rgba({{value}},{{opacity}}")></span>
+      {{/active}}
+      {{/backgroundprops}}
       <div class="row">
         <div class="{{#format}}{{#fullpage}}header-fullpage{{/fullpage}}{{/format}}">
           <div class="middle">
@@ -31,7 +35,11 @@
         </div>
       </div>
       {{/text}}
+      {{#backgroundprops}}
+      {{#active}}
       </span>
+      {{/active}}
+      {{/backgroundprops}}
     </div>
   </div>
 
