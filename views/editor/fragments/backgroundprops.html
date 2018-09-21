@@ -1,3 +1,9 @@
+<script>
+  $('#opacity').text(Math.round($('#bgOpacity').val() * 100));
+  $('#bgOpacity').change(function(){
+    $('#opacity').text(Math.round($(this).val() * 100));
+  });
+</script>
 <div>
   <label for="bg-active">Active</label>
   <input id="bg-active" name="bg-active" type="checkbox" {{#backgroundprops}}{{#active}} checked="checked"{{/active}}{{/backgroundprops}} />
@@ -7,7 +13,6 @@
   <input name="bg-colour" class="form-control" data-for="bg-colour" id="bgColour" type="text" placeholder="eg: 255, 0, 0"{{#backgroundprops}} value="{{value}}"{{/backgroundprops}}></input>
 </div>
 <div>
-  <label for="bg-opacity">Opacity Level (0 — 1)</label>
-  <input type="range" min="0" max="1" {{#backgroundprops}} value="{{opacity}}"{{/backgroundprops}} step="0.1" data-for="bg-opacity" id="bgOpacity" name="bg-opacity" />
-  <!-- <input name="bg-opacity" class="form-control" data-for="bg-opacity" id="bgOpacity" type="text" placeholder="eg: 0.5"{{#backgroundprops}} value="{{opacity}}"{{/backgroundprops}}></input> -->
+  <label for="bg-opacity">Opacity Level (0 — 100%): <span id="opacity">0</span>%</label>
+  <input type="range" min="0" max="1" {{#backgroundprops}} value="{{opacity}}"{{/backgroundprops}} step="0.05" data-for="bg-opacity" id="bgOpacity" name="bg-opacity" />
 </div>
