@@ -8,5 +8,6 @@
 </div>
 <div>
   <label for="bg-opacity">Opacity Level (0 — 1)</label>
-  <input name="bg-opacity" class="form-control" data-for="bg-opacity" id="bgOpacity" type="text" placeholder="eg: 0.5"{{#backgroundprops}} value="{{opacity}}"{{/backgroundprops}}></input>
+  <input type="range" min="0" max="1" {{#backgroundprops}} value="{{opacity}}"{{/backgroundprops}} step="0.1" data-for="bg-opacity" id="bgOpacity" name="bg-opacity" />
+  <!-- <input name="bg-opacity" class="form-control" data-for="bg-opacity" id="bgOpacity" type="text" placeholder="eg: 0.5"{{#backgroundprops}} value="{{opacity}}"{{/backgroundprops}}></input> -->
 </div>
