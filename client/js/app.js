@@ -8,11 +8,11 @@ require('stickybits/src/jquery.stickybits');
 $.fn.moveIt = function(){
   var $window = $(window);
   var instances = [];
-  
+
   $(this).each(function() {
     instances.push(new MoveItItem($(this)));
   });
-  
+
   window.addEventListener('scroll', function(){
     const scrollTop = $window.scrollTop();
     instances.forEach(function(inst){
