@@ -9360,7 +9360,6 @@ function getVideoAttrs(item) {
   if (item.el.hasClass('st-content-video')) {
     muted = isSoundEnabled === false;
     autoplay = !isMobile.any;
-    console.log(item.width);
   } else {
     muted = isMobile.any || !isSoundEnabled;
     autoplay = true;
