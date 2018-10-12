@@ -309,7 +309,16 @@
                 data-webm="{{webm}}"
               {{/webm}}
             {{/video}}>
-            <div class="video-container"><video></video></div>
+            {{#offset.custom}}
+            <style>
+              @media (orientation:portrait) {
+                section[name="story{{id}}"] .video-container {
+                  margin-left: {{offset.value}}vw;
+                }
+              }
+            </style>
+            {{/offset.custom}}
+            <div class="video-container{{#offset}}{{#left}} offset-left{{/left}}{{#centre}} offset-centre{{/centre}}{{#right}} offset-right{{/right}}{{/offset}}"><video></video></div>
             <div class="content container-fluid">
 
               {{#backgroundprops}}

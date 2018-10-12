@@ -636,6 +636,7 @@ router.get('/page/videobackground/id/:id', function (req, res) {
                 formcontrols: 'editor/fragments/formcontrols',
                 fullpage: 'editor/fragments/fullpage',
                 loadingimage: 'editor/fragments/loadingimage',
+                offset: 'editor/fragments/offset',
                 plaintext: 'editor/fragments/plaintext',
                 subtitle: 'editor/fragments/subtitle',
                 title: 'editor/fragments/title',
@@ -659,22 +660,33 @@ router.post('/page/videobackground/id/:id', function (req, res) {
 
         // format and save new values to videobackground
         var fullpage = (newItem['fullpage'] === 'on') ? true : false;
-        var active = (newItem['bg-active'] === 'on') ? true : false;
         item['format'] = { fullpage: fullpage };
+        var active = (newItem['bg-active'] === 'on') ? true : false;
         item['backgroundprops'] = {
           active: newItem['bg-active'],
           value: newItem['bg-colour'],
           opacity: newItem['bg-opacity']
-        }
+        };
+        item['image'] = {
+            loading: newItem['loading']
+        };
+        var offsetLeft = (newItem['offset-left'] === 'on') ? true : false;
+        var offsetCentre = (newItem['offset-centre'] === 'on') ? true : false;
+        var offsetRight = (newItem['offset-right'] === 'on') ? true : false;
+        var offsetCustom = (newItem['offset-custom'] === 'on') ? true : false;
+        item['offset'] = {
+          left: offsetLeft,
+          centre: offsetCentre,
+          right: offsetRight,
+          custom: offsetCustom,
+          value: newItem['offset-value']
+        };
         item['title'] = newItem['title'];
         item['subtitle'] = newItem['subtitle'];
         item['text'] = newItem['text'];
         item['video'] = {
             mp4: newItem['mp4'],
             webm: newItem['webm']
-        };
-        item['image'] = {
-            loading: newItem['loading']
         };
 
         // save the file

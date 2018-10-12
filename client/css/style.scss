@@ -1476,8 +1476,14 @@ address {
 
 // testing a portrait
 @media (orientation: portrait) {
-  .video-container {
-    margin-left: -75vh;
+  .video-container.offset-left {
+    margin-left: 0;
+  }
+  .video-container.offset-centre {
+    margin-left: -50vw;
+  }
+  .video-container.offset-right {
+    margin-left: -100vw;
   }
 }
 
