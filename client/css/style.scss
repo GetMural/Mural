@@ -1486,6 +1486,16 @@ address {
   .video-container.offset-right {
     margin-left: -100vw;
   }
+  // bg-image is slightly different
+  .sticky-image .bg-image.offset-left {
+    background-position: 0;
+  }
+  .sticky-image .bg-image.offset-centre {
+    background-position: 50%;
+  }
+  .sticky-image .bg-image.offset-right {
+    background-position: 100%;
+  }
 }
 
 @media (max-width: 767px) {

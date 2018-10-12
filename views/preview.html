@@ -102,8 +102,17 @@
                 data-src-phone="{{srcphone}}"
               {{/srcphone}}
             {{/image}}>
+            {{#offset.custom}}
+            <style>
+              @media (orientation:portrait) {
+                section[name="story{{id}}"] .bg-image {
+                  background-position: {{offset.value}}%;
+                }
+              }
+            </style>
+            {{/offset.custom}}
             {{#image}}
-              <div class="bg-image"></div>
+              <div class="bg-image{{#offset}}{{#left}} offset-left{{/left}}{{#centre}} offset-centre{{/centre}}{{#right}} offset-right{{/right}}{{/offset}}"></div>
             {{/image}}
             <div class="content container-fluid">
               <div class="row">

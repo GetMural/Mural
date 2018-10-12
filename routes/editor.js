@@ -390,14 +390,15 @@ router.get('/page/imagebackground/id/:id', function (req, res) {
             id: qId,
             item: item,
             partials: {
+                audiosources: 'editor/fragments/audiosources',
                 formcontrols: 'editor/fragments/formcontrols',
                 fullpage: 'editor/fragments/fullpage',
-                audiosources: 'editor/fragments/audiosources',
                 imagesources: 'editor/fragments/imagesources',
-                text: 'editor/fragments/plaintext',
-                title: 'editor/fragments/title',
+                offset: 'editor/fragments/offset-bgimage',
+                plaintext: 'editor/fragments/plaintext',
                 subtitle: 'editor/fragments/subtitle',
-                plaintext: 'editor/fragments/plaintext'
+                text: 'editor/fragments/plaintext',
+                title: 'editor/fragments/title'
             }
         });
     });
@@ -426,7 +427,17 @@ router.post('/page/imagebackground/id/:id', function (req, res) {
             srcphone: newItem['srcphone'],
             srcmedium: newItem['srcmedium']
         };
-
+        var offsetLeft = (newItem['offset-left'] === 'on') ? true : false;
+        var offsetCentre = (newItem['offset-centre'] === 'on') ? true : false;
+        var offsetRight = (newItem['offset-right'] === 'on') ? true : false;
+        var offsetCustom = (newItem['offset-custom'] === 'on') ? true : false;
+        item['offset'] = {
+          left: offsetLeft,
+          centre: offsetCentre,
+          right: offsetRight,
+          custom: offsetCustom,
+          value: newItem['offset-value']
+        };
         if (newItem['mp3'] || newItem['ogg']) {
             item['audio'] = {
                 mp3: newItem['mp3'],
