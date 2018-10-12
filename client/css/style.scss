@@ -1474,8 +1474,9 @@ address {
   display: none !important;
 }
 
-// testing a portrait
+// portrait view offset rules
 @media (orientation: portrait) {
+  // this works for videobackground and videofullpage
   .video-container.offset-left {
     margin-left: 0;
   }

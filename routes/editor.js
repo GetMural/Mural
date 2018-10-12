@@ -723,6 +723,7 @@ router.get('/page/videofullpage/id/:id', function (req, res) {
                 formcontrols: 'editor/fragments/formcontrols',
                 fullpage: 'editor/fragments/fullpage',
                 loadingimage: 'editor/fragments/loadingimage',
+                offset: 'editor/fragments/offset',
                 plaintext: 'editor/fragments/plaintext',
                 title: 'editor/fragments/title',
                 videosources: 'editor/fragments/videosources'
@@ -745,7 +746,6 @@ router.post('/page/videofullpage/id/:id', function (req, res) {
         // format and save new values to videofullpage
         var fullpage = (newItem['fullpage'] === 'on') ? true : false;
         var playback = newItem['playback'];
-
         if (playback === 'advance') {
             item['autoAdvance'] = true;
             item['loop'] = false;
@@ -753,7 +753,17 @@ router.post('/page/videofullpage/id/:id', function (req, res) {
             item['loop'] = true;
             item['autoAdvance'] = false;
         }
-
+        var offsetLeft = (newItem['offset-left'] === 'on') ? true : false;
+        var offsetCentre = (newItem['offset-centre'] === 'on') ? true : false;
+        var offsetRight = (newItem['offset-right'] === 'on') ? true : false;
+        var offsetCustom = (newItem['offset-custom'] === 'on') ? true : false;
+        item['offset'] = {
+          left: offsetLeft,
+          centre: offsetCentre,
+          right: offsetRight,
+          custom: offsetCustom,
+          value: newItem['offset-value']
+        };
         item['format'] = { fullpage: fullpage };
         item['title'] = newItem['title'];
         item['subtitle'] = newItem['subtitle'];
