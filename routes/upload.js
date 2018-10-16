@@ -4,8 +4,8 @@ const path = require('path');
 const fs = require('fs');
 const mkdirp = require('mkdirp');
 
-const Prefernces = require('../models/preferences');
-const preferences = new Prefernces(path.join(__dirname, '../data/preferences.json'));
+const Preferences = require('../models/preferences');
+const preferences = new Preferences(path.join(__dirname, '../data/preferences.json'));
 
 router.post('/', function (req, res) {
     preferences.readFile(null, function(err, data) {
@@ -22,6 +22,8 @@ router.post('/', function (req, res) {
             } else {
                 req.pipe(req.busboy);
                 req.busboy.on('file', function (fieldname, file, filename) {
+                    filename = filename.toLowerCase();
+                    filename = filename.replace(" ", "-");
                     console.log("Uploading: " + filename);
                     const fstream = fs.createWriteStream(path.join(uploadPath, filename));
                     file.pipe(fstream);
