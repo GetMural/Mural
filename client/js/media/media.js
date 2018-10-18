@@ -40,15 +40,14 @@ function canPlayThroughPromise(media, srcs) {
       resolve();
     }
 
-    const sources = srcs.filter(src => src.src !== undefined);
-    sources.forEach((src, i) => {
+    srcs.forEach((src, i) => {
       const source = document.createElement('source'); 
       source.type = src.type;
       source.src = src.src;
       media.appendChild(source);
 
       // resolve if error on sources (404)
-      if (i === sources.length - 1) {
+      if (i === srcs.length - 1) {
         source.addEventListener('error', function(e) {
           resolve();
         });
@@ -56,7 +55,7 @@ function canPlayThroughPromise(media, srcs) {
     });
 
     // resolve incase of invalid sources.
-    if (!sources.length) {
+    if (!srcs.length) {
       resolve();
     }
   });

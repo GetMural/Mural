@@ -58,6 +58,7 @@ module.exports = {
         test: /\.js$/,
         // Sticky Bits didn't transpile :/
         // exclude: /(node_modules|bower_components)/,
+        exclude: /node_modules\/hls.js/,
         use: {
           loader: 'babel-loader',
           options: {
