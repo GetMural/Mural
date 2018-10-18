@@ -34,7 +34,9 @@ function removeBackgroundAudio (id) {
 
 function setMuted (id, muted) {
   const audio = MEDIA[id];
-  audio.muted = muted;
+  if (audio) {
+    audio.muted = muted;
+  }
 }
 
 function playBackgroundAudio (id, attrs) {
