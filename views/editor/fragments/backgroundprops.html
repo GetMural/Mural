@@ -1,0 +1,37 @@
+<script>
+  function changeColour(color){
+    console.log(color);
+  };
+  ColorPicker(
+    document.getElementById('slide'),
+    document.getElementById('picker'),
+    function(hex, hsv, rgb) {
+      $('#bgColourSwatch').attr('style', 'background-color: ' + hex);
+      rgbStr = rgb.r + ", " + rgb.g + ", " + rgb.b;
+      $('#bgColour').val(rgbStr);
+
+    }
+  );
+  $('#opacity').text(Math.round($('#bgOpacity').val() * 100));
+  $('#bgOpacity').change(function(){
+    $('#opacity').text(Math.round($(this).val() * 100));
+  });
+</script>
+<legend>Background Text Box</legend>
+<div>
+  <label for="bg-active">Active</label>
+  <input id="bg-active" name="bg-active" type="checkbox" {{#backgroundprops}}{{#active}} checked="checked"{{/active}}{{/backgroundprops}} />
+</div>
+<div>
+  <label for="bg-colour">Colour (R, G, B)<span class="bg-color-swatch" id="bgColourSwatch" {{#backgroundprops}}style="background-color: rgb({{value}});"{{/backgroundprops}}></span></label>
+  <input name="bg-colour" class="form-control" data-for="bg-colour" id="bgColour" type="text" placeholder="eg: 255, 0, 0"{{#backgroundprops}} value="{{value}}"{{/backgroundprops}}></input>
+  <p>If you know the RGB value that you want to use you may enter it here and just click save.</p>
+</div>
+<div class="bg-colour-sliders">
+  <div id="picker"></div>
+  <div id="slide"></div>
+</div>
+<div>
+  <label for="bg-opacity">Opacity Level: <span id="opacity">0</span>%</label>
+  <input type="range" min="0" max="1" {{#backgroundprops}} value="{{opacity}}"{{/backgroundprops}} step="0.05" data-for="bg-opacity" id="bgOpacity" name="bg-opacity" />
+</div>

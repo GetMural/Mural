@@ -4,6 +4,7 @@ const Hls = require('hls.js');
 
 const MEDIA = [];
 const DATA = [];
+const isMobile = window.isMobile;
 
 const HSL_TYPE = 'application/vnd.apple.mpegurl';
 
@@ -23,7 +24,7 @@ function playBackgroundVideo (id, attrs) {
   const video = MEDIA[id];
 
   video.loop = attrs.loop;
-  video.muted = attrs.muted;
+  video.muted = isMobile.any ? video.muted : attrs.muted;
 
   if ((!DATA[id].paused && attrs.autoplay) ||
       (DATA[id].playTriggered && !DATA[id].paused)) {
@@ -51,6 +52,7 @@ function unfixBackgroundVideo ($el) {
 function prepareVideo (scrollStory, $el, id, srcs, attrs) {
   const video = document.createElement('video');
   video.poster = attrs.poster;
+  video.muted = attrs.muted;
   video.preload = 'auto';
   video.setAttribute('webkit-playsinline', '');
   video.setAttribute('playsinline', '');
@@ -82,7 +84,7 @@ function prepareVideo (scrollStory, $el, id, srcs, attrs) {
     canPlayThrough = mediaUtils.canPlayThroughPromise(video, normalSources);
   }
 
-  $el.find('.video-container').html(video);
+  $el.find('.video-container').append(video);
 
   $el.find('.play').click(function() {
     DATA[id].playPromise = mediaUtils.fadein(video);
@@ -105,6 +107,11 @@ function prepareVideo (scrollStory, $el, id, srcs, attrs) {
     $el.find('.pause').hide();
   }
 
+  $el.find('.mobile-mute.muted').click(function() {
+    setMuted(id, false);
+    $(this).remove();
+  });
+
   if (attrs.autoAdvance) {
     video.addEventListener('ended', () => {
       const count = scrollStory.getItems().length;
@@ -126,7 +133,9 @@ function prepareVideo (scrollStory, $el, id, srcs, attrs) {
 
 function setMuted (id, muted) {
   const video = MEDIA[id];
-  video.muted = muted;
+  if (video) {
+    video.muted = muted;
+  } 
 }
 
 module.exports = {

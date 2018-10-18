@@ -157,6 +157,13 @@ router.get('/fragment/fullpage', function (req, res) {
     });
 });
 
+// Text Bounding Box Fragment
+router.get('/fragment/backgroundprops', function (req, res) {
+    res.render('editor/fragments/backgroundprops', {
+        backgroundprops: 'backgroundprops'
+    });
+});
+
 // Slide Fragment
 router.get('/fragment/slide', function (req, res) {
     const index = req.query.index;
@@ -383,14 +390,15 @@ router.get('/page/imagebackground/id/:id', function (req, res) {
             id: qId,
             item: item,
             partials: {
+                audiosources: 'editor/fragments/audiosources',
                 formcontrols: 'editor/fragments/formcontrols',
                 fullpage: 'editor/fragments/fullpage',
-                audiosources: 'editor/fragments/audiosources',
                 imagesources: 'editor/fragments/imagesources',
-                text: 'editor/fragments/plaintext',
-                title: 'editor/fragments/title',
+                offset: 'editor/fragments/offset-bgimage',
+                plaintext: 'editor/fragments/plaintext',
                 subtitle: 'editor/fragments/subtitle',
-                plaintext: 'editor/fragments/plaintext'
+                text: 'editor/fragments/plaintext',
+                title: 'editor/fragments/title'
             }
         });
     });
@@ -419,7 +427,17 @@ router.post('/page/imagebackground/id/:id', function (req, res) {
             srcphone: newItem['srcphone'],
             srcmedium: newItem['srcmedium']
         };
-
+        var offsetLeft = (newItem['offset-left'] === 'on') ? true : false;
+        var offsetCentre = (newItem['offset-centre'] === 'on') ? true : false;
+        var offsetRight = (newItem['offset-right'] === 'on') ? true : false;
+        var offsetCustom = (newItem['offset-custom'] === 'on') ? true : false;
+        item['offset'] = {
+          left: offsetLeft,
+          centre: offsetCentre,
+          right: offsetRight,
+          custom: offsetCustom,
+          value: newItem['offset-value']
+        };
         if (newItem['mp3'] || newItem['ogg']) {
             item['audio'] = {
                 mp3: newItem['mp3'],
@@ -625,14 +643,16 @@ router.get('/page/videobackground/id/:id', function (req, res) {
             id: query.params.id,
             message: '',
             partials: {
+                backgroundprops: 'editor/fragments/backgroundprops',
                 formcontrols: 'editor/fragments/formcontrols',
                 fullpage: 'editor/fragments/fullpage',
                 loadingimage: 'editor/fragments/loadingimage',
-                title: 'editor/fragments/title',
+                offset: 'editor/fragments/offset',
+                plaintext: 'editor/fragments/plaintext',
                 subtitle: 'editor/fragments/subtitle',
+                title: 'editor/fragments/title',
                 videobackground: 'editor/pages/videobackground',
-                videosources: 'editor/fragments/videosources',
-                plaintext: 'editor/fragments/plaintext'
+                videosources: 'editor/fragments/videosources'
             }
         });
     });
@@ -652,15 +672,32 @@ router.post('/page/videobackground/id/:id', function (req, res) {
         // format and save new values to videobackground
         var fullpage = (newItem['fullpage'] === 'on') ? true : false;
         item['format'] = { fullpage: fullpage };
+        var active = (newItem['bg-active'] === 'on') ? true : false;
+        item['backgroundprops'] = {
+          active: newItem['bg-active'],
+          value: newItem['bg-colour'],
+          opacity: newItem['bg-opacity']
+        };
+        item['image'] = {
+            loading: newItem['loading']
+        };
+        var offsetLeft = (newItem['offset-left'] === 'on') ? true : false;
+        var offsetCentre = (newItem['offset-centre'] === 'on') ? true : false;
+        var offsetRight = (newItem['offset-right'] === 'on') ? true : false;
+        var offsetCustom = (newItem['offset-custom'] === 'on') ? true : false;
+        item['offset'] = {
+          left: offsetLeft,
+          centre: offsetCentre,
+          right: offsetRight,
+          custom: offsetCustom,
+          value: newItem['offset-value']
+        };
         item['title'] = newItem['title'];
         item['subtitle'] = newItem['subtitle'];
         item['text'] = newItem['text'];
         item['video'] = {
             mp4: newItem['mp4'],
             webm: newItem['webm']
-        };
-        item['image'] = {
-            loading: newItem['loading']
         };
 
         // save the file
@@ -697,6 +734,7 @@ router.get('/page/videofullpage/id/:id', function (req, res) {
                 formcontrols: 'editor/fragments/formcontrols',
                 fullpage: 'editor/fragments/fullpage',
                 loadingimage: 'editor/fragments/loadingimage',
+                offset: 'editor/fragments/offset',
                 plaintext: 'editor/fragments/plaintext',
                 title: 'editor/fragments/title',
                 videosources: 'editor/fragments/videosources'
@@ -719,7 +757,6 @@ router.post('/page/videofullpage/id/:id', function (req, res) {
         // format and save new values to videofullpage
         var fullpage = (newItem['fullpage'] === 'on') ? true : false;
         var playback = newItem['playback'];
-
         if (playback === 'advance') {
             item['autoAdvance'] = true;
             item['loop'] = false;
@@ -727,7 +764,17 @@ router.post('/page/videofullpage/id/:id', function (req, res) {
             item['loop'] = true;
             item['autoAdvance'] = false;
         }
-
+        var offsetLeft = (newItem['offset-left'] === 'on') ? true : false;
+        var offsetCentre = (newItem['offset-centre'] === 'on') ? true : false;
+        var offsetRight = (newItem['offset-right'] === 'on') ? true : false;
+        var offsetCustom = (newItem['offset-custom'] === 'on') ? true : false;
+        item['offset'] = {
+          left: offsetLeft,
+          centre: offsetCentre,
+          right: offsetRight,
+          custom: offsetCustom,
+          value: newItem['offset-value']
+        };
         item['format'] = { fullpage: fullpage };
         item['title'] = newItem['title'];
         item['subtitle'] = newItem['subtitle'];

@@ -12,12 +12,16 @@
     </fieldset>
 
     <fieldset>
+      {{> offset}}
+    </fieldset>
+
+    <fieldset>
       {{> videosources}}
     </fieldset>
 
     <fieldset>
        <legend>Playback</legend>
-      
+
       <div>
         <label>Loop</label>
         <input name="playback" value="loop" type="radio" {{^autoAdvance}} checked {{/autoAdvance}} />

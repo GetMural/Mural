@@ -8,12 +8,12 @@ require('stickybits/src/jquery.stickybits');
 $.fn.moveIt = function(){
   var $window = $(window);
   var instances = [];
-  
+
   $(this).each(function() {
     instances.push(new MoveItItem($(this)));
   });
-  
-  window.addEventListener('scroll', function(){
+
+  window.addEventListener('scroll', function(e){
     const scrollTop = $window.scrollTop();
     instances.forEach(function(inst){
       inst.update(scrollTop);
@@ -25,11 +25,20 @@ const MoveItItem = function(el){
   this.el = $(el);
   this.container = this.el.parent('.part');
   this.speed = parseInt(this.el.attr('data-scroll-speed'));
+  this.lastTop = null;
 };
 
 MoveItItem.prototype.update = function(scrollTop){
-  const top = scrollTop - this.container.offset().top;
-  this.el.css('transform', 'translateY(' + -(top / this.speed) + 'px)');
+  if (this.container.hasClass('inviewport')) {
+    this.el.css('willChange', 'transform');
+    const top = scrollTop - this.container.offset().top;
+    if (this.lastTop !== top) {
+      this.el.css('transform', 'translateY(' + -(top / this.speed) + 'px)');
+      this.lastTop = top;
+    } 
+  } else {
+    this.el.css('willChange', 'auto');
+  }
 };
 
 const blueimp = require('blueimp-gallery/js/blueimp-gallery');
@@ -277,35 +286,41 @@ $story.on('itemexitviewport', function(ev, item) {
 
 $('[data-scroll-speed]').moveIt();
 
-$('.mute').click(function () {
-  const $this = $(this);
-  if ($this.hasClass('muted')) {
-    isSoundEnabled = true;
-    $this.removeClass('muted');
-  } else {
-    isSoundEnabled = false;
-    $this.addClass('muted');
-  }
+// give mobile a special "unmute button" per video.
+if (isMobile.any) {
+  $('.mute').hide();
+} else {
+  $('.mobile-mute').remove();
+  $('.mute').click(function () {
+    const $this = $(this);
+    if ($this.hasClass('muted')) {
+      isSoundEnabled = true;
+      $this.removeClass('muted');
+    } else {
+      isSoundEnabled = false;
+      $this.addClass('muted');
+    }
 
-  storyItems.forEach(function (item) {
-    if (item.data.video) {
-      let muted;
+    storyItems.forEach(function (item) {
+      if (item.data.video) {
+        let muted;
 
-      if (item.data.isFullpage) {
-        muted = (isSoundEnabled === false) || (item.data.muted === true);
-      } else {
-        muted = (isSoundEnabled === false) || (isMobile.any === true) || (item.data.muted === true);
+        if (item.data.isFullpage) {
+          muted = (isSoundEnabled === false) || (item.data.muted === true);
+        } else {
+          muted = (isSoundEnabled === false) || (item.data.muted === true);
+        }
+
+        videoMedia.setMuted(item.index, muted);
       }
 
-      videoMedia.setMuted(item.index, muted);
-    }
-
-    if (item.data.audio) {
-      const muted = (isSoundEnabled === false);
-      audioMedia.setMuted(item.index, muted);
-    }
+      if (item.data.audio) {
+        const muted = (isSoundEnabled === false);
+        audioMedia.setMuted(item.index, muted);
+      }
+    });
   });
-});
+}
 
 $('.sticks_wrapper').click(function() {
   $('body').toggleClass('paneOpen');

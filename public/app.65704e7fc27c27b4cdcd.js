@@ -10535,7 +10535,7 @@ $.fn.moveIt = function () {
   $(this).each(function () {
     instances.push(new MoveItItem($(this)));
   });
-  window.addEventListener('scroll', function () {
+  window.addEventListener('scroll', function (e) {
     var scrollTop = $window.scrollTop();
     instances.forEach(function (inst) {
       inst.update(scrollTop);
@@ -10549,11 +10549,21 @@ var MoveItItem = function MoveItItem(el) {
   this.el = $(el);
   this.container = this.el.parent('.part');
   this.speed = parseInt(this.el.attr('data-scroll-speed'));
+  this.lastTop = null;
 };
 
 MoveItItem.prototype.update = function (scrollTop) {
-  var top = scrollTop - this.container.offset().top;
-  this.el.css('transform', 'translateY(' + -(top / this.speed) + 'px)');
+  if (this.container.hasClass('inviewport')) {
+    this.el.css('willChange', 'transform');
+    var top = scrollTop - this.container.offset().top;
+
+    if (this.lastTop !== top) {
+      this.el.css('transform', 'translateY(' + -(top / this.speed) + 'px)');
+      this.lastTop = top;
+    }
+  } else {
+    this.el.css('willChange', 'auto');
+  }
 };
 
 var blueimp = __webpack_require__(10);
@@ -10765,38 +10775,45 @@ $story.on('itemexitviewport', function (ev, item) {
     videoMedia.removeBackgroundVideo(item.el, item.index);
   }
 });
-$('[data-scroll-speed]').moveIt();
-$('.mute').click(function () {
-  var $this = $(this);
+$('[data-scroll-speed]').moveIt(); // give mobile a special "unmute button" per video.
 
-  if ($this.hasClass('muted')) {
-    isSoundEnabled = true;
-    $this.removeClass('muted');
-  } else {
-    isSoundEnabled = false;
-    $this.addClass('muted');
-  }
+if (isMobile.any) {
+  $('.mute').hide();
+} else {
+  $('.mobile-mute').remove();
+  $('.mute').click(function () {
+    var $this = $(this);
 
-  storyItems.forEach(function (item) {
-    if (item.data.video) {
-      var muted;
+    if ($this.hasClass('muted')) {
+      isSoundEnabled = true;
+      $this.removeClass('muted');
+    } else {
+      isSoundEnabled = false;
+      $this.addClass('muted');
+    }
 
-      if (item.data.isFullpage) {
-        muted = isSoundEnabled === false || item.data.muted === true;
-      } else {
-        muted = isSoundEnabled === false || isMobile.any === true || item.data.muted === true;
+    storyItems.forEach(function (item) {
+      if (item.data.video) {
+        var muted;
+
+        if (item.data.isFullpage) {
+          muted = isSoundEnabled === false || item.data.muted === true;
+        } else {
+          muted = isSoundEnabled === false || item.data.muted === true;
+        }
+
+        videoMedia.setMuted(item.index, muted);
       }
 
-      videoMedia.setMuted(item.index, muted);
-    }
+      if (item.data.audio) {
+        var _muted = isSoundEnabled === false;
 
-    if (item.data.audio) {
-      var _muted = isSoundEnabled === false;
-
-      audioMedia.setMuted(item.index, _muted);
-    }
+        audioMedia.setMuted(item.index, _muted);
+      }
+    });
   });
-});
+}
+
 $('.sticks_wrapper').click(function () {
   $('body').toggleClass('paneOpen');
 });
@@ -14462,6 +14479,7 @@ var Hls = __webpack_require__(13);
 
 var MEDIA = [];
 var DATA = [];
+var isMobile = window.isMobile;
 var HSL_TYPE = 'application/vnd.apple.mpegurl';
 
 function stopVideo(id) {
@@ -14479,7 +14497,7 @@ function stopVideo(id) {
 function playBackgroundVideo(id, attrs) {
   var video = MEDIA[id];
   video.loop = attrs.loop;
-  video.muted = attrs.muted;
+  video.muted = isMobile.any ? video.muted : attrs.muted;
 
   if (!DATA[id].paused && attrs.autoplay || DATA[id].playTriggered && !DATA[id].paused) {
     DATA[id].playPromise = mediaUtils.fadein(video);
@@ -14506,6 +14524,7 @@ function unfixBackgroundVideo($el) {
 function prepareVideo(scrollStory, $el, id, srcs, attrs) {
   var video = document.createElement('video');
   video.poster = attrs.poster;
+  video.muted = attrs.muted;
   video.preload = 'auto';
   video.setAttribute('webkit-playsinline', '');
   video.setAttribute('playsinline', '');
@@ -14542,7 +14561,7 @@ function prepareVideo(scrollStory, $el, id, srcs, attrs) {
     canPlayThrough = mediaUtils.canPlayThroughPromise(video, normalSources);
   }
 
-  $el.find('.video-container').html(video);
+  $el.find('.video-container').append(video);
   $el.find('.play').click(function () {
     DATA[id].playPromise = mediaUtils.fadein(video);
     DATA[id].paused = false;
@@ -14562,6 +14581,11 @@ function prepareVideo(scrollStory, $el, id, srcs, attrs) {
   } else {
     $el.find('.pause').hide();
   }
+
+  $el.find('.mobile-mute.muted').click(function () {
+    setMuted(id, false);
+    $(this).remove();
+  });
 
   if (attrs.autoAdvance) {
     video.addEventListener('ended', function () {
@@ -14583,7 +14607,10 @@ function prepareVideo(scrollStory, $el, id, srcs, attrs) {
 
 function setMuted(id, muted) {
   var video = MEDIA[id];
-  video.muted = muted;
+
+  if (video) {
+    video.muted = muted;
+  }
 }
 
 module.exports = {
@@ -33633,7 +33660,10 @@ function removeBackgroundAudio(id) {
 
 function setMuted(id, muted) {
   var audio = MEDIA[id];
-  audio.muted = muted;
+
+  if (audio) {
+    audio.muted = muted;
+  }
 }
 
 function playBackgroundAudio(id, attrs) {

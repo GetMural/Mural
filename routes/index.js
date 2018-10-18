@@ -4,8 +4,8 @@ const path = require('path');
 const fs = require('fs');
 const rimraf = require('rimraf');
 
-var Prefernces = require('../models/preferences');
-var preferences = new Prefernces(path.join(__dirname, '../data/preferences.json'));
+var Preferences = require('../models/preferences');
+var preferences = new Preferences(path.join(__dirname, '../data/preferences.json'));
 
 
 /* GET home page. */

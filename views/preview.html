@@ -71,7 +71,7 @@
       <nav>
         <ol>
           {{#nav}}
-            <li data-id="{{id}}">{{{title}}}</li>
+            <li data-id="{{id}}">{{title}}</li>
           {{/nav}}
         </ol>
       </nav>
@@ -102,8 +102,17 @@
                 data-src-phone="{{srcphone}}"
               {{/srcphone}}
             {{/image}}>
+            {{#offset.custom}}
+            <style>
+              @media (orientation:portrait) {
+                section[name="story{{id}}"] .bg-image {
+                  background-position: {{offset.value}}%;
+                }
+              }
+            </style>
+            {{/offset.custom}}
             {{#image}}
-              <div class="bg-image"></div>
+              <div class="bg-image{{#offset}}{{#left}} offset-left{{/left}}{{#centre}} offset-centre{{/centre}}{{#right}} offset-right{{/right}}{{/offset}}"></div>
             {{/image}}
             <div class="content container-fluid">
               <div class="row">
@@ -177,7 +186,7 @@
             {{/image}}
 
             {{#title}}
-              <div class="content container" data-scroll-speed="-0.8">
+              <div class="content container">
                 <div class="row">
                   <div class="col-sm-12 header-fullpage">
                     <h1>{{{title}}}</h1>
@@ -309,28 +318,76 @@
                 data-webm="{{webm}}"
               {{/webm}}
             {{/video}}>
-            <div class="video-container"><video></video></div>
-            <div class="content container-fluid">
-              <div class="row">
-                <div class="col-sm-12 {{#format}}{{#fullpage}}header-fullpage{{/fullpage}}{{/format}}">
-                  <div class="middle">
-                  {{#title}}
-                    <h1>{{{title}}}</h1>
-                  {{/title}}
-                  {{#subtitle}}
-                    <h2>{{{subtitle}}}</h2>
-                  {{/subtitle}}
-                  </div>
-                </div>
-              </div>
-              {{#text}}
-              <div class="row">
-                <div class="col-xs-12 col-sm-10 col-md-8 col-lg-6 text">
-                  {{{text}}}
-                </div>
-              </div>
-              {{/text}}
+            {{#offset.custom}}
+            <style>
+              @media (orientation:portrait) {
+                section[name="story{{id}}"] .video-container {
+                  margin-left: {{offset.value}}vw;
+                }
+              }
+            </style>
+            {{/offset.custom}}
+            <div class="video-container{{#offset}}{{#left}} offset-left{{/left}}{{#centre}} offset-centre{{/centre}}{{#right}} offset-right{{/right}}{{/offset}}">
             </div>
+            <div class="content container-fluid">
+
+              {{#backgroundprops}}
+              {{#active}}
+                <div class="col-xs-12 col-sm-10 col-md-8 col-lg-6 article-wrapper">
+                  <span class="text-bg-colour" style="background-color: rgba({{value}},{{opacity}})">
+              {{/active}}
+              {{/backgroundprops}}
+                  <div class="row">
+                    <div class="{{#format}}{{#fullpage}}header-fullpage{{/fullpage}}{{/format}}">
+                      <div class="middle">
+                        {{#title}}
+                          <h1>{{{title}}}</h1>
+                        {{/title}}
+                        {{#subtitle}}
+                          <h2>{{{subtitle}}}</h2>
+                        {{/subtitle}}
+                      </div>
+                    </div>
+                  </div>
+                  {{#text}}
+                  <div class="row">
+                    {{#backgroundprops}}
+                    {{^active}}
+                    <div class="col-xs-12 col-sm-10 col-md-8 col-lg-6 text">
+                    {{/active}}
+                    {{/backgroundprops}}
+
+                    {{#backgroundprops}}
+                    {{#active}}
+                      <div class="text">
+                    {{/active}}
+                    {{/backgroundprops}}
+
+                        {{{text}}}
+
+                    {{#backgroundprops}}
+                    {{#active}}
+                      </div>
+                    {{/active}}
+                    {{/backgroundprops}}
+
+                    {{#backgroundprops}}
+                    {{^active}}
+                    </div>
+                    {{/active}}
+                    {{/backgroundprops}}
+
+                  </div>
+                  {{/text}}
+                {{#backgroundprops}}
+                {{#active}}
+                </span>
+                </div>
+                {{/active}}
+                {{/backgroundprops}}
+
+            </div>
+            <span class="mobile-mute muted">Muted</span>
           </section>
         {{/videobackground}}
 
@@ -358,7 +415,16 @@
                 data-webm="{{webm}}"
               {{/webm}}
             {{/video}}>
-            <div class="video-container"><video></video></div>
+            {{#offset.custom}}
+            <style>
+              @media (orientation:portrait) {
+                section[name="story{{id}}"] .video-container {
+                  margin-left: {{offset.value}}vw;
+                }
+              }
+            </style>
+            {{/offset.custom}}
+            <div class="video-container{{#offset}}{{#left}} offset-left{{/left}}{{#centre}} offset-centre{{/centre}}{{#right}} offset-right{{/right}}{{/offset}}"></div>
             <div class="caption">
               <div class="button-container play"></div>
               <div class="button-container pause"></div>

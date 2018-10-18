@@ -4,6 +4,10 @@
     "format": {
       "fullpage": true
     },
+    "backgroundprops": {
+      "value": "",
+      "opacity": ""
+    },
     "title": "",
     "subtitle": "",
     "video": {
