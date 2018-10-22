@@ -1722,7 +1722,7 @@ address {
   position: relative;
   float: left;
   height: 100%;
-  text-align: center; 
+  text-align: center;
   transition-timing-function: cubic-bezier(0.645, 0.045, 0.355, 1.000);
 }
 .blueimp-gallery,
@@ -1938,6 +1938,10 @@ body:last-child .blueimp-gallery-playing > .play-pause {
 .blueimp-gallery > .slides > .slide > .video-loading > a {
   background: url(../img/loading.gif) center no-repeat;
   background-size: 64px 64px;
+}
+/* attempt to override the blueimp default which triggers a 404 */
+.blueimp-gallery > .slides > .slide > .slide-loading {
+  background: url(../img/loading.gif) 50% no-repeat;
 }
 
 /* Replace PNGs with SVGs for capable browsers (excluding IE<9) */
