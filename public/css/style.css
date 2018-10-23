@@ -1722,7 +1722,7 @@ address {
   position: relative;
   float: left;
   height: 100%;
-  text-align: center; 
+  text-align: center;
   transition-timing-function: cubic-bezier(0.645, 0.045, 0.355, 1.000);
 }
 .blueimp-gallery,

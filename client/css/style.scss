@@ -724,12 +724,10 @@ address {
   padding-right: 6vw;
 }
 /* this currently is only used by the videobackground element */
-.text-bg-colour {
-  display: inline-block;
-  margin-left: -15px;
-  margin-right: -15px;
-  padding-left: 30px;
-  padding-right: 30px;
+.text-bounding-box {
+  display: block;
+  padding-left: 2vw;
+  padding-right: 2vw;
 }
 .row {
   margin-left: -15px;

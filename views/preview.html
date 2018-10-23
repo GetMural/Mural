@@ -331,12 +331,6 @@
             </div>
             <div class="content container-fluid">
 
-              {{#backgroundprops}}
-              {{#active}}
-                <div class="col-xs-12 col-sm-10 col-md-8 col-lg-6 article-wrapper">
-                  <span class="text-bg-colour" style="background-color: rgba({{value}},{{opacity}})">
-              {{/active}}
-              {{/backgroundprops}}
                   <div class="row">
                     <div class="{{#format}}{{#fullpage}}header-fullpage{{/fullpage}}{{/format}}">
                       <div class="middle">
@@ -349,42 +343,26 @@
                       </div>
                     </div>
                   </div>
+
                   {{#text}}
                   <div class="row">
-                    {{#backgroundprops}}
-                    {{^active}}
                     <div class="col-xs-12 col-sm-10 col-md-8 col-lg-6 text">
-                    {{/active}}
-                    {{/backgroundprops}}
 
-                    {{#backgroundprops}}
-                    {{#active}}
-                      <div class="text">
-                    {{/active}}
-                    {{/backgroundprops}}
+                        {{#backgroundprops}}
+                        {{#active}}
+                        <span class="text-bounding-box" style="background-color: rgba({{value}}, {{opacity}});">
+                        {{/active}}
+                        {{/backgroundprops}}
 
                         {{{text}}}
 
-                    {{#backgroundprops}}
-                    {{#active}}
-                      </div>
-                    {{/active}}
-                    {{/backgroundprops}}
-
-                    {{#backgroundprops}}
-                    {{^active}}
-                    </div>
-                    {{/active}}
-                    {{/backgroundprops}}
-
+                        {{#backgroundprops}}
+                        {{#active}}
+                        </span>
+                        {{/active}}
+                        {{/backgroundprops}}
                   </div>
                   {{/text}}
-                {{#backgroundprops}}
-                {{#active}}
-                </span>
-                </div>
-                {{/active}}
-                {{/backgroundprops}}
 
             </div>
             <span class="mobile-mute muted">Muted</span>
