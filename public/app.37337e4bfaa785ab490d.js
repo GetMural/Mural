@@ -10464,13 +10464,21 @@ function fadein(id, media) {
     // mute video & audio for mobile platform autoplay.
     media.muted = true; // insert an unmute button for mobile.
 
-    var mobileUnmute = $('<span/>', {
-      class: 'mobile-mute muted'
-    }).click(function () {
-      media.muted = false;
-      $(this).remove();
-    });
-    $("#story0-".concat(id)).append(mobileUnmute);
+    var $storyItem = $("#story0-".concat(id));
+
+    if ($storyItem.find('.mobile-mute').length === 0) {
+      var mobileUnmute = $('<span/>', {
+        class: 'mobile-mute muted'
+      }).click(function () {
+        media.muted = false;
+        $(media).animate({
+          volume: 1
+        }, FADE_DURATION);
+        $(this).remove();
+      });
+      $storyItem.append(mobileUnmute);
+    }
+
     return media.play();
   });
   return playPromise;
