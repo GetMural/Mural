@@ -4,8 +4,6 @@ const Hls = require('hls.js');
 
 const MEDIA = [];
 const DATA = [];
-const isMobile = window.isMobile;
-
 const HSL_TYPE = 'application/vnd.apple.mpegurl';
 
 function stopVideo(id) {
@@ -24,11 +22,11 @@ function playBackgroundVideo (id, attrs) {
   const video = MEDIA[id];
 
   video.loop = attrs.loop;
-  video.muted = isMobile.any ? video.muted : attrs.muted;
+  video.muted = attrs.muted;
 
   if ((!DATA[id].paused && attrs.autoplay) ||
       (DATA[id].playTriggered && !DATA[id].paused)) {
-    DATA[id].playPromise = mediaUtils.fadein(video);
+    DATA[id].playPromise = mediaUtils.fadein(id, video);
   }
 }
 
@@ -73,7 +71,7 @@ function prepareVideo (scrollStory, $el, id, srcs, attrs) {
           resolve();
         });
     });
-  } else if (video.canPlayType(HSL_TYPE)) {
+  } else if (hslSource && video.canPlayType(HSL_TYPE)) {
     canPlayThrough = new Promise(function(resolve, reject) {
       video.src = hslSource.src;
       video.addEventListener('loadedmetadata',function() {
@@ -87,7 +85,7 @@ function prepareVideo (scrollStory, $el, id, srcs, attrs) {
   $el.find('.video-container').append(video);
 
   $el.find('.play').click(function() {
-    DATA[id].playPromise = mediaUtils.fadein(video);
+    DATA[id].playPromise = mediaUtils.fadein(id, video);
     DATA[id].paused = false;
     DATA[id].playTriggered = true;
     $(this).hide();
@@ -106,11 +104,6 @@ function prepareVideo (scrollStory, $el, id, srcs, attrs) {
   } else {
     $el.find('.pause').hide();
   }
-
-  $el.find('.mobile-mute.muted').click(function() {
-    setMuted(id, false);
-    $(this).remove();
-  });
 
   if (attrs.autoAdvance) {
     video.addEventListener('ended', () => {
