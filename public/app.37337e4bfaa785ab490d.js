@@ -10443,7 +10443,7 @@ return jQuery;
 
 var $ = __webpack_require__(0);
 
-var FADE_DURATION = 500;
+var FADE_DURATION = 200;
 
 function fadeout(media) {
   $(media).animate({
@@ -10453,12 +10453,34 @@ function fadeout(media) {
   });
 }
 
-function fadein(media) {
+function fadein(id, media) {
   media.volume = 0;
   var playPromise = media.play();
-  $(media).animate({
-    volume: 1
-  }, FADE_DURATION);
+  playPromise.then(function () {
+    $(media).animate({
+      volume: 1
+    }, FADE_DURATION);
+  }).catch(function (e) {
+    // mute video & audio for mobile platform autoplay.
+    media.muted = true; // insert an unmute button for mobile.
+
+    var $storyItem = $("#story0-".concat(id));
+
+    if ($storyItem.find('.mobile-mute').length === 0) {
+      var mobileUnmute = $('<span/>', {
+        class: 'mobile-mute muted'
+      }).click(function () {
+        media.muted = false;
+        $(media).animate({
+          volume: 1
+        }, FADE_DURATION);
+        $(this).remove();
+      });
+      $storyItem.append(mobileUnmute);
+    }
+
+    return media.play();
+  });
   return playPromise;
 }
 
@@ -10608,7 +10630,7 @@ function getVideoAttrs(item) {
     muted = isSoundEnabled === false;
     autoplay = !isMobile.any;
   } else {
-    muted = isMobile.any || !isSoundEnabled;
+    muted = !isSoundEnabled;
     autoplay = true;
   }
 
@@ -10778,7 +10800,7 @@ $story.on('itemexitviewport', function (ev, item) {
 $('[data-scroll-speed]').moveIt(); // give mobile a special "unmute button" per video.
 
 if (isMobile.any) {
-  $('.mute').hide();
+  $('.mute').remove();
 } else {
   $('.mobile-mute').remove();
   $('.mute').click(function () {
@@ -14479,7 +14501,6 @@ var Hls = __webpack_require__(13);
 
 var MEDIA = [];
 var DATA = [];
-var isMobile = window.isMobile;
 var HSL_TYPE = 'application/vnd.apple.mpegurl';
 
 function stopVideo(id) {
@@ -14497,10 +14518,10 @@ function stopVideo(id) {
 function playBackgroundVideo(id, attrs) {
   var video = MEDIA[id];
   video.loop = attrs.loop;
-  video.muted = isMobile.any ? video.muted : attrs.muted;
+  video.muted = attrs.muted;
 
   if (!DATA[id].paused && attrs.autoplay || DATA[id].playTriggered && !DATA[id].paused) {
-    DATA[id].playPromise = mediaUtils.fadein(video);
+    DATA[id].playPromise = mediaUtils.fadein(id, video);
   }
 }
 
@@ -14550,7 +14571,7 @@ function prepareVideo(scrollStory, $el, id, srcs, attrs) {
         resolve();
       });
     });
-  } else if (video.canPlayType(HSL_TYPE)) {
+  } else if (hslSource && video.canPlayType(HSL_TYPE)) {
     canPlayThrough = new Promise(function (resolve, reject) {
       video.src = hslSource.src;
       video.addEventListener('loadedmetadata', function () {
@@ -14563,7 +14584,7 @@ function prepareVideo(scrollStory, $el, id, srcs, attrs) {
 
   $el.find('.video-container').append(video);
   $el.find('.play').click(function () {
-    DATA[id].playPromise = mediaUtils.fadein(video);
+    DATA[id].playPromise = mediaUtils.fadein(id, video);
     DATA[id].paused = false;
     DATA[id].playTriggered = true;
     $(this).hide();
@@ -14581,11 +14602,6 @@ function prepareVideo(scrollStory, $el, id, srcs, attrs) {
   } else {
     $el.find('.pause').hide();
   }
-
-  $el.find('.mobile-mute.muted').click(function () {
-    setMuted(id, false);
-    $(this).remove();
-  });
 
   if (attrs.autoAdvance) {
     video.addEventListener('ended', function () {
@@ -33669,7 +33685,7 @@ function setMuted(id, muted) {
 function playBackgroundAudio(id, attrs) {
   var audio = MEDIA[id];
   audio.muted = attrs.muted;
-  DATA[id].playPromise = mediaUtils.fadein(audio);
+  DATA[id].playPromise = mediaUtils.fadein(id, audio);
 }
 
 module.exports = {
