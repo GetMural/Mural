@@ -10446,14 +10446,12 @@ var $ = __webpack_require__(0);
 var FADE_DURATION = 200;
 
 function fadeout(id, media, shouldPause) {
-  console.log('fadeout ' + id);
   $(media).animate({
     volume: 0
   }, {
     duration: FADE_DURATION,
     always: function always() {
       if (shouldPause()) {
-        console.log('fadeout ' + id + ' pausing.');
         media.pause();
       }
     }
@@ -10461,18 +10459,19 @@ function fadeout(id, media, shouldPause) {
 }
 
 function fadein(id, media) {
-  console.log('fade in ' + id);
   media.volume = 0;
   var playPromise = media.play();
   playPromise.then(function () {
     $(media).animate({
       volume: 1
     }, {
-      duration: FADE_DURATION
+      duration: FADE_DURATION,
+      fail: function fail() {
+        console.log("couldn't animate volume");
+      }
     });
-  }).catch(function (e) {
-    console.log(e); // mute video & audio for mobile platform autoplay.
-
+  }, function (e) {
+    // mute video & audio for mobile platform autoplay.
     media.muted = true; // insert an unmute button for mobile.
 
     var $storyItem = $("#story0-".concat(id));
@@ -10491,6 +10490,9 @@ function fadein(id, media) {
     }
 
     return media.play();
+  }).catch(function (e) {
+    console.log('Muted play not working either :(');
+    console.log(e);
   });
   return playPromise;
 }
@@ -10759,8 +10761,6 @@ function loadItem(item) {
 }
 
 $story.on('itemfocus', function (ev, item) {
-  console.log('itemfocus ' + item.index);
-
   if (item.data.image) {
     imageMedia.fixBackgroundImage(item.el, item.data[scrKey], true);
   }
@@ -10777,8 +10777,6 @@ $story.on('itemfocus', function (ev, item) {
   }
 });
 $story.on('itemblur', function (ev, item) {
-  console.log('itemblur ' + item.index);
-
   if (item.data.image) {
     imageMedia.unfixBackgroundImage(item.el);
   }
@@ -10792,7 +10790,6 @@ $story.on('itemblur', function (ev, item) {
   }
 });
 $story.on('itementerviewport', function (ev, item) {
-  console.log('itementerviewport ' + item.index);
   loadItem(item); // load another in advance
 
   if (item.index + 1 < storyItems.length) {
@@ -14521,18 +14518,9 @@ function stopVideo(id) {
     return;
   }
 
-  if (DATA[id].playPromise) {
-    DATA[id].playPromise.then(function () {
-      DATA[id].playPromise = null;
-      mediaUtils.fadeout(id, video, function () {
-        return DATA[id].active === false;
-      });
-    });
-  } else {
-    mediaUtils.fadeout(id, video, function () {
-      return DATA[id].active === false;
-    });
-  }
+  mediaUtils.fadeout(id, video, function () {
+    return DATA[id].active === false;
+  });
 }
 
 function playBackgroundVideo(id, attrs) {
@@ -33681,18 +33669,9 @@ function stopAudio(id) {
     return;
   }
 
-  if (DATA[id].playPromise) {
-    DATA[id].playPromise.then(function () {
-      DATA[id].playPromise = null;
-      mediaUtils.fadeout(id, audio, function () {
-        return DATA[id].active === false;
-      });
-    });
-  } else {
-    mediaUtils.fadeout(id, audio, function () {
-      return DATA[id].active === false;
-    });
-  }
+  mediaUtils.fadeout(id, audio, function () {
+    return DATA[id].active === false;
+  });
 }
 
 function prepareAudio(id, srcs) {

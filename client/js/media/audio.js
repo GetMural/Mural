@@ -13,18 +13,9 @@ function stopAudio(id) {
     return;
   }
 
-  if (DATA[id].playPromise) {
-    DATA[id].playPromise.then(() => {
-      DATA[id].playPromise = null;
-      mediaUtils.fadeout(id, audio, function() {
-        return DATA[id].active === false;
-      });
-    });
-  } else {
-    mediaUtils.fadeout(id, audio, function() {
-      return DATA[id].active === false;
-    });
-  }
+  mediaUtils.fadeout(id, audio, function() {
+    return DATA[id].active === false;
+  });
 }
 
 function prepareAudio (id, srcs) {

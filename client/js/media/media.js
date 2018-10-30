@@ -2,12 +2,10 @@ const $ = require('jquery');
 const FADE_DURATION = 200;
 
 function fadeout(id, media, shouldPause) {
-  console.log('fadeout ' + id);
   $(media).animate({volume: 0}, {
     duration: FADE_DURATION,
     always: function() {
       if (shouldPause()) {
-        console.log('fadeout ' + id + ' pausing.');
         media.pause();
       }
     }
@@ -15,33 +13,39 @@ function fadeout(id, media, shouldPause) {
 }
 
 function fadein(id, media) {
-  console.log('fade in ' + id);
   media.volume = 0;
   const playPromise = media.play();
 
-  playPromise.then(function() {
-    $(media).animate({volume: 1}, {
-      duration: FADE_DURATION
-    });
-  }).catch(function(e) {
-    console.log(e);
-    // mute video & audio for mobile platform autoplay.
-    media.muted = true;
-
-    // insert an unmute button for mobile.
-    const $storyItem = $(`#story0-${id}`);
-    if ($storyItem.find('.mobile-mute').length === 0) {
-      const mobileUnmute = $('<span/>', {
-        class: 'mobile-mute muted'
-      }).click(function() {
-        media.muted = false;
-        $(media).animate({volume: 1}, FADE_DURATION);
-        $(this).remove();
+  playPromise.then(
+    function() {
+      $(media).animate({volume: 1}, {
+        duration: FADE_DURATION,
+        fail: function () {
+          console.log("couldn't animate volume");
+        }
       });
-      $storyItem.append(mobileUnmute);
-    }
+    },
+    function(e) {
+      // mute video & audio for mobile platform autoplay.
+      media.muted = true;
+      // insert an unmute button for mobile.
+      const $storyItem = $(`#story0-${id}`);
+      if ($storyItem.find('.mobile-mute').length === 0) {
+        const mobileUnmute = $('<span/>', {
+          class: 'mobile-mute muted'
+        }).click(function() {
+          media.muted = false;
+          $(media).animate({volume: 1}, FADE_DURATION);
+          $(this).remove();
+        });
+        $storyItem.append(mobileUnmute);
+      }
 
-    return media.play();
+      return media.play();
+    }
+  ).catch(function(e) {
+    console.log('Muted play not working either :(');
+    console.log(e);
   });
 
   return playPromise;

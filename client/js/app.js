@@ -227,7 +227,6 @@ function loadItem (item) {
 }
 
 $story.on('itemfocus', function(ev, item) {
-  console.log('itemfocus ' + item.index);
   if (item.data.image) {
     imageMedia.fixBackgroundImage(item.el, item.data[scrKey], true);
   }
@@ -248,7 +247,6 @@ $story.on('itemfocus', function(ev, item) {
 });
 
 $story.on('itemblur', function(ev, item) {
-  console.log('itemblur ' + item.index);
   if (item.data.image) {
     imageMedia.unfixBackgroundImage(item.el);
   }
@@ -263,7 +261,6 @@ $story.on('itemblur', function(ev, item) {
 });
 
 $story.on('itementerviewport', function(ev, item) {
-  console.log('itementerviewport ' + item.index);
   loadItem(item);
 
   // load another in advance

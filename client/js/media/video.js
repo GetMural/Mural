@@ -16,18 +16,9 @@ function stopVideo(id) {
     return;
   }
 
-  if (DATA[id].playPromise) {
-    DATA[id].playPromise.then(() => {
-      DATA[id].playPromise = null;
-      mediaUtils.fadeout(id, video, function() {
-        return DATA[id].active === false;
-      });
-    });
-  } else {
-    mediaUtils.fadeout(id, video, function() {
-      return DATA[id].active === false;
-    });
-  }
+  mediaUtils.fadeout(id, video, function() {
+    return DATA[id].active === false;
+  });
 }
 
 function playBackgroundVideo (id, attrs) {
