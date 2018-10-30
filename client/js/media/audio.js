@@ -5,13 +5,25 @@ const DATA = [];
 
 function stopAudio(id) {
   const audio = MEDIA[id];
+  $(audio).stop(true);
+  DATA[id].active = false;
+
+  if (audio.paused) {
+    DATA[id].playPromise = null;
+    return;
+  }
 
   if (DATA[id].playPromise) {
     DATA[id].playPromise.then(() => {
-      mediaUtils.fadeout(audio);
+      DATA[id].playPromise = null;
+      mediaUtils.fadeout(id, audio, function() {
+        return DATA[id].active === false;
+      });
     });
   } else {
-    mediaUtils.fadeout(audio);
+    mediaUtils.fadeout(id, audio, function() {
+      return DATA[id].active === false;
+    });
   }
 }
 
@@ -42,6 +54,13 @@ function setMuted (id, muted) {
 
 function playBackgroundAudio (id, attrs) {
   const audio = MEDIA[id];
+  $(audio).stop(true);
+  DATA[id].active = true;
+
+  if (!audio.paused) {
+    return;
+  }
+
   audio.muted = attrs.muted;
   DATA[id].playPromise = mediaUtils.fadein(id, audio);
 }

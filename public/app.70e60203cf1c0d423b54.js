@@ -10445,23 +10445,34 @@ var $ = __webpack_require__(0);
 
 var FADE_DURATION = 200;
 
-function fadeout(media) {
+function fadeout(id, media, shouldPause) {
+  console.log('fadeout ' + id);
   $(media).animate({
     volume: 0
-  }, FADE_DURATION, function () {
-    media.pause();
+  }, {
+    duration: FADE_DURATION,
+    always: function always() {
+      if (shouldPause()) {
+        console.log('fadeout ' + id + ' pausing.');
+        media.pause();
+      }
+    }
   });
 }
 
 function fadein(id, media) {
+  console.log('fade in ' + id);
   media.volume = 0;
   var playPromise = media.play();
   playPromise.then(function () {
     $(media).animate({
       volume: 1
-    }, FADE_DURATION);
+    }, {
+      duration: FADE_DURATION
+    });
   }).catch(function (e) {
-    // mute video & audio for mobile platform autoplay.
+    console.log(e); // mute video & audio for mobile platform autoplay.
+
     media.muted = true; // insert an unmute button for mobile.
 
     var $storyItem = $("#story0-".concat(id));
@@ -10748,6 +10759,8 @@ function loadItem(item) {
 }
 
 $story.on('itemfocus', function (ev, item) {
+  console.log('itemfocus ' + item.index);
+
   if (item.data.image) {
     imageMedia.fixBackgroundImage(item.el, item.data[scrKey], true);
   }
@@ -10764,6 +10777,8 @@ $story.on('itemfocus', function (ev, item) {
   }
 });
 $story.on('itemblur', function (ev, item) {
+  console.log('itemblur ' + item.index);
+
   if (item.data.image) {
     imageMedia.unfixBackgroundImage(item.el);
   }
@@ -10777,6 +10792,7 @@ $story.on('itemblur', function (ev, item) {
   }
 });
 $story.on('itementerviewport', function (ev, item) {
+  console.log('itementerviewport ' + item.index);
   loadItem(item); // load another in advance
 
   if (item.index + 1 < storyItems.length) {
@@ -10787,16 +10803,8 @@ $story.on('itementerviewport', function (ev, item) {
   if (item.index + 2 < storyItems.length) {
     loadItem(storyItems[item.index + 2]);
   }
-});
-$story.on('itemexitviewport', function (ev, item) {
-  if (item.data.image) {
-    imageMedia.unfixBackgroundImage(item.el);
-  }
+}); // parallax.
 
-  if (item.data.video) {
-    videoMedia.removeBackgroundVideo(item.el, item.index);
-  }
-});
 $('[data-scroll-speed]').moveIt(); // give mobile a special "unmute button" per video.
 
 if (isMobile.any) {
@@ -14505,30 +14513,49 @@ var HSL_TYPE = 'application/vnd.apple.mpegurl';
 
 function stopVideo(id) {
   var video = MEDIA[id];
+  $(video).stop(true);
+  DATA[id].active = false;
+
+  if (video.paused) {
+    DATA[id].playPromise = null;
+    return;
+  }
 
   if (DATA[id].playPromise) {
     DATA[id].playPromise.then(function () {
-      mediaUtils.fadeout(video);
+      DATA[id].playPromise = null;
+      mediaUtils.fadeout(id, video, function () {
+        return DATA[id].active === false;
+      });
     });
   } else {
-    mediaUtils.fadeout(video);
+    mediaUtils.fadeout(id, video, function () {
+      return DATA[id].active === false;
+    });
   }
 }
 
 function playBackgroundVideo(id, attrs) {
   var video = MEDIA[id];
+  $(video).stop(true);
+
+  if (!video.paused) {
+    DATA[id].active = true;
+    return;
+  }
+
   video.loop = attrs.loop;
   video.muted = attrs.muted;
 
   if (!DATA[id].paused && attrs.autoplay || DATA[id].playTriggered && !DATA[id].paused) {
     DATA[id].playPromise = mediaUtils.fadein(id, video);
+    DATA[id].active = true;
   }
 }
 
 function removeBackgroundVideo($el, id) {
   var $container = $el.find('.video-container');
   $container.css('position', '');
-  var video = MEDIA[id];
   stopVideo(id);
 }
 
@@ -33646,13 +33673,25 @@ var DATA = [];
 
 function stopAudio(id) {
   var audio = MEDIA[id];
+  $(audio).stop(true);
+  DATA[id].active = false;
+
+  if (audio.paused) {
+    DATA[id].playPromise = null;
+    return;
+  }
 
   if (DATA[id].playPromise) {
     DATA[id].playPromise.then(function () {
-      mediaUtils.fadeout(audio);
+      DATA[id].playPromise = null;
+      mediaUtils.fadeout(id, audio, function () {
+        return DATA[id].active === false;
+      });
     });
   } else {
-    mediaUtils.fadeout(audio);
+    mediaUtils.fadeout(id, audio, function () {
+      return DATA[id].active === false;
+    });
   }
 }
 
@@ -33684,6 +33723,13 @@ function setMuted(id, muted) {
 
 function playBackgroundAudio(id, attrs) {
   var audio = MEDIA[id];
+  $(audio).stop(true);
+  DATA[id].active = true;
+
+  if (!audio.paused) {
+    return;
+  }
+
   audio.muted = attrs.muted;
   DATA[id].playPromise = mediaUtils.fadein(id, audio);
 }

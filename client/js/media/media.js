@@ -1,19 +1,30 @@
 const $ = require('jquery');
 const FADE_DURATION = 200;
 
-function fadeout(media) {
-  $(media).animate({volume: 0}, FADE_DURATION, function() {
-    media.pause();
+function fadeout(id, media, shouldPause) {
+  console.log('fadeout ' + id);
+  $(media).animate({volume: 0}, {
+    duration: FADE_DURATION,
+    always: function() {
+      if (shouldPause()) {
+        console.log('fadeout ' + id + ' pausing.');
+        media.pause();
+      }
+    }
   });
 }
 
 function fadein(id, media) {
+  console.log('fade in ' + id);
   media.volume = 0;
   const playPromise = media.play();
 
   playPromise.then(function() {
-    $(media).animate({volume: 1}, FADE_DURATION);
+    $(media).animate({volume: 1}, {
+      duration: FADE_DURATION
+    });
   }).catch(function(e) {
+    console.log(e);
     // mute video & audio for mobile platform autoplay.
     media.muted = true;
 

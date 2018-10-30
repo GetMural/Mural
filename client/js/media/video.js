@@ -8,18 +8,36 @@ const HSL_TYPE = 'application/vnd.apple.mpegurl';
 
 function stopVideo(id) {
   const video = MEDIA[id];
+  $(video).stop(true);
+  DATA[id].active = false;
+
+  if (video.paused) {
+    DATA[id].playPromise = null;
+    return;
+  }
 
   if (DATA[id].playPromise) {
     DATA[id].playPromise.then(() => {
-      mediaUtils.fadeout(video);
+      DATA[id].playPromise = null;
+      mediaUtils.fadeout(id, video, function() {
+        return DATA[id].active === false;
+      });
     });
   } else {
-    mediaUtils.fadeout(video);
+    mediaUtils.fadeout(id, video, function() {
+      return DATA[id].active === false;
+    });
   }
 }
 
 function playBackgroundVideo (id, attrs) {
   const video = MEDIA[id];
+  $(video).stop(true);
+
+  if (!video.paused) {
+    DATA[id].active = true;
+    return;
+  }
 
   video.loop = attrs.loop;
   video.muted = attrs.muted;
@@ -27,13 +45,13 @@ function playBackgroundVideo (id, attrs) {
   if ((!DATA[id].paused && attrs.autoplay) ||
       (DATA[id].playTriggered && !DATA[id].paused)) {
     DATA[id].playPromise = mediaUtils.fadein(id, video);
+    DATA[id].active = true;
   }
 }
 
 function removeBackgroundVideo ($el, id) {
   const $container = $el.find('.video-container');
   $container.css('position', '');
-  const video = MEDIA[id];
   stopVideo(id);
 }
 
