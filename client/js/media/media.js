@@ -1,5 +1,5 @@
 const $ = require('jquery');
-const FADE_DURATION = 500;
+const FADE_DURATION = 200;
 
 function fadeout(media) {
   $(media).animate({volume: 0}, FADE_DURATION, function() {
@@ -7,10 +7,31 @@ function fadeout(media) {
   });
 }
 
-function fadein(media) {
+function fadein(id, media) {
   media.volume = 0;
   const playPromise = media.play();
-  $(media).animate({volume: 1}, FADE_DURATION);
+
+  playPromise.then(function() {
+    $(media).animate({volume: 1}, FADE_DURATION);
+  }).catch(function(e) {
+    // mute video & audio for mobile platform autoplay.
+    media.muted = true;
+
+    // insert an unmute button for mobile.
+    const $storyItem = $(`#story0-${id}`);
+    if ($storyItem.find('.mobile-mute').length === 0) {
+      const mobileUnmute = $('<span/>', {
+        class: 'mobile-mute muted'
+      }).click(function() {
+        media.muted = false;
+        $(media).animate({volume: 1}, FADE_DURATION);
+        $(this).remove();
+      });
+      $storyItem.append(mobileUnmute);
+    }
+
+    return media.play();
+  });
 
   return playPromise;
 }

@@ -43,7 +43,7 @@ function setMuted (id, muted) {
 function playBackgroundAudio (id, attrs) {
   const audio = MEDIA[id];
   audio.muted = attrs.muted;
-  DATA[id].playPromise = mediaUtils.fadein(audio);
+  DATA[id].playPromise = mediaUtils.fadein(id, audio);
 }
 
 module.exports = {

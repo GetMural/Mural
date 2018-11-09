@@ -83,7 +83,7 @@ function getVideoAttrs(item) {
     muted = (isSoundEnabled === false);
     autoplay = !isMobile.any;
   } else {
-    muted = isMobile.any || !isSoundEnabled;
+    muted = !isSoundEnabled;
     autoplay = true;
   }
 
@@ -288,7 +288,7 @@ $('[data-scroll-speed]').moveIt();
 
 // give mobile a special "unmute button" per video.
 if (isMobile.any) {
-  $('.mute').hide();
+  $('.mute').remove();
 } else {
   $('.mobile-mute').remove();
   $('.mute').click(function () {
