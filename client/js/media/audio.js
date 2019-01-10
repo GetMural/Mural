@@ -5,14 +5,17 @@ const DATA = [];
 
 function stopAudio(id) {
   const audio = MEDIA[id];
+  $(audio).stop(true);
+  DATA[id].active = false;
 
-  if (DATA[id].playPromise) {
-    DATA[id].playPromise.then(() => {
-      mediaUtils.fadeout(audio);
-    });
-  } else {
-    mediaUtils.fadeout(audio);
+  if (audio.paused) {
+    DATA[id].playPromise = null;
+    return;
   }
+
+  mediaUtils.fadeout(id, audio, function() {
+    return DATA[id].active === false;
+  });
 }
 
 function prepareAudio (id, srcs) {
@@ -42,6 +45,13 @@ function setMuted (id, muted) {
 
 function playBackgroundAudio (id, attrs) {
   const audio = MEDIA[id];
+  $(audio).stop(true);
+  DATA[id].active = true;
+
+  if (!audio.paused) {
+    return;
+  }
+
   audio.muted = attrs.muted;
   DATA[id].playPromise = mediaUtils.fadein(id, audio);
 }

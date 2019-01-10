@@ -274,16 +274,7 @@ $story.on('itementerviewport', function(ev, item) {
   }
 });
 
-$story.on('itemexitviewport', function(ev, item) {
-  if (item.data.image) {
-    imageMedia.unfixBackgroundImage(item.el);
-  }
-
-  if (item.data.video) {
-    videoMedia.removeBackgroundVideo(item.el, item.index);
-  }
-});
-
+// parallax.
 $('[data-scroll-speed]').moveIt();
 
 // give mobile a special "unmute button" per video.
