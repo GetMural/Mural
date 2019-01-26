@@ -22,6 +22,12 @@ An end-user manual is available here: https://www.getmural.io/Mural_0.2.5_manual
 
 Once a Mural story is ready to be published, the user clicks the 'Download' button and the program sends a .ZIP file which contains all the files needed to publish the story on a standard web server (HTML, CSS, JavaScript and media files, in addition to the JSON file used by Mural internally). 
 
+## Running from git
+
+Clone/download the repo and run:
+`npm install`
+`npm start`
+
 ## Installation and running the app
 
 **Pre-compiled binaries are available:**
