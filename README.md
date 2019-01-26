@@ -25,6 +25,7 @@ Once a Mural story is ready to be published, the user clicks the 'Download' butt
 ## Running from git
 
 Clone/download the repo and run:
+
 `npm install`
 
 `npm start`
