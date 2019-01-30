@@ -10971,6 +10971,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 }(function($, undefined) {
 
   var pluginName = 'scrollStory';
+  var eventNameSpace = '.' + pluginName;
   var defaults = {
 
     // jquery object, class selector string, or array of values, or null (to use existing DOM)
@@ -11028,6 +11029,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
     enabled: true,
 
     setup: $.noop,
+    destroy: $.noop,
     itembuild: $.noop,
     itemfocus: $.noop,
     itemblur: $.noop,
@@ -11198,17 +11200,18 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
       /**
        * Attach handlers before any events are dispatched
        */
-      this.$el.on('setup', this._onSetup.bind(this));
-      this.$el.on('containeractive', this._onContainerActive.bind(this));
-      this.$el.on('containerinactive', this._onContainerInactive.bind(this));
-      this.$el.on('itemblur', this._onItemBlur.bind(this));
-      this.$el.on('itemfocus', this._onItemFocus.bind(this));
-      this.$el.on('itementerviewport', this._onItemEnterViewport.bind(this));
-      this.$el.on('itemexitviewport', this._onItemExitViewport.bind(this));
-      this.$el.on('itemfilter', this._onItemFilter.bind(this));
-      this.$el.on('itemunfilter', this._onItemUnfilter.bind(this));
-      this.$el.on('categoryfocus', this._onCategoryFocus.bind(this));
-      this.$el.on('triggeroffsetupdate', this._onTriggerOffsetUpdate.bind(this));
+      this.$el.on('setup'+eventNameSpace, this._onSetup.bind(this));
+      this.$el.on('destroy'+eventNameSpace, this._onDestroy.bind(this));
+      this.$el.on('containeractive'+eventNameSpace, this._onContainerActive.bind(this));
+      this.$el.on('containerinactive'+eventNameSpace, this._onContainerInactive.bind(this));
+      this.$el.on('itemblur'+eventNameSpace, this._onItemBlur.bind(this));
+      this.$el.on('itemfocus'+eventNameSpace, this._onItemFocus.bind(this));
+      this.$el.on('itementerviewport'+eventNameSpace, this._onItemEnterViewport.bind(this));
+      this.$el.on('itemexitviewport'+eventNameSpace, this._onItemExitViewport.bind(this));
+      this.$el.on('itemfilter'+eventNameSpace, this._onItemFilter.bind(this));
+      this.$el.on('itemunfilter'+eventNameSpace, this._onItemUnfilter.bind(this));
+      this.$el.on('categoryfocus'+eventNameSpace, this._onCategoryFocus.bind(this));
+      this.$el.on('triggeroffsetupdate'+eventNameSpace, this._onTriggerOffsetUpdate.bind(this));
 
 
       /**
@@ -11239,8 +11242,9 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
       // 3. Set active item, and double check 
       // scroll position and offsets.
-      this._handleRepaint();
-
+      if(this.options.enabled){
+        this._handleRepaint();
+      }
 
 
       /**
@@ -11302,7 +11306,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
         // bind and throttle native scroll
         scrollThrottle = (this.options.throttleType === 'throttle') ? throttle : debounce;
         scrollHandler = scrollThrottle(this._handleScroll.bind(this), this.options.scrollSensitivity, this.options.throttleTypeOptions);
-        $window.on('scroll', scrollHandler);
+        $window.on('scroll'+eventNameSpace, scrollHandler);
       } else {
 
         // bind but don't throttle custom event
@@ -11337,7 +11341,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
         if (typeof this.options.scrollEvent === 'function') {
           this.options.scrollEvent(scrollHandler);
         } else {
-          $window.on(this.options.scrollEvent, function(){
+          $window.on(this.options.scrollEvent+eventNameSpace, function(){
             scrollHandler();
           });
         }
@@ -11345,7 +11349,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
       // anything that might cause a repaint      
       var resizeThrottle = debounce(this._handleResize, 100);
-      $window.on('DOMContentLoaded load resize', resizeThrottle.bind(this));
+      $window.on('DOMContentLoaded'+eventNameSpace + ' load'+eventNameSpace + ' resize'+eventNameSpace, resizeThrottle.bind(this));
 
       instanceCounter = instanceCounter + 1;
     },
@@ -11369,17 +11373,53 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
     /**
      * Convenience method to navigate to next item
+     *
+     * @param  {Number} _index -- an optional index. Used to recursively find unflitered item 
      */
-    next: function() {
-      this.index(this.index() + 1);
+    next: function(_index) {
+      var currentIndex = _index || this.index();
+      var nextItem;
+
+      if (typeof currentIndex === 'number') {
+        nextItem = this.getItemByIndex(currentIndex + 1);
+
+        // valid index and item
+        if (nextItem) {
+
+          // proceed if not filtered. if filtered try the one after that.
+          if (!nextItem.filtered) {
+            this.index(currentIndex + 1);
+          } else {
+            this.next(currentIndex + 1);
+          }
+        }
+      }
     },
 
 
     /**
      * Convenience method to navigate to previous item
+     *
+     * @param  {Number} _index -- an optional index. Used to recursively find unflitered item 
      */
-    previous: function() {
-      this.index(this.index() - 1);
+    previous: function(_index) {
+      var currentIndex = _index || this.index();
+      var previousItem;
+
+      if (typeof currentIndex === 'number') {
+        previousItem = this.getItemByIndex(currentIndex - 1);
+
+        // valid index and item
+        if (previousItem) {
+
+          // proceed if not filtered. if filtered try the one before that.
+          if (!previousItem.filtered) {
+            this.index(currentIndex - 1);            
+          } else {
+            this.previous(currentIndex - 1);
+          }
+        }
+      }
     },
 
 
@@ -11578,7 +11618,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
      *
      * 0 means the first item isn't yet active,
      * and 1 means the last item is active, or 
-     * has already be scrolled beyond.
+     * has already been scrolled beyond active.
      * 
      * @return {[type]} [description]
      */
@@ -11586,6 +11626,15 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
       return this._percentScrollToLastItem || 0;
     },
 
+
+    /**
+     * Progress of the entire scroll distance, from the start 
+     * of the first item a '0', until the very end of the last
+     * item, which is '1';
+     */
+    getScrollComplete: function() {
+      return this._totalScrollComplete || 0;
+    },
 
     /**
      * Return an array of all filtered items.
@@ -11735,7 +11784,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
     disable: function() {
       this.options.enabled = false;
     },
-
+    
     
     /**
      * Enable scroll updates
@@ -12003,6 +12052,9 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
       var rect;
       var previouslyInViewport;
 
+      // track total scroll across all items
+      var totalScrollComplete = 0;
+
       for (i = 0; i < length; i++) {
         item = items[i];
         rect = item.el[0].getBoundingClientRect();
@@ -12013,10 +12065,13 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
         if (item.distanceToOffset >= 0) {
           item.percentScrollComplete = 0;
         } else if (Math.abs(item.distanceToOffset) >= rect.height){
-          item.percentScrollComplete = 100;
+          item.percentScrollComplete = 1;
         } else {
           item.percentScrollComplete = Math.abs(item.distanceToOffset) / rect.height;
         }
+
+        // track percent scroll 
+        totalScrollComplete = totalScrollComplete + item.percentScrollComplete;
 
         // track viewport status
         previouslyInViewport = item.inViewport;
@@ -12046,6 +12101,8 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
       }
 
       this._percentScrollToLastItem = percentScrollToLastItem;
+
+      this._totalScrollComplete = totalScrollComplete / length;
     },
 
 
@@ -12109,6 +12166,32 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
       if (opts.handleRepaint) {
         this._handleRepaint();
       }
+    },
+
+    /**
+     * Remove any classes added during
+     * use and unbind all events.
+     */
+    destroy: function(removeMarkup) {
+      removeMarkup = removeMarkup || false;
+
+      if(removeMarkup){
+        this.each(function(item){
+          item.el.remove();
+        });
+      }
+
+      // cleanup dom / events and 
+      // run any user code
+      this._trigger('destroy');
+
+      // plugin wrapper disallows multiple scrollstory
+      // instances on the same element. after a destory,
+      // allow plugin to reattach to this element.
+       var containerData = this.$el.data();
+       containerData['plugin_' + pluginName] = null;
+
+      // TODO: destroy the *instance*?
     },
 
 
@@ -12177,6 +12260,32 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
       this.$el.addClass(pluginName);
     },
 
+    _onDestroy: function() {
+
+      // remove events
+      this.$el.off(eventNameSpace);
+      $window.off(eventNameSpace);
+
+      // item classes
+      var itemClassesToRemove = ['scrollStoryItem', 'inviewport', 'active', 'filtered'].join(' ');
+      this.each(function(item){
+        item.el.removeClass(itemClassesToRemove);
+      });
+
+      // container classes
+      this.$el.removeClass(function(i, classNames){
+        var classNamesToRemove = [];
+        classNames.split(' ').forEach(function(c){
+          if (c.lastIndexOf(pluginName) === 0 ){
+            classNamesToRemove.push(c);
+          }
+        });
+        return classNamesToRemove.join(' ');
+      });
+
+      this.$trigger.remove();
+    },
+
     _onContainerActive: function() {
       this.$el.addClass(pluginName + 'Active');
     },
@@ -12238,6 +12347,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
         top: offset + 'px'
       });
     },
+
 
 
     /**

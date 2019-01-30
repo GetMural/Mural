@@ -25,7 +25,8 @@ app.on('ready', function () {
         //  'node-integration': false // otherwise various client-side things may break
     });
 
-    mainWindow.loadURL('http://localhost:3000/');
+    var port = process.env.MURAL_PORT || 3000;
+    mainWindow.loadURL(`http://localhost:${port}/`);
 
     var template = [
         {
