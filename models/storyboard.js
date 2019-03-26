@@ -19,14 +19,22 @@ function createNav(items) {
     const nav = [];
 
     items.forEach((item, id) => {
-        const [mediaType] = Object.keys(item);
-        // fallback for now until every type has a title field to fill in. (or something for nav)
-        const tmpTitle = item[mediaType].title ? item[mediaType].title : `${id} ${mediaType}`;
-        const title = tmpTitle.replace(/<\/?[^>]+(>|$)/g, "");
+      var elKey = Object.keys(item)[0];
+      const root = item[elKey];
+      var writeToNav = true;
+      if (root && root.in_nav && root.in_nav.suppress) {
+        writeToNav = false;
+      }
+      const [mediaType] = Object.keys(item);
+      // fallback for now until every type has a title field to fill in. (or something for nav)
+      const tmpTitle = item[mediaType].title ? item[mediaType].title : `${id} ${mediaType}`;
+      const title = tmpTitle.replace(/<\/?[^>]+(>|$)/g, "");
+      if (writeToNav) {
         nav.push({
             id,
             title
         });
+      }
     });
 
     return nav;
@@ -42,7 +50,7 @@ Storyboard.prototype = {
             if (err) {
                 cb(err, null);
             }
-            console.log("Reading from preferenes file", data.storyboard);
+            console.log("Reading from preferences file", data.storyboard);
             self.filename = data.storyboard;
             cb(null, path.join(__dirname, "../data/stories/", data.storyboard));
         })

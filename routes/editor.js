@@ -157,6 +157,13 @@ router.get('/fragment/fullpage', function (req, res) {
     });
 });
 
+// Nav Suppression Toggle Fragment
+router.get('/fragment/suppressnav', function (req, res) {
+    res.render('editor/fragments/suppressnav', {
+        suppressnav: 'suppressnav'
+    });
+});
+
 // Text Bounding Box Fragment
 router.get('/fragment/backgroundprops', function (req, res) {
     res.render('editor/fragments/backgroundprops', {
@@ -397,6 +404,7 @@ router.get('/page/imagebackground/id/:id', function (req, res) {
                 offset: 'editor/fragments/offset-bgimage',
                 plaintext: 'editor/fragments/plaintext',
                 subtitle: 'editor/fragments/subtitle',
+                suppressnav: 'editor/fragments/suppressnav',
                 text: 'editor/fragments/plaintext',
                 title: 'editor/fragments/title'
             }
@@ -417,6 +425,8 @@ router.post('/page/imagebackground/id/:id', function (req, res) {
         // format and save new item
         var fullpage = (newItem['fullpage'] === 'on') ? true : false;
         item['format'] = { fullpage: fullpage };
+        var suppress = (newItem['suppress'] === 'on') ? true : false;
+        item['in_nav'] = { suppress: suppress };
         item['title'] = newItem['title'];
         item['subtitle'] = newItem['subtitle'];
         item['text'] = newItem['text'];
@@ -456,7 +466,7 @@ router.post('/page/imagebackground/id/:id', function (req, res) {
             meta: meta,
             items: items,
             editor: 'editor',
-            message: 'Image Backgroun Updated',
+            message: 'Image Background Updated',
             partials: {
                 editornav: 'editor/fragments/editornav'
             }
