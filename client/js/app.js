@@ -391,27 +391,35 @@ if ((active.index + 2) < storyItems.length) {
 }
 
 Promise.all(LOAD_PROMISES).then(() => {
-  const overlay = document.getElementById('loading_overlay');
-  document.body.removeChild(overlay);
-  document.body.classList.remove('frozen');
+  let overlay = document.getElementById('loading_overlay');
+  let playStart = document.getElementById('play_start');
+  playStart.style.display="block";
 
-  if (active.data.video) {
-    videoMedia.playBackgroundVideo(
-      active.index,
-      getVideoAttrs(active)
-    );
+  playStart.addEventListener('click', () => {
+    document.body.removeChild(overlay);
+    document.body.classList.remove('frozen');
 
-    videoMedia.fixBackgroundVideo(active.el);
-  }
+    if (active.data.video) {
+      videoMedia.playBackgroundVideo(
+        active.index,
+        getVideoAttrs(active)
+      );
 
-  if (active.data.audio) {
-    audioMedia.playBackgroundAudio(
-      active.index,
-      {
-        muted: (isSoundEnabled === false)
-      }
-    );
-  }
+      videoMedia.fixBackgroundVideo(active.el);
+    }
+
+    if (active.data.audio) {
+      audioMedia.playBackgroundAudio(
+        active.index,
+        {
+          muted: (isSoundEnabled === false)
+        }
+      );
+    }
+
+    overlay = null;
+    playStart = null;
+  });
 }).catch((e) => {
   console.error(e);
 });

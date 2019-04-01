@@ -10917,19 +10917,26 @@ if (active.index + 2 < storyItems.length) {
 
 Promise.all(LOAD_PROMISES).then(function () {
   var overlay = document.getElementById('loading_overlay');
-  document.body.removeChild(overlay);
-  document.body.classList.remove('frozen');
+  var playStart = document.getElementById('play_start');
+  playStart.style.display = "block";
+  playStart.addEventListener('click', function () {
+    document.body.removeChild(overlay);
+    document.body.classList.remove('frozen');
 
-  if (active.data.video) {
-    videoMedia.playBackgroundVideo(active.index, getVideoAttrs(active));
-    videoMedia.fixBackgroundVideo(active.el);
-  }
+    if (active.data.video) {
+      videoMedia.playBackgroundVideo(active.index, getVideoAttrs(active));
+      videoMedia.fixBackgroundVideo(active.el);
+    }
 
-  if (active.data.audio) {
-    audioMedia.playBackgroundAudio(active.index, {
-      muted: isSoundEnabled === false
-    });
-  }
+    if (active.data.audio) {
+      audioMedia.playBackgroundAudio(active.index, {
+        muted: isSoundEnabled === false
+      });
+    }
+
+    overlay = null;
+    playStart = null;
+  });
 }).catch(function (e) {
   console.error(e);
 });

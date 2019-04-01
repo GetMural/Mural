@@ -2155,20 +2155,26 @@ article .part.box_text p{background:rgba(0,0,0,0.3);display:inline}
 .loading {
   width: 100vw;
   height: 100vh;
-  z-index: 99999999;
-  position: fixed;
-  top: 0;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: auto 150px 150px auto;
+  grid-template-areas: 
+    ". . . . . . ."
+    ". logo logo logo logo logo ."
+    ". . . play . . ."
+    ". . . . . . .";
+  grid-row-gap: 0.3rem;
   background: white;
-  text-align: center;
-  color: white;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  position: fixed;
+  z-index: 102;
 }
 
-.loading-text {
-  margin: 1em;
+.loading .logo {
+  grid-area: logo;
+}
+
+.loading .play-start {
+  grid-area: play;
 }
 
 .frozen {
@@ -2177,6 +2183,7 @@ article .part.box_text p{background:rgba(0,0,0,0.3);display:inline}
 
 .play-start {
   cursor: pointer;
+  height: 150px;
 }
 
 .opacity-pane {
