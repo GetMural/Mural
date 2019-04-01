@@ -413,6 +413,54 @@
             </div>
           </section>
         {{/videofullpage}}
+
+        {{#youtube}}
+          <section class="st-video part"
+            name="story{{id}}"
+            {{#youtube_id}}
+              data-youtube-id="{{youtube_id}}"
+            {{/youtube_id}}
+              >
+            <div class="video-container"></div>
+            <div class="content container-fluid">
+
+              <div class="row">
+                <div class="{{#format}}{{#fullpage}}header-fullpage{{/fullpage}}{{/format}}">
+                  <div class="middle">
+                    {{#title}}
+                      <h1>{{{title}}}</h1>
+                    {{/title}}
+                    {{#subtitle}}
+                      <h2>{{{subtitle}}}</h2>
+                    {{/subtitle}}
+                  </div>
+                </div>
+              </div>
+
+              {{#text}}
+              <div class="row">
+                <div class="col-xs-12 col-sm-10 col-md-8 col-lg-6 text">
+
+                    {{#backgroundprops}}
+                    {{#active}}
+                    <span class="text-bounding-box" style="background-color: rgba({{value}}, {{opacity}});">
+                    {{/active}}
+                    {{/backgroundprops}}
+
+                    {{{text}}}
+
+                    {{#backgroundprops}}
+                    {{#active}}
+                    </span>
+                    {{/active}}
+                    {{/backgroundprops}}
+              </div>
+              {{/text}}
+
+            </div>
+          </section>
+        {{/youtube}}
+
       {{/items}}
     </article>
     {{#manifest}}

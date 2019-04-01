@@ -213,10 +213,6 @@ function loadItem (item) {
       item.index,
       [
         {
-          type: 'youtube',
-          src: item.data.youtube
-        },
-        {
           type: 'video/mp4',
           src: item.data.mp4
         },
