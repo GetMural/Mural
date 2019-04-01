@@ -213,6 +213,10 @@ function loadItem (item) {
       item.index,
       [
         {
+          type: 'youtube',
+          src: item.data.youtube
+        },
+        {
           type: 'video/mp4',
           src: item.data.mp4
         },
@@ -376,40 +380,27 @@ if ((active.index + 2) < storyItems.length) {
 }
 
 Promise.all(LOAD_PROMISES).then(() => {
-  let overlay = document.getElementById('loading_overlay');
-  let playStart = document.createElement('img');
-  playStart.classList.add('play-start');
-  playStart.src = "img/play.png";
+  const overlay = document.getElementById('loading_overlay');
+  document.body.removeChild(overlay);
+  document.body.classList.remove('frozen');
 
-  let text = overlay.querySelector('.loading-text');
-  text.innerHTML = "Click to Start";
-  overlay.appendChild(playStart);
+  if (active.data.video) {
+    videoMedia.playBackgroundVideo(
+      active.index,
+      getVideoAttrs(active)
+    );
 
-  playStart.addEventListener('click', () => {
-    document.body.removeChild(overlay);
-    document.body.classList.remove('frozen');
+    videoMedia.fixBackgroundVideo(active.el);
+  }
 
-    if (active.data.video) {
-      videoMedia.playBackgroundVideo(
-        active.index,
-        getVideoAttrs(active)
-      );
-
-      videoMedia.fixBackgroundVideo(active.el);
-    }
-
-    if (active.data.audio) {
-      audioMedia.playBackgroundAudio(
-        active.index,
-        {
-          muted: (isSoundEnabled === false)
-        }
-      );
-    }
-
-    overlay = null;
-    playStart = null;
-  });
+  if (active.data.audio) {
+    audioMedia.playBackgroundAudio(
+      active.index,
+      {
+        muted: (isSoundEnabled === false)
+      }
+    );
+  }
 }).catch((e) => {
   console.error(e);
 });

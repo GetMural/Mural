@@ -1,0 +1,22 @@
+<legend>Youtube Video</legend>
+<div>
+  <label for="youtube_id">YouTube Id</label>
+  <input id="youtube_id" name="youtube_id" type="text" value="{{youtube_id}}" placeholder="No YouTube id" />
+</div>
+<div id="ytpreview"></div>
+
+<script type="text/javascript" src="https://www.youtube.com/player_api"></script>
+<script type="text/javascript">
+	var youtube_id = document.getElementById('youtube_id');
+	youtube_id.onchange = function() {
+		window.YouTubePlayer.loadVideoById(this.value);
+	}
+
+	function onYouTubePlayerAPIReady () {
+	    window.YouTubePlayer = new YT.Player('ytpreview', {
+	      width: 480,
+	      height: 270,
+	      videoId: "{{youtube_id}}",
+	    });
+	}
+</script>

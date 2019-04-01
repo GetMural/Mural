@@ -72,6 +72,14 @@
           <button class="btn btn-danger btn-xs" type="submit">Delete</button>
         </form>
       {{/videofullpage}}
+      {{#youtube}}
+        <a href="/editor/page/youtube/id/{{id}}">
+          YouTube{{#title}}: {{{title}}}{{/title}}
+        </a>
+        <form action="/editor/delete/{{id}}" method="post">
+          <button class="btn btn-danger btn-xs" type="submit">Delete</button>
+        </form>
+      {{/youtube}}
     </li>
   {{/items}}
   {{^items}}

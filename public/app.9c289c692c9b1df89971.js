@@ -10760,6 +10760,9 @@ function loadItem(item) {
 
   if (item.data.video) {
     var videoLoaded = videoMedia.prepareVideo(scrollStory, item.el, item.index, [{
+      type: 'youtube',
+      src: item.data.youtube
+    }, {
       type: 'video/mp4',
       src: item.data.mp4
     }, {
@@ -10901,30 +10904,19 @@ if (active.index + 2 < storyItems.length) {
 
 Promise.all(LOAD_PROMISES).then(function () {
   var overlay = document.getElementById('loading_overlay');
-  var playStart = document.createElement('img');
-  playStart.classList.add('play-start');
-  playStart.src = "img/play.png";
-  var text = overlay.querySelector('.loading-text');
-  text.innerHTML = "Click to Start";
-  overlay.appendChild(playStart);
-  playStart.addEventListener('click', function () {
-    document.body.removeChild(overlay);
-    document.body.classList.remove('frozen');
+  document.body.removeChild(overlay);
+  document.body.classList.remove('frozen');
 
-    if (active.data.video) {
-      videoMedia.playBackgroundVideo(active.index, getVideoAttrs(active));
-      videoMedia.fixBackgroundVideo(active.el);
-    }
+  if (active.data.video) {
+    videoMedia.playBackgroundVideo(active.index, getVideoAttrs(active));
+    videoMedia.fixBackgroundVideo(active.el);
+  }
 
-    if (active.data.audio) {
-      audioMedia.playBackgroundAudio(active.index, {
-        muted: isSoundEnabled === false
-      });
-    }
-
-    overlay = null;
-    playStart = null;
-  });
+  if (active.data.audio) {
+    audioMedia.playBackgroundAudio(active.index, {
+      muted: isSoundEnabled === false
+    });
+  }
 }).catch(function (e) {
   console.error(e);
 });

@@ -629,6 +629,52 @@ router.post('/page/slideshowvertical/id/:id', function (req, res) {
     });
 });
 
+// Slideshow Vertical Page with ID
+router.get('/page/youtube/id/:id', function (req, res) {
+    storyboard.readFile(function (err, data) {
+        var query = req || {};
+        var items = data.items;
+        if (query.params && query.params.id) {
+            var qId = query.params.id;
+            var item = items[qId].youtube;
+        };
+
+        res.render('editor/pages/youtube', {
+            id: qId,
+            item: item,
+            partials: {
+                youtubesource: 'editor/fragments/youtubesource',
+                formcontrols: 'editor/fragments/formcontrols',
+                fullpage: 'editor/fragments/fullpage',
+                plaintext: 'editor/fragments/plaintext',
+                subtitle: 'editor/fragments/subtitle',
+                title: 'editor/fragments/title',
+            }
+        });
+    });
+});
+
+router.post('/page/youtube/id/:id', function (req, res) {
+    storyboard.readFile(function (err, data) {
+        const meta = data.meta;
+        const items = data.items;
+        const qId = req.params.id;
+        items[qId].youtube = req.body;
+
+        storyboard.writeFile({ meta: meta, items: items });
+
+        res.render('editor/editor', {
+            meta: meta,
+            items: items,
+            editor: 'editor',
+            message: 'YouTube Updated',
+            partials: {
+                editornav: 'editor/fragments/editornav',
+            }
+        });
+    });
+});
+
 // Videobackground Page with ID
 router.get('/page/videobackground/id/:id', function (req, res) {
     storyboard.readFile(function (err, data) {

@@ -57,7 +57,7 @@ function unfixBackgroundVideo ($el) {
 }
 
 function prepareVideo (scrollStory, $el, id, srcs, attrs) {
-  const video = document.createElement('video');
+  let video = document.createElement('video');
   video.poster = attrs.poster;
   video.muted = attrs.muted;
   video.preload = 'auto';

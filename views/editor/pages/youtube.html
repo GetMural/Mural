@@ -1,0 +1,23 @@
+<form action="/editor/page/youtube/id/{{id}}" method="post">
+
+  <h4>YouTube</h4>
+
+  {{#item}}
+    <input type="hidden" name="id" value="{{id}}">
+    {{> fullpage}}
+
+    <fieldset>
+      {{> title}}
+      {{> subtitle}}
+      {{> plaintext}}
+    </fieldset>
+
+    <fieldset>
+      {{> youtubesource}}
+    </fieldset>
+
+  {{/item}}
+
+  {{> formcontrols}}
+
+</form>

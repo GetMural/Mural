@@ -50,12 +50,10 @@
   </head>
 
   <body class="longform" name="top">
-    <div id="loading_overlay" class="loading" {{#meta}}{{#site_img}} style="background-image:url('{{site_img}}');background-position:center center;background-size:cover;" {{/site_img}}{{/meta}}>
-      <div class="opacity-pane"></div>
-
-      <img src="img/logo.svg" alt="Mural is Loading...">
-      <h3>{{#meta}}{{title}}{{/meta}}</h3>
-      <div class="loading-text">LOADING...</div>
+    <div id="loading_overlay"
+      class="loading"
+      style="background:white">
+      <img src="uploads/tuska/tuskalogo_vektorina.png" alt="TUSKA">
     </div>
 
     <span class="mute">Mute</span>
@@ -311,6 +309,9 @@
               data-loop="true"
               data-autoplay="true"
               data-muted="false"
+              {{#youtube}}
+                data-youtube="{{youtube}}"
+              {{/youtube}}
               {{#mp4}}
                 data-mp4="{{mp4}}"
               {{/mp4}}
