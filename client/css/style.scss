@@ -2156,34 +2156,32 @@ article .part.box_text p{background:rgba(0,0,0,0.3);display:inline}
   width: 100vw;
   height: 100vh;
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  grid-template-rows: auto 150px 150px auto;
+  grid-template-rows: auto 200px 150px auto;
   grid-template-areas: 
-    ". . . . . . ."
-    ". logo logo logo logo logo ."
-    ". . . play . . ."
-    ". . . . . . .";
+    "."
+    "logo"
+    "play"
+    ".";
   grid-row-gap: 0.3rem;
   background: white;
   position: fixed;
   z-index: 102;
+  justify-items: center;
 }
 
 .loading .logo {
   grid-area: logo;
+  max-height: 250px;
 }
 
 .loading .play-start {
   grid-area: play;
+  cursor: pointer;
+  height: 150px;
 }
 
 .frozen {
   overflow: hidden;
-}
-
-.play-start {
-  cursor: pointer;
-  height: 150px;
 }
 
 .opacity-pane {
