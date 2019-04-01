@@ -71,6 +71,7 @@ const blueimp = require('blueimp-gallery/js/blueimp-gallery');
 const videoMedia = require('./media/video');
 const imageMedia = require('./media/images');
 const audioMedia = require('./media/audio');
+const youtubeMedia = require('./media/youtube');
 const isMobile = window.isMobile;
 
 const WINDOW_WIDTH = $(window).width();
@@ -133,6 +134,11 @@ function loadItem (item) {
   }
 
   const returnPromises = [];
+
+  if (item.data.youtubeId) {
+    const youtubeLoaded = youtubeMedia.prepare(item);
+    returnPromises.push(youtubeLoaded);
+  }
 
   if (item.data.image) {
     const imageLoaded = imageMedia.insertBackgroundImage(item.el, item.data[scrKey], item.active);
@@ -262,6 +268,11 @@ $story.on('itemfocus', function(ev, item) {
     videoMedia.fixBackgroundVideo(item.el);
   }
 
+  if (item.data.youtubeId) {
+    youtubeMedia.play(item);
+    youtubeMedia.stick(item);
+  }
+
   if (item.data.audio) {
     audioMedia.playBackgroundAudio(
       item.index,
@@ -275,6 +286,10 @@ $story.on('itemfocus', function(ev, item) {
 $story.on('itemblur', function(ev, item) {
   if (item.data.image) {
     imageMedia.unfixBackgroundImage(item.el);
+  }
+
+  if (item.data.youtubeId) {
+    youtubeMedia.remove(item);
   }
 
   if (item.data.video) {

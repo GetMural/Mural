@@ -10635,6 +10635,8 @@ var imageMedia = __webpack_require__(14);
 
 var audioMedia = __webpack_require__(15);
 
+var youtubeMedia = __webpack_require__(16);
+
 var isMobile = window.isMobile;
 var WINDOW_WIDTH = $(window).width();
 var scrKey;
@@ -10692,6 +10694,11 @@ function loadItem(item) {
   }
 
   var returnPromises = [];
+
+  if (item.data.youtubeId) {
+    var youtubeLoaded = youtubeMedia.prepare(item);
+    returnPromises.push(youtubeLoaded);
+  }
 
   if (item.data.image) {
     var imageLoaded = imageMedia.insertBackgroundImage(item.el, item.data[scrKey], item.active);
@@ -10760,9 +10767,6 @@ function loadItem(item) {
 
   if (item.data.video) {
     var videoLoaded = videoMedia.prepareVideo(scrollStory, item.el, item.index, [{
-      type: 'youtube',
-      src: item.data.youtube
-    }, {
       type: 'video/mp4',
       src: item.data.mp4
     }, {
@@ -10799,6 +10803,11 @@ $story.on('itemfocus', function (ev, item) {
     videoMedia.fixBackgroundVideo(item.el);
   }
 
+  if (item.data.youtubeId) {
+    youtubeMedia.play(item);
+    youtubeMedia.stick(item);
+  }
+
   if (item.data.audio) {
     audioMedia.playBackgroundAudio(item.index, {
       muted: isSoundEnabled === false
@@ -10808,6 +10817,10 @@ $story.on('itemfocus', function (ev, item) {
 $story.on('itemblur', function (ev, item) {
   if (item.data.image) {
     imageMedia.unfixBackgroundImage(item.el);
+  }
+
+  if (item.data.youtubeId) {
+    youtubeMedia.remove(item);
   }
 
   if (item.data.video) {
@@ -14680,11 +14693,6 @@ function fixBackgroundVideo($el) {
   $container.css('position', 'fixed');
 }
 
-function unfixBackgroundVideo($el) {
-  var $container = $el.find('.video-container');
-  $container.css('position', '');
-}
-
 function prepareVideo(scrollStory, $el, id, srcs, attrs) {
   var video = document.createElement('video');
   video.poster = attrs.poster;
@@ -14777,7 +14785,6 @@ module.exports = {
   prepareVideo: prepareVideo,
   removeBackgroundVideo: removeBackgroundVideo,
   fixBackgroundVideo: fixBackgroundVideo,
-  unfixBackgroundVideo: unfixBackgroundVideo,
   setMuted: setMuted
 };
 
@@ -33846,6 +33853,87 @@ module.exports = {
   prepareAudio: prepareAudio,
   removeBackgroundAudio: removeBackgroundAudio,
   setMuted: setMuted
+};
+
+/***/ }),
+/* 16 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var YouTubeLoaded = false;
+var YouTubePromise;
+var YOUTUBE = [];
+
+function loadYouTube() {
+  var tag = document.createElement('script');
+  tag.src = "https://www.youtube.com/player_api";
+  var firstScriptTag = document.getElementsByTagName('script')[0];
+  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+}
+
+function play(item) {
+  var videoId = item.data.youtubeId;
+  YOUTUBE[videoId].playVideo();
+}
+
+function remove(item) {
+  var videoId = item.data.youtubeId;
+  var $container = item.el.find('.video-container');
+  $container.css('position', '');
+  YOUTUBE[videoId].pauseVideo();
+}
+
+function stick(item) {
+  var $container = item.el.find('.video-container');
+  $container.css('position', 'fixed');
+}
+
+function prepare(item) {
+  var videoId = item.data.youtubeId;
+
+  if (!YouTubeLoaded) {
+    YouTubePromise = new Promise(function (resolve, reject) {
+      window.onYouTubePlayerAPIReady = function () {
+        resolve();
+      };
+    });
+    loadYouTube();
+    YouTubeLoaded = true;
+  }
+
+  YouTubePromise.then(function () {
+    var canPlayThrough = new Promise(function (resolve, reject) {
+      var player = new YT.Player('ytplayer_' + videoId, {
+        width: window.innerWidth,
+        height: window.innerHeight,
+        videoId: videoId,
+        playerVars: {
+          controls: 0,
+          enablejsapi: 1,
+          playsinline: 0,
+          rel: 0,
+          loop: 1,
+          modestbranding: 1
+        },
+        events: {
+          onReady: function onReady(event) {
+            YOUTUBE[videoId] = event.target;
+            resolve();
+          } // 'onStateChange': onPlayerStateChange
+
+        }
+      });
+    });
+  });
+}
+
+module.exports = {
+  play: play,
+  remove: remove,
+  stick: stick,
+  prepare: prepare
 };
 
 /***/ })

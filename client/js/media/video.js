@@ -51,11 +51,6 @@ function fixBackgroundVideo ($el) {
   $container.css('position', 'fixed');
 }
 
-function unfixBackgroundVideo ($el) {
-  const $container = $el.find('.video-container');
-  $container.css('position', '');
-}
-
 function prepareVideo (scrollStory, $el, id, srcs, attrs) {
   let video = document.createElement('video');
   video.poster = attrs.poster;
@@ -145,6 +140,5 @@ module.exports = {
   prepareVideo,
   removeBackgroundVideo,
   fixBackgroundVideo,
-  unfixBackgroundVideo,
   setMuted
 };
