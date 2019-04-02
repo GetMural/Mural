@@ -23,7 +23,7 @@ router.post('/', function (req, res) {
                 req.pipe(req.busboy);
                 req.busboy.on('file', function (fieldname, file, filename) {
                     filename = filename.toLowerCase();
-                    filename = filename.replace(" ", "-");
+                    filename = filename.split(" ").join("-");
                     console.log("Uploading: " + filename);
                     const fstream = fs.createWriteStream(path.join(uploadPath, filename));
                     file.pipe(fstream);
