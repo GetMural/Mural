@@ -3,7 +3,9 @@ const router = express.Router();
 const path = require('path');
 const fs = require('fs');
 const mkdirp = require('mkdirp');
+const electron = require('electron');
 
+const USER_DATA_FOLDER = electron.app.getPath('userData');
 const Preferences = require('../models/preferences');
 const preferences = new Preferences(path.join(__dirname, '../data/preferences.json'));
 
@@ -14,7 +16,7 @@ router.post('/', function (req, res) {
         }
 
         const story = data.storyboard.split('.')[0];
-        const uploadPath = path.join(__dirname,'../public/uploads/', story);
+        const uploadPath = path.join(USER_DATA_FOLDER, 'uploads', story);
 
         mkdirp(uploadPath, function (err) {
             if (err) {
