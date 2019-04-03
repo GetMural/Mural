@@ -1,6 +1,8 @@
 var fs = require('fs');
-var path = require('path');
 var Preferences = require('./preferences');
+const electron = require('electron');
+const path = require('path');
+const USER_DATA_FOLDER = electron.app.getPath('userData');
 
 /**
  *  IMPORTANT:  This model saves a storyboard JSON object to local filesystem
@@ -43,7 +45,7 @@ function createNav(items) {
 Storyboard.prototype = {
 
     getFilename: function(cb) {
-        var preferences = new Preferences(path.join(__dirname, '../data/preferences.json'));
+        var preferences = new Preferences();
         var self = this;
         // get filename from preferences file
         preferences.readFile(null, function(err, data) {
@@ -52,7 +54,7 @@ Storyboard.prototype = {
             }
             console.log("Reading from preferences file", data.storyboard);
             self.filename = data.storyboard;
-            cb(null, path.join(__dirname, "../data/stories/", data.storyboard));
+            cb(null, path.join(USER_DATA_FOLDER, 'data', 'stories', data.storyboard));
         })
     },
 
@@ -105,9 +107,9 @@ Storyboard.prototype = {
         self.getFilename(function (err, filename) {
             fs.unlink(filename, (err) => {
                 if (err) {
-                    console.log('Error deleting file', filename);
+                    console.log('Error deleting file' + filename);
                 }
-                console.log('path/file.txt was deleted');
+                console.log(filename +' was deleted');
             });
         });
     },
