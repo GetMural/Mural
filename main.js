@@ -8,18 +8,24 @@ var nativeImage = require('electron').nativeImage;
 const USER_DATA_FOLDER = app.getPath('userData');
 
 // copy the data folder for new users.
-function checkDirectorySync(directory) {  
+function checkDirectories(directory) {
+    const DATA_DIR = path.join(USER_DATA_FOLDER, 'data')
+    const DIST_DIR = path.join(USER_DATA_FOLDER, 'dist')
   try {
-    fs.statSync(directory);
+    fs.statSync(DATA_DIR);
   } catch(e) {
-    fs.mkdirSync(directory);
-    fs.copySync(path.join(__dirname, 'data'), path.join(USER_DATA_FOLDER, 'data'));
+    fs.mkdirSync(DATA_DIR);
+    fs.copySync(path.join(__dirname, 'data'), DATA_DIR);
+  }
+
+  try {
+    fs.statSync(DIST_DIR);
+  } catch(e) {
+    fs.mkdirSync(DIST_DIR);
   }
 }
 
-console.log('checking dir ' + path.join(USER_DATA_FOLDER, 'data'))
-
-checkDirectorySync(path.join(USER_DATA_FOLDER, 'data'));
+checkDirectories();
 
 var server = require('./app');
 
