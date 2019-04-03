@@ -33,6 +33,7 @@
     "debug": "~2.6.9",
     "electron": "^4.0.1",
     "express": "~4.15.5",
+    "fs-extra": "^7.0.1",
     "hls.js": "^0.10.1",
     "hogan-express": "^0.5.2",
     "ismobilejs": "^0.4.1",

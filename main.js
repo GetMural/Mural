@@ -3,7 +3,23 @@ var Window = require('electron').BrowserWindow; // jshint ignore:line
 var Tray = require('electron').Tray; // jshint ignore:line
 var Menu = require('electron').Menu; // jshint ignore:line
 var path = require('path');
+const fs = require('fs-extra')
 var nativeImage = require('electron').nativeImage;
+const USER_DATA_FOLDER = app.getPath('userData');
+
+// copy the data folder for new users.
+function checkDirectorySync(directory) {  
+  try {
+    fs.statSync(directory);
+  } catch(e) {
+    fs.mkdirSync(directory);
+    fs.copySync(path.join(__dirname, 'data'), path.join(USER_DATA_FOLDER, 'data'));
+  }
+}
+
+console.log('checking dir ' + path.join(USER_DATA_FOLDER, 'data'))
+
+checkDirectorySync(path.join(USER_DATA_FOLDER, 'data'));
 
 var server = require('./app');
 

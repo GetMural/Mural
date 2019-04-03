@@ -7,7 +7,7 @@ const electron = require('electron');
 
 const USER_DATA_FOLDER = electron.app.getPath('userData');
 const Preferences = require('../models/preferences');
-const preferences = new Preferences(path.join(__dirname, '../data/preferences.json'));
+const preferences = new Preferences();
 
 router.post('/', function (req, res) {
     preferences.readFile(null, function(err, data) {
