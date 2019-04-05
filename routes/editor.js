@@ -1,4 +1,5 @@
 var express = require('express');
+const electron = require('electron');
 const path = require('path');
 const fs = require('fs');
 var router = express.Router();
@@ -6,12 +7,14 @@ var Storyboard = require('../models/storyboard');
 var storyboard = new Storyboard();
 var archiver = require('archiver');
 
+const USER_DATA_FOLDER = electron.app.getPath('userData');
 const PUBLIC_FOLDER = path.resolve(__dirname, '..', 'public');
-const DATA_FOLDER = path.resolve(__dirname, '..', 'data');
+const DATA_FOLDER = path.resolve(USER_DATA_FOLDER, 'data');
 const MANIFEST = require(path.resolve(PUBLIC_FOLDER, 'manifest'));
 
 // Main Editor View
 router.get('/', function (req, res) {
+    console.log('getting editor')
     storyboard.readFile(function(err, data) {
         var meta = data.meta;
         var items = data.items;
@@ -80,7 +83,7 @@ router.get('/download', function (req, res) {
       const storyName = storyboard.filename.split('.')[0];
 
       // write to dist/index.html
-      fs.writeFile(path.resolve(PUBLIC_FOLDER, 'dist', 'index.html'), html, function (err) {
+      fs.writeFile(path.resolve(USER_DATA_FOLDER, 'dist', 'index.html'), html, function (err) {
         if (err) {
             console.log(err);
             return res.send(err);
@@ -116,13 +119,15 @@ router.get('/download', function (req, res) {
 
         archive.pipe(res);
 
+        const uploadPath = path.join(USER_DATA_FOLDER, 'uploads', storyName);
+
         archive
-            .file(path.resolve(PUBLIC_FOLDER, 'dist', 'index.html'), {name: 'index.html'})
+            .file(path.resolve(USER_DATA_FOLDER, 'dist', 'index.html'), {name: 'index.html'})
             .file(path.resolve(PUBLIC_FOLDER, MANIFEST['app.css']), {name: MANIFEST['app.css']})
             .file(path.resolve(PUBLIC_FOLDER, MANIFEST['app.js']), {name: MANIFEST['app.js']})
             .file(path.resolve(DATA_FOLDER, 'stories', `${storyName}.json`), {name: `${storyName}.json`})
             .directory(path.resolve(PUBLIC_FOLDER, 'img'), 'img')
-            .directory(path.resolve(PUBLIC_FOLDER, 'uploads', storyName), path.join('uploads', storyName))
+            .directory(uploadPath, path.join('uploads', storyName))
             .finalize();
       });
     });

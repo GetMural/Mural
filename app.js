@@ -9,6 +9,8 @@
     var http = require('http');
     var busboy = require('connect-busboy');
     var app = express();
+    const electron = require('electron');
+    const USER_DATA_FOLDER = electron.app.getPath('userData');
 
     // Setup node_modules for templates
     app.use('/node_modules', express.static(path.join(__dirname, 'node_modules')));
@@ -23,6 +25,7 @@
     app.use(bodyParser.urlencoded({limit: '500mb', extended: true}));
     app.use(cookieParser());
     app.use(express.static(path.join(__dirname, 'public')));
+    app.use(express.static(path.join(USER_DATA_FOLDER)));
     app.use(busboy()); // for file upload
 
     // load routes

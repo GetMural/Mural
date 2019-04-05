@@ -1,11 +1,13 @@
-var fs = require('fs');
+const fs = require('fs');
+const electron = require('electron');
+const path = require('path');
+const USER_DATA_FOLDER = electron.app.getPath('userData');
 
 /**
  *  IMPORTANT:  This model saves a preferences JSON object to local filesystem
- *  it does NOT deal with pouchDB or couchDB in anyway.
  */
-function Preferences(filename) {
-    this.filename = filename;
+function Preferences() {
+    this.filename = path.join(USER_DATA_FOLDER, 'data', 'preferences.json');
     this.data = {};
 };
 
@@ -17,6 +19,7 @@ Preferences.prototype = {
         if (!filename) {
             filename = self.filename;
         }
+        console.log('Reading file ' + filename);
         fs.readFile(filename, 'utf8', function (err, data) {
             if (!err) {
                 self.data = JSON.parse(data)

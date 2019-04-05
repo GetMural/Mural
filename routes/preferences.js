@@ -3,11 +3,12 @@ var router = express.Router();
 const path = require('path');
 const fs = require('fs');
 var Preferences = require('../models/preferences');
-var preferences = new Preferences(path.join(__dirname, '../data/preferences.json'));
+var preferences = new Preferences();
 
 
 /* GET home page. */
 router.get('/', function (req, res) {
+    console.log('get homepage')
     preferences.readFile(null, function(err, data) {
         res.send(data);
     });
