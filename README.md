@@ -16,11 +16,11 @@ Mural is released as open source under the GNU Affero General Public License. Se
 
 Mural is written in NodeJS and uses Electron.
 
-An end-user manual is available here: https://www.getmural.io/Mural_0.2.5_manual.pdf
+An end-user manual is available here: https://www.getmural.io/Mural-manual-v0.2.8.pdf
 
 ## Site Output
 
-Once a Mural story is ready to be published, the user clicks the 'Download' button and the program sends a .ZIP file which contains all the files needed to publish the story on a standard web server (HTML, CSS, JavaScript and media files, in addition to the JSON file used by Mural internally). 
+Once a Mural story is ready to be published, the user clicks the 'Download' button and the program sends a .ZIP file which contains all the files needed to publish the story on a standard web server (HTML, CSS, JavaScript and media files, in addition to the JSON file used by Mural internally).
 
 ## Running from git
 
@@ -34,13 +34,13 @@ Clone/download the repo and run:
 
 **Pre-compiled binaries are available:**
 
-**Windows 64bit:** https://www.getmural.io/Mural_0.2.6-win32-x64.zip
+**Windows 64bit:** https://www.getmural.io/Mural-0.2.9-win32-x64.zip
 
-**Windows 32bit:** https://www.getmural.io/Mural_0.2.6-win32-ia32.zip
+**Windows 32bit:** https://www.getmural.io/Mural-0.2.9-win32-ia32.zip
 
-**Mac OSX:** https://www.getmural.io/Mural_0.2.6-mac.zip
+**Mac OSX:** https://www.getmural.io/Mural-0.2.9-mac.zip
 
-Linux builds are coming soon.
+**Debian Linux AMD 64:** https://www.getmural.io/Mural-0.2.9-amd64.deb.zip
 
 **Compiling from source:**
 
