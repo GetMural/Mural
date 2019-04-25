@@ -35,10 +35,12 @@ router.get('/', function (req, res) {
 });
 
 router.post('/copy-story', function (req, res) {
-    let newFileName = req.body.filename.split(' ').join('_');
-    if (!/\.json$/.test(newFileName)) {
-        newFileName = newFileName + '.json';
-    }
+
+    let newFileName = req.body.filename
+        .split(' ')
+        .join('_')
+        .replace(/[^A-Za-z0-9_]/g, '');
+    newFileName += '.json';
 
     preferences.readFile(null, function(err, data) {
         const currentStory = path.join(DATA_STORIES_PATH, data.storyboard);
