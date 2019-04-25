@@ -26,7 +26,7 @@ $(function() {
     $('#btn-copy-story').on('click', function() {
         vex.dialog.open({
             message: 'Enter the new story name:',
-            input: '<input name="filename" type="text" placeholder="new_story.json" required />',
+            input: '<input name="filename" type="text" placeholder="Story Name" required />',
             buttons: [
                 $.extend({}, vex.dialog.buttons.YES, { text: 'Save' }),
                 $.extend({}, vex.dialog.buttons.NO, { text: 'Cancel' })

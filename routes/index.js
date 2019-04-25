@@ -26,7 +26,7 @@ router.get('/', function (req, res) {
                 }
             });
             res.render('index', {
-                title: 'Express',
+                title: 'Mural Editor',
                 filename: data.storyboard,
                 files: jsonFiles
             });
@@ -35,18 +35,26 @@ router.get('/', function (req, res) {
 });
 
 router.post('/copy-story', function (req, res) {
-    const newFileName = req.body.filename;
+
+    let newFileName = req.body.filename
+        .split(' ')
+        .join('_')
+        .replace(/[^A-Za-z0-9_]/g, '');
+    let datestr = (new Date()).toISOString().replace(/[-T:\.Z]/g, '');
+    newFileName = `${newFileName}-${datestr}.json`;
+
     preferences.readFile(null, function(err, data) {
-        console.log("copying story", data.storyboard, newFileName);
-        fs.createReadStream(path.join(DATA_STORIES_PATH, data.storyboard))
-          .pipe(fs.createWriteStream(path.join(DATA_STORIES_PATH, newFileName)));
+        const currentStory = path.join(DATA_STORIES_PATH, data.storyboard);
+        const newStory = path.join(DATA_STORIES_PATH, newFileName);
+        fs.createReadStream(currentStory).pipe(fs.createWriteStream(newStory));
         data.storyboard = newFileName;
         preferences.writeFile(null, data, function(err, response) {
             if (err) {
-                console.log('Error setting new preferences', err);
+                console.log('Error setting new preferences');
+                console.log(err);
                 res.send("{status: 'error'}");
             }
-            console.log('New story set to preferences' + path.join(DATA_STORIES_PATH, newFileName));
+            console.log('New story set to preferences' + newStory);
             res.send("{status: 'ok'}");
         })
     });
