@@ -159,7 +159,7 @@
                   {{/topleft}}
                 }
                 section[name="story{{id}}"] .bg-gradient {
-                  animation: gradient{{id}} 3s ease infinite;
+                  animation: gradient{{id}} {{#speed}}{{speed}}{{/speed}}{{^speed}}0{{/speed}}s ease infinite;
                   background-size: calc({{stops.length}} * 200%) calc({{stops.length}} * 200%);
                   background-image: linear-gradient(
                     {{#top}}

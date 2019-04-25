@@ -478,7 +478,7 @@ router.post('/page/imagebackground/id/:id', function (req, res) {
         var gradientBottomLeft = (newItem['gradient-bottom-left'] === 'on' ? true : false);
         var gradientLeft = (newItem['gradient-left'] === 'on' ? true : false);
         var gradientTopLeft = (newItem['gradient-top-left'] === 'on' ? true : false);
-        var gradientSpeed = (newItem['speed'] = 'speed');
+        var gradientSpeed = newItem['speed'];
         var stops = [];
         for (var stop in newItem['stop']) {
           if (newItem['stop'][stop] !== '') {
