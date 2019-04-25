@@ -425,9 +425,6 @@ router.get('/page/imagebackground/id/:id', function (req, res) {
             var qId = query.params.id;
             var item = items[qId].imagebackground;
         };
-        if (item.gradient && item.gradient.stops) {
-          console.log("piss");
-        };
 
         res.render('editor/pages/imagebackground', {
             id: qId,
