@@ -40,7 +40,8 @@ router.post('/copy-story', function (req, res) {
         .split(' ')
         .join('_')
         .replace(/[^A-Za-z0-9_]/g, '');
-    newFileName += '.json';
+    let datestr = (new Date()).toISOString().replace(/[-T:\.Z]/g, '');
+    newFileName = `${newFileName}-${datestr}.json`;
 
     preferences.readFile(null, function(err, data) {
         const currentStory = path.join(DATA_STORIES_PATH, data.storyboard);
