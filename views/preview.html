@@ -114,6 +114,85 @@
             {{#image}}
               <div class="bg-image{{#offset}}{{#left}} offset-left{{/left}}{{#centre}} offset-centre{{/centre}}{{#right}} offset-right{{/right}}{{/offset}}"></div>
             {{/image}}
+            {{#gradient}}
+              <style>
+                @keyframes gradient{{id}} {
+                  {{#top}}
+                    0% {background-position:50% 0%}
+                    50% {background-position:50% 100%}
+                    100% {background-position:50% 0%}
+                  {{/top}}
+                  {{#topright}}
+                    0% {background-position:0% 100%}
+                    50% {background-position:100% 0%}
+                    100% {background-position:0% 100%}
+                  {{/topright}}
+                  {{#right}}
+                    0% {background-position:0% 50%}
+                    50% {background-position:100% 50%}
+                    100% {background-position:0% 50%}
+                  {{/right}}
+                  {{#bottomright}}
+                    0% {background-position:0% 0%}
+                    50% {background-position:100% 100%}
+                    100% {background-position:0% 0%}
+                  {{/bottomright}}
+                  {{#bottom}}
+                    0% {background-position:50% 0%}
+                    50% {background-position:50% 100%}
+                    100% {background-position:50% 0%}
+                  {{/bottom}}
+                  {{#bottomleft}}
+                    0% {background-position:0% 100%}
+                    50% {background-position:100% 0%}
+                    100% {background-position:0% 100%}
+                  {{/bottomleft}}
+                  {{#left}}
+                    0% {background-position:0% 50%}
+                    50% {background-position:100% 50%}
+                    100% {background-position:0% 50%}
+                  {{/left}}
+                  {{#topleft}}
+                    0% {background-position:0% 0%}
+                    50% {background-position:100% 100%}
+                    100% {background-position:0% 0%}
+                  {{/topleft}}
+                }
+                section[name="story{{id}}"] .bg-gradient {
+                  animation: gradient{{id}} 3s ease infinite;
+                  background-size: calc({{stops.length}} * 200%) calc({{stops.length}} * 200%);
+                  background-image: linear-gradient(
+                    {{#top}}
+                    180deg
+                    {{/top}}
+                    {{#topright}}
+                    225deg
+                    {{/topright}}
+                    {{#right}}
+                    270deg
+                    {{/right}}
+                    {{#bottomright}}
+                    315deg
+                    {{/bottomright}}
+                    {{#bottom}}
+                    0deg
+                    {{/bottom}}
+                    {{#bottomleft}}
+                    45deg
+                    {{/bottomleft}}
+                    {{#left}}
+                    90deg
+                    {{/left}}
+                    {{#topleft}}
+                    135deg
+                    {{/topleft}}
+                    {{#stops}}
+                      ,{{.}}
+                    {{/stops}});
+                }
+              </style>
+              <div class="bg-gradient"></div>
+            {{/gradient}}
             <div class="content container-fluid">
               <div class="row">
                 <div class="col-sm-12 {{#format}}{{#fullpage}}header-fullpage{{/fullpage}}{{/format}}">

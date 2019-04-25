@@ -16,6 +16,11 @@ itemEditor.on('click', '.js-AddImage', function (e) {
   addDynamic('snippetimage', 'snippets', $('.js-SnippetImage').length);
 });
 
+itemEditor.on('click', '.js-AddStop', function (e) {
+  e.preventDefault();
+  addDynamic('gradientstop', 'stop', $('.js-Stop').length);
+});
+
 function addDynamic(template, name, index) {
   const el = document.createElement('div');
   const fragment = `/editor/fragment/${template}?index=${index}`;
@@ -73,8 +78,8 @@ itemEditor.on('change', '.fileupload-input', function (){
                 $(previewImg).attr('src', `/${response.path}`);
               } else {
                 $(previewImg).attr('src', `${response.path}`);
-              }            
-              
+              }
+
           } else {
               console.log('Error uploading file');
               console.log(response.error);

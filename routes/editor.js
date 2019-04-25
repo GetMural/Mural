@@ -162,6 +162,34 @@ router.get('/fragment/fullpage', function (req, res) {
     });
 });
 
+// Gradient Direction Fragment
+router.get('/fragment/gradientdirection', function (req, res) {
+    res.render('editor/fragments/gradientdirection', {
+        gradientdirection: 'gradientdirection'
+    });
+});
+
+// Gradient Stop Fragment
+router.get('/fragment/gradientspeed', function (req, res) {
+    res.render('editor/fragments/gradientspeed', {
+        gradientspeed: 'gradientspeed'
+    });
+});
+
+// Gradient Stop Fragment
+router.get('/fragment/gradientstop', function (req, res) {
+    res.render('editor/fragments/gradientstop', {
+        gradientstop: 'gradientstop'
+    });
+});
+
+// Gradient Stops Fragment
+router.get('/fragment/gradientstops', function (req, res) {
+    res.render('editor/fragments/gradientstops', {
+        gradientstops: 'gradientstops'
+    });
+});
+
 // Text Bounding Box Fragment
 router.get('/fragment/backgroundprops', function (req, res) {
     res.render('editor/fragments/backgroundprops', {
@@ -209,6 +237,13 @@ router.get('/fragment/intro', function (req, res) {
 router.get('/fragment/loadingimage', function (req, res) {
     res.render('editor/fragments/loadingimage', {
         loadingimage: 'loadingimage'
+    });
+});
+
+// Image Offset Fragment
+router.get('/fragment/offset', function (req, res) {
+    res.render('editor/fragments/offset', {
+        offset: 'offset'
     });
 });
 
@@ -364,7 +399,7 @@ router.post('/page/textcentred/id/:id', function (req, res) {
         const qId = req.params.id;
         const newItem = req.body;
 
-        console.log(newItem);
+        // console.log(newItem);
         // format and save new item
         items[qId].textcentred = newItem;
         storyboard.writeFile({ meta: meta, items: items });
@@ -390,6 +425,9 @@ router.get('/page/imagebackground/id/:id', function (req, res) {
             var qId = query.params.id;
             var item = items[qId].imagebackground;
         };
+        if (item.gradient && item.gradient.stops) {
+          console.log("piss");
+        };
 
         res.render('editor/pages/imagebackground', {
             id: qId,
@@ -398,6 +436,9 @@ router.get('/page/imagebackground/id/:id', function (req, res) {
                 audiosources: 'editor/fragments/audiosources',
                 formcontrols: 'editor/fragments/formcontrols',
                 fullpage: 'editor/fragments/fullpage',
+                gradientdirection: 'editor/fragments/gradientdirection',
+                gradientspeed: 'editor/fragments/gradientspeed',
+                gradientstops: 'editor/fragments/gradientstops',
                 imagesources: 'editor/fragments/imagesources',
                 offset: 'editor/fragments/offset-bgimage',
                 plaintext: 'editor/fragments/plaintext',
@@ -418,7 +459,7 @@ router.post('/page/imagebackground/id/:id', function (req, res) {
             var item = items[qId].imagebackground;
             var newItem = req.body;
         };
-
+        // console.log(newItem['stop']);
         // format and save new item
         var fullpage = (newItem['fullpage'] === 'on') ? true : false;
         item['format'] = { fullpage: fullpage };
@@ -431,6 +472,34 @@ router.post('/page/imagebackground/id/:id', function (req, res) {
             srcmain: newItem['srcmain'],
             srcphone: newItem['srcphone'],
             srcmedium: newItem['srcmedium']
+        };
+        var gradientTop = (newItem['gradient-top'] === 'on' ? true : false);
+        var gradientTopRight = (newItem['gradient-top-right'] === 'on' ? true : false);
+        var gradientRight = (newItem['gradient-right'] === 'on' ? true : false);
+        var gradientBottomRight = (newItem['gradient-bottom-right'] === 'on' ? true : false);
+        var gradientBottom = (newItem['gradient-bottom'] === 'on' ? true : false);
+        var gradientBottomLeft = (newItem['gradient-bottom-left'] === 'on' ? true : false);
+        var gradientLeft = (newItem['gradient-left'] === 'on' ? true : false);
+        var gradientTopLeft = (newItem['gradient-top-left'] === 'on' ? true : false);
+        var gradientSpeed = (newItem['speed'] = 'speed');
+        var stops = [];
+        for (var stop in newItem['stop']) {
+          if (newItem['stop'][stop] !== '') {
+            stops.push(newItem['stop'][stop]);
+          }
+        };
+        // console.log(stops);
+        item['gradient'] = {
+          top: gradientTop,
+          topright: gradientTopRight,
+          right: gradientRight,
+          bottomright: gradientBottomRight,
+          bottom: gradientBottom,
+          bottomleft: gradientBottomLeft,
+          left: gradientLeft,
+          topleft: gradientTopLeft,
+          speed: gradientSpeed,
+          stops: stops
         };
         var offsetLeft = (newItem['offset-left'] === 'on') ? true : false;
         var offsetCentre = (newItem['offset-centre'] === 'on') ? true : false;
