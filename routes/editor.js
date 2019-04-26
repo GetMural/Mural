@@ -480,13 +480,7 @@ router.post('/page/imagebackground/id/:id', function (req, res) {
         var gradientAnimate = (newItem['gradientAnimate']) ? true : false;
         var gradientDirection = newItem['gradientDirection'];
         var gradientSpeed = newItem['speed'];
-        var gradientStops = [];
-        console.log(newItem['stop']);
-        for (var stop in newItem['stop']) {
-          if (newItem['stop'][stop] !== '') {
-            gradientStops.push(newItem['stop'][stop]);
-          }
-        };
+        var gradientStops = newItem['stops'];
         var gradientAnimTop = (newItem['gradientAnimTop']) ? true : false;
         var gradientAnimTopRight = (newItem['gradientAnimTopRight']) ? true : false;
         var gradientAnimRight = (newItem['gradientAnimRight']) ? true : false;

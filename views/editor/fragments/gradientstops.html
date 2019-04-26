@@ -12,13 +12,14 @@
 
 <fieldset>
   <legend>Stops</legend>
+  <p>A gradient needs at least two colours to display. You can use hexadecimal values <code>#efefef, #ff0000</code> or named HTML colour entities <code>goldenrod, pink</code>.</p>
   <div>
     <label>Colour</label>
     <div class="js-ContentDynamic">
     {{#gradient}}
     {{#stops}}
       <div class="js-Stop js-Dynamic">
-        <input type="text" placeholder="&hellip;" name="stop" value="{{.}}" />
+        <input type="text" placeholder="&hellip;" class="stop" name="stops[]" value="{{.}}" />
         <button type="button" class="js-Remove btn btn-danger pull-right">Delete</button>
       </div>
     {{/stops}}
