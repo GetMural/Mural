@@ -1,7 +1,7 @@
 <script>
-  $('.gradientanimationdirection').each(function(){
+  $('.gradientanim').each(function(){
     $(this).change(function(){
-      $('.gradientanimationdirection').prop('checked', false);
+      $('.gradientanim').prop('checked', false);
       $(this).prop('checked', true);
     });
   });
@@ -10,34 +10,34 @@
   <legend>Animation Direction</legend>
   <div>
     <label for="gradientTop">Top</label>
-    <input id="gradientTop" class="gradientanimationdirection" name="gradientAnimTop" type="radio" {{#gradient.animation.top}}checked="checked"{{/gradient.animation.top}} />
+    <input id="gradientTop" class="gradientanim" name="gradientAnimTop" type="radio" {{#gradient.animation.top}}checked="checked"{{/gradient.animation.top}} />
   </div>
   <div>
     <label for="gradientTopRight">Top-Right</label>
-    <input id="gradientTopRight" class="gradientanimationdirection" name="gradientAnimTopRight" type="radio" {{#gradient.animation.topright}}checked="checked"{{/gradient.animation.topright}} />
+    <input id="gradientTopRight" class="gradientanim" name="gradientAnimTopRight" type="radio" {{#gradient.animation.topright}}checked="checked"{{/gradient.animation.topright}} />
   </div>
   <div>
     <label for="gradientRight">Right</label>
-    <input id="gradientRight" class="gradientanimationdirection" name="gradientAnimRight" type="radio" {{#gradient.animation.right}}checked="checked"{{/gradient.animation.right}} />
+    <input id="gradientRight" class="gradientanim" name="gradientAnimRight" type="radio" {{#gradient.animation.right}}checked="checked"{{/gradient.animation.right}} />
   </div>
   <div>
     <label for="gradientBottomRight">Bottom-Right</label>
-    <input id="gradientBottomRight" class="gradientanimationdirection" name="gradientAnimBottomRight" {{#gradient.animation.bottomright}}checked="checked"{{/gradient.animation.bottomright}} type="radio" />
+    <input id="gradientBottomRight" class="gradientanim" name="gradientAnimBottomRight" {{#gradient.animation.bottomright}}checked="checked"{{/gradient.animation.bottomright}} type="radio" />
   </div>
   <div>
     <label for="gradientBottom">Bottom</label>
-    <input id="gradientBottom" class="gradientanimationdirection" name="gradientAnimBottom" type="radio" {{#gradient.animation.bottom}}checked="checked"{{/gradient.animation.bottom}}/>
+    <input id="gradientBottom" class="gradientanim" name="gradientAnimBottom" type="radio" {{#gradient.animation.bottom}}checked="checked"{{/gradient.animation.bottom}}/>
   </div>
   <div>
     <label for="gradientBottomLeft">Bottom-Left</label>
-    <input id="gradientBottomLeft" class="gradientanimationdirection" name="gradientAnimBottomLeft" type="radio" {{#gradient.animation.bottomleft}}checked="checked"{{/gradient.animation.bottomleft}}/>
+    <input id="gradientBottomLeft" class="gradientanim" name="gradientAnimBottomLeft" type="radio" {{#gradient.animation.bottomleft}}checked="checked"{{/gradient.animation.bottomleft}}/>
   </div>
   <div>
     <label for="gradientLeft">Left</label>
-    <input id="gradientLeft" class="gradientanimationdirection" name="gradientAnimLeft" type="radio" {{#gradient.animation.left}}checked="checked"{{/gradient.animation.left}}/>
+    <input id="gradientLeft" class="gradientanim" name="gradientAnimLeft" type="radio" {{#gradient.animation.left}}checked="checked"{{/gradient.animation.left}}/>
   </div>
   <div>
     <label for="gradientTopLeft">Top-Left</label>
-    <input id="gradientTopLeft" class="gradientanimationdirection" name="gradientAnimTopLeft" type="radio" {{#gradient.animation.topleft}}checked="checked"{{/gradient.animation.topleft}}/>
+    <input id="gradientTopLeft" class="gradientanim" name="gradientAnimTopLeft" type="radio" {{#gradient.animation.topleft}}checked="checked"{{/gradient.animation.topleft}}/>
   </div>
 </fieldset>
