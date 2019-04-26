@@ -21,13 +21,11 @@ function createNav(items) {
     const nav = [];
 
     items.forEach((item, id) => {
-      var elKey = Object.keys(item)[0];
-      const root = item[elKey];
+      const [mediaType] = Object.keys(item);
       var writeToNav = true;
-      if (root && root.in_nav && root.in_nav.suppress) {
+      if (item[mediaType] && item[mediaType].in_nav) {
         writeToNav = false;
       }
-      const [mediaType] = Object.keys(item);
       // fallback for now until every type has a title field to fill in. (or something for nav)
       const tmpTitle = item[mediaType].title ? item[mediaType].title : `${id} ${mediaType}`;
       const title = tmpTitle.replace(/<\/?[^>]+(>|$)/g, "");

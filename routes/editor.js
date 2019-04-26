@@ -431,7 +431,8 @@ router.post('/page/imagebackground/id/:id', function (req, res) {
         var fullpage = (newItem['fullpage'] === 'on') ? true : false;
         item['format'] = { fullpage: fullpage };
         var suppress = (newItem['suppress'] === 'on') ? true : false;
-        item['in_nav'] = { suppress: suppress };
+        item['in_nav'] = suppress;
+        console.log(item);
         item['title'] = newItem['title'];
         item['subtitle'] = newItem['subtitle'];
         item['text'] = newItem['text'];
