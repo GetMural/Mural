@@ -23,7 +23,7 @@ function createNav(items) {
     items.forEach((item, id) => {
       const [mediaType] = Object.keys(item);
       var writeToNav = true;
-      if (item[mediaType] && item[mediaType].in_nav) {
+      if (item[mediaType] && item[mediaType].suppress) {
         writeToNav = false;
       }
       // fallback for now until every type has a title field to fill in. (or something for nav)

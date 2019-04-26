@@ -318,69 +318,71 @@ router.post('/page/meta', function (req, res) {
     });
 });
 
-// Textcentred Page with ID
-router.get('/page/textcentred/id/:id', function (req, res) {
+// Imageaudio page with ID
+router.get('/page/imageaudio/id/:id', function (req, res) {
     storyboard.readFile(function (err, data) {
-        const meta = data.meta;
-        const items = data.items;
-        const qId = req.params.id;
-        const item = items[qId].textcentred;
+        var query = req || {};
+        var items = data.items;
+        if (query.params && query.params.id) {
+            var qId = query.params.id;
+            var item = items[qId].imageaudio;
+        };
 
-        //hack an image number in here for Hogan.... :'(
-        if (item.snippets) {
-            item.snippets.forEach((snippet, i) => {
-                snippet.index = i;
-                snippet.options = [
-                    {
-                        value: 'left',
-                        txt: 'left',
-                        selected: (snippet.align === 'left')
-                    },
-                    {
-                        value: 'center',
-                        txt: 'center',
-                        selected: (snippet.align === 'center')
-                    },
-                    {
-                        value: 'right',
-                        txt: 'right',
-                        selected: (snippet.align === 'right')
-                    }
-                ];
-            });
-        }
-
-        res.render('editor/pages/textcentred', {
+        res.render('editor/pages/imageaudio', {
             id: qId,
             item: item,
             partials: {
                 formcontrols: 'editor/fragments/formcontrols',
-                intro: 'editor/fragments/intro',
-                snippetimage: 'editor/fragments/snippetimage',
-                subtitle: 'editor/fragments/subtitle',
+                audiosources: 'editor/fragments/audiosources',
+                imagesources: 'editor/fragments/imagesources',
+                suppressnav: 'editor/fragments/suppressnav',
                 title: 'editor/fragments/title'
             }
         });
     });
 });
 
-router.post('/page/textcentred/id/:id', function (req, res) {
+router.post('/page/imageaudio/id/:id', function (req, res) {
     storyboard.readFile(function (err, data) {
-        const meta = data.meta;
-        const items = data.items;
-        const qId = req.params.id;
-        const newItem = req.body;
+        var query = req || {};
+        var meta = data.meta;
+        var items = data.items;
+        if (query.params && query.params.id) {
+            var qId = query.params.id;
+            var item = items[qId].imageaudio;
+            var newItem = req.body;
+        };
+        var suppress = (newItem['suppress'] === 'on') ? true : false;
 
-        console.log(newItem);
         // format and save new item
-        items[qId].textcentred = newItem;
+        item['suppress'] = suppress;
+        item['title'] = newItem['title'];
+
+        item['image'] = {
+            srcmain: newItem['srcmain'],
+            srcphone: newItem['srcphone'],
+            srcmedium: newItem['srcmedium']
+        };
+
+        if (newItem['mp3'] || newItem['ogg']) {
+            item['audio'] = {
+                mp3: newItem['mp3'],
+                ogg: newItem['ogg']
+            };
+        } else {
+            delete item['audio'];
+        }
+
+        // save the file
+        items[qId].imageaudio = item;
+        // TODO: move this to a global file save function with its own button in the frontend
         storyboard.writeFile({ meta: meta, items: items });
 
         res.render('editor/editor', {
             meta: meta,
             items: items,
             editor: 'editor',
-            message: 'Text Centered Update',
+            message: 'Image Audio Updated',
             partials: {
                 editornav: 'editor/fragments/editornav'
             }
@@ -416,6 +418,7 @@ router.get('/page/imagebackground/id/:id', function (req, res) {
         });
     });
 });
+
 router.post('/page/imagebackground/id/:id', function (req, res) {
     storyboard.readFile(function (err, data) {
         var query = req || {};
@@ -431,8 +434,7 @@ router.post('/page/imagebackground/id/:id', function (req, res) {
         var fullpage = (newItem['fullpage'] === 'on') ? true : false;
         item['format'] = { fullpage: fullpage };
         var suppress = (newItem['suppress'] === 'on') ? true : false;
-        item['in_nav'] = suppress;
-        console.log(item);
+        item['suppress'] = suppress;
         item['title'] = newItem['title'];
         item['subtitle'] = newItem['subtitle'];
         item['text'] = newItem['text'];
@@ -480,75 +482,6 @@ router.post('/page/imagebackground/id/:id', function (req, res) {
     });
 });
 
-
-router.get('/page/imageaudio/id/:id', function (req, res) {
-    storyboard.readFile(function (err, data) {
-        var query = req || {};
-        var items = data.items;
-        if (query.params && query.params.id) {
-            var qId = query.params.id;
-            var item = items[qId].imageaudio;
-        };
-
-        res.render('editor/pages/imageaudio', {
-            id: qId,
-            item: item,
-            partials: {
-                formcontrols: 'editor/fragments/formcontrols',
-                audiosources: 'editor/fragments/audiosources',
-                imagesources: 'editor/fragments/imagesources',
-                title: 'editor/fragments/title'
-            }
-        });
-    });
-});
-
-router.post('/page/imageaudio/id/:id', function (req, res) {
-    storyboard.readFile(function (err, data) {
-        var query = req || {};
-        var meta = data.meta;
-        var items = data.items;
-        if (query.params && query.params.id) {
-            var qId = query.params.id;
-            var item = items[qId].imageaudio;
-            var newItem = req.body;
-        };
-
-        // format and save new item
-        item['title'] = newItem['title'];
-
-        item['image'] = {
-            srcmain: newItem['srcmain'],
-            srcphone: newItem['srcphone'],
-            srcmedium: newItem['srcmedium']
-        };
-
-        if (newItem['mp3'] || newItem['ogg']) {
-            item['audio'] = {
-                mp3: newItem['mp3'],
-                ogg: newItem['ogg']
-            };
-        } else {
-            delete item['audio'];
-        }
-
-        // save the file
-        items[qId].imageaudio = item;
-        // TODO: move this to a global file save function with its own button in the frontend
-        storyboard.writeFile({ meta: meta, items: items });
-
-        res.render('editor/editor', {
-            meta: meta,
-            items: items,
-            editor: 'editor',
-            message: 'Image Audio Updated',
-            partials: {
-                editornav: 'editor/fragments/editornav'
-            }
-        });
-    });
-});
-
 // Slideshow Horizontal Page with ID
 router.get('/page/slideshowhorizontal/id/:id', function (req, res) {
     storyboard.readFile(function (err, data) {
@@ -568,7 +501,8 @@ router.get('/page/slideshowhorizontal/id/:id', function (req, res) {
             item: item,
             partials: {
                 formcontrols: 'editor/fragments/formcontrols',
-                slide: 'editor/fragments/slide'
+                slide: 'editor/fragments/slide',
+                suppressnav: 'editor/fragments/suppressnav'
             }
         });
     });
@@ -581,6 +515,8 @@ router.post('/page/slideshowhorizontal/id/:id', function (req, res) {
         const qId = req.params.id;
 
         items[qId].slideshowhorizontal = req.body;
+        var suppress = (items[qId].slideshowhorizontal['suppress'] === 'on') ? true : false;
+        items[qId].slideshowhorizontal['suppress'] = suppress;
 
         storyboard.writeFile({ meta: meta, items: items });
 
@@ -618,7 +554,8 @@ router.get('/page/slideshowvertical/id/:id', function (req, res) {
             item: item,
             partials: {
                 formcontrols: 'editor/fragments/formcontrols',
-                slide: 'editor/fragments/slide'
+                slide: 'editor/fragments/slide',
+                suppressnav: 'editor/fragments/suppressnav'
             }
         });
     });
@@ -629,7 +566,10 @@ router.post('/page/slideshowvertical/id/:id', function (req, res) {
         const meta = data.meta;
         const items = data.items;
         const qId = req.params.id;
+
         items[qId].slideshowvertical = req.body;
+        var suppress = (items[qId].slideshowvertical['suppress'] === 'on') ? true : false;
+        items[qId].slideshowvertical['suppress'] = suppress;
 
         storyboard.writeFile({ meta: meta, items: items });
 
@@ -638,6 +578,78 @@ router.post('/page/slideshowvertical/id/:id', function (req, res) {
             items: items,
             editor: 'editor',
             message: 'Slideshow Vertical Updated',
+            partials: {
+                editornav: 'editor/fragments/editornav'
+            }
+        });
+    });
+});
+
+// Textcentred Page with ID
+router.get('/page/textcentred/id/:id', function (req, res) {
+    storyboard.readFile(function (err, data) {
+        const meta = data.meta;
+        const items = data.items;
+        const qId = req.params.id;
+        const item = items[qId].textcentred;
+
+        //hack an image number in here for Hogan.... :'(
+        if (item.snippets) {
+            item.snippets.forEach((snippet, i) => {
+                snippet.index = i;
+                snippet.options = [
+                    {
+                        value: 'left',
+                        txt: 'left',
+                        selected: (snippet.align === 'left')
+                    },
+                    {
+                        value: 'center',
+                        txt: 'center',
+                        selected: (snippet.align === 'center')
+                    },
+                    {
+                        value: 'right',
+                        txt: 'right',
+                        selected: (snippet.align === 'right')
+                    }
+                ];
+            });
+        }
+
+        res.render('editor/pages/textcentred', {
+            id: qId,
+            item: item,
+            partials: {
+                formcontrols: 'editor/fragments/formcontrols',
+                intro: 'editor/fragments/intro',
+                snippetimage: 'editor/fragments/snippetimage',
+                subtitle: 'editor/fragments/subtitle',
+                suppressnav: 'editor/fragments/suppressnav',
+                title: 'editor/fragments/title'
+            }
+        });
+    });
+});
+
+router.post('/page/textcentred/id/:id', function (req, res) {
+    storyboard.readFile(function (err, data) {
+        const meta = data.meta;
+        const items = data.items;
+        const qId = req.params.id;
+        const newItem = req.body;
+
+        // format and save new item
+        var suppress = (newItem['suppress'] === 'on') ? true : false;
+        items[qId].textcentred['suppress'] = suppress;
+        items[qId].textcentred = newItem;
+        storyboard.writeFile({ meta: meta, items: items });
+
+        res.render('editor/editor', {
+            meta: meta,
+            items: items,
+            editor: 'editor',
+            message: 'Text Centered Update',
             partials: {
                 editornav: 'editor/fragments/editornav'
             }
@@ -666,6 +678,7 @@ router.get('/page/videobackground/id/:id', function (req, res) {
                 offset: 'editor/fragments/offset',
                 plaintext: 'editor/fragments/plaintext',
                 subtitle: 'editor/fragments/subtitle',
+                suppressnav: 'editor/fragments/suppressnav',
                 title: 'editor/fragments/title',
                 videobackground: 'editor/pages/videobackground',
                 videosources: 'editor/fragments/videosources'
@@ -684,11 +697,12 @@ router.post('/page/videobackground/id/:id', function (req, res) {
             var item = items[qId].videobackground;
             var newItem = req.body;
         };
-
         // format and save new values to videobackground
         var fullpage = (newItem['fullpage'] === 'on') ? true : false;
-        item['format'] = { fullpage: fullpage };
+        var suppress = (newItem['suppress'] === 'on') ? true : false;
         var active = (newItem['bg-active'] === 'on') ? true : false;
+        item['suppress'] = suppress;
+        item['format'] = { fullpage: fullpage };
         item['backgroundprops'] = {
           active: newItem['bg-active'],
           value: newItem['bg-colour'],
@@ -752,6 +766,7 @@ router.get('/page/videofullpage/id/:id', function (req, res) {
                 loadingimage: 'editor/fragments/loadingimage',
                 offset: 'editor/fragments/offset',
                 plaintext: 'editor/fragments/plaintext',
+                suppressnav: 'editor/fragments/suppressnav',
                 title: 'editor/fragments/title',
                 videosources: 'editor/fragments/videosources'
             }
@@ -772,6 +787,8 @@ router.post('/page/videofullpage/id/:id', function (req, res) {
 
         // format and save new values to videofullpage
         var fullpage = (newItem['fullpage'] === 'on') ? true : false;
+        var suppress = (newItem['suppress'] === 'on') ? true : false;
+        item['suppress'] = suppress;
         var playback = newItem['playback'];
         if (playback === 'advance') {
             item['autoAdvance'] = true;
@@ -829,6 +846,7 @@ router.get('/page/imageparallax/id/:id', function (req, res) {
             var qId = query.params.id;
             var item = items[qId].imageparallax;
         };
+
         res.render('editor/pages/imageparallax', {
             id: qId,
             item: item,
@@ -837,6 +855,7 @@ router.get('/page/imageparallax/id/:id', function (req, res) {
                 fullpage: 'editor/fragments/fullpage',
                 imagesources: 'editor/fragments/imagesources',
                 subtitle: 'editor/fragments/subtitle',
+                suppressnav: 'editor/fragments/suppressnav',
                 title: 'editor/fragments/title'
             }
         });
@@ -856,6 +875,8 @@ router.post('/page/imageparallax/id/:id', function (req, res) {
 
         // format and save new values to imageparallax
         var fullpage = (newItem['fullpage'] === 'on') ? true : false;
+        var suppress = (newItem['suppress'] === 'on') ? true : false;
+        item['suppress'] = suppress;
         item['format'] = { fullpage: fullpage };
         item['title'] = newItem['title'];
         item['subtitle'] = newItem['subtitle'];
