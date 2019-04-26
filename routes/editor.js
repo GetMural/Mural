@@ -324,7 +324,6 @@ router.post('/page/meta', function (req, res) {
         var meta = data.meta;
         var items = data.items;
 
-
         // TODO: refactor to Storybaord.updateMeta() function
         meta['title'] = newMeta['title'];
         meta['site_name'] = newMeta['site_name'];
@@ -482,6 +481,7 @@ router.post('/page/imagebackground/id/:id', function (req, res) {
         var gradientDirection = newItem['gradientDirection'];
         var gradientSpeed = newItem['speed'];
         var gradientStops = [];
+        console.log(newItem['stop']);
         for (var stop in newItem['stop']) {
           if (newItem['stop'][stop] !== '') {
             gradientStops.push(newItem['stop'][stop]);

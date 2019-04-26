@@ -17,19 +17,9 @@
     <div class="js-ContentDynamic">
     {{#gradient}}
     {{#stops}}
-      <div>
-        <input class="stop" name="stop" type="text" placeholder="{{.}}" value="{{.}}" />
-      </div>
-    {{/stops}}
-    {{^stops}}
-      <div>
-        <input class="stop" name="stop" type="text" placeholder="#a3e0bb" />
-      </div>
-      <div>
-        <input class="stop" name="stop" type="text" placeholder="#fcd700" />
-      </div>
-      <div>
-        <input class="stop" name="stop" type="text" placeholder="#ff0000" />
+      <div class="js-Stop js-Dynamic">
+        <input type="text" placeholder="&hellip;" name="stop" value="{{.}}" />
+        <button type="button" class="js-Remove btn btn-danger pull-right">Delete</button>
       </div>
     {{/stops}}
     {{/gradient}}
