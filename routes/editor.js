@@ -162,6 +162,13 @@ router.get('/fragment/fullpage', function (req, res) {
     });
 });
 
+// Gradient Animation Direction Fragment
+router.get('/fragment/gradientanimationdirection', function (req, res) {
+    res.render('editor/fragments/gradientanimationdirection', {
+        gradientanimationdirection: 'gradientanimationdirection'
+    });
+});
+
 // Gradient Direction Fragment
 router.get('/fragment/gradientdirection', function (req, res) {
     res.render('editor/fragments/gradientdirection', {
@@ -433,6 +440,7 @@ router.get('/page/imagebackground/id/:id', function (req, res) {
                 audiosources: 'editor/fragments/audiosources',
                 formcontrols: 'editor/fragments/formcontrols',
                 fullpage: 'editor/fragments/fullpage',
+                gradientanimationdirection: 'editor/fragments/gradientanimationdirection',
                 gradientdirection: 'editor/fragments/gradientdirection',
                 gradientspeed: 'editor/fragments/gradientspeed',
                 gradientstops: 'editor/fragments/gradientstops',
@@ -456,7 +464,6 @@ router.post('/page/imagebackground/id/:id', function (req, res) {
             var item = items[qId].imagebackground;
             var newItem = req.body;
         };
-        // console.log(newItem['stop']);
         // format and save new item
         var fullpage = (newItem['fullpage'] === 'on') ? true : false;
         item['format'] = { fullpage: fullpage };
@@ -470,34 +477,43 @@ router.post('/page/imagebackground/id/:id', function (req, res) {
             srcphone: newItem['srcphone'],
             srcmedium: newItem['srcmedium']
         };
-        var gradientTop = (newItem['gradient-top'] === 'on' ? true : false);
-        var gradientTopRight = (newItem['gradient-top-right'] === 'on' ? true : false);
-        var gradientRight = (newItem['gradient-right'] === 'on' ? true : false);
-        var gradientBottomRight = (newItem['gradient-bottom-right'] === 'on' ? true : false);
-        var gradientBottom = (newItem['gradient-bottom'] === 'on' ? true : false);
-        var gradientBottomLeft = (newItem['gradient-bottom-left'] === 'on' ? true : false);
-        var gradientLeft = (newItem['gradient-left'] === 'on' ? true : false);
-        var gradientTopLeft = (newItem['gradient-top-left'] === 'on' ? true : false);
+        var gradientEnable = (newItem['gradientEnable'] ? true : false);
+        var gradientAnimate = (newItem['gradientAnimate']) ? true : false;
+        var gradientDirection = newItem['gradientDirection'];
         var gradientSpeed = newItem['speed'];
-        var stops = [];
+        var gradientStops = [];
         for (var stop in newItem['stop']) {
           if (newItem['stop'][stop] !== '') {
-            stops.push(newItem['stop'][stop]);
+            gradientStops.push(newItem['stop'][stop]);
           }
         };
-        // console.log(stops);
-        item['gradient'] = {
-          top: gradientTop,
-          topright: gradientTopRight,
-          right: gradientRight,
-          bottomright: gradientBottomRight,
-          bottom: gradientBottom,
-          bottomleft: gradientBottomLeft,
-          left: gradientLeft,
-          topleft: gradientTopLeft,
-          speed: gradientSpeed,
-          stops: stops
+        var gradientAnimTop = (newItem['gradientAnimTop']) ? true : false;
+        var gradientAnimTopRight = (newItem['gradientAnimTopRight']) ? true : false;
+        var gradientAnimRight = (newItem['gradientAnimRight']) ? true : false;
+        var gradientAnimBottomRight = (newItem['gradientAnimBottomRight']) ? true : false;
+        var gradientAnimBottom = (newItem['gradientAnimBottom']) ? true : false;
+        var gradientAnimBottomLeft = (newItem['gradientAnimBottomLeft']) ? true : false;
+        var gradientAnimLeft = (newItem['gradientAnimLeft']) ? true : false;
+        var gradientAnimTopLeft = (newItem['gradientAnimTopLeft']) ? true : false;
+        var gradientAnim = {
+          top: gradientAnimTop,
+          topright: gradientAnimTopRight,
+          right: gradientAnimRight,
+          bottomright: gradientAnimBottomRight,
+          bottom: gradientAnimBottom,
+          bottomleft: gradientAnimBottomLeft,
+          left: gradientAnimLeft,
+          topleft: gradientAnimTopLeft
         };
+        item['gradient'] = {
+          animate: gradientAnimate,
+          animation: gradientAnim,
+          enable: gradientEnable,
+          direction: gradientDirection,
+          speed: gradientSpeed,
+          stops: gradientStops
+        };
+        console.log(item['gradient']);
         var offsetLeft = (newItem['offset-left'] === 'on') ? true : false;
         var offsetCentre = (newItem['offset-centre'] === 'on') ? true : false;
         var offsetRight = (newItem['offset-right'] === 'on') ? true : false;
@@ -527,7 +543,7 @@ router.post('/page/imagebackground/id/:id', function (req, res) {
             meta: meta,
             items: items,
             editor: 'editor',
-            message: 'Image Backgroun Updated',
+            message: 'Image Background Updated',
             partials: {
                 editornav: 'editor/fragments/editornav'
             }

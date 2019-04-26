@@ -1,4 +1,16 @@
 <fieldset>
+  <legend>Animate</legend>
+  <div>
+    <label for="gradientEnable">Enable Gradient</label>
+    <input id="gradientEnable" class="gradientenable" name="gradientEnable" type="checkbox" {{#gradient.enable}}checked="checked"{{/gradient.enable}} />
+  </div>
+  <div>
+    <label for="gradientAnimate">Enable Gradient Animation</label>
+    <input id="gradientAnimate" class="gradientanimate" name="gradientAnimate" type="checkbox" {{#gradient.animate}}checked="checked"{{/gradient.animate}} />
+  </div>
+</fieldset>
+
+<fieldset>
   <legend>Stops</legend>
   <div>
     <label>Colour</label>

@@ -1,7 +1,7 @@
 <script>
-  $('#value').text(Math.round($('#offsetValue').val()) + 100);
+  $('#offset_value').text(Math.round($('#offsetValue').val()) + 100);
   $('#offsetValue').change(function(){
-    $('#value').text(Math.round($(this).val()) + 100);
+    $('#offset_value').text(Math.round($(this).val()) + 100);
     $('.offset').prop('checked', false);
     $('#offsetCustom').prop('checked', true);
   });
@@ -12,7 +12,6 @@
     });
   });
 </script>
-<legend>Offset Portrait Video</legend>
 <div>
   <label for="offsetLeft">Left</label>
   <input id="offsetLeft" class="offset" name="offset-left" type="radio" {{#offset}}{{#left}} checked="checked"{{/left}}{{/offset}} />
@@ -30,6 +29,6 @@
   <input id="offsetCustom" class="offset" name="offset-custom" type="radio" {{#offset}}{{#custom}} checked="checked"{{/custom}}{{/offset}} />
 </div>
 <div>
-  <label for="offset-value">Offset Value: <span id="value">0</span>%</label>
+  <label for="offset-value">Offset Value: <span id="offset_value">0</span>%</label>
   <input type="range" min="-100" max="0" {{#offset}} value="{{value}}"{{/offset}} step="1" data-for="offsetValue" id="offsetValue" name="offset-value" />
 </div>

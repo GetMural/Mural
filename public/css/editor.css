@@ -29,6 +29,7 @@ button#save
 
 label {
   clear: left;
+  user-select: none;
 }
 
 [draggable] {

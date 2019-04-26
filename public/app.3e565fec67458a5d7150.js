@@ -33725,13 +33725,23 @@ function insertBackgroundImage($el, src) {
   });
 }
 
+function insertBackgroundGradient($el) {
+  var active = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+  return imageLoadPromise(src).then(function () {
+    var styles = {
+      position: active ? 'fixed' : ''
+    };
+    $el.find('.bg-gradient').css(styles);
+  });
+}
+
 function fixBackgroundImage($el) {
-  var $container = $el.find('.bg-image');
+  var $container = $el.find('.bg-image, .bg-gradient');
   $container.css('position', 'fixed');
 }
 
 function unfixBackgroundImage($el) {
-  var $container = $el.find('.bg-image');
+  var $container = $el.find('.bg-image, .bg-gradient');
   $container.css('position', '');
 }
 
@@ -33751,6 +33761,7 @@ function loadImages($el) {
 
 module.exports = {
   insertBackgroundImage: insertBackgroundImage,
+  insertBackgroundGradient: insertBackgroundGradient,
   fixBackgroundImage: fixBackgroundImage,
   unfixBackgroundImage: unfixBackgroundImage,
   loadImages: loadImages,

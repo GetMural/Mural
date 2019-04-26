@@ -115,8 +115,11 @@
               <div class="bg-image{{#offset}}{{#left}} offset-left{{/left}}{{#centre}} offset-centre{{/centre}}{{#right}} offset-right{{/right}}{{/offset}}"></div>
             {{/image}}
             {{#gradient}}
+              {{#enable}}
+              <div class="bg-gradient" style="position: fixed;"></div>
               <style>
                 @keyframes gradient{{id}} {
+                  {{#animation}}
                   {{#top}}
                     0% {background-position:50% 0%}
                     50% {background-position:50% 100%}
@@ -157,41 +160,23 @@
                     50% {background-position:100% 100%}
                     100% {background-position:0% 0%}
                   {{/topleft}}
+                  {{/animation}}
                 }
                 section[name="story{{id}}"] .bg-gradient {
                   animation: gradient{{id}} {{#speed}}{{speed}}{{/speed}}{{^speed}}0{{/speed}}s ease infinite;
+                  {{#animate}}
                   background-size: calc({{stops.length}} * 200%) calc({{stops.length}} * 200%);
+                  {{/animate}}
                   background-image: linear-gradient(
-                    {{#top}}
-                    180deg
-                    {{/top}}
-                    {{#topright}}
-                    225deg
-                    {{/topright}}
-                    {{#right}}
-                    270deg
-                    {{/right}}
-                    {{#bottomright}}
-                    315deg
-                    {{/bottomright}}
-                    {{#bottom}}
-                    0deg
-                    {{/bottom}}
-                    {{#bottomleft}}
-                    45deg
-                    {{/bottomleft}}
-                    {{#left}}
-                    90deg
-                    {{/left}}
-                    {{#topleft}}
-                    135deg
-                    {{/topleft}}
+                    {{#direction}}
+                      {{direction}}deg
+                    {{/direction}}
                     {{#stops}}
                       ,{{.}}
                     {{/stops}});
                 }
               </style>
-              <div class="bg-gradient"></div>
+              {{/enable}}
             {{/gradient}}
             <div class="content container-fluid">
               <div class="row">

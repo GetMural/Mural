@@ -26,13 +26,22 @@ function insertBackgroundImage($el, src, active=false) {
   });
 }
 
+function insertBackgroundGradient($el, active=false) {
+  return imageLoadPromise(src).then(() => {
+    const styles = {
+       position: active ? 'fixed' : ''
+    };
+    $el.find('.bg-gradient').css(styles);
+  });
+}
+
 function fixBackgroundImage($el) {
-  const $container = $el.find('.bg-image');
+  const $container = $el.find('.bg-image, .bg-gradient');
   $container.css('position', 'fixed');
 }
 
 function unfixBackgroundImage($el) {
-  const $container = $el.find('.bg-image');
+  const $container = $el.find('.bg-image, .bg-gradient');
   $container.css('position', '');
 }
 
@@ -43,7 +52,7 @@ function loadImages($el) {
     const loadPromise = imageLoadPromise(src).then(() => {
       this.src = this.dataset.src;
     });
-  
+
     loadPromises.push(loadPromise);
   });
 
@@ -52,6 +61,7 @@ function loadImages($el) {
 
 module.exports = {
   insertBackgroundImage,
+  insertBackgroundGradient,
   fixBackgroundImage,
   unfixBackgroundImage,
   loadImages,
