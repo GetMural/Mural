@@ -1,26 +1,28 @@
 <form action="/editor/page/slideshowhorizontal/id/{{id}}" method="post">
+  <fieldset>
+    <label>Horizontal Slideshow</label>
 
-  <h4>Horizontal Slideshow</h4>
+    {{#item}}
 
-  {{#item}}
+    {{> suppressnav}}
 
-    <fieldset>
-      <div class="form-group">
-        <input type="hidden" name="id" value="{{id}}">
-        <label for="title" class="control-label">Title</label>
-        <input name="title" type="text" class="form-control" value="{{title}}" placeholder="No title"/>
+      <fieldset>
+        <div class="form-group">
+          <input type="hidden" name="id" value="{{id}}">
+          <label for="title" class="control-label">Title</label>
+          <input name="title" type="text" class="form-control" value="{{title}}" placeholder="No title"/>
+        </div>
+        <button type="button" class="js-AddSlide btn btn-success pull-right">Add Slide [+]</button>
+      </fieldset>
+
+      <div class="js-ContentDynamic">
+        {{#images}}
+          {{> slide}}
+        {{/images}}
       </div>
-      <button type="button" class="js-AddSlide btn btn-success pull-right">Add Slide [+]</button>
-    </fieldset>
 
-    <div class="js-ContentDynamic">
-      {{#images}}
-        {{> slide}}
-      {{/images}}
-    </div>
+    {{/item}}
 
-  {{/item}}
-
-  {{> formcontrols}}
-
+    {{> formcontrols}}
+  </fieldset>
 </form>

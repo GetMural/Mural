@@ -21,14 +21,20 @@ function createNav(items) {
     const nav = [];
 
     items.forEach((item, id) => {
-        const [mediaType] = Object.keys(item);
-        // fallback for now until every type has a title field to fill in. (or something for nav)
-        const tmpTitle = item[mediaType].title ? item[mediaType].title : `${id} ${mediaType}`;
-        const title = tmpTitle.replace(/<\/?[^>]+(>|$)/g, "");
+      const [mediaType] = Object.keys(item);
+      var writeToNav = true;
+      if (item[mediaType] && item[mediaType].suppress) {
+        writeToNav = false;
+      }
+      // fallback for now until every type has a title field to fill in. (or something for nav)
+      const tmpTitle = item[mediaType].title ? item[mediaType].title : `${id} ${mediaType}`;
+      const title = tmpTitle.replace(/<\/?[^>]+(>|$)/g, "");
+      if (writeToNav) {
         nav.push({
             id,
             title
         });
+      }
     });
 
     return nav;
