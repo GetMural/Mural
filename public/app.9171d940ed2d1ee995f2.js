@@ -33899,6 +33899,7 @@ function stick(item) {
 
 function prepare(item) {
   var videoId = item.data.youtubeId;
+  var hasControls = item.data.controls;
 
   if (!YouTubeLoaded) {
     YouTubePromise = new Promise(function (resolve, reject) {
@@ -33917,7 +33918,7 @@ function prepare(item) {
         height: window.innerHeight,
         videoId: videoId,
         playerVars: {
-          controls: 0,
+          controls: hasControls ? 1 : 0,
           enablejsapi: 1,
           playsinline: 0,
           rel: 0,

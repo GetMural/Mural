@@ -4,13 +4,17 @@
 
   {{#item}}
     <input type="hidden" name="id" value="{{id}}">
-
     {{> suppressnav}}
     <fieldset>
       {{> title}}
     </fieldset>
     <fieldset>
       {{> youtubesource}}
+      <fieldset>
+        <legend>Options</legend>
+        <label for="controls">Controls</label>
+        <input id="controls" name="controls" type="checkbox"{{#controls}} checked="checked"{{/controls}}>
+      </fieldset>
     </fieldset>
 
   {{/item}}
