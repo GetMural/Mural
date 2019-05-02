@@ -97,7 +97,6 @@ function prepare(scrollStory, item) {
             const status = event.data;
 
             if (autoAdvance && (status === YT.PlayerState.ENDED)) {
-              debugger;
               const count = scrollStory.getItems().length;
               const next = id + 1;
 
