@@ -33923,7 +33923,9 @@ function prepare(scrollStory, item) {
           controls: hasControls ? 1 : 0,
           enablejsapi: 1,
           playsinline: 1,
+          disablekb: 1,
           rel: 0,
+          fs: 0,
           modestbranding: 1
         },
         events: {
