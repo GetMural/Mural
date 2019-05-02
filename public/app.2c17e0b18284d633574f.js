@@ -33869,8 +33869,12 @@ module.exports = {
 "use strict";
 
 
-var YouTubeLoaded = false;
-var YouTubePromise;
+var YouTubePromise = new Promise(function (resolve, reject) {
+  window.onYouTubePlayerAPIReady = function () {
+    resolve();
+  };
+});
+loadYouTube();
 var YOUTUBE = [];
 
 function loadYouTube() {
@@ -33909,17 +33913,6 @@ function prepare(scrollStory, item) {
   var autoAdvance = item.data.autoAdvance;
   var id = item.index;
   var youtube_id = getYoutubeId(item);
-
-  if (!YouTubeLoaded) {
-    YouTubePromise = new Promise(function (resolve, reject) {
-      window.onYouTubePlayerAPIReady = function () {
-        resolve();
-      };
-    });
-    loadYouTube();
-    YouTubeLoaded = true;
-  }
-
   YouTubePromise.then(function () {
     var canPlayThrough = new Promise(function (resolve, reject) {
       YOUTUBE[youtube_id] = new YT.Player(youtube_id, {

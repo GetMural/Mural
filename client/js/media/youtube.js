@@ -1,5 +1,10 @@
-let YouTubeLoaded = false;
-let YouTubePromise;
+const YouTubePromise = new Promise(function(resolve, reject) {
+  window.onYouTubePlayerAPIReady = function () {
+    resolve();
+  }
+});
+loadYouTube();
+
 
 const YOUTUBE = [];
 
@@ -39,17 +44,6 @@ function prepare(scrollStory, item) {
   const autoAdvance = item.data.autoAdvance;
   const id = item.index;
   const youtube_id = getYoutubeId(item);
-
-  if (!YouTubeLoaded) {
-    YouTubePromise = new Promise(function(resolve, reject) {
-      window.onYouTubePlayerAPIReady = function () {
-        resolve();
-      }
-    });
-
-    loadYouTube();
-    YouTubeLoaded = true;
-  }
 
   YouTubePromise.then(function () {
     const canPlayThrough = new Promise(function(resolve, reject) {
