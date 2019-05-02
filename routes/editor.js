@@ -673,9 +673,7 @@ router.get('/page/youtube/id/:id', function (req, res) {
             partials: {
                 youtubesource: 'editor/fragments/youtubesource',
                 formcontrols: 'editor/fragments/formcontrols',
-                fullpage: 'editor/fragments/fullpage',
-                plaintext: 'editor/fragments/plaintext',
-                subtitle: 'editor/fragments/subtitle',
+                suppressnav: 'editor/fragments/suppressnav',
                 title: 'editor/fragments/title',
             }
         });
