@@ -33869,13 +33869,7 @@ module.exports = {
 "use strict";
 
 
-var YouTubePromise = new Promise(function (resolve, reject) {
-  window.onYouTubePlayerAPIReady = function () {
-    resolve();
-  };
-});
-loadYouTube();
-var YOUTUBE = [];
+var YOUTUBE = {};
 
 function loadYouTube() {
   var tag = document.createElement('script');
@@ -33883,6 +33877,25 @@ function loadYouTube() {
   var firstScriptTag = document.getElementsByTagName('script')[0];
   firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 }
+
+var YouTubePromise = new Promise(function (resolve, reject) {
+  window.onYouTubePlayerAPIReady = function () {
+    resolve();
+  };
+});
+loadYouTube();
+
+function resizePlayers() {
+  Object.keys(YOUTUBE).forEach(function (ytid) {
+    YOUTUBE[ytid].setSize(window.innerWidth, window.innerHeight);
+  });
+}
+
+var resizeTimeout;
+window.addEventListener('resize', function () {
+  clearTimeout(resizeTimeout);
+  resizeTimeout = setTimeout(resizePlayers, 200);
+});
 
 function getYoutubeId(item) {
   var videoId = item.data.youtubeId;

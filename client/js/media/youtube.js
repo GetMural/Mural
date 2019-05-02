@@ -1,11 +1,4 @@
-const YouTubePromise = new Promise(function(resolve, reject) {
-  window.onYouTubePlayerAPIReady = function () {
-    resolve();
-  }
-});
-loadYouTube();
-
-const YOUTUBE = [];
+const YOUTUBE = {};
 
 function loadYouTube () {
   var tag = document.createElement('script');
@@ -13,6 +6,25 @@ function loadYouTube () {
   var firstScriptTag = document.getElementsByTagName('script')[0];
   firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 }
+
+const YouTubePromise = new Promise(function(resolve, reject) {
+  window.onYouTubePlayerAPIReady = function () {
+    resolve();
+  }
+});
+loadYouTube();
+
+function resizePlayers() {
+  Object.keys(YOUTUBE).forEach(function (ytid) {
+    YOUTUBE[ytid].setSize(window.innerWidth, window.innerHeight);
+  });  
+}
+
+let resizeTimeout;
+window.addEventListener('resize', function () {
+  clearTimeout(resizeTimeout);
+  resizeTimeout = setTimeout(resizePlayers, 200);
+});
 
 function getYoutubeId (item) {
   const videoId = item.data.youtubeId;
