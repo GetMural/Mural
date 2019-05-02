@@ -9,7 +9,7 @@
 
 <script type="text/javascript">
 	var youtube_id = document.getElementById('youtube_id');
-	youtube_id.onchange = function() {
+	youtube_id.oninput = function() {
 		const video_id = this.value;
 
 		window.YouTubePromise.then(function() {
@@ -24,21 +24,21 @@
 	  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 	}
 
-	if (window.YouTubePromise) {
+	function createPlayer () {
 		window.YouTubePlayer = new YT.Player('ytpreview', {
 		  width: 480,
 		  height: 270,
 		  videoId: "{{youtube_id}}",
 		});
+	}
+
+	if (window.YouTubePromise) {
+		createPlayer();
 	} else {
 		loadYouTube();
 		window.YouTubePromise = new Promise(function(resolve, reject) {
 		  window.onYouTubePlayerAPIReady = function () {
-		  	window.YouTubePlayer = new YT.Player('ytpreview', {
-				  width: 480,
-				  height: 270,
-				  videoId: "{{youtube_id}}",
-				});
+		  	createPlayer();
 		    resolve();
 		  }
 		});

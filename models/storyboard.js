@@ -4,10 +4,6 @@ const electron = require('electron');
 const path = require('path');
 const USER_DATA_FOLDER = electron.app.getPath('userData');
 
-/**
- *  IMPORTANT:  This model saves a storyboard JSON object to local filesystem
- *  it does NOT deal with pouchDB or couchDB in anyway.
- */
 function Storyboard() {
     this.filename = null;
     this.data = {};
@@ -22,13 +18,12 @@ function createNav(items) {
 
     items.forEach((item, id) => {
       const [mediaType] = Object.keys(item);
-      var writeToNav = true;
-      if (item[mediaType] && item[mediaType].suppress) {
+      let writeToNav = true;
+      if (item[mediaType].suppress) {
         writeToNav = false;
       }
-      // fallback for now until every type has a title field to fill in. (or something for nav)
-      const tmpTitle = item[mediaType].title ? item[mediaType].title : `${id} ${mediaType}`;
-      const title = tmpTitle.replace(/<\/?[^>]+(>|$)/g, "");
+
+      const title = item[mediaType].nav_title;
       if (writeToNav) {
         nav.push({
             id,

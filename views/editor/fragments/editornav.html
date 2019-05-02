@@ -10,72 +10,81 @@
     <li class="list-group-item">
       {{#imagebackground}}
         <a href="/editor/page/imagebackground/id/{{id}}">
-          Image Background{{#title}}: {{{title}}}{{/title}}
+          Image Background{{#nav_title}}: {{nav_title}}{{/nav_title}}
         </a>
+        {{^nav_title}}{{#title}}: {{{title}}}{{/title}}{{/nav_title}}
         <form action="/editor/delete/{{id}}" method="post">
           <button class="btn btn-danger btn-xs" type="submit">Delete</button>
         </form>
       {{/imagebackground}}
       {{#imageaudio}}
         <a href="/editor/page/imageaudio/id/{{id}}">
-          Image Audio{{#title}}: {{{title}}}{{/title}}
+          Image Audio{{#nav_title}}: {{nav_title}}{{/nav_title}}
         </a>
+        {{^nav_title}}{{#title}}: {{{title}}}{{/title}}{{/nav_title}}
         <form action="/editor/delete/{{id}}" method="post">
           <button class="btn btn-danger btn-xs" type="submit">Delete</button>
         </form>
       {{/imageaudio}}
   	  {{#imageparallax}}
         <a href="/editor/page/imageparallax/id/{{id}}">
-          Parallax Image{{#title}}: {{{title}}}{{/title}}
+          Parallax Image{{#nav_title}}: {{nav_title}}{{/nav_title}}
         </a>
+        {{^nav_title}}{{#title}}: {{{title}}}{{/title}}{{/nav_title}}
         <form action="/editor/delete/{{id}}" method="post">
           <button class="btn btn-danger btn-xs" type="submit">Delete</button>
         </form>
       {{/imageparallax}}
       {{#slideshowhorizontal}}
         <a href="/editor/page/slideshowhorizontal/id/{{id}}">
-          Horizontal Slideshow{{#title}}: {{{title}}}{{/title}}
+          Horizontal Slideshow{{#nav_title}}: {{nav_title}}{{/nav_title}}
         </a>
+        {{^nav_title}}{{#title}}: {{{title}}}{{/title}}{{/nav_title}}
         <form action="/editor/delete/{{id}}" method="post">
           <button class="btn btn-danger btn-xs" type="submit">Delete</button>
         </form>
       {{/slideshowhorizontal}}
   	  {{#slideshowvertical}}
         <a href="/editor/page/slideshowvertical/id/{{id}}">
-          Vertical Slideshow{{#title}}: {{{title}}}{{/title}}
+          Vertical Slideshow{{#nav_title}}: {{nav_title}}{{/nav_title}}
         </a>
+        {{^nav_title}}{{#title}}: {{{title}}}{{/title}}{{/nav_title}}
         <form action="/editor/delete/{{id}}" method="post">
           <button class="btn btn-danger btn-xs" type="submit">Delete</button>
         </form>
       {{/slideshowvertical}}
       {{#textcentred}}
         <a href="/editor/page/textcentred/id/{{id}}">
-          Centred Text{{#title}}: {{{title}}}{{/title}}
+          Centred Text{{#nav_title}}: {{nav_title}}{{/nav_title}}
         </a>
+        {{^nav_title}}{{#title}}: {{{title}}}{{/title}}{{/nav_title}}
         <form action="/editor/delete/{{id}}" method="post">
           <button class="btn btn-danger btn-xs" type="submit">Delete</button>
         </form>
       {{/textcentred}}
       {{#videobackground}}
         <a href="/editor/page/videobackground/id/{{id}}">
-          Background Video{{#title}}: {{{title}}}{{/title}}
+          Background Video{{#nav_title}}: {{nav_title}}{{/nav_title}}
         </a>
+        {{^nav_title}}{{#title}}: {{{title}}}{{/title}}{{/nav_title}}
         <form action="/editor/delete/{{id}}" method="post">
           <button class="btn btn-danger btn-xs" type="submit">Delete</button>
         </form>
       {{/videobackground}}
       {{#videofullpage}}
         <a href="/editor/page/videofullpage/id/{{id}}">
-          Fullpage Video{{#title}}: {{{title}}}{{/title}}
+          Fullpage Video{{#nav_title}}: {{nav_title}}{{/nav_title}}
         </a>
+        {{^nav_title}}{{#title}}: {{{title}}}{{/title}}{{/nav_title}}
         <form action="/editor/delete/{{id}}" method="post">
           <button class="btn btn-danger btn-xs" type="submit">Delete</button>
         </form>
       {{/videofullpage}}
       {{#youtube}}
         <a href="/editor/page/youtube/id/{{id}}">
-          YouTube{{#title}}: {{{title}}}{{/title}}
+          YouTube{{#nav_title}}: {{nav_title}}{{/nav_title}}
         </a>
+        {{^nav_title}}{{#title}}: {{{title}}}{{/title}}{{/nav_title}}
         <form action="/editor/delete/{{id}}" method="post">
           <button class="btn btn-danger btn-xs" type="submit">Delete</button>
         </form>
