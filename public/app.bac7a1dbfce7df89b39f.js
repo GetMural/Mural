@@ -33922,7 +33922,7 @@ function prepare(scrollStory, item) {
         playerVars: {
           controls: hasControls ? 1 : 0,
           enablejsapi: 1,
-          playsinline: 0,
+          playsinline: 1,
           rel: 0,
           modestbranding: 1
         },
@@ -33930,11 +33930,10 @@ function prepare(scrollStory, item) {
           onReady: function onReady(event) {
             resolve();
           },
-          // https://developers.google.com/youtube/iframe_api_reference#Example_Video_Player_Constructors
           onStateChange: function onStateChange(event) {
             var status = event.data;
 
-            if (autoAdvance && status === 0) {
+            if (autoAdvance && status === YT.PlayerState.ENDED) {
               debugger;
               var count = scrollStory.getItems().length;
               var next = id + 1;
