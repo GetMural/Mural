@@ -50,9 +50,12 @@
   </head>
 
   <body class="longform frozen" name="top">
-    <div id="loading_overlay" class="loading">
-      <img src="uploads/tuska/tuskalogo_vektorina.png" class="logo" alt="TUSKA Logo">
-      <img id="play_start" class="play-start animated bounce" src="img/tuska_play.svg" style="display: none">
+    <div id="loading_overlay" class="loading" {{#meta}}{{#site_img}} style="background-image:url('{{site_img}}');background-position:center center;background-size:cover;" {{/site_img}}{{/meta}}>
+      <div class="opacity-pane"></div>
+
+      <img src="img/logo.svg" alt="Mural is Loading..." class="logo">
+      <h3 class="story-name">{{#meta}}{{title}}{{/meta}}</h3>
+      <img id="play_start" class="play-start animated bounce" src="img/tuska_play.svg" style="display: none; fill:white">
     </div>
 
     <span class="mute">Mute</span>
@@ -332,7 +335,7 @@
             <div class="content container-fluid">
 
                   <div class="row">
-                    <div class="{{#format}}{{#fullpage}}header-fullpage{{/fullpage}}{{/format}}">
+                    <div class="col-sm-12 {{#format}}{{#fullpage}}header-fullpage{{/fullpage}}{{/format}}">
                       <div class="middle">
                         {{#title}}
                           <h1>{{{title}}}</h1>
@@ -422,42 +425,6 @@
               >
             <div class="video-container">
               <div id="ytplayer_{{youtube_id}}"></div>
-            </div>
-            <div class="content container-fluid">
-
-              <div class="row">
-                <div class="{{#format}}{{#fullpage}}header-fullpage{{/fullpage}}{{/format}}">
-                  <div class="middle">
-                    {{#title}}
-                      <h1>{{{title}}}</h1>
-                    {{/title}}
-                    {{#subtitle}}
-                      <h2>{{{subtitle}}}</h2>
-                    {{/subtitle}}
-                  </div>
-                </div>
-              </div>
-
-              {{#text}}
-              <div class="row">
-                <div class="col-xs-12 col-sm-10 col-md-8 col-lg-6 text">
-
-                    {{#backgroundprops}}
-                    {{#active}}
-                    <span class="text-bounding-box" style="background-color: rgba({{value}}, {{opacity}});">
-                    {{/active}}
-                    {{/backgroundprops}}
-
-                    {{{text}}}
-
-                    {{#backgroundprops}}
-                    {{#active}}
-                    </span>
-                    {{/active}}
-                    {{/backgroundprops}}
-              </div>
-              {{/text}}
-
             </div>
           </section>
         {{/youtube}}

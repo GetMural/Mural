@@ -2156,10 +2156,11 @@ article .part.box_text p{background:rgba(0,0,0,0.3);display:inline}
   width: 100vw;
   height: 100vh;
   display: grid;
-  grid-template-rows: auto 200px 150px auto;
+  grid-template-rows: auto 200px 150px 150px auto;
   grid-template-areas: 
     "."
     "logo"
+    "storyname"
     "play"
     ".";
   grid-row-gap: 0.3rem;
@@ -2172,6 +2173,14 @@ article .part.box_text p{background:rgba(0,0,0,0.3);display:inline}
 .loading .logo {
   grid-area: logo;
   max-height: 250px;
+}
+
+.loading .story-name {
+  grid-area: storyname;
+  height: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .loading .play-start {
