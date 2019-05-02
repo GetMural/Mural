@@ -115,7 +115,7 @@ function prepareVideo (scrollStory, $el, id, srcs, attrs) {
       const next = id + 1;
 
       if (next < count) {
-        scrollStory.index(id + 1);
+        scrollStory.index(next);
       }
 
       // Allow it to restart from the beginning.

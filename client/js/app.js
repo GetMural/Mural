@@ -136,7 +136,7 @@ function loadItem (item) {
   const returnPromises = [];
 
   if (item.data.youtubeId) {
-    const youtubeLoaded = youtubeMedia.prepare(item);
+    const youtubeLoaded = youtubeMedia.prepare(scrollStory, item);
     returnPromises.push(youtubeLoaded);
   }
 

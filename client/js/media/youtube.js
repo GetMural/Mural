@@ -27,9 +27,11 @@ function stick(item) {
   $container.css('position', 'fixed');
 }
 
-function prepare(item) {
+function prepare(scrollStory, item) {
   const videoId = item.data.youtubeId;
   const hasControls = item.data.controls;
+  const autoAdvance = item.data.autoAdvance;
+  const id = item.index;
 
   if (!YouTubeLoaded) {
     YouTubePromise = new Promise(function(resolve, reject) {
@@ -53,7 +55,6 @@ function prepare(item) {
           enablejsapi: 1,
           playsinline: 0,
           rel: 0,
-          loop: 1,
           modestbranding: 1,
         },
         events: {
@@ -61,7 +62,19 @@ function prepare(item) {
             YOUTUBE[videoId] = event.target;
             resolve();
           },
-          // 'onStateChange': onPlayerStateChange
+          // https://developers.google.com/youtube/iframe_api_reference#Example_Video_Player_Constructors
+          onStateChange: function (event) {
+            const status = event.data;
+
+            if (autoAdvance && status === 0) {
+              const count = scrollStory.getItems().length;
+              const next = id + 1;
+
+              if (next < count) {
+                scrollStory.index(next);
+              }
+            }
+          }
         }
       });
     });

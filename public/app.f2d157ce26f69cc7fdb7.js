@@ -10696,7 +10696,7 @@ function loadItem(item) {
   var returnPromises = [];
 
   if (item.data.youtubeId) {
-    var youtubeLoaded = youtubeMedia.prepare(item);
+    var youtubeLoaded = youtubeMedia.prepare(scrollStory, item);
     returnPromises.push(youtubeLoaded);
   }
 
@@ -14767,7 +14767,7 @@ function prepareVideo(scrollStory, $el, id, srcs, attrs) {
       var next = id + 1;
 
       if (next < count) {
-        scrollStory.index(id + 1);
+        scrollStory.index(next);
       } // Allow it to restart from the beginning.
 
 
@@ -33897,9 +33897,11 @@ function stick(item) {
   $container.css('position', 'fixed');
 }
 
-function prepare(item) {
+function prepare(scrollStory, item) {
   var videoId = item.data.youtubeId;
   var hasControls = item.data.controls;
+  var autoAdvance = item.data.autoAdvance;
+  var id = item.index;
 
   if (!YouTubeLoaded) {
     YouTubePromise = new Promise(function (resolve, reject) {
@@ -33922,15 +33924,26 @@ function prepare(item) {
           enablejsapi: 1,
           playsinline: 0,
           rel: 0,
-          loop: 1,
           modestbranding: 1
         },
         events: {
           onReady: function onReady(event) {
             YOUTUBE[videoId] = event.target;
             resolve();
-          } // 'onStateChange': onPlayerStateChange
+          },
+          // https://developers.google.com/youtube/iframe_api_reference#Example_Video_Player_Constructors
+          onStateChange: function onStateChange(event) {
+            var status = event.data;
 
+            if (autoAdvance && status === 0) {
+              var count = scrollStory.getItems().length;
+              var next = id + 1;
+
+              if (next < count) {
+                scrollStory.index(next);
+              }
+            }
+          }
         }
       });
     });
