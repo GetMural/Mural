@@ -5,7 +5,6 @@ const YouTubePromise = new Promise(function(resolve, reject) {
 });
 loadYouTube();
 
-
 const YOUTUBE = [];
 
 function loadYouTube () {
@@ -45,8 +44,8 @@ function prepare(scrollStory, item) {
   const id = item.index;
   const youtube_id = getYoutubeId(item);
 
-  YouTubePromise.then(function () {
-    const canPlayThrough = new Promise(function(resolve, reject) {
+  const canPlayThrough = new Promise(function(resolve, reject) {
+    YouTubePromise.then(function () {
       YOUTUBE[youtube_id] = new YT.Player(youtube_id, {
         width: window.innerWidth,
         height: window.innerHeight,
@@ -79,7 +78,9 @@ function prepare(scrollStory, item) {
         }
       });
     });
-  })
+  });
+
+  return canPlayThrough;
 }
 
 module.exports = {

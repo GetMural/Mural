@@ -33913,8 +33913,8 @@ function prepare(scrollStory, item) {
   var autoAdvance = item.data.autoAdvance;
   var id = item.index;
   var youtube_id = getYoutubeId(item);
-  YouTubePromise.then(function () {
-    var canPlayThrough = new Promise(function (resolve, reject) {
+  var canPlayThrough = new Promise(function (resolve, reject) {
+    YouTubePromise.then(function () {
       YOUTUBE[youtube_id] = new YT.Player(youtube_id, {
         width: window.innerWidth,
         height: window.innerHeight,
@@ -33948,6 +33948,7 @@ function prepare(scrollStory, item) {
       });
     });
   });
+  return canPlayThrough;
 }
 
 module.exports = {
