@@ -102,15 +102,13 @@ const LOADED_STORY_SECTIONS = [];
 let isSoundEnabled = true;
 
 function getVideoAttrs(item) {
-  let muted;
+  const muted = !isSoundEnabled;
   let autoplay;
 
   // TODO we only have full page videos atm.
   if (item.el.hasClass('st-content-video')) {
-    muted = (isSoundEnabled === false);
     autoplay = !isMobile.any;
   } else {
-    muted = !isSoundEnabled;
     autoplay = true;
   }
 
@@ -269,7 +267,7 @@ $story.on('itemfocus', function(ev, item) {
   }
 
   if (item.data.youtubeId) {
-    youtubeMedia.play(item);
+    youtubeMedia.play(item, isSoundEnabled);
     youtubeMedia.stick(item);
   }
 
@@ -277,7 +275,7 @@ $story.on('itemfocus', function(ev, item) {
     audioMedia.playBackgroundAudio(
       item.index,
       {
-        muted: (isSoundEnabled === false)
+        muted: !isSoundEnabled
       }
     );
   }
@@ -335,22 +333,17 @@ if (isMobile.any) {
 
     storyItems.forEach(function (item) {
       if (item.data.video) {
-        let muted;
-
-        if (item.data.isFullpage) {
-          muted = (isSoundEnabled === false) || (item.data.muted === true);
-        } else {
-          muted = (isSoundEnabled === false) || (item.data.muted === true);
-        }
-
+        const muted = !isSoundEnabled || item.data.muted;
         videoMedia.setMuted(item.index, muted);
       }
 
       if (item.data.audio) {
-        const muted = (isSoundEnabled === false);
+        const muted = !isSoundEnabled;
         audioMedia.setMuted(item.index, muted);
       }
     });
+
+    youtubeMedia.setMuted(!isSoundEnabled);
   });
 }
 
@@ -412,7 +405,7 @@ Promise.all(LOAD_PROMISES).then(() => {
       audioMedia.playBackgroundAudio(
         active.index,
         {
-          muted: (isSoundEnabled === false)
+          muted: !isSoundEnabled
         }
       );
     }

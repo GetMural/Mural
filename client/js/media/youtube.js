@@ -32,9 +32,27 @@ function getYoutubeId (item) {
   return `ytplayer_${videoId}_${id}`;
 }
 
-function play(item) {
+function setMuted (muted) {
+  Object.keys(YOUTUBE).forEach(function (ytid) {
+    const player = YOUTUBE[ytid];
+    if (muted) {
+      player.mute();
+    } else {
+      player.unMute();
+    }
+  });
+}
+
+function play(item, isSoundEnabled) {
   const youtube_id = getYoutubeId(item);
-  YOUTUBE[youtube_id].playVideo();
+  const player = YOUTUBE[youtube_id]
+
+  if (isSoundEnabled) {
+    player.unMute();
+  } else {
+    player.mute();
+  }
+  player.playVideo();
 }
 
 function remove(item) {
@@ -101,4 +119,5 @@ module.exports = {
   remove,
   stick,
   prepare,
+  setMuted,
 };

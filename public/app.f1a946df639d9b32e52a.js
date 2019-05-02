@@ -10664,14 +10664,12 @@ var LOADED_STORY_SECTIONS = [];
 var isSoundEnabled = true;
 
 function getVideoAttrs(item) {
-  var muted;
+  var muted = !isSoundEnabled;
   var autoplay; // TODO we only have full page videos atm.
 
   if (item.el.hasClass('st-content-video')) {
-    muted = isSoundEnabled === false;
     autoplay = !isMobile.any;
   } else {
-    muted = !isSoundEnabled;
     autoplay = true;
   }
 
@@ -10804,13 +10802,13 @@ $story.on('itemfocus', function (ev, item) {
   }
 
   if (item.data.youtubeId) {
-    youtubeMedia.play(item);
+    youtubeMedia.play(item, isSoundEnabled);
     youtubeMedia.stick(item);
   }
 
   if (item.data.audio) {
     audioMedia.playBackgroundAudio(item.index, {
-      muted: isSoundEnabled === false
+      muted: !isSoundEnabled
     });
   }
 });
@@ -10863,23 +10861,17 @@ if (isMobile.any) {
 
     storyItems.forEach(function (item) {
       if (item.data.video) {
-        var muted;
-
-        if (item.data.isFullpage) {
-          muted = isSoundEnabled === false || item.data.muted === true;
-        } else {
-          muted = isSoundEnabled === false || item.data.muted === true;
-        }
-
+        var muted = !isSoundEnabled || item.data.muted;
         videoMedia.setMuted(item.index, muted);
       }
 
       if (item.data.audio) {
-        var _muted = isSoundEnabled === false;
+        var _muted = !isSoundEnabled;
 
         audioMedia.setMuted(item.index, _muted);
       }
     });
+    youtubeMedia.setMuted(!isSoundEnabled);
   });
 }
 
@@ -10930,7 +10922,7 @@ Promise.all(LOAD_PROMISES).then(function () {
 
     if (active.data.audio) {
       audioMedia.playBackgroundAudio(active.index, {
-        muted: isSoundEnabled === false
+        muted: !isSoundEnabled
       });
     }
 
@@ -33903,9 +33895,29 @@ function getYoutubeId(item) {
   return "ytplayer_".concat(videoId, "_").concat(id);
 }
 
-function play(item) {
+function setMuted(muted) {
+  Object.keys(YOUTUBE).forEach(function (ytid) {
+    var player = YOUTUBE[ytid];
+
+    if (muted) {
+      player.mute();
+    } else {
+      player.unMute();
+    }
+  });
+}
+
+function play(item, isSoundEnabled) {
   var youtube_id = getYoutubeId(item);
-  YOUTUBE[youtube_id].playVideo();
+  var player = YOUTUBE[youtube_id];
+
+  if (isSoundEnabled) {
+    player.unMute();
+  } else {
+    player.mute();
+  }
+
+  player.playVideo();
 }
 
 function remove(item) {
@@ -33969,7 +33981,8 @@ module.exports = {
   play: play,
   remove: remove,
   stick: stick,
-  prepare: prepare
+  prepare: prepare,
+  setMuted: setMuted
 };
 
 /***/ })
