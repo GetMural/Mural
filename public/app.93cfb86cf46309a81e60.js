@@ -33880,16 +33880,22 @@ function loadYouTube() {
   firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 }
 
-function play(item) {
+function getYoutubeId(item) {
   var videoId = item.data.youtubeId;
-  YOUTUBE[videoId].playVideo();
+  var id = item.index;
+  return "ytplayer_".concat(videoId, "_").concat(id);
+}
+
+function play(item) {
+  var youtube_id = getYoutubeId(item);
+  YOUTUBE[youtube_id].playVideo();
 }
 
 function remove(item) {
-  var videoId = item.data.youtubeId;
+  var youtube_id = getYoutubeId(item);
   var $container = item.el.find('.video-container');
   $container.css('position', '');
-  YOUTUBE[videoId].pauseVideo();
+  YOUTUBE[youtube_id].pauseVideo();
 }
 
 function stick(item) {
@@ -33902,6 +33908,7 @@ function prepare(scrollStory, item) {
   var hasControls = item.data.controls;
   var autoAdvance = item.data.autoAdvance;
   var id = item.index;
+  var youtube_id = getYoutubeId(item);
 
   if (!YouTubeLoaded) {
     YouTubePromise = new Promise(function (resolve, reject) {
@@ -33915,7 +33922,7 @@ function prepare(scrollStory, item) {
 
   YouTubePromise.then(function () {
     var canPlayThrough = new Promise(function (resolve, reject) {
-      var player = new YT.Player('ytplayer_' + videoId, {
+      YOUTUBE[youtube_id] = new YT.Player(youtube_id, {
         width: window.innerWidth,
         height: window.innerHeight,
         videoId: videoId,
@@ -33928,7 +33935,6 @@ function prepare(scrollStory, item) {
         },
         events: {
           onReady: function onReady(event) {
-            YOUTUBE[videoId] = event.target;
             resolve();
           },
           // https://developers.google.com/youtube/iframe_api_reference#Example_Video_Player_Constructors
@@ -33936,6 +33942,7 @@ function prepare(scrollStory, item) {
             var status = event.data;
 
             if (autoAdvance && status === 0) {
+              debugger;
               var count = scrollStory.getItems().length;
               var next = id + 1;
 

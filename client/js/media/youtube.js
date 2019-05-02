@@ -10,16 +10,22 @@ function loadYouTube () {
   firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 }
 
-function play(item) {
+function getYoutubeId (item) {
   const videoId = item.data.youtubeId;
-  YOUTUBE[videoId].playVideo();
+  const id = item.index;
+  return `ytplayer_${videoId}_${id}`;
+}
+
+function play(item) {
+  const youtube_id = getYoutubeId(item);
+  YOUTUBE[youtube_id].playVideo();
 }
 
 function remove(item) {
-  const videoId = item.data.youtubeId;
+  const youtube_id = getYoutubeId(item);
   const $container = item.el.find('.video-container');
   $container.css('position', '');
-  YOUTUBE[videoId].pauseVideo();
+  YOUTUBE[youtube_id].pauseVideo();
 }
 
 function stick(item) {
@@ -32,6 +38,7 @@ function prepare(scrollStory, item) {
   const hasControls = item.data.controls;
   const autoAdvance = item.data.autoAdvance;
   const id = item.index;
+  const youtube_id = getYoutubeId(item);
 
   if (!YouTubeLoaded) {
     YouTubePromise = new Promise(function(resolve, reject) {
@@ -46,7 +53,7 @@ function prepare(scrollStory, item) {
 
   YouTubePromise.then(function () {
     const canPlayThrough = new Promise(function(resolve, reject) {
-      const player = new YT.Player('ytplayer_'+videoId, {
+      YOUTUBE[youtube_id] = new YT.Player(youtube_id, {
         width: window.innerWidth,
         height: window.innerHeight,
         videoId: videoId,
@@ -59,7 +66,6 @@ function prepare(scrollStory, item) {
         },
         events: {
           onReady: function (event) {
-            YOUTUBE[videoId] = event.target;
             resolve();
           },
           // https://developers.google.com/youtube/iframe_api_reference#Example_Video_Player_Constructors
@@ -67,6 +73,7 @@ function prepare(scrollStory, item) {
             const status = event.data;
 
             if (autoAdvance && status === 0) {
+              debugger;
               const count = scrollStory.getItems().length;
               const next = id + 1;
 
