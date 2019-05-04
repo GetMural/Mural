@@ -2155,28 +2155,42 @@ article .part.box_text p{background:rgba(0,0,0,0.3);display:inline}
 .loading {
   width: 100vw;
   height: 100vh;
-  z-index: 99999999;
-  position: fixed;
-  top: 0;
+  display: grid;
+  grid-template-rows: auto 200px 150px 150px auto;
+  grid-template-areas: 
+    "."
+    "logo"
+    "storyname"
+    "play"
+    ".";
+  grid-row-gap: 0.3rem;
   background: white;
-  text-align: center;
-  color: white;
+  position: fixed;
+  z-index: 102;
+  justify-items: center;
+}
+
+.loading .logo {
+  grid-area: logo;
+  max-height: 250px;
+}
+
+.loading .story-name {
+  grid-area: storyname;
+  height: 150px;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
-.loading-text {
-  margin: 1em;
+.loading .play-start {
+  grid-area: play;
+  cursor: pointer;
+  height: 150px;
 }
 
 .frozen {
   overflow: hidden;
-}
-
-.play-start {
-  cursor: pointer;
 }
 
 .opacity-pane {
@@ -2188,4 +2202,35 @@ article .part.box_text p{background:rgba(0,0,0,0.3);display:inline}
   background: black;
   z-index: -1;
   opacity: 0.5;
+}
+
+.animated {
+  -webkit-animation-duration: .5s;
+  animation-duration: .5s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+  -webkit-animation-timing-function: linear;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  -webkit-animation-iteration-count: infinite;
+}
+@-webkit-keyframes bounce {
+  0%, 100% {
+    -webkit-transform: translateY(0);
+  }
+  50% {
+    -webkit-transform: translateY(-5px);
+  }
+}
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+.bounce {
+  -webkit-animation-name: bounce;
+  animation-name: bounce;
 }

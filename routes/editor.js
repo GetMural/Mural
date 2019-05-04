@@ -356,7 +356,7 @@ router.post('/page/imageaudio/id/:id', function (req, res) {
 
         // format and save new item
         item['suppress'] = suppress;
-        item['title'] = newItem['title'];
+        item['nav_title'] = newItem['nav_title'];
 
         item['image'] = {
             srcmain: newItem['srcmain'],
@@ -435,6 +435,7 @@ router.post('/page/imagebackground/id/:id', function (req, res) {
         item['format'] = { fullpage: fullpage };
         var suppress = (newItem['suppress'] === 'on') ? true : false;
         item['suppress'] = suppress;
+        item['nav_title'] = newItem['nav_title'];
         item['title'] = newItem['title'];
         item['subtitle'] = newItem['subtitle'];
         item['text'] = newItem['text'];
@@ -515,9 +516,6 @@ router.post('/page/slideshowhorizontal/id/:id', function (req, res) {
         const qId = req.params.id;
 
         items[qId].slideshowhorizontal = req.body;
-        var suppress = (items[qId].slideshowhorizontal['suppress'] === 'on') ? true : false;
-        items[qId].slideshowhorizontal['suppress'] = suppress;
-
         storyboard.writeFile({ meta: meta, items: items });
 
         res.render('editor/editor', {
@@ -568,8 +566,6 @@ router.post('/page/slideshowvertical/id/:id', function (req, res) {
         const qId = req.params.id;
 
         items[qId].slideshowvertical = req.body;
-        var suppress = (items[qId].slideshowvertical['suppress'] === 'on') ? true : false;
-        items[qId].slideshowvertical['suppress'] = suppress;
 
         storyboard.writeFile({ meta: meta, items: items });
 
@@ -640,8 +636,6 @@ router.post('/page/textcentred/id/:id', function (req, res) {
         const newItem = req.body;
 
         // format and save new item
-        var suppress = (newItem['suppress'] === 'on') ? true : false;
-        items[qId].textcentred['suppress'] = suppress;
         items[qId].textcentred = newItem;
         storyboard.writeFile({ meta: meta, items: items });
 
@@ -652,6 +646,50 @@ router.post('/page/textcentred/id/:id', function (req, res) {
             message: 'Text Centered Update',
             partials: {
                 editornav: 'editor/fragments/editornav'
+            }
+        });
+    });
+});
+
+// Slideshow Vertical Page with ID
+router.get('/page/youtube/id/:id', function (req, res) {
+    storyboard.readFile(function (err, data) {
+        var query = req || {};
+        var items = data.items;
+        if (query.params && query.params.id) {
+            var qId = query.params.id;
+            var item = items[qId].youtube;
+        };
+
+        res.render('editor/pages/youtube', {
+            id: qId,
+            item: item,
+            partials: {
+                youtubesource: 'editor/fragments/youtubesource',
+                formcontrols: 'editor/fragments/formcontrols',
+                suppressnav: 'editor/fragments/suppressnav',
+                title: 'editor/fragments/title',
+            }
+        });
+    });
+});
+
+router.post('/page/youtube/id/:id', function (req, res) {
+    storyboard.readFile(function (err, data) {
+        const meta = data.meta;
+        const items = data.items;
+        const qId = req.params.id;
+        items[qId].youtube = req.body;
+
+        storyboard.writeFile({ meta: meta, items: items });
+
+        res.render('editor/editor', {
+            meta: meta,
+            items: items,
+            editor: 'editor',
+            message: 'YouTube Updated',
+            partials: {
+                editornav: 'editor/fragments/editornav',
             }
         });
     });
@@ -702,6 +740,7 @@ router.post('/page/videobackground/id/:id', function (req, res) {
         var suppress = (newItem['suppress'] === 'on') ? true : false;
         var active = (newItem['bg-active'] === 'on') ? true : false;
         item['suppress'] = suppress;
+        item['nav_title'] = newItem['nav_title'];
         item['format'] = { fullpage: fullpage };
         item['backgroundprops'] = {
           active: newItem['bg-active'],
@@ -789,6 +828,7 @@ router.post('/page/videofullpage/id/:id', function (req, res) {
         var fullpage = (newItem['fullpage'] === 'on') ? true : false;
         var suppress = (newItem['suppress'] === 'on') ? true : false;
         item['suppress'] = suppress;
+        item['nav_title'] = newItem['nav_title'];
         var playback = newItem['playback'];
         if (playback === 'advance') {
             item['autoAdvance'] = true;
@@ -878,6 +918,7 @@ router.post('/page/imageparallax/id/:id', function (req, res) {
         var suppress = (newItem['suppress'] === 'on') ? true : false;
         item['suppress'] = suppress;
         item['format'] = { fullpage: fullpage };
+        item['nav_title'] = newItem['nav_title'];
         item['title'] = newItem['title'];
         item['subtitle'] = newItem['subtitle'];
         // TODO: item['navlevel'] is missing from the form

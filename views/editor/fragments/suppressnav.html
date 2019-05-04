@@ -1,8 +1,15 @@
 <div>
   <fieldset class="js-SuppressNav">
-    <label for="suppress">
-      Suppress from Navigation
-    </label>
-    <input id="suppress" name="suppress" type="checkbox"{{#suppress}} checked="checked"{{/suppress}} />
+    <legend>Navigation Entry</legend>
+    <div>
+        <label for="nav_title">Navigation Title</label>
+        <input type="text" id="nav_title" name="nav_title">
+    </div>
+    <div>
+        <label for="suppress">
+          Suppress from Navigation
+        </label>
+        <input id="suppress" name="suppress" type="checkbox"{{#suppress}} checked="checked"{{/suppress}} />
+    </div>
   </fieldset>
 </div>

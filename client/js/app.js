@@ -25,19 +25,45 @@ const MoveItItem = function(el){
   this.el = $(el);
   this.container = this.el.parent('.part');
   this.speed = parseInt(this.el.attr('data-scroll-speed'));
-  this.lastTop = null;
+  // 60 fps
+  this.fpsInterval = 1000 / 60;
+  this.top = null;
+  this.inView = false;
+  this.rafID = null;
+  this.then = null;
+};
+
+MoveItItem.prototype.animate = function(time) {
+  // calc elapsed time since last loop
+  const now = time;
+  const elapsed = now - this.then;
+
+  // if enough time has elapsed, draw the next frame
+  if (elapsed > this.fpsInterval) {
+    // Get ready for next frame by setting then=now, but...
+    // Also, adjust for fpsInterval not being multiple of 16.67
+    this.then = now - (elapsed % this.fpsInterval);
+    this.el.css('transform', 'translateY(' + -(this.top / this.speed) + 'px)');
+  }
+  this.rafID = requestAnimationFrame(this.animate.bind(this));
 };
 
 MoveItItem.prototype.update = function(scrollTop){
   if (this.container.hasClass('inviewport')) {
-    this.el.css('willChange', 'transform');
-    const top = scrollTop - this.container.offset().top;
-    if (this.lastTop !== top) {
-      this.el.css('transform', 'translateY(' + -(top / this.speed) + 'px)');
-      this.lastTop = top;
-    } 
+    if (!this.inView) {
+      this.el.css('willChange', 'transform');
+      this.then = performance.now();
+      this.rafID = requestAnimationFrame(this.animate.bind(this));
+    }
+    
+    this.top = scrollTop - this.container.offset().top;
+    this.inView = true;
   } else {
-    this.el.css('willChange', 'auto');
+    if (this.inView) {
+      cancelAnimationFrame(this.rafID);
+      this.el.css('willChange', 'auto');
+    } 
+    this.inView = false;
   }
 };
 
@@ -45,6 +71,7 @@ const blueimp = require('blueimp-gallery/js/blueimp-gallery');
 const videoMedia = require('./media/video');
 const imageMedia = require('./media/images');
 const audioMedia = require('./media/audio');
+const youtubeMedia = require('./media/youtube');
 const isMobile = window.isMobile;
 
 const WINDOW_WIDTH = $(window).width();
@@ -75,15 +102,13 @@ const LOADED_STORY_SECTIONS = [];
 let isSoundEnabled = true;
 
 function getVideoAttrs(item) {
-  let muted;
+  const muted = !isSoundEnabled;
   let autoplay;
 
   // TODO we only have full page videos atm.
   if (item.el.hasClass('st-content-video')) {
-    muted = (isSoundEnabled === false);
     autoplay = !isMobile.any;
   } else {
-    muted = !isSoundEnabled;
     autoplay = true;
   }
 
@@ -107,6 +132,11 @@ function loadItem (item) {
   }
 
   const returnPromises = [];
+
+  if (item.data.youtubeId) {
+    const youtubeLoaded = youtubeMedia.prepare(scrollStory, item);
+    returnPromises.push(youtubeLoaded);
+  }
 
   if (item.data.image) {
     const imageLoaded = imageMedia.insertBackgroundImage(item.el, item.data[scrKey], item.active);
@@ -236,11 +266,16 @@ $story.on('itemfocus', function(ev, item) {
     videoMedia.fixBackgroundVideo(item.el);
   }
 
+  if (item.data.youtubeId) {
+    youtubeMedia.play(item, isSoundEnabled);
+    youtubeMedia.stick(item);
+  }
+
   if (item.data.audio) {
     audioMedia.playBackgroundAudio(
       item.index,
       {
-        muted: (isSoundEnabled === false)
+        muted: !isSoundEnabled
       }
     );
   }
@@ -249,6 +284,10 @@ $story.on('itemfocus', function(ev, item) {
 $story.on('itemblur', function(ev, item) {
   if (item.data.image) {
     imageMedia.unfixBackgroundImage(item.el);
+  }
+
+  if (item.data.youtubeId) {
+    youtubeMedia.remove(item);
   }
 
   if (item.data.video) {
@@ -294,22 +333,17 @@ if (isMobile.any) {
 
     storyItems.forEach(function (item) {
       if (item.data.video) {
-        let muted;
-
-        if (item.data.isFullpage) {
-          muted = (isSoundEnabled === false) || (item.data.muted === true);
-        } else {
-          muted = (isSoundEnabled === false) || (item.data.muted === true);
-        }
-
+        const muted = !isSoundEnabled || item.data.muted;
         videoMedia.setMuted(item.index, muted);
       }
 
       if (item.data.audio) {
-        const muted = (isSoundEnabled === false);
+        const muted = !isSoundEnabled;
         audioMedia.setMuted(item.index, muted);
       }
     });
+
+    youtubeMedia.setMuted(!isSoundEnabled);
   });
 }
 
@@ -351,13 +385,8 @@ if ((active.index + 2) < storyItems.length) {
 
 Promise.all(LOAD_PROMISES).then(() => {
   let overlay = document.getElementById('loading_overlay');
-  let playStart = document.createElement('img');
-  playStart.classList.add('play-start');
-  playStart.src = "img/play.png";
-
-  let text = overlay.querySelector('.loading-text');
-  text.innerHTML = "Click to Start";
-  overlay.appendChild(playStart);
+  let playStart = document.getElementById('play_start');
+  playStart.style.display="block";
 
   playStart.addEventListener('click', () => {
     document.body.removeChild(overlay);
@@ -376,7 +405,7 @@ Promise.all(LOAD_PROMISES).then(() => {
       audioMedia.playBackgroundAudio(
         active.index,
         {
-          muted: (isSoundEnabled === false)
+          muted: !isSoundEnabled
         }
       );
     }
