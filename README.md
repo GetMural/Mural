@@ -34,13 +34,13 @@ Clone/download the repo and run:
 
 **Pre-compiled binaries are available:**
 
-**Windows 64bit:** https://www.getmural.io/Mural-0.2.9-win32-x64.zip
+**Windows 64bit:** https://www.getmural.io/Mural-0.3.0-win32-x64.zip
 
-**Windows 32bit:** https://www.getmural.io/Mural-0.2.9-win32-ia32.zip
+**Windows 32bit:** https://www.getmural.io/Mural-0.3.0-win32-ia32.zip
 
-**Mac OSX:** https://www.getmural.io/Mural-0.2.9-mac.zip
+**Mac OSX:** https://www.getmural.io/Mural-0.3.0-mac.zip
 
-**Debian Linux AMD 64:** https://www.getmural.io/Mural-0.2.9-amd64.deb.zip
+**Debian Linux AMD 64:** https://www.getmural.io/Mural-0.3.0-amd64.deb.zip
 
 **Compiling from source:**
 
