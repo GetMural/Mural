@@ -299,6 +299,7 @@ router.post('/page/meta', function (req, res) {
         meta['rsspingback'] = newMeta['rsspingback'];
         meta['description'] = newMeta['description'];
         meta['src'] = newMeta['src'];
+        meta['analytics'] = newMeta['analytics'];
         // TODO: meta['share'] is missing from form
         // TODO: meta['facebook'] is missing from form
         // TODO: meta['twitter'] is missing from form
