@@ -24,6 +24,8 @@ Once a Mural story is ready to be published, the user clicks the 'Download' butt
 
 ## Running from git
 
+Install Node.js 10.x (LTS)
+
 Clone/download the repo and run:
 
 `npm install`
