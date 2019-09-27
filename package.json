@@ -31,7 +31,7 @@
     "connect-busboy": "0.0.2",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
-    "electron": "^4.0.1",
+    "electron": "^6.0.10",
     "express": "~4.15.5",
     "fs-extra": "^7.0.1",
     "hls.js": "^0.10.1",

@@ -14,14 +14,14 @@ function checkDirectories(directory) {
   try {
     fs.statSync(DATA_DIR);
   } catch(e) {
-    fs.mkdirSync(DATA_DIR);
+    fs.mkdirSync(DATA_DIR, {recursive: true});
     fs.copySync(path.join(__dirname, 'data'), DATA_DIR);
   }
 
   try {
     fs.statSync(DIST_DIR);
   } catch(e) {
-    fs.mkdirSync(DIST_DIR);
+    fs.mkdirSync(DIST_DIR, {recursive: true});
   }
 }
 
