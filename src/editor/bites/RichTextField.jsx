@@ -2,7 +2,7 @@ import React from 'react';
 import { string, func } from 'prop-types';
 import Summernote from './Summernote';
 
-function BasicField({ onChange, value }) {
+function RichTextField({ onChange, value }) {
   return (
     <Summernote
       onChange={onChange}
@@ -11,21 +11,25 @@ function BasicField({ onChange, value }) {
         toolbar: [
           ['style', ['bold', 'italic', 'underline', 'clear']],
           ['font', ['strikethrough', 'superscript', 'subscript']],
+          ['fontsize', ['fontsize']],
           ['color', ['color']],
+          ['para', ['style', 'ul', 'ol', 'paragraph']],
+          ['height', ['height']],
+          ['tools', ['link', 'hr', 'codeview', 'undo', 'redo']],
         ],
       }}
     />
   );
 }
 
-BasicField.propTypes = {
+RichTextField.propTypes = {
   value: string,
   onChange: func,
 };
 
-BasicField.defaultProps = {
+RichTextField.defaultProps = {
   value: '',
   onChange: null,
 };
 
-export default BasicField;
+export default RichTextField;
