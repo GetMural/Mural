@@ -34,23 +34,29 @@ class ReactSummernote extends Component {
     this.insertImage = this.insertImage.bind(this);
     this.insertNode = this.insertNode.bind(this);
     this.insertText = this.insertText.bind(this);
+    this.pasteHTML = this.pasteHTML.bind(this);
+    this.createLink = this.createLink.bind(this);
+    this.unlink = this.unlink.bind(this);
 
-    ReactSummernote.focus = this.focus.bind(this);
-    ReactSummernote.isEmpty = this.isEmpty.bind(this);
-    ReactSummernote.reset = this.reset.bind(this);
-    ReactSummernote.replace = this.replace.bind(this);
-    ReactSummernote.disable = this.disable.bind(this);
-    ReactSummernote.enable = this.enable.bind(this);
-    ReactSummernote.toggleState = this.toggleState.bind(this);
-    ReactSummernote.insertImage = this.insertImage.bind(this);
-    ReactSummernote.insertNode = this.insertNode.bind(this);
-    ReactSummernote.insertText = this.insertText.bind(this);
+    ReactSummernote.focus = this.focus;
+    ReactSummernote.isEmpty = this.isEmpty;
+    ReactSummernote.reset = this.reset;
+    ReactSummernote.replace = this.replace;
+    ReactSummernote.disable = this.disable;
+    ReactSummernote.enable = this.enable;
+    ReactSummernote.toggleState = this.toggleState;
+    ReactSummernote.insertImage = this.insertImage;
+    ReactSummernote.insertNode = this.insertNode;
+    ReactSummernote.insertText = this.insertText;
+    ReactSummernote.pasteHTML = this.pasteHTML;
+    ReactSummernote.createLink = this.createLink;
+    ReactSummernote.unlink = this.unlink;
   }
 
+  // TODO need to replace this function
   componentDidMount() {
     const options = this.props.options || {};
     const codeview = this.props.codeview;
-    // const codeviewCommand = codeview ? 'codeview.activate' : 'codeview.deactivate';
     options.callbacks = this.callbacks;
 
     this.editor = $(`#${this.uid}`);
@@ -58,8 +64,10 @@ class ReactSummernote extends Component {
     if (codeview) {
       this.editor.summernote('codeview.activate');
     }
+    this.replace(this.props.value);
   }
 
+  // TODO need to replace this function
   componentWillReceiveProps(nextProps) {
     const { props } = this;
 
@@ -111,7 +119,10 @@ class ReactSummernote extends Component {
         enable: this.enable,
         insertImage: this.insertImage,
         insertNode: this.insertNode,
-        insertText: this.insertText
+        insertText: this.insertText,
+        pasteHTML: this.pasteHTML,
+        createLink: this.createLink,
+        unlink: this.unlink
       });
     }
   }
@@ -178,6 +189,18 @@ class ReactSummernote extends Component {
 
   insertText(text) {
     this.editor.summernote('insertText', text);
+  }
+
+  pasteHTML(html) {
+    this.editor.summernote('pasteHTML', html);
+  }
+
+  createLink(options) {
+    this.editor.summernote('createLink', options);
+  }
+
+  unlink() {
+    this.editor.summernote('unlink');
   }
 
   get callbacks() {

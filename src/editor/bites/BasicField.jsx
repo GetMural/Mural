@@ -1,15 +1,12 @@
 import React, { Component } from 'react';
-import Summernote from './../Summernote';
+import Summernote from './Summernote';
 
-class TitleField extends Component {
-  onChange(content) {
-    console.log('onChange', content);
-  }
+class BasicField extends Component {
 
   render() {
     return (
       <Summernote
-        onChange={this.onChange}
+        onChange={this.props.onChange}
         value={this.props.value}
         options={{
           toolbar: [
@@ -23,4 +20,4 @@ class TitleField extends Component {
   }
 }
 
-export default TitleField;
+export default BasicField;
