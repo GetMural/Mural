@@ -1,75 +1,67 @@
 {
-  "name": "Mural",
-  "version": "0.3.0",
-  "description": "Longform Storytelling",
-  "main": "main.js",
-  "scripts": {
-    "start": "electron .",
-    "clean": "rm -rf ./public/dist/index.html && rm ./public/app*",
-    "build": "npm run clean && npm run build:client",
-    "build:client": "webpack",
-    "build:dev": "webpack --config webpack.dev.config.js",
-    "webpack:server": "webpack-dev-server --content-base public/ --colors --host 0.0.0.0 --port 8081 --inline",
-    "dev": "npm run clean && npm run build:dev"
-  },
-  "betterScripts": {
-    "dev": {
-      "command": "npm run webpack:server",
-      "env": {
-        "NODE_ENV": "development"
-      }
-    }
-  },
-  "author": "Pete Haughie, Mark Lewis, Naomi Aro",
-  "license": "LGPL",
+  "name": "mural-cra",
+  "version": "0.1.0",
+  "main": "public/electron.js",
+  "homepage": "./",
+  "private": true,
   "dependencies": {
-    "archiver": "^2.1.1",
-    "better-npm-run": "^0.1.0",
-    "blueimp-gallery": "^2.29.0",
-    "body-parser": "~1.18.2",
-    "bootstrap": "^3.3.7",
-    "connect-busboy": "0.0.2",
-    "cookie-parser": "~1.4.3",
-    "debug": "~2.6.9",
-    "electron": "^6.0.10",
-    "express": "~4.15.5",
-    "fs-extra": "^7.0.1",
-    "hls.js": "^0.10.1",
-    "hogan-express": "^0.5.2",
-    "ismobilejs": "^0.4.1",
-    "jquery": "^3.2.1",
-    "json-fmt": "^1.1.2",
-    "mkdirp": "^0.5.1",
-    "morgan": "~1.9.0",
-    "rimraf": "^2.6.2",
-    "scrollstory": "^1.1.0",
-    "serve-favicon": "~2.4.5",
-    "sortablejs": "^1.7.0",
-    "stickybits": "^3.3.1",
-    "summernote": "^0.8.10",
-    "vex-js": "^4.1.0"
+    "electron-is-dev": "^1.1.0",
+    "react": "^16.10.0",
+    "react-dom": "^16.10.0",
+    "react-scripts": "3.1.2"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://bitbucket.com/Flowdeeps/mural.git"
+  "scripts": {
+    "start": "rescripts start",
+    "build": "rescripts build",
+    "test": "rescripts test",
+    "eject": "react-scripts eject",
+    "electron-dev": "concurrently \"BROWSER=none yarn start\" \"wait-on http://localhost:3000 && electron .\"",
+    "postinstall": "electron-builder install-app-deps",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
   },
-  "homepage": "https://bitbucket.com/Flowdeeps/mural#readme",
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
   "devDependencies": {
-    "@babel/core": "^7.0.0-beta.46",
-    "@babel/preset-env": "^7.0.0-beta.46",
-    "babel-loader": "^8.0.0-beta.2",
-    "css-loader": "^0.28.7",
-    "expose-loader": "^0.7.5",
-    "extract-text-webpack-plugin": "^3.0.2",
-    "img-loader": "^2.0.0",
-    "node-sass": "^4.11.0",
-    "sass-loader": "^6.0.6",
-    "style-loader": "^0.19.1",
-    "svg-loader": "0.0.2",
-    "watch": "^1.0.2",
-    "webpack": "^3.11.0",
-    "webpack-dev-server": "^2.9.7",
-    "webpack-manifest-plugin": "^2.0.3",
-    "webpack-md5-hash": "0.0.6"
+    "@rescripts/cli": "^0.0.12",
+    "@rescripts/rescript-env": "^0.0.10",
+    "concurrently": "^4.1.2",
+    "electron": "^6.0.10",
+    "electron-builder": "^21.2.0",
+    "typescript": "^3.6.3",
+    "wait-on": "^3.3.0"
+  },
+  "author": {
+    "name": "Naomi Aro",
+    "email": "naomiaro@gmail.com",
+    "url": "http://getmural.io"
+  },
+  "build": {
+    "appId": "io.getmural.mural",
+    "productName": "Mural",
+    "copyright": "Copyright © 2019 ${author}",
+    "mac": {
+      "category": "public.app-category.utilities"
+    },
+    "files": [
+      "build/**/*",
+      "node_modules/**/*"
+    ],
+    "directories": {
+      "buildResources": "assets"
+    }
   }
 }

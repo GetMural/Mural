@@ -1,54 +1,68 @@
-# Mural
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-Mural is a tool for visual storytelling. It’s a program that helps you sequence your visual story, and then generates everything needed for that story to be displayed on most modern web browsers and served from any web server.
+## Available Scripts
 
-You can see the way your story will look, test out all of the elements, and make changes if necessary before it’s uploaded to the web.
+In the project directory, you can run:
 
-When a story is made with Mural, its visual elements are displayed at full screen by default, letting the strength and richness of your work shine through. Images can be combined with sound, videos combined with text, and numerous other combinations are possible.
+### `npm start`
 
-Mural uses the metaphor of a storyboard to lay out the different elements of your story. With Mural, you can easily rearrange the sequence of the different items that make up your story.
+Runs the app in the development mode.<br>
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-You don’t have to know how to code in order to use Mural. But if you do know how to code, you’ll appreciate being able to go into the web standard code that Mural generates and make the changes you want using standard tools.
+The page will reload if you make edits.<br>
+You will also see any lint errors in the console.
 
-Funding for Mural was provided in Round 3 of Google’s Digital News Initiative Prototype Fund.
+### `npm test`
 
-Mural is released as open source under the GNU Affero General Public License. See the [LICENSE.md](../blob/master/LICENSE.md) file for the text of the license.
+Launches the test runner in the interactive watch mode.<br>
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-Mural is written in NodeJS and uses Electron.
+### `npm run build`
 
-An end-user manual is available here: https://www.getmural.io/Mural-manual-v0.2.8.pdf
+Builds the app for production to the `build` folder.<br>
+It correctly bundles React in production mode and optimizes the build for the best performance.
 
-## Site Output
+The build is minified and the filenames include the hashes.<br>
+Your app is ready to be deployed!
 
-Once a Mural story is ready to be published, the user clicks the 'Download' button and the program sends a .ZIP file which contains all the files needed to publish the story on a standard web server (HTML, CSS, JavaScript and media files, in addition to the JSON file used by Mural internally).
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-## Running from git
+### `npm run eject`
 
-Install Node.js 10.x (LTS)
+**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
-Clone/download the repo and run:
+If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-`npm install`
+Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
-`npm start`
+You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-## Installation and running the app
+## Learn More
 
-**Pre-compiled binaries are available:**
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-**Windows 64bit:** https://www.getmural.io/Mural-0.3.0-win32-x64.zip
+To learn React, check out the [React documentation](https://reactjs.org/).
 
-**Windows 32bit:** https://www.getmural.io/Mural-0.3.0-win32-ia32.zip
+### Code Splitting
 
-**Mac OSX:** https://www.getmural.io/Mural-0.3.0-mac.zip
+This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
 
-**Debian Linux AMD 64:** https://www.getmural.io/Mural-0.3.0-amd64.deb.zip
+### Analyzing the Bundle Size
 
-**Compiling from source:**
+This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
 
-So far it's as easy as `npm install` but you'll also need to have a global installation of https://github.com/electron/electron and https://github.com/electron-userland/electron-packager to build the app.
+### Making a Progressive Web App
 
+This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
 
-## Build dist index.html
+### Advanced Configuration
 
-From the command line run `npm run build`.  This will create the in public/dist/index.html which can be used as a standalone file.
+This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+
+### Deployment
+
+This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+
+### `npm run build` fails to minify
+
+This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify

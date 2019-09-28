@@ -1,7 +1,5 @@
-node_modules/
-yarn.lock
-.idea
-Mural-darwin-x64/
-public/dist
-public/uploads
+dist
+build
+node_modules
 .DS_Store
+
