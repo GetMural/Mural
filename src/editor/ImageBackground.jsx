@@ -10,6 +10,7 @@ import {
 
 import BasicField from './bites/BasicField';
 import RichTextField from './bites/RichTextField';
+import AudioField from './bites/AudioField';
 
 const IMAGE_RENDITIONS = [
   {
@@ -75,6 +76,10 @@ export default function ImageBackground() {
           <Input type="file" name="image" onChange={uploadFile} />
           <FormText color="muted">Master Background Image</FormText>
         </FormGroup>
+      </Fieldset>
+      <Fieldset>
+        <Label>Audio</Label>
+        <AudioField></AudioField>
       </Fieldset>
     </Form>
   );
