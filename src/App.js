@@ -1,9 +1,9 @@
 import React from 'react';
 import './App.css';
-import { HashRouter as Router, Switch, Route, Link } from "react-router-dom";
-
+import { HashRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import ImageBackground from './editor/ImageBackground';
 function Home() {
-  return <h2>Home</h2>;
+  return <div><h2>Home</h2></div>;
 }
 
 function About() {
@@ -24,7 +24,7 @@ export default function App() {
               <Link to="/">Home</Link>
             </li>
             <li>
-              <Link to="/about">About</Link>
+              <Link to="/imagebackground">Image Background</Link>
             </li>
             <li>
               <Link to="/users">Users</Link>
@@ -33,8 +33,8 @@ export default function App() {
         </nav>
 
         <Switch>
-          <Route path="/about">
-            <About />
+          <Route path="/imagebackground">
+            <ImageBackground />
           </Route>
           <Route path="/users">
             <Users />
