@@ -56,7 +56,7 @@ class ReactSummernote extends Component {
   // TODO need to replace this function
   componentDidMount() {
     const options = this.props.options || {};
-    const codeview = this.props.codeview;
+    const { codeview } = this.props;
     options.callbacks = this.callbacks;
 
     this.editor = $(`#${this.uid}`);
@@ -71,15 +71,22 @@ class ReactSummernote extends Component {
   componentWillReceiveProps(nextProps) {
     const { props } = this;
 
-    const codeview = nextProps.codeview;
-    const codeviewCommand = codeview ? 'codeview.activate' : 'codeview.deactivate';
+    const { codeview } = nextProps;
+    const codeviewCommand = codeview
+      ? 'codeview.activate'
+      : 'codeview.deactivate';
 
-
-    if (typeof nextProps.value === 'string' && props.value !== nextProps.value) {
+    if (
+      typeof nextProps.value === 'string'
+      && props.value !== nextProps.value
+    ) {
       this.replace(nextProps.value);
     }
 
-    if (typeof nextProps.disabled === 'boolean' && props.disabled !== nextProps.disabled) {
+    if (
+      typeof nextProps.disabled === 'boolean'
+      && props.disabled !== nextProps.disabled
+    ) {
       this.toggleState(nextProps.disabled);
     }
     if (codeview !== props.codeview) {
@@ -122,7 +129,7 @@ class ReactSummernote extends Component {
         insertText: this.insertText,
         pasteHTML: this.pasteHTML,
         createLink: this.createLink,
-        unlink: this.unlink
+        unlink: this.unlink,
       });
     }
   }
@@ -204,7 +211,7 @@ class ReactSummernote extends Component {
   }
 
   get callbacks() {
-    const props = this.props;
+    const { props } = this;
 
     return {
       onInit: this.onInit,
@@ -215,7 +222,7 @@ class ReactSummernote extends Component {
       onKeydown: props.onKeyDown,
       onPaste: props.onPaste,
       onChange: props.onChange,
-      onImageUpload: this.onImageUpload
+      onImageUpload: this.onImageUpload,
     };
   }
 
@@ -245,10 +252,10 @@ ReactSummernote.propTypes = {
   onKeyDown: PropTypes.func,
   onPaste: PropTypes.func,
   onChange: PropTypes.func,
-  onImageUpload: PropTypes.func
+  onImageUpload: PropTypes.func,
 };
 
 ReactSummernote.defaultProps = {
-  tag: 'div'
+  tag: 'div',
 };
 export default ReactSummernote;

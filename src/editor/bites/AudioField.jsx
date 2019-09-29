@@ -1,30 +1,12 @@
 import React, { Component } from 'react';
 import { string, func } from 'prop-types';
-import {
-  Form,
-  FormGroup,
-  Input,
-  Fieldset,
-  Label,
-  FormText,
-} from '@bootstrap-styled/v4';
-import Store from './../../store';
+import { Input, FormText } from '@bootstrap-styled/v4';
+import Store from '../../store';
+
 const mime = require('mime-types');
-const dataurl = require('dataurl');
-const fs = require('fs');
+const { convertMediaToDataurl } = require('../../utils/dataurl');
 
 const storage = new Store({ storyName: 'Test' });
-
-const convertSong = (filePath) => {
-  const songPromise = new Promise((resolve, reject) => {
-    fs.readFile(filePath, (err, data) => {
-      if (err) { reject(err); }
-      resolve(dataurl.convert({ data, mimetype: mime.lookup(filePath) }));
-    });
-  });
-  return songPromise;
-};
-
 
 class AudioField extends Component {
   constructor(props) {
@@ -42,20 +24,22 @@ class AudioField extends Component {
   createPath(e) {
     const file = e.target.files[0];
     const uploadPath = storage.importMedia(file.path, file.name);
+    const mimeType = mime.lookup(uploadPath);
     this.setState({
       uploadPath,
+      mimeType,
     });
 
-    convertSong(uploadPath).then((preview) => {
+    convertMediaToDataurl(uploadPath, mimeType).then((preview) => {
       this.setState({
         preview,
       });
-    })
+    });
   }
 
   render() {
     const { onChange } = this.props;
-    const { uploadPath, preview } = this.state;
+    const { uploadPath, mimeType, preview } = this.state;
 
     return (
       <>
@@ -63,6 +47,7 @@ class AudioField extends Component {
         <Input type="file" onChange={this.createPath} />
         {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
         <audio controls src={preview} />
+        <FormText>{mimeType}</FormText>
       </>
     );
   }
