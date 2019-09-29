@@ -1,9 +1,16 @@
 import React from 'react';
 import './App.css';
-import { HashRouter as Router, Switch, Route, Link } from 'react-router-dom';
-import ImageBackground from './editor/ImageBackground';
+import {
+ HashRouter as Router, Switch, Route, Link 
+} from 'react-router-dom';
+import ImageBackgroundForm from './editor/ImageBackgroundForm';
+
 function Home() {
-  return <div><h2>Home</h2></div>;
+  return (
+    <div>
+      <h2>Home</h2>
+    </div>
+  );
 }
 
 function About() {
@@ -34,7 +41,7 @@ export default function App() {
 
         <Switch>
           <Route path="/imagebackground">
-            <ImageBackground />
+            <ImageBackgroundForm />
           </Route>
           <Route path="/users">
             <Users />
