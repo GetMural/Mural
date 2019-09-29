@@ -71,23 +71,28 @@ export default function ImageBackground() {
         <NavEntry />
         <Fieldset>
           <Legend>Item Content</Legend>
-          <FormGroup color="success">
+          <FormGroup>
             <Label>Title</Label>
             <BasicField onChange={updateTitle} value="Hello" />
           </FormGroup>
-          <FormGroup color="success">
+          <FormGroup>
             <Label>Headline</Label>
             <BasicField onChange={updateTitle} value="Hello" />
           </FormGroup>
-          <FormGroup color="success">
+          <FormGroup>
             <Label>Body</Label>
             <RichTextField onChange={updateTitle} value="Hello" />
           </FormGroup>
         </Fieldset>
         <Fieldset>
-          <FormGroup color="success">
-            <Label htmlFor="exampleEmail">Background Image</Label>
-            <BackgroundImageField />
+          <FormGroup>
+            <Label>Background Image</Label>
+            <BackgroundImageField
+              value="/Users/naaro/Library/Application Support/mural/uploads/Test/IMG_20190810_135134.jpg"
+              onUpdate={(path) => {
+                console.log(path);
+              }}
+            />
           </FormGroup>
         </Fieldset>
         <Fieldset>
