@@ -3006,6 +3006,11 @@ compression@^1.5.2:
     safe-buffer "5.1.2"
     vary "~1.1.2"
 
+computed-async-mobx@^4.2.1:
+  version "4.2.1"
+  resolved "https://registry.yarnpkg.com/computed-async-mobx/-/computed-async-mobx-4.2.1.tgz#868c899f209af0bcdecaf677abd9bb50f9f39105"
+  integrity sha512-kThbGHul+3YrXWFfxRJpuHAv9CdEl/UVGI79BmMq3m6UMuWggZq3Hyp2tj1hEe3ZScokTzg+Quxk7X5cN3YKpA==
+
 concat-map@0.0.1:
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/concat-map/-/concat-map-0.0.1.tgz#d8a96bd77fd68df7793a73036a3ba0d5405d477b"
@@ -7222,6 +7227,11 @@ mobx-state-tree@^3.14.1:
   version "3.14.1"
   resolved "https://registry.yarnpkg.com/mobx-state-tree/-/mobx-state-tree-3.14.1.tgz#0a523876b87817f5c8553a162e71b38044f0c9da"
   integrity sha512-cmwO1jvYPgaJTGJtqId0Qod4cDqcJEWWCwSu/Uns7jFT+kWKzLFhzb9jxPub8YM3HSXg7HPGpKiLe970he9FOw==
+
+mobx-utils@^5.4.1:
+  version "5.4.1"
+  resolved "https://registry.yarnpkg.com/mobx-utils/-/mobx-utils-5.4.1.tgz#18ff5f9723b27e1ff50ae0b362938a4792eb077a"
+  integrity sha512-u5BSvFiSx1ZkzBz/7V96RB7xWn7oOFwczI+AVi1v8TV8HbT8rXLco1Aqb87tEA8Jsc2e5uvTwHdYoiv81qspaA==
 
 mobx@^5.13.1:
   version "5.13.1"

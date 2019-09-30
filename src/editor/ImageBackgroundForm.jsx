@@ -13,50 +13,19 @@ import {
   Row,
 } from '@bootstrap-styled/v4';
 import Store from '../store';
-import { StoryItem } from '../models/StoryTree';
+import { ImageBackgroundDraft as Draft } from '../models/StoryTree';
 
 import BasicField from './bites/BasicField';
 import RichTextField from './bites/RichTextField';
 import AudioField from './bites/AudioField';
 import BackgroundImageField from './bites/BackgroundImageField';
 import NavEntry from './bites/NavEntry';
-import ImageBackground from './preview/ImageBackground';
-
-// const IMAGE_RENDITIONS = [
-//   {
-//     name: "16-9-1920",
-//     orientation: "landscape",
-//     title: "Rendition 16:9",
-//     suggestion: "1920 x 1080",
-//     thumbor: "http://localhost:8888/unsafe/1920x1080"
-//   },
-//   {
-//     name: "4-3-1024",
-//     orientation: "landscape",
-//     title: "Rendition 4:3",
-//     suggestion: "1024 x 768",
-//     thumbor: "http://localhost:8888/unsafe/1024x768"
-//   },
-//   {
-//     name: "9-16-1080",
-//     orientation: "portrait",
-//     title: "Rendition 9:16",
-//     suggestion: "1080 x 1920",
-//     thumbor: "http://localhost:8888/unsafe/1080x1920"
-//   },
-//   {
-//     name: "3-4-768",
-//     orientation: "portrait",
-//     title: "Rendition 3:4",
-//     suggestion: "768 x 1024",
-//     thumbor: "http://localhost:8888/unsafe/768x1024"
-//   }
-// ];
+import ImageBackgroundDraft from './preview/ImageBackgroundDraft';
 
 const storage = new Store({ storyName: 'Test' });
 const item = storage.get('items')[0];
 
-const draftItem = StoryItem.create(item);
+const draftItem = Draft.create(item);
 unprotect(draftItem);
 
 export default function ImageBackgroundForm() {
@@ -100,26 +69,26 @@ export default function ImageBackgroundForm() {
               <FormGroup>
                 <Label>Background Image</Label>
                 <BackgroundImageField
-                  value={draftItem.image}
+                  image={draftItem.image}
                   onUpdate={(path) => {
-                    draftItem.image = path;
+                    draftItem.image.path = path;
                   }}
                 />
               </FormGroup>
             </Fieldset>
             <Fieldset>
               <Label>Audio</Label>
-              <AudioField
+              {/* <AudioField
                 value={draftItem.audio}
                 onUpdate={(path) => {
                   draftItem.audio = path;
                 }}
-              />
+              /> */}
             </Fieldset>
           </Form>
         </Col>
         <Col xs="6">
-          <ImageBackground item={draftItem} />
+          <ImageBackgroundDraft item={draftItem} />
         </Col>
       </Row>
     </Container>
