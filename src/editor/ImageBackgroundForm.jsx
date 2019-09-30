@@ -1,5 +1,6 @@
-import React from 'react';
-import { unprotect } from 'mobx-state-tree';
+import React from "react";
+import { unprotect } from "mobx-state-tree";
+import { observer } from "mobx-react";
 import {
   Form,
   FormGroup,
@@ -10,25 +11,25 @@ import {
   FormText,
   Container,
   Col,
-  Row,
-} from '@bootstrap-styled/v4';
-import Store from '../store';
-import { ImageBackgroundDraft as Draft } from '../models/StoryTree';
+  Row
+} from "@bootstrap-styled/v4";
+import Store from "../store";
+import { ImageBackgroundDraft as Draft } from "../models/StoryTree";
 
-import BasicField from './bites/BasicField';
-import RichTextField from './bites/RichTextField';
-import AudioField from './bites/AudioField';
-import BackgroundImageField from './bites/BackgroundImageField';
-import NavEntry from './bites/NavEntry';
-import ImageBackgroundDraft from './preview/ImageBackgroundDraft';
+import BasicField from "./bites/BasicField";
+import RichTextField from "./bites/RichTextField";
+import AudioField from "./bites/AudioField";
+import BackgroundImageField from "./bites/BackgroundImageField";
+import NavEntry from "./bites/NavEntry";
+import ImageBackgroundDraft from "./preview/ImageBackgroundDraft";
 
-const storage = new Store({ storyName: 'Test' });
-const item = storage.get('items')[0];
+const storage = new Store({ storyName: "Test" });
+const item = storage.get("items")[0];
 
 const draftItem = Draft.create(item);
 unprotect(draftItem);
 
-export default function ImageBackgroundForm() {
+function ImageBackgroundForm() {
   return (
     <Container className="m-1" fluid>
       <Row>
@@ -40,7 +41,7 @@ export default function ImageBackgroundForm() {
               <FormGroup>
                 <Label>Title</Label>
                 <BasicField
-                  onChange={(content) => {
+                  onChange={content => {
                     draftItem.title = content;
                   }}
                   value={draftItem.title}
@@ -49,7 +50,7 @@ export default function ImageBackgroundForm() {
               <FormGroup>
                 <Label>Headline</Label>
                 <BasicField
-                  onChange={(content) => {
+                  onChange={content => {
                     draftItem.subtitle = content;
                   }}
                   value={draftItem.subtitle}
@@ -58,7 +59,7 @@ export default function ImageBackgroundForm() {
               <FormGroup>
                 <Label>Body</Label>
                 <RichTextField
-                  onChange={(content) => {
+                  onChange={content => {
                     draftItem.body = content;
                   }}
                   value={draftItem.body}
@@ -70,7 +71,7 @@ export default function ImageBackgroundForm() {
                 <Label>Background Image</Label>
                 <BackgroundImageField
                   image={draftItem.image}
-                  onUpdate={(path) => {
+                  onUpdate={path => {
                     draftItem.image.path = path;
                   }}
                 />
@@ -94,3 +95,5 @@ export default function ImageBackgroundForm() {
     </Container>
   );
 }
+
+export default observer(ImageBackgroundForm);

@@ -4,12 +4,9 @@ import { string, shape } from 'prop-types';
 import { observer } from 'mobx-react';
 import styled from 'styled-components';
 
-// 'background-image': `url(${src})`,
-// position: active ? 'fixed' : ''
-
 const BackgroundImage = styled.div`
   position: fixed;
-  background: url(${(props) => props.srcImage});
+  background-image: url(${(props) => props.srcImage});
   width: 100%;
   height: 100vh;
   background-position: center center;

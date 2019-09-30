@@ -1,10 +1,11 @@
-import React, { Component } from "react";
-import { string, func, shape } from "prop-types";
-import { Input, FormText } from "@bootstrap-styled/v4";
-import styled from "styled-components";
-import Store from "../../store";
+import React, { Component } from 'react';
+import { string, func, shape } from 'prop-types';
+import { Input, FormText } from '@bootstrap-styled/v4';
+import styled from 'styled-components';
+import { observer } from 'mobx-react';
+import Store from '../../store';
 
-const storage = new Store({ storyName: "Test" });
+const storage = new Store({ storyName: 'Test' });
 
 const Img = styled.img`
   max-width: 200px;
@@ -27,7 +28,7 @@ class BackgroundImageField extends Component {
 
   render() {
     const {
-      image: { path }
+      image: { path, preview },
     } = this.props;
 
     return (
@@ -35,7 +36,7 @@ class BackgroundImageField extends Component {
         <Input type="text" value={path} onChange={this.createPath} />
         <Input type="file" onChange={this.createPath} />
         {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
-        <Img alt="master img preview" />
+        <Img src={preview} alt="master img preview" />
         <FormText color="muted">Master Background Image</FormText>
       </>
     );
@@ -45,17 +46,17 @@ class BackgroundImageField extends Component {
 BackgroundImageField.propTypes = {
   image: shape({
     path: string,
-    preview: string
+    preview: string,
   }),
-  onUpdate: func
+  onUpdate: func,
 };
 
 BackgroundImageField.defaultProps = {
   image: {
-    path: "",
-    preview: ""
+    path: '',
+    preview: '',
   },
-  onUpdate() {}
+  onUpdate() {},
 };
 
-export default BackgroundImageField;
+export default observer(BackgroundImageField);
