@@ -13,7 +13,7 @@ function NavEntry({ onChange, value }) {
   return (
     <Fieldset>
       <Legend>Navigation Entry</Legend>
-      <FormGroup color="success" check>
+      <FormGroup check>
         <Label htmlFor="nav_title">Title</Label>
         <Input type="text" id="nav_title" />
         <Label htmlFor="nav" check>

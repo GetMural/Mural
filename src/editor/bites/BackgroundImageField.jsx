@@ -6,6 +6,8 @@ import { observer } from 'mobx-react';
 import Store from '../../store';
 
 const storage = new Store({ storyName: 'Test' });
+const ACCEPTED_MIME_TYPES = ['image/jpeg', 'image/png', 'image/webp'];
+const mime = require('mime-types');
 
 const Img = styled.img`
   max-width: 200px;
@@ -19,11 +21,15 @@ class BackgroundImageField extends Component {
   }
 
   createPath(e) {
-    const file = e.target.files[0];
+    const file = e.target.files ? e.target.files[0] : e.target.value;
     const { onUpdate } = this.props;
 
-    const uploadPath = storage.importMedia(file.path, file.name);
-    onUpdate(uploadPath);
+    if (!file) {
+      onUpdate('');
+    } else if (file && ACCEPTED_MIME_TYPES.includes(mime.lookup(file.path))) {
+      const uploadPath = storage.importMedia(file.path, file.name);
+      onUpdate(uploadPath);
+    }
   }
 
   render() {

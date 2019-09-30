@@ -31,7 +31,11 @@ const Image = types
     });
     return {
       get preview() {
-        return dataUrlPromise.get();
+        const mimeType = mime.lookup(self.path);
+        if (mimeType) {
+          return dataUrlPromise.get();
+        }
+        return '';
       },
     };
   });
