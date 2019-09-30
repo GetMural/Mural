@@ -9,6 +9,19 @@ import styled from 'styled-components';
 
 const BackgroundImage = styled.div`
   position: fixed;
+  background: url(${(props) => props.srcImage});
+  width: 100%;
+  height: 100vh;
+  background-position: center center;
+  background-size: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
 `;
 
 function ImageBackgroundDraft(props) {
@@ -22,7 +35,7 @@ function ImageBackgroundDraft(props) {
   } = props;
   return (
     <section className="part sticky-image" name="story-id">
-      <BackgroundImage className="bg-image" />
+      <BackgroundImage className="bg-image" srcImage={preview} />
       <div className="content container-fluid">
         <div className="row">
           <div className="col-sm-12 header-fullpage">
@@ -37,7 +50,6 @@ function ImageBackgroundDraft(props) {
             className="col-xs-12 col-sm-10 col-md-8 col-lg-6 text"
             dangerouslySetInnerHTML={{ __html: body }}
           />
-          {preview}
         </div>
       </div>
     </section>
