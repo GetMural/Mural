@@ -30,8 +30,9 @@ class BackgroundImageField extends Component {
 
     this.createPath = this.createPath.bind(this);
     this.createPreview = this.createPreview.bind(this);
-
-    this.createPreview();
+    if (ACCEPTED_MIME_TYPES.includes(mimeType)) {
+      this.createPreview();
+    }
   }
 
   createPreview() {

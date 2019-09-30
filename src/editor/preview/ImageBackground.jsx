@@ -1,9 +1,12 @@
 /* eslint-disable react/no-danger */
 import React from 'react';
 import { string } from 'prop-types';
+import { observer } from 'mobx-react';
 
 function ImageBackground(props) {
-  const { title, subtitle, body } = props;
+  const {
+    item: { title, subtitle, body },
+  } = props;
   return (
     <section className="part sticky-image" name="story-id">
       <div className="bg-image" />
@@ -28,15 +31,19 @@ function ImageBackground(props) {
 }
 
 ImageBackground.propTypes = {
-  title: string,
-  subtitle: string,
-  body: string,
+  item: {
+    title: string,
+    subtitle: string,
+    body: string,
+  },
 };
 
 ImageBackground.defaultProps = {
-  title: '',
-  subtitle: '',
-  body: '',
+  item: {
+    title: '',
+    subtitle: '',
+    body: '',
+  },
 };
 
-export default ImageBackground;
+export default observer(ImageBackground);

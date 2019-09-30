@@ -20,12 +20,18 @@ class AudioField extends Component {
     super(props);
 
     const { value } = this.props;
+    const mimeType = mime.lookup(value);
 
     this.state = {
+      mimeType,
       uploadPath: value,
     };
 
     this.createPath = this.createPath.bind(this);
+    this.createPreview = this.createPreview.bind(this);
+    if (ACCEPTED_MIME_TYPES.includes(mimeType)) {
+      this.createPreview();
+    }
   }
 
   createPreview() {

@@ -1,4 +1,5 @@
-import React from "react";
+import React from 'react';
+import { unprotect } from 'mobx-state-tree';
 import {
   Form,
   FormGroup,
@@ -9,16 +10,17 @@ import {
   FormText,
   Container,
   Col,
-  Row
-} from "@bootstrap-styled/v4";
-import Store from "../store";
+  Row,
+} from '@bootstrap-styled/v4';
+import Store from '../store';
+import { StoryItem } from '../models/StoryTree';
 
-import BasicField from "./bites/BasicField";
-import RichTextField from "./bites/RichTextField";
-import AudioField from "./bites/AudioField";
-import BackgroundImageField from "./bites/BackgroundImageField";
-import NavEntry from "./bites/NavEntry";
-import ImageBackground from "./preview/ImageBackground";
+import BasicField from './bites/BasicField';
+import RichTextField from './bites/RichTextField';
+import AudioField from './bites/AudioField';
+import BackgroundImageField from './bites/BackgroundImageField';
+import NavEntry from './bites/NavEntry';
+import ImageBackground from './preview/ImageBackground';
 
 // const IMAGE_RENDITIONS = [
 //   {
@@ -51,23 +53,15 @@ import ImageBackground from "./preview/ImageBackground";
 //   }
 // ];
 
-const defaultJson = {
-  image: "",
-  audio: [
-    // {mime: 'audio/mpeg', src: 'example.mp3'}
-  ]
-};
+const storage = new Store({ storyName: 'Test' });
+const item = storage.get('items')[0];
 
-const storage = new Store({ storyName: "Test" });
-const item = storage.get("items")[0];
-
-function updateTitle(content) {
-  console.log("onChange", content);
-}
+const draftItem = StoryItem.create(item);
+unprotect(draftItem);
 
 export default function ImageBackgroundForm() {
   return (
-    <Container>
+    <Container className="m-1" fluid>
       <Row>
         <Col xs="6">
           <Form>
@@ -76,41 +70,56 @@ export default function ImageBackgroundForm() {
               <Legend>Item Content</Legend>
               <FormGroup>
                 <Label>Title</Label>
-                <BasicField onChange={updateTitle} value={item.title} />
+                <BasicField
+                  onChange={(content) => {
+                    draftItem.title = content;
+                  }}
+                  value={draftItem.title}
+                />
               </FormGroup>
               <FormGroup>
                 <Label>Headline</Label>
-                <BasicField onChange={updateTitle} value={item.subtitle} />
+                <BasicField
+                  onChange={(content) => {
+                    draftItem.subtitle = content;
+                  }}
+                  value={draftItem.subtitle}
+                />
               </FormGroup>
               <FormGroup>
                 <Label>Body</Label>
-                <RichTextField onChange={updateTitle} value={item.body} />
+                <RichTextField
+                  onChange={(content) => {
+                    draftItem.body = content;
+                  }}
+                  value={draftItem.body}
+                />
               </FormGroup>
             </Fieldset>
             <Fieldset>
               <FormGroup>
                 <Label>Background Image</Label>
                 <BackgroundImageField
-                  value={item.image}
-                  onUpdate={path => {
-                    console.log(path);
+                  value={draftItem.image}
+                  onUpdate={(path) => {
+                    draftItem.image = path;
                   }}
                 />
               </FormGroup>
             </Fieldset>
             <Fieldset>
               <Label>Audio</Label>
-              <AudioField />
+              <AudioField
+                value={draftItem.audio}
+                onUpdate={(path) => {
+                  draftItem.audio = path;
+                }}
+              />
             </Fieldset>
           </Form>
         </Col>
         <Col xs="6">
-          <ImageBackground
-            title={item.title}
-            subtitle={item.subtitle}
-            body={item.body}
-            image={item.image}
-          />
+          <ImageBackground item={draftItem} />
         </Col>
       </Row>
     </Container>
