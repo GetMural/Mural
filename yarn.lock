@@ -10737,6 +10737,11 @@ through@^2.3.6:
   resolved "https://registry.yarnpkg.com/through/-/through-2.3.8.tgz#0dd4c9ffaabc357960b1b724115d7e0e86a2e1f5"
   integrity sha1-DdTJ/6q8NXlgsbckEV1+Doai4fU=
 
+thumbor@^0.1.5:
+  version "0.1.5"
+  resolved "https://registry.yarnpkg.com/thumbor/-/thumbor-0.1.5.tgz#13e03d2333b408b1bc8539fca9f273ae8b8fb1f3"
+  integrity sha1-E+A9IzO0CLG8hTn8qfJzrouPsfM=
+
 thunky@^1.0.2:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/thunky/-/thunky-1.0.3.tgz#f5df732453407b09191dae73e2a8cc73f381a826"

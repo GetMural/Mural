@@ -1,25 +1,32 @@
+/* eslint-disable react/jsx-filename-extension */
 import React from 'react';
 import './App.css';
 import {
  HashRouter as Router, Switch, Route, Link 
 } from 'react-router-dom';
+import { unprotect } from 'mobx-state-tree';
 import ImageBackgroundForm from './editor/ImageBackgroundForm';
 
-function Home() {
-  return (
-    <div>
-      <h2>Home</h2>
-    </div>
-  );
+import Settings from './settings/Settings';
+import SettingsModel from './models/Settings';
+
+const electron = require('electron');
+const path = require('path');
+
+const USER_DATA_PATH = (electron.app || electron.remote.app).getPath(
+  'userData',
+);
+
+let config;
+try {
+  config = JSON.parse(path.join(USER_DATA_PATH, 'settings.json'));
+} catch (error) {
+  // file doesn't exist
+  config = {};
 }
 
-function About() {
-  return <h2>About</h2>;
-}
-
-function Users() {
-  return <h2>Users</h2>;
-}
+const settingsTree = SettingsModel.create(config);
+unprotect(settingsTree);
 
 export default function App() {
   return (
@@ -28,26 +35,20 @@ export default function App() {
         <nav>
           <ul>
             <li>
-              <Link to="/">Home</Link>
+              <Link to="/">Editor</Link>
             </li>
             <li>
-              <Link to="/imagebackground">Image Background</Link>
-            </li>
-            <li>
-              <Link to="/users">Users</Link>
+              <Link to="/settings">Settings</Link>
             </li>
           </ul>
         </nav>
 
         <Switch>
-          <Route path="/imagebackground">
-            <ImageBackgroundForm />
-          </Route>
-          <Route path="/users">
-            <Users />
+          <Route path="/settings">
+            <Settings config={settingsTree} />
           </Route>
           <Route path="/">
-            <Home />
+            <ImageBackgroundForm config={settingsTree} />
           </Route>
         </Switch>
       </div>

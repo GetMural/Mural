@@ -25,7 +25,8 @@
     "react-router-dom": "^5.1.1",
     "react-scripts": "3.1.2",
     "styled-components": "^4.4.0",
-    "summernote": "^0.8.12"
+    "summernote": "^0.8.12",
+    "thumbor": "^0.1.5"
   },
   "scripts": {
     "start": "rescripts start",
