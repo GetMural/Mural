@@ -5,20 +5,8 @@ import { observer } from 'mobx-react';
 import styled from 'styled-components';
 
 const BackgroundImage = styled.div`
-  position: fixed;
   background-image: url(${(props) => props.srcImage});
-  width: 100%;
-  height: 100vh;
-  background-position: center center;
-  background-size: cover;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-  -webkit-transform: translateZ(0);
-  transform: translateZ(0);
+  position: fixed;
 `;
 
 function ImageBackgroundDraft(props) {

@@ -4,7 +4,9 @@ import './App.css';
 import {
  HashRouter as Router, Switch, Route, Link 
 } from 'react-router-dom';
+
 import { unprotect } from 'mobx-state-tree';
+
 import ImageBackgroundForm from './editor/ImageBackgroundForm';
 
 import Settings from './settings/Settings';
@@ -31,26 +33,30 @@ unprotect(settingsTree);
 export default function App() {
   return (
     <Router>
-      <div>
-        <nav>
-          <ul>
-            <li>
-              <Link to="/">Editor</Link>
-            </li>
-            <li>
-              <Link to="/settings">Settings</Link>
-            </li>
-          </ul>
-        </nav>
-
-        <Switch>
-          <Route path="/settings">
-            <Settings config={settingsTree} />
-          </Route>
-          <Route path="/">
-            <ImageBackgroundForm config={settingsTree} />
-          </Route>
-        </Switch>
+      <div className="row">
+        <div className="col-1">
+          <div
+            className="nav flex-column nav-pills"
+            id="v-pills-tab"
+            role="tablist"
+            aria-orientation="vertical"
+          >
+            <Link to="/">Editor</Link>
+            <Link to="/settings">Settings</Link>
+          </div>
+        </div>
+        <div className="col-11">
+          <div className="tab-content" id="v-pills-tabContent">
+            <Switch>
+              <Route path="/settings">
+                <Settings config={settingsTree} />
+              </Route>
+              <Route path="/">
+                <ImageBackgroundForm config={settingsTree} />
+              </Route>
+            </Switch>
+          </div>
+        </div>
       </div>
     </Router>
   );
