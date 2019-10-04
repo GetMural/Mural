@@ -7,6 +7,12 @@ import {
 
 import { unprotect } from 'mobx-state-tree';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faArrowCircleRight,
+  faArrowCircleLeft,
+} from '@fortawesome/free-solid-svg-icons';
+
 import ImageBackgroundForm from './editor/ImageBackgroundForm';
 
 import Settings from './settings/Settings';
@@ -43,6 +49,18 @@ export default function App() {
           >
             <Link to="/">Editor</Link>
             <Link to="/settings">Settings</Link>
+            <FontAwesomeIcon
+              icon={faArrowCircleLeft}
+              onClick={() => {
+                settingsTree.editor.previewWidth++;
+              }}
+            />
+            <FontAwesomeIcon
+              icon={faArrowCircleRight}
+              onClick={() => {
+                settingsTree.editor.previewWidth--;
+              }}
+            />
           </div>
         </div>
         <div className="col-11">

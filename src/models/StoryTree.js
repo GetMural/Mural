@@ -11,10 +11,12 @@ const USER_DATA_PATH = (electron.app || electron.remote.app).getPath(
 );
 
 const renditions = [
-  { w: '1920', h: '1080' },
-  { w: '1024', h: '768' },
-  { w: '1080', h: '1920' },
-  { w: '768', h: '1024' },
+  { w: '375', h: '667', scale: 1 },
+  { w: '375', h: '667', scale: 2 },
+  { w: '768', h: '1024', scale: 1 },
+  { w: '768', h: '1024', scale: 2 },
+  { w: '1920', h: '1080', scale: 1 },
+  { w: '1920', h: '1080', scale: 2 },
 ];
 
 const NavItem = types.model({
@@ -56,7 +58,10 @@ const Image = types
         return renditions.map((rendition) => {
           const thumborUrl = thumbor
             .setImagePath(self.path.substr(USER_DATA_PATH.length + 1))
-            .resize(rendition.w, rendition.h)
+            .resize(
+              rendition.w * rendition.scale,
+              rendition.h * rendition.scale,
+            )
             .smartCrop()
             .buildUrl();
 

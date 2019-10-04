@@ -5,8 +5,15 @@ import { observer } from 'mobx-react';
 import styled from 'styled-components';
 
 const BackgroundImage = styled.div`
-  background-image: url(${(props) => props.srcImage});
   position: fixed;
+
+  ${(props) => props.srcImages.map(
+      (rendition) => `
+    @media (min-resolution: ${rendition.scale}dppx) and (min-width: ${rendition.w}px) {
+      background-image: url(${rendition.thumborUrl});
+    }
+  `,
+    )}
 `;
 
 function ImageBackgroundDraft(props) {
@@ -15,12 +22,12 @@ function ImageBackgroundDraft(props) {
       title,
       subtitle,
       body,
-      image: { preview },
+      image: { preview, renditions },
     },
   } = props;
   return (
     <section className="part sticky-image" name="story-id">
-      <BackgroundImage className="bg-image" srcImage={preview} />
+      <BackgroundImage className="bg-image" srcImages={renditions} />
       <div className="content container-fluid">
         <div className="row">
           <div className="col-sm-12 header-fullpage">

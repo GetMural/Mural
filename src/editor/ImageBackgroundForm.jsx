@@ -49,11 +49,16 @@ const item = storage.get('items')[0];
 const draftItem = Draft.create(item);
 unprotect(draftItem);
 
-function ImageBackgroundForm() {
+function ImageBackgroundForm(props) {
+  const {
+    config: {
+      editor: { previewWidth },
+    },
+  } = props;
   return (
-    <Container className="m-0" fluid>
+    <Container className="m-0 p-0" fluid>
       <Row>
-        <Col xs="6">
+        <Col xs={12 - previewWidth}>
           <Editor>
             <Form>
               <NavEntry />
@@ -97,10 +102,12 @@ function ImageBackgroundForm() {
                     }}
                   />
                   {draftItem.image.renditions.map((rendition) => (
-                    <div>
+                    <div
+                      key={`${rendition.w}x${rendition.h}x${rendition.scale}`}
+                    >
+                      <div>{`${rendition.w}x${rendition.h} scale ${rendition.scale}`}</div>
                       <Img
                         src={rendition.thumborUrl}
-                        key={`${rendition.w}x${rendition.h}`}
                         alt={`${rendition.w}x${rendition.h}`}
                       />
                     </div>
@@ -119,7 +126,7 @@ function ImageBackgroundForm() {
             </Form>
           </Editor>
         </Col>
-        <Col xs="6">
+        <Col xs={previewWidth} className="p-0">
           <StoryPreview head={<style>{draftCSS}</style>}>
             <>
               <article>

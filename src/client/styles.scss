@@ -2236,7 +2236,7 @@ article .header h2 {
 article .header-fullpage {
   font-weight: 200;
   height: 100vh;
-  margin: -10vh auto 0 auto;
+  margin: -10vh 0 0 0;
   display: table;
 }
 article .header-fullpage .middle {
@@ -2642,12 +2642,7 @@ article .part.box_text p {
   background-position: center center;
   background-size: cover;
   z-index: 1;
-  top: 0;
-  left: 0;
-  right: 0;
-  -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
-  -webkit-transform: translateZ(0);
   transform: translateZ(0);
 }
 .sticky-image .content {
