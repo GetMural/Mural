@@ -1,8 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import {
- clone, unprotect, applySnapshot, getSnapshot 
-} from 'mobx-state-tree';
+import { clone, applySnapshot, getSnapshot } from 'mobx-state-tree';
 import {
  HashRouter as Router, Switch, Route, Link 
 } from 'react-router-dom';

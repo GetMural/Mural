@@ -20,7 +20,6 @@ const fileManager = new FileManager({ storyName: 'Test' });
 
 const storyJson = fileManager.read();
 const config = fileManager.readSettings();
-
 const settingsTree = WorkspaceSettings.create(config);
 
 const storyTree = StoryModel.create(storyJson, {

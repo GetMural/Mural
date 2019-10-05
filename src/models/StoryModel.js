@@ -16,13 +16,22 @@ const EditorSettings = types.model({
   previewWidth: 4,
 });
 
-const ThumborSettings = types.model({
-  host: '',
-  key: '',
-});
+const ThumborSettings = types
+  .model({
+    host: '',
+    key: '',
+  })
+  .actions((self) => ({
+    changeHost(host) {
+      self.host = host;
+    },
+    changeKey(key) {
+      self.key = key;
+    },
+  }));
 
 export const WorkspaceSettings = types.model({
-  thumbor: types.optional(ThumborSettings, { host: '', key: '' }),
+  thumbor: types.optional(ThumborSettings, {}),
   editor: types.optional(EditorSettings, {}),
 });
 

@@ -1,51 +1,22 @@
 import React from 'react';
 import { shape, string } from 'prop-types';
-import {
-  Form,
-  FormGroup,
-  Input,
-  Fieldset,
-  Legend,
-  Label,
-  FormText,
-  Container,
-  Col,
-  Row,
-} from '@bootstrap-styled/v4';
+import { Container } from '@bootstrap-styled/v4';
+import { clone, applySnapshot, getSnapshot } from 'mobx-state-tree';
+import SettingsForm from './SettingsForm';
 
 function Settings(props) {
-  let {
-    config: {
-      thumbor: { host, key },
-    },
-  } = props;
+  const { config } = props;
+
+  const clonedConfig = clone(config);
 
   return (
     <Container>
-      <Form>
-        <Fieldset>
-          <Legend>Thumbor</Legend>
-          <Label htmlFor="thumbor[host]">Host</Label>
-          <Input
-            type="text"
-            id="thumbor[host]"
-            value={host}
-            onChange={(e) => {
-              debugger;
-              host = e.target.value;
-            }}
-          />
-          <Label htmlFor="thumbor[key]">Key</Label>
-          <Input
-            type="text"
-            id="thumbor[key]"
-            value={key}
-            onChange={(e) => {
-              key = e.target.value;
-            }}
-          />
-        </Fieldset>
-      </Form>
+      <SettingsForm
+        config={clonedConfig}
+        onSave={() => {
+          applySnapshot(config, getSnapshot(clonedConfig));
+        }}
+      />
     </Container>
   );
 }
