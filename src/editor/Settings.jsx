@@ -19,6 +19,7 @@ function Settings(props) {
       thumbor: { host, key },
     },
   } = props;
+
   return (
     <Container>
       <Form>
@@ -29,8 +30,9 @@ function Settings(props) {
             type="text"
             id="thumbor[host]"
             value={host}
-            onChange={(value) => {
-              host = value;
+            onChange={(e) => {
+              debugger;
+              host = e.target.value;
             }}
           />
           <Label htmlFor="thumbor[key]">Key</Label>
@@ -38,8 +40,8 @@ function Settings(props) {
             type="text"
             id="thumbor[key]"
             value={key}
-            onChange={(value) => {
-              key = value;
+            onChange={(e) => {
+              key = e.target.value;
             }}
           />
         </Fieldset>

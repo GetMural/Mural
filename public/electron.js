@@ -11,7 +11,7 @@ let mainWindow;
 function createWindow() {
   mainWindow = new BrowserWindow({
     width: 1280,
-    height: 800,
+    height: 700,
     webPreferences: {
       nodeIntegration: true,
     },
@@ -23,7 +23,10 @@ function createWindow() {
   );
   if (isDev) {
     // Open the DevTools.
-    // BrowserWindow.addDevToolsExtension('<location to your react chrome extension>');
+    BrowserWindow.addDevToolsExtension(
+      '/Users/naaro/Library/Application Support/Google/Chrome/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/4.2.0_0',
+      '/Users/naaro/Library/Application Support/Google/Chrome/Default/Extensions/pfgnfdagidkfgccljigdamigbcnndkod/0.9.21_0',
+    );
     mainWindow.webContents.openDevTools();
   }
   mainWindow.on('closed', () => (mainWindow = null));

@@ -1,14 +1,30 @@
-import { types, getRoot, destroy } from 'mobx-state-tree';
+import { types, getEnv } from 'mobx-state-tree';
 import { promisedComputed } from 'computed-async-mobx';
 
 const electron = require('electron');
 const mime = require('mime-types');
 const Thumbor = require('thumbor');
+
+const thumbor = new Thumbor('', 'http://localhost:8888');
 const { convertMediaToDataurl } = require('../utils/dataurl');
 // Renderer process has to get `app` module via `remote`.
 const USER_DATA_PATH = (electron.app || electron.remote.app).getPath(
   'userData',
 );
+
+const EditorSettings = types.model({
+  previewWidth: 4,
+});
+
+const ThumborSettings = types.model({
+  host: '',
+  key: '',
+});
+
+export const WorkspaceSettings = types.model({
+  thumbor: types.optional(ThumborSettings, { host: '', key: '' }),
+  editor: types.optional(EditorSettings, {}),
+});
 
 const renditions = [
   { w: '320', h: '568', scale: 1 },
@@ -27,17 +43,18 @@ const NavItem = types.model({
   title: types.string,
 });
 
-const StoryItem = types.model({
-  type: 'imagebackground',
-  title: types.string,
-  subtitle: types.string,
-  body: types.string,
-  image: types.optional(types.string, ''),
-});
-
 const Media = types
   .model({
     path: '',
+  })
+  .actions((self) => {
+    debugger;
+    return {
+      uploadFile(systemPath, name) {
+        const { fileManager } = getEnv(self);
+        fileManager.importMedia(systemPath, name);
+      },
+    };
   })
   .views((self) => {
     const dataUrlPromise = promisedComputed('', async () => {
@@ -60,8 +77,6 @@ const Media = types
 
 const ImageViews = types.model({}).views((self) => ({
   get renditions() {
-    const thumbor = new Thumbor('', 'http://localhost:8888');
-
     return renditions.map((rendition) => {
       const thumborUrl = thumbor
         .setImagePath(self.path.substr(USER_DATA_PATH.length + 1))
@@ -79,20 +94,30 @@ const Image = types.compose(
   ImageViews,
 );
 
-const ImageBackgroundDraft = types.model({
-  type: 'imagebackground',
-  title: types.string,
-  subtitle: types.string,
-  body: types.string,
-  image: types.optional(Image, {}),
-  audio: types.optional(Media, {}),
-});
+export const StoryItem = types
+  .model({
+    type: 'ImageBackground',
+    title: '',
+    subtitle: '',
+    body: '',
+    image: types.optional(Image, {}),
+    audio: types.optional(Media, {}),
+  })
+  .actions((self) => ({
+    changeTitle(title) {
+      self.title = title;
+    },
+    changeSubtitle(subtitle) {
+      self.subtitle = subtitle;
+    },
+    changeBody(body) {
+      self.body = body;
+    },
+  }));
 
-const StoryTree = types.model({
+const StoryModel = types.model({
   items: types.array(StoryItem),
   nav: types.array(NavItem),
 });
 
-export { StoryItem, ImageBackgroundDraft };
-
-export default StoryTree;
+export default StoryModel;

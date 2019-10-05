@@ -16,21 +16,24 @@ function parseDataFile(filePath) {
   }
 }
 
-class Store {
+class FileManager {
   constructor(opts) {
     this.path = path.join(USER_DATA_PATH, `${opts.storyName}.json`);
     this.uploads = path.join(USER_DATA_PATH, 'uploads', opts.storyName);
-    this.data = parseDataFile(this.path);
+    this.settings = path.join(USER_DATA_PATH, 'settings.json');
   }
 
-  get(key) {
-    return this.data[key];
+  readSettings() {
+    return parseDataFile(this.settings);
   }
 
-  set(key, val) {
-    this.data[key] = val;
+  read() {
+    return parseDataFile(this.path);
+  }
+
+  write(snapshot) {
     try {
-      fs.writeFileSync(this.path, JSON.stringify(this.data));
+      fs.writeFileSync(this.path, JSON.stringify(snapshot));
     } catch (e) {
       console.log(e);
     }
@@ -49,4 +52,4 @@ class Store {
   }
 }
 
-module.exports = Store;
+module.exports = FileManager;

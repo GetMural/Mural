@@ -1,5 +1,4 @@
 import React from 'react';
-import { unprotect } from 'mobx-state-tree';
 import { observer } from 'mobx-react';
 import styled from 'styled-components';
 import {
@@ -13,10 +12,10 @@ import {
   Container,
   Col,
   Row,
+  Button,
+  ButtonGroup,
 } from '@bootstrap-styled/v4';
 import Frame from 'react-styled-frame';
-import Store from '../store';
-import { ImageBackgroundDraft as Draft } from '../models/StoryTree';
 
 // eslint-disable-next-line import/no-webpack-loader-syntax
 import draftCSS from '!!raw-loader!../client/styles.scss';
@@ -42,22 +41,12 @@ const Editor = styled.div`
   height: 100vh;
 `;
 
-const storage = new Store({ storyName: 'Test' });
-const item = storage.get('items')[0];
-
-const draftItem = Draft.create(item);
-unprotect(draftItem);
-
 function ImageBackgroundForm(props) {
-  const {
-    config: {
-      editor: { previewWidth },
-    },
-  } = props;
+  const { draftItem, onSave } = props;
   return (
     <Container className="m-0 p-0" fluid>
       <Row>
-        <Col xs={12 - previewWidth}>
+        <Col xs={8}>
           <Editor>
             <Form>
               <NavEntry />
@@ -67,7 +56,7 @@ function ImageBackgroundForm(props) {
                   <Label>Title</Label>
                   <BasicField
                     onChange={(content) => {
-                      draftItem.title = content;
+                      draftItem.changeTitle(content);
                     }}
                     value={draftItem.title}
                   />
@@ -76,7 +65,7 @@ function ImageBackgroundForm(props) {
                   <Label>Headline</Label>
                   <BasicField
                     onChange={(content) => {
-                      draftItem.subtitle = content;
+                      draftItem.changeSubtitle(content);
                     }}
                     value={draftItem.subtitle}
                   />
@@ -85,7 +74,7 @@ function ImageBackgroundForm(props) {
                   <Label>Body</Label>
                   <RichTextField
                     onChange={(content) => {
-                      draftItem.body = content;
+                      draftItem.changeBody(content);
                     }}
                     value={draftItem.body}
                   />
@@ -96,8 +85,8 @@ function ImageBackgroundForm(props) {
                   <Label>Background Image</Label>
                   <MediaPreviewField
                     media={draftItem.image}
-                    onUpdate={(path) => {
-                      draftItem.image.path = path;
+                    onUpdate={(path, name) => {
+                      draftItem.image.uploadFile(path, name);
                     }}
                     acceptedMimeTypes={[
                       'image/jpeg',
@@ -129,8 +118,9 @@ function ImageBackgroundForm(props) {
                 <Label>Audio</Label>
                 <MediaPreviewField
                   media={draftItem.audio}
-                  onUpdate={(path) => {
-                    draftItem.audio.path = path;
+                  onUpdate={(path, name) => {
+                    debugger;
+                    draftItem.audio.uploadFile(path, name);
                   }}
                   acceptedMimeTypes={[
                     'audio/mpeg',
@@ -148,10 +138,17 @@ function ImageBackgroundForm(props) {
                   )}
                 </MediaPreviewField>
               </Fieldset>
+              <ButtonGroup>
+                <Button color="secondary">Cancel</Button>
+                <Button color="secondary">Reset</Button>
+                <Button color="primary" onClick={onSave}>
+                  Save
+                </Button>
+              </ButtonGroup>
             </Form>
           </Editor>
         </Col>
-        <Col xs={previewWidth} className="p-0">
+        <Col xs={4} className="p-0">
           <StoryPreview head={<style>{draftCSS}</style>}>
             <>
               <article>
