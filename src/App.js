@@ -51,12 +51,14 @@ export default function App() {
             <Link to="/settings">Settings</Link>
             <FontAwesomeIcon
               icon={faArrowCircleLeft}
+              size="2x"
               onClick={() => {
                 settingsTree.editor.previewWidth++;
               }}
             />
             <FontAwesomeIcon
               icon={faArrowCircleRight}
+              size="2x"
               onClick={() => {
                 settingsTree.editor.previewWidth--;
               }}

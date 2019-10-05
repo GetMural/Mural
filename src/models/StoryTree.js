@@ -11,6 +11,8 @@ const USER_DATA_PATH = (electron.app || electron.remote.app).getPath(
 );
 
 const renditions = [
+  { w: '320', h: '568', scale: 1 },
+  { w: '320', h: '568', scale: 2 },
   { w: '375', h: '667', scale: 1 },
   { w: '375', h: '667', scale: 2 },
   { w: '768', h: '1024', scale: 1 },

@@ -23,8 +23,7 @@ import draftCSS from '!!raw-loader!../client/styles.scss';
 
 import BasicField from './bites/BasicField';
 import RichTextField from './bites/RichTextField';
-import AudioField from './bites/AudioField';
-import BackgroundImageField from './bites/BackgroundImageField';
+import MediaPreviewField from './bites/MediaPreviewField';
 import NavEntry from './bites/NavEntry';
 import ImageBackgroundDraft from './preview/ImageBackgroundDraft';
 
@@ -95,12 +94,24 @@ function ImageBackgroundForm(props) {
               <Fieldset>
                 <FormGroup>
                   <Label>Background Image</Label>
-                  <BackgroundImageField
-                    image={draftItem.image}
+                  <MediaPreviewField
+                    media={draftItem.image}
                     onUpdate={(path) => {
                       draftItem.image.path = path;
                     }}
-                  />
+                    acceptedMimeTypes={[
+                      'image/jpeg',
+                      'image/png',
+                      'image/webp',
+                    ]}
+                  >
+                    {({ preview }) => (
+                      <>
+                        <Img src={preview} alt="Feature image preview" />
+                        <FormText color="muted">Feature Image</FormText>
+                      </>
+                    )}
+                  </MediaPreviewField>
                   {draftItem.image.renditions.map((rendition) => (
                     <div
                       key={`${rendition.w}x${rendition.h}x${rendition.scale}`}
@@ -117,11 +128,11 @@ function ImageBackgroundForm(props) {
               <Fieldset>
                 <Label>Audio</Label>
                 {/* <AudioField
-                value={draftItem.audio}
-                onUpdate={(path) => {
-                  draftItem.audio = path;
-                }}
-              /> */}
+                  value={draftItem.audio}
+                  onUpdate={(path) => {
+                    draftItem.audio = path;
+                  }}
+                /> */}
               </Fieldset>
             </Form>
           </Editor>

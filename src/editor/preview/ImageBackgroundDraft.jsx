@@ -9,7 +9,7 @@ const BackgroundImage = styled.div`
 
   ${(props) => props.srcImages.map(
       (rendition) => `
-    @media (min-resolution: ${rendition.scale}dppx) and (min-width: ${rendition.w}px) {
+    @media only screen and (min-resolution: ${rendition.scale}dppx) and (min-width: ${rendition.w}px) {
       background-image: url(${rendition.thumborUrl});
     }
   `,
