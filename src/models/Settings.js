@@ -1,7 +1,7 @@
 import { types } from 'mobx-state-tree';
 
 const Editor = types.model({
-  previewWidth: 6,
+  previewWidth: 4,
 });
 
 const Thumbor = types.model({

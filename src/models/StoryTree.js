@@ -33,12 +33,11 @@ const StoryItem = types.model({
   subtitle: types.string,
   body: types.string,
   image: types.optional(types.string, ''),
-  // id: types.identifier(types.number),
 });
 
-const Image = types
+const Media = types
   .model({
-    path: types.string,
+    path: '',
   })
   .views((self) => {
     const dataUrlPromise = promisedComputed('', async () => {
@@ -46,7 +45,7 @@ const Image = types
         self.path,
         mime.lookup(self.path),
       );
-      return response; // score between 0 and 1000
+      return response;
     });
     return {
       get preview() {
@@ -56,36 +55,40 @@ const Image = types
         }
         return '';
       },
-      get renditions() {
-        const thumbor = new Thumbor('', 'http://localhost:8888');
-
-        return renditions.map((rendition) => {
-          const thumborUrl = thumbor
-            .setImagePath(self.path.substr(USER_DATA_PATH.length + 1))
-            .resize(
-              rendition.w * rendition.scale,
-              rendition.h * rendition.scale,
-            )
-            .smartCrop()
-            .buildUrl();
-
-          return { ...rendition, thumborUrl };
-        });
-      },
     };
   });
+
+const ImageViews = types.model({}).views((self) => ({
+  get renditions() {
+    const thumbor = new Thumbor('', 'http://localhost:8888');
+
+    return renditions.map((rendition) => {
+      const thumborUrl = thumbor
+        .setImagePath(self.path.substr(USER_DATA_PATH.length + 1))
+        .resize(rendition.w * rendition.scale, rendition.h * rendition.scale)
+        .smartCrop()
+        .buildUrl();
+
+      return { ...rendition, thumborUrl };
+    });
+  },
+}));
+
+const Image = types.compose(
+  Media,
+  ImageViews,
+);
 
 const ImageBackgroundDraft = types.model({
   type: 'imagebackground',
   title: types.string,
   subtitle: types.string,
   body: types.string,
-  image: Image,
-  // id: types.identifier(types.number),
+  image: types.optional(Image, {}),
+  audio: types.optional(Media, {}),
 });
 
 const StoryTree = types.model({
-  // rootPath: uploads fir for story
   items: types.array(StoryItem),
   nav: types.array(NavItem),
 });

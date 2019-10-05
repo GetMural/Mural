@@ -127,12 +127,26 @@ function ImageBackgroundForm(props) {
               </Fieldset>
               <Fieldset>
                 <Label>Audio</Label>
-                {/* <AudioField
-                  value={draftItem.audio}
+                <MediaPreviewField
+                  media={draftItem.audio}
                   onUpdate={(path) => {
-                    draftItem.audio = path;
+                    draftItem.audio.path = path;
                   }}
-                /> */}
+                  acceptedMimeTypes={[
+                    'audio/mpeg',
+                    'audio/ogg',
+                    'audio/vorbis',
+                    'audio/opus',
+                  ]}
+                >
+                  {({ preview }) => (
+                    <>
+                      {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
+                      <audio src={preview} alt="Audio" controls />
+                      <FormText color="muted">Background Audio</FormText>
+                    </>
+                  )}
+                </MediaPreviewField>
               </Fieldset>
             </Form>
           </Editor>
