@@ -1,4 +1,4 @@
-import { types, getEnv } from 'mobx-state-tree';
+import { types, getEnv, onSnapshot } from 'mobx-state-tree';
 import { promisedComputed } from 'computed-async-mobx';
 
 const electron = require('electron');
@@ -122,9 +122,15 @@ export const StoryItem = types
     },
   }));
 
-const StoryModel = types.model({
-  items: types.array(StoryItem),
-  nav: types.array(NavItem),
-});
+const StoryModel = types
+  .model({
+    items: types.array(StoryItem),
+  })
+  .actions((self) => ({
+    afterCreate() {
+      const { fileManager } = getEnv(self);
+      onSnapshot(self, fileManager.write.bind(fileManager));
+    },
+  }));
 
 export default StoryModel;

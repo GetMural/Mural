@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import {
   Form,
   FormGroup,
-  Input,
   Fieldset,
   Legend,
   Label,
@@ -21,10 +20,9 @@ import Frame from 'react-styled-frame';
 import draftCSS from '!!raw-loader!../client/styles.scss';
 
 import BasicField from './bites/BasicField';
-import RichTextField from './bites/RichTextField';
 import MediaPreviewField from './bites/MediaPreviewField';
 import NavEntry from './bites/NavEntry';
-import ImageBackgroundDraft from './preview/ImageBackgroundDraft';
+import ImageParallaxDraft from './preview/ImageParallaxDraft';
 
 const Img = styled.img`
   max-width: 200px;
@@ -41,7 +39,7 @@ const Editor = styled.div`
   height: 100vh;
 `;
 
-function ImageBackgroundForm(props) {
+function ImageParallaxForm(props) {
   const { draftItem, onSave } = props;
   return (
     <Container className="m-0 p-0" fluid>
@@ -68,15 +66,6 @@ function ImageBackgroundForm(props) {
                       draftItem.changeSubtitle(content);
                     }}
                     value={draftItem.subtitle}
-                  />
-                </FormGroup>
-                <FormGroup>
-                  <Label>Body</Label>
-                  <RichTextField
-                    onChange={content => {
-                      draftItem.changeBody(content);
-                    }}
-                    value={draftItem.body}
                   />
                 </FormGroup>
               </Fieldset>
@@ -119,31 +108,6 @@ function ImageBackgroundForm(props) {
                   ))}
                 </FormGroup>
               </Fieldset>
-              <Fieldset>
-                <Label>Audio</Label>
-                <MediaPreviewField
-                  media={draftItem.audio}
-                  onUpdate={(path, name) => {
-                    draftItem.audio.uploadFile(path, name);
-                  }}
-                  acceptedMimeTypes={[
-                    'audio/mpeg',
-                    'audio/ogg',
-                    'audio/vorbis',
-                    'audio/opus',
-                  ]}
-                >
-                  {({ preview }) => (
-                    <>
-                      {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
-                      <audio src={preview} alt="Audio" controls />
-                      <FormText color="muted">
-                        Background Audio
-                      </FormText>
-                    </>
-                  )}
-                </MediaPreviewField>
-              </Fieldset>
               <ButtonGroup>
                 <Button color="secondary">Cancel</Button>
                 <Button color="secondary">Reset</Button>
@@ -158,7 +122,7 @@ function ImageBackgroundForm(props) {
           <StoryPreview head={<style>{draftCSS}</style>}>
             <>
               <article>
-                <ImageBackgroundDraft item={draftItem} />
+                <ImageParallaxDraft item={draftItem} />
               </article>
             </>
           </StoryPreview>
@@ -168,4 +132,4 @@ function ImageBackgroundForm(props) {
   );
 }
 
-export default observer(ImageBackgroundForm);
+export default observer(ImageParallaxForm);

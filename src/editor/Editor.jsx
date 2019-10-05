@@ -1,12 +1,16 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import { clone, applySnapshot, getSnapshot } from 'mobx-state-tree';
-import {
- HashRouter as Router, Switch, Route, Link 
-} from 'react-router-dom';
-import ImageBackgroundForm from './ImageBackgroundForm';
 
-const Editor = (props) => {
+import ImageBackgroundForm from './ImageBackgroundForm';
+import ImageParallaxForm from './ImageParallaxForm';
+
+const StoryForms = {
+  ImageBackground: ImageBackgroundForm,
+  ImageParallax: ImageParallaxForm,
+};
+
+const Editor = props => {
   const {
     story: { items },
     match: {
@@ -17,9 +21,10 @@ const Editor = (props) => {
   const storyIndex = parseInt(itemNum, 10);
   const item = items[storyIndex];
   const clonedItem = clone(item);
+  const Component = StoryForms[clonedItem.type];
 
   return (
-    <ImageBackgroundForm
+    <Component
       draftItem={clonedItem}
       onSave={() => {
         applySnapshot(items[storyIndex], getSnapshot(clonedItem));
