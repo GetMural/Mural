@@ -1,10 +1,10 @@
-const electron = require('electron');
-const path = require('path');
-const fs = require('fs');
+const electron = require("electron");
+const path = require("path");
+const fs = require("fs");
 
 // Renderer process has to get `app` module via `remote`.
 const USER_DATA_PATH = (electron.app || electron.remote.app).getPath(
-  'userData',
+  "userData"
 );
 
 function parseDataFile(filePath) {
@@ -19,8 +19,8 @@ function parseDataFile(filePath) {
 class FileManager {
   constructor(opts) {
     this.path = path.join(USER_DATA_PATH, `${opts.storyName}.json`);
-    this.uploads = path.join(USER_DATA_PATH, 'uploads', opts.storyName);
-    this.settings = path.join(USER_DATA_PATH, 'settings.json');
+    this.uploads = path.join(USER_DATA_PATH, "uploads", opts.storyName);
+    this.settings = path.join(USER_DATA_PATH, "settings.json");
   }
 
   readSettings() {

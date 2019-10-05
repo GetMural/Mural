@@ -56,15 +56,13 @@ const Media = types
   .model({
     path: '',
   })
-  .actions((self) => {
-    debugger;
-    return {
-      uploadFile(systemPath, name) {
-        const { fileManager } = getEnv(self);
-        fileManager.importMedia(systemPath, name);
-      },
-    };
-  })
+  .actions((self) => ({
+    uploadFile(systemPath, name) {
+      const { fileManager } = getEnv(self);
+      const uploadPath = fileManager.importMedia(systemPath, name);
+      self.path = uploadPath;
+    },
+  }))
   .views((self) => {
     const dataUrlPromise = promisedComputed('', async () => {
       const response = await convertMediaToDataurl(
