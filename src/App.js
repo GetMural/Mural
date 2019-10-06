@@ -2,18 +2,17 @@
 import React from 'react';
 import './App.css';
 import {
- HashRouter as Router, Switch, Route, Link 
+  HashRouter as Router,
+  Switch,
+  Route,
+  Link,
 } from 'react-router-dom';
-
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faArrowCircleRight,
-  faArrowCircleLeft,
-} from '@fortawesome/free-solid-svg-icons';
-
-import Editor, { Settings } from './editor';
+import Editor, { Settings, Preview } from './editor';
 import StoryModel, { WorkspaceSettings } from './models/StoryModel';
 
+const electron = require('electron');
+const path = require('path');
+const isDev = require('electron-is-dev');
 const FileManager = require('./FileManager');
 
 const fileManager = new FileManager({ storyName: 'Test' });
@@ -39,33 +38,48 @@ export default function App() {
           >
             <Link to="/">Editor</Link>
             <Link to="/settings">Settings</Link>
-            {/* <FontAwesomeIcon
-              icon={faArrowCircleLeft}
-              size="2x"
+            <button
+              type="button"
               onClick={() => {
-                settingsTree.editor.previewWidth++;
+                const win = new electron.remote.BrowserWindow({
+                  width: 1280,
+                  height: 700,
+                  webPreferences: {
+                    nodeIntegration: true,
+                  },
+                });
+                win.loadURL(
+                  isDev
+                    ? 'http://localhost:3000/#/preview'
+                    : `file://${path.join(
+                        __dirname,
+                        '../build/index.html#/preview',
+                      )}`,
+                );
               }}
-            />
-            <FontAwesomeIcon
-              icon={faArrowCircleRight}
-              size="2x"
-              onClick={() => {
-                settingsTree.editor.previewWidth--;
-              }}
-            /> */}
+            >
+              Preview
+            </button>
           </div>
         </div>
         <div className="col-11">
           <div className="tab-content" id="v-pills-tabContent">
             <Switch>
+              <Route path="/preview" component={Preview} />
               <Route
                 path="/settings"
-                render={(props) => <Settings {...props} config={settingsTree} />}
+                render={props => (
+                  // eslint-disable-next-line react/jsx-props-no-spreading
+                  <Settings {...props} config={settingsTree} />
+                )}
               />
               <Route
                 path="/:itemNum"
                 exact
-                render={(props) => <Editor {...props} story={storyTree} />}
+                render={props => (
+                  // eslint-disable-next-line react/jsx-props-no-spreading
+                  <Editor {...props} story={storyTree} />
+                )}
               />
               <Route path="">
                 <ul>
