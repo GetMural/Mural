@@ -7,6 +7,20 @@ const USER_DATA_PATH = (electron.app || electron.remote.app).getPath(
   'userData',
 );
 
+export function loadStories() {
+  try {
+    const files = fs.readdirSync(
+      path.join(USER_DATA_PATH, 'stories'),
+    );
+
+    return files.filter(name => {
+      return /\.json$/.test(name) && name !== 'settings.json';
+    });
+  } catch (e) {
+    console.log(e);
+  }
+}
+
 function parseDataFile(filePath) {
   try {
     return JSON.parse(fs.readFileSync(filePath));
