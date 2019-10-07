@@ -91,6 +91,9 @@ const Media = types
 
 const ImageViews = types.model({}).views(self => ({
   get renditions() {
+    if (self.path === '') {
+      return [];
+    }
     return renditions.map(rendition => {
       const thumborUrl = thumbor
         .setImagePath(self.path.substr(USER_DATA_PATH.length + 1))
@@ -140,6 +143,9 @@ const StoryModel = types
     afterCreate() {
       const { fileManager } = getEnv(self);
       onSnapshot(self, fileManager.write.bind(fileManager));
+    },
+    addItem(item) {
+      self.items.push(item);
     },
   }));
 
