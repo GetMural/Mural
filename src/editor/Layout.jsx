@@ -1,5 +1,6 @@
 import React from 'react';
 import Navigation from './Navigation';
+import ErrorBoundary from './ErrorBoundary';
 
 const Layout = props => {
   const { children } = props;
@@ -17,7 +18,7 @@ const Layout = props => {
       </div>
       <div className="col-11">
         <div className="tab-content" id="v-pills-tabContent">
-          {children}
+          <ErrorBoundary>{children}</ErrorBoundary>
         </div>
       </div>
     </div>

@@ -13,7 +13,7 @@ const Navigation = () => {
           <Link to="/">New</Link>
         </li>
         <li>
-          <Link to="/editor">Editor</Link>
+          <Link to="/story">Editor</Link>
         </li>
         <li>
           <Link to="/settings">Settings</Link>
