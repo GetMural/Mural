@@ -13,21 +13,27 @@ const settingsState = WorkspaceSettings.create(
   },
 );
 
+const getStoryState = storyName => {
+  const fileManager = new FileManager({ storyName });
+  const storyJson = fileManager.read();
+  return StoryModel.create(storyJson, {
+    fileManager,
+  });
+};
+
 class WorkspaceProvider extends React.Component {
   state = {
     settingsState,
-    storyState: {},
-    currentStory: '',
+    storyState: getStoryState(settingsState.currentStory),
+    currentStory: settingsState.currentStory,
     error: null,
   };
 
   handleSelectStory = storyName => {
-    const fileManager = new FileManager({ storyName });
-    const storyJson = fileManager.read();
-    const storyState = StoryModel.create(storyJson, {
-      fileManager,
+    const storyState = getStoryState(storyName);
+    this.setState({ currentStory: storyName, storyState }, () => {
+      this.state.settingsState.changeStory(storyName);
     });
-    this.setState({ currentStory: storyName, storyState });
   };
 
   render() {

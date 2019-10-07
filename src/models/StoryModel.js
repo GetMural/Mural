@@ -34,8 +34,12 @@ export const WorkspaceSettings = types
   .model({
     thumbor: types.optional(ThumborSettings, {}),
     editor: types.optional(EditorSettings, {}),
+    currentStory: '',
   })
   .actions(self => ({
+    changeStory(story) {
+      self.currentStory = story;
+    },
     afterCreate() {
       const { fileManager } = getEnv(self);
       onSnapshot(self, fileManager.write.bind(fileManager));

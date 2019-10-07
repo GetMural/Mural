@@ -19,9 +19,6 @@ const Navigation = () => {
           <Link to="/settings">Settings</Link>
         </li>
         <li>
-          <Link to="/preview">Preview</Link>
-        </li>
-        <li>
           <button
             type="button"
             onClick={() => {
