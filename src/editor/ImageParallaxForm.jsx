@@ -120,11 +120,9 @@ function ImageParallaxForm(props) {
         </Col>
         <Col xs={4} className="p-0">
           <StoryPreview head={<style>{draftCSS}</style>}>
-            <>
-              <article>
-                <ImageParallaxDraft item={draftItem} />
-              </article>
-            </>
+            <article>
+              <ImageParallaxDraft item={draftItem} />
+            </article>
           </StoryPreview>
         </Col>
       </Row>

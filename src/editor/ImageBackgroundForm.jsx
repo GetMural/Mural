@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import {
   Form,
   FormGroup,
-  Input,
   Fieldset,
   Legend,
   Label,
@@ -156,11 +155,9 @@ function ImageBackgroundForm(props) {
         </Col>
         <Col xs={4} className="p-0">
           <StoryPreview head={<style>{draftCSS}</style>}>
-            <>
-              <article>
-                <ImageBackgroundDraft item={draftItem} />
-              </article>
-            </>
+            <article>
+              <ImageBackgroundDraft item={draftItem} />
+            </article>
           </StoryPreview>
         </Col>
       </Row>
