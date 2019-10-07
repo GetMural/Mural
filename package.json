@@ -47,9 +47,6 @@
     "pack": "electron-builder --dir",
     "dist": "electron-builder"
   },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
   "browserslist": {
     "production": [
       ">0.2%",

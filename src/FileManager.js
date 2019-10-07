@@ -7,7 +7,13 @@ const USER_DATA_PATH = (electron.app || electron.remote.app).getPath(
   'userData',
 );
 
-function parseDataFile(filePath) {
+export const SETTINGS_PATH = path.join(
+  USER_DATA_PATH,
+  'stories',
+  'settings.json',
+);
+
+export function parseDataFile(filePath) {
   try {
     return JSON.parse(fs.readFileSync(filePath));
   } catch (error) {
@@ -18,13 +24,17 @@ function parseDataFile(filePath) {
 
 class FileManager {
   constructor(opts) {
-    this.path = path.join(USER_DATA_PATH, `${opts.storyName}.json`);
-    this.uploads = path.join(USER_DATA_PATH, 'uploads', opts.storyName);
-    this.settings = path.join(USER_DATA_PATH, 'settings.json');
-  }
-
-  readSettings() {
-    return parseDataFile(this.settings);
+    this.path = path.join(
+      USER_DATA_PATH,
+      'stories',
+      `${opts.storyName}.json`,
+    );
+    this.uploads = path.join(
+      USER_DATA_PATH,
+      'stories',
+      'uploads',
+      opts.storyName,
+    );
   }
 
   read() {
@@ -32,7 +42,6 @@ class FileManager {
   }
 
   write(snapshot) {
-    debugger;
     try {
       fs.writeFileSync(this.path, JSON.stringify(snapshot));
     } catch (e) {
@@ -53,4 +62,4 @@ class FileManager {
   }
 }
 
-module.exports = FileManager;
+export default FileManager;

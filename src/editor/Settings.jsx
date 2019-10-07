@@ -3,21 +3,31 @@ import { shape, string } from 'prop-types';
 import { Container } from '@bootstrap-styled/v4';
 import { clone, applySnapshot, getSnapshot } from 'mobx-state-tree';
 import SettingsForm from './SettingsForm';
+import { WorkspaceConsumer } from '../WorkspaceContext';
+import Layout from './Layout';
 
 function Settings(props) {
-  const { config } = props;
-
-  const clonedConfig = clone(config);
-
   return (
-    <Container>
-      <SettingsForm
-        config={clonedConfig}
-        onSave={() => {
-          applySnapshot(config, getSnapshot(clonedConfig));
-        }}
-      />
-    </Container>
+    <WorkspaceConsumer>
+      {({ settingsState }) => {
+        const clonedConfig = clone(settingsState);
+        return (
+          <Layout>
+            <Container>
+              <SettingsForm
+                config={clonedConfig}
+                onSave={() => {
+                  applySnapshot(
+                    settingsState,
+                    getSnapshot(clonedConfig),
+                  );
+                }}
+              />
+            </Container>
+          </Layout>
+        );
+      }}
+    </WorkspaceConsumer>
   );
 }
 

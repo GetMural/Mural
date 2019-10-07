@@ -21,7 +21,7 @@ const ThumborSettings = types
     host: '',
     key: '',
   })
-  .actions((self) => ({
+  .actions(self => ({
     changeHost(host) {
       self.host = host;
     },
@@ -30,10 +30,17 @@ const ThumborSettings = types
     },
   }));
 
-export const WorkspaceSettings = types.model({
-  thumbor: types.optional(ThumborSettings, {}),
-  editor: types.optional(EditorSettings, {}),
-});
+export const WorkspaceSettings = types
+  .model({
+    thumbor: types.optional(ThumborSettings, {}),
+    editor: types.optional(EditorSettings, {}),
+  })
+  .actions(self => ({
+    afterCreate() {
+      const { fileManager } = getEnv(self);
+      onSnapshot(self, fileManager.write.bind(fileManager));
+    },
+  }));
 
 const renditions = [
   { w: '320', h: '568', scale: 1 },
@@ -48,22 +55,18 @@ const renditions = [
   { w: '1920', h: '1080', scale: 2 },
 ];
 
-const NavItem = types.model({
-  title: types.string,
-});
-
 const Media = types
   .model({
     path: '',
   })
-  .actions((self) => ({
+  .actions(self => ({
     uploadFile(systemPath, name) {
       const { fileManager } = getEnv(self);
       const uploadPath = fileManager.importMedia(systemPath, name);
       self.path = uploadPath;
     },
   }))
-  .views((self) => {
+  .views(self => {
     const dataUrlPromise = promisedComputed('', async () => {
       const response = await convertMediaToDataurl(
         self.path,
@@ -82,12 +85,15 @@ const Media = types
     };
   });
 
-const ImageViews = types.model({}).views((self) => ({
+const ImageViews = types.model({}).views(self => ({
   get renditions() {
-    return renditions.map((rendition) => {
+    return renditions.map(rendition => {
       const thumborUrl = thumbor
         .setImagePath(self.path.substr(USER_DATA_PATH.length + 1))
-        .resize(rendition.w * rendition.scale, rendition.h * rendition.scale)
+        .resize(
+          rendition.w * rendition.scale,
+          rendition.h * rendition.scale,
+        )
         .smartCrop()
         .buildUrl();
 
@@ -110,7 +116,7 @@ export const StoryItem = types
     image: types.optional(Image, {}),
     audio: types.optional(Media, {}),
   })
-  .actions((self) => ({
+  .actions(self => ({
     changeTitle(title) {
       self.title = title;
     },
@@ -126,7 +132,7 @@ const StoryModel = types
   .model({
     items: types.array(StoryItem),
   })
-  .actions((self) => ({
+  .actions(self => ({
     afterCreate() {
       const { fileManager } = getEnv(self);
       onSnapshot(self, fileManager.write.bind(fileManager));
