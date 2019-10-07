@@ -5,6 +5,7 @@ import { WorkspaceConsumer } from '../WorkspaceContext';
 
 import ImageBackgroundForm from './ImageBackgroundForm';
 import ImageParallaxForm from './ImageParallaxForm';
+import Layout from './Layout';
 
 const StoryForms = {
   ImageBackground: ImageBackgroundForm,
@@ -22,21 +23,22 @@ const Editor = props => {
 
   return (
     <WorkspaceConsumer>
-      {({ storyState, currentStory }) => {
-        debugger;
+      {({ storyState }) => {
         const item = storyState.items[storyIndex];
         const clonedItem = clone(item);
         const Component = StoryForms[clonedItem.type];
         return (
-          <Component
-            draftItem={clonedItem}
-            onSave={() => {
-              applySnapshot(
-                storyState.items[storyIndex],
-                getSnapshot(clonedItem),
-              );
-            }}
-          />
+          <Layout>
+            <Component
+              draftItem={clonedItem}
+              onSave={() => {
+                applySnapshot(
+                  storyState.items[storyIndex],
+                  getSnapshot(clonedItem),
+                );
+              }}
+            />
+          </Layout>
         );
       }}
     </WorkspaceConsumer>

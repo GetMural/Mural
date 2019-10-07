@@ -1,17 +1,17 @@
 import React from 'react';
 
 import StoryModel, { WorkspaceSettings } from './models/StoryModel';
-import FileManager, {
-  parseDataFile,
-  SETTINGS_PATH,
-} from './FileManager';
+import FileManager from './FileManager';
 
 const { Provider, Consumer } = React.createContext();
 
-const config = parseDataFile(SETTINGS_PATH);
-const settingsState = WorkspaceSettings.create(config, {
-  fileManager: new FileManager({ storyName: 'settings' }),
-});
+const settingsManager = new FileManager({ storyName: 'settings' });
+const settingsState = WorkspaceSettings.create(
+  settingsManager.read(),
+  {
+    fileManager: settingsManager,
+  },
+);
 
 class WorkspaceProvider extends React.Component {
   state = {
