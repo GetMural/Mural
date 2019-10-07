@@ -28,7 +28,7 @@ const Preview = () => {
           {({ storyState }) =>
             storyState.items.map((storyItem, i) => {
               const Component = StoryItems[storyItem.type];
-              return <Component item={storyItem}></Component>;
+              return <Component key={i} item={storyItem}></Component>;
             })
           }
         </WorkspaceConsumer>
