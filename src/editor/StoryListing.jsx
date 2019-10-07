@@ -1,10 +1,9 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { H3 } from '@bootstrap-styled/v4';
 import { WorkspaceConsumer } from '../WorkspaceContext';
 import Layout from './Layout';
-import { observer } from 'mobx-react';
 import { StoryItem } from '../models/StoryModel';
+import ItemList from './ItemList';
 
 const StoryListing = props => {
   return (
@@ -23,13 +22,7 @@ const StoryListing = props => {
                 ImageBackground
               </button>
             </div>
-            <ul>
-              {storyState.items.map((storyItem, i) => (
-                <li key={i}>
-                  <Link to={`${i}`}>{storyItem.type}</Link>
-                </li>
-              ))}
-            </ul>
+            <ItemList items={storyState.items} />
           </Layout>
         );
       }}
@@ -37,4 +30,4 @@ const StoryListing = props => {
   );
 };
 
-export default observer(StoryListing);
+export default StoryListing;
