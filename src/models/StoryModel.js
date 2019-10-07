@@ -43,16 +43,16 @@ export const WorkspaceSettings = types
   }));
 
 const renditions = [
-  { w: '320', h: '568', scale: 1 },
-  { w: '320', h: '568', scale: 2 },
-  { w: '375', h: '667', scale: 1 },
-  { w: '375', h: '667', scale: 2 },
-  { w: '768', h: '1024', scale: 1 },
-  { w: '768', h: '1024', scale: 2 },
-  { w: '1280', h: '800', scale: 1 },
-  { w: '1280', h: '800', scale: 2 },
-  { w: '1920', h: '1080', scale: 1 },
-  { w: '1920', h: '1080', scale: 2 },
+  { w: 320, h: 568, scale: 1 },
+  { w: 320, h: 568, scale: 2 },
+  { w: 375, h: 667, scale: 1 },
+  { w: 375, h: 667, scale: 2 },
+  { w: 768, h: 1024, scale: 1 },
+  { w: 768, h: 1024, scale: 2 },
+  { w: 1280, h: 800, scale: 1 },
+  { w: 1280, h: 800, scale: 2 },
+  { w: 1920, h: 1080, scale: 1 },
+  { w: 1920, h: 1080, scale: 2 },
 ];
 
 const Media = types

@@ -1,6 +1,6 @@
-import React from "react";
-import { shape, string } from "prop-types";
-import { observer } from "mobx-react";
+import React from 'react';
+import { shape, string } from 'prop-types';
+import { observer } from 'mobx-react';
 import {
   Form,
   Input,
@@ -8,8 +8,8 @@ import {
   Legend,
   Label,
   Button,
-  ButtonGroup
-} from "@bootstrap-styled/v4";
+  ButtonGroup,
+} from '@bootstrap-styled/v4';
 
 function Settings(props) {
   const { config, onSave } = props;
@@ -52,18 +52,18 @@ Settings.propTypes = {
   config: shape({
     thumbor: shape({
       host: string,
-      key: string
-    })
-  })
+      key: string,
+    }),
+  }),
 };
 
 Settings.defaultProps = {
   config: {
     thumbor: {
-      host: "",
-      key: ""
-    }
-  }
+      host: '',
+      key: '',
+    },
+  },
 };
 
 export default observer(Settings);
