@@ -71,14 +71,16 @@ const Media = types
     const dataUrlPromise = promisedComputed('', async () => {
       const response = await convertMediaToDataurl(
         self.path,
-        mime.lookup(self.path),
+        self.mimeType,
       );
       return response;
     });
     return {
+      get mimeType() {
+        return mime.lookup(self.path);
+      },
       get preview() {
-        const mimeType = mime.lookup(self.path);
-        if (mimeType) {
+        if (self.mimeType) {
           return dataUrlPromise.get();
         }
         return '';
