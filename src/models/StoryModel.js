@@ -3,9 +3,6 @@ import { promisedComputed } from 'computed-async-mobx';
 
 const electron = require('electron');
 const mime = require('mime-types');
-const Thumbor = require('thumbor');
-
-const thumbor = new Thumbor('', 'http://localhost:8888');
 const { convertMediaToDataurl } = require('../utils/dataurl');
 // Renderer process has to get `app` module via `remote`.
 const USER_DATA_PATH = (electron.app || electron.remote.app).getPath(
@@ -94,6 +91,7 @@ const ImageViews = types.model({}).views(self => ({
     if (self.path === '') {
       return [];
     }
+    const thumbor = getEnv(self).thumbor;
     return renditions.map(rendition => {
       const thumborUrl = thumbor
         .setImagePath(self.path.substr(USER_DATA_PATH.length + 1))

@@ -2,7 +2,7 @@ import React from 'react';
 
 import StoryModel, { WorkspaceSettings } from './models/StoryModel';
 import FileManager from './FileManager';
-
+const Thumbor = require('thumbor');
 const { Provider, Consumer } = React.createContext();
 
 const settingsManager = new FileManager({ storyName: 'settings' });
@@ -18,6 +18,10 @@ const getStoryState = storyName => {
   const storyJson = fileManager.read();
   return StoryModel.create(storyJson, {
     fileManager,
+    thumbor: new Thumbor(
+      settingsState.thumbor.key,
+      settingsState.thumbor.host,
+    ),
   });
 };
 
