@@ -7,17 +7,23 @@ const USER_DATA_PATH = (electron.app || electron.remote.app).getPath(
   'userData',
 );
 
+const STORIES_PATH = path.join(USER_DATA_PATH, 'stories');
+
 export function loadStories() {
   try {
-    const files = fs.readdirSync(
-      path.join(USER_DATA_PATH, 'stories'),
-    );
-
-    return files.filter(name => {
-      return /\.json$/.test(name) && name !== 'settings.json';
-    });
+    try {
+      fs.statSync(STORIES_PATH);
+      const files = fs.readdirSync(STORIES_PATH);
+      return files.filter(name => {
+        return /\.json$/.test(name) && name !== 'settings.json';
+      });
+    } catch (e) {
+      fs.mkdirSync(STORIES_PATH, { recursive: true });
+      return [];
+    }
   } catch (e) {
     console.log(e);
+    return [];
   }
 }
 
