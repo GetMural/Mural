@@ -13,7 +13,7 @@
     "bootstrap": "^4.3.1",
     "bootstrap-styled": "^2.5.3",
     "computed-async-mobx": "^4.2.1",
-    "dataurl": "^0.1.0",
+    "datauri": "^2.0.0",
     "electron": "^6.0.10",
     "electron-is-dev": "^1.1.0",
     "hls.js": "^0.12.4",

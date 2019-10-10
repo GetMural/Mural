@@ -69,10 +69,7 @@ const Media = types
   }))
   .views(self => {
     const dataUrlPromise = promisedComputed('', async () => {
-      const response = await convertMediaToDataurl(
-        self.path,
-        self.mimeType,
-      );
+      const response = await convertMediaToDataurl(self.path);
       return response;
     });
     return {
