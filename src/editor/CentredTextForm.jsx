@@ -13,6 +13,7 @@ import {
 
 import { Title, Subtitle, Body, NavEntry } from './bites';
 import FormLayout from './FormLayout';
+import TextImageItemForm from './TextImageItemForm';
 
 function CentredTextForm(props) {
   const { draftItem, onSave } = props;
@@ -44,6 +45,18 @@ function CentredTextForm(props) {
           changeBody={draftItem.changeBody}
         />
       </Fieldset>
+      {draftItem.snippets.map((snippet, id) => (
+        <TextImageItemForm item={snippet} key={id} />
+      ))}
+      <div>
+        <Button
+          type="button"
+          color="success"
+          onClick={draftItem.addSnippet}
+        >
+          Add Image
+        </Button>
+      </div>
       <ButtonGroup>
         <Button color="secondary">Cancel</Button>
         <Button color="secondary">Reset</Button>

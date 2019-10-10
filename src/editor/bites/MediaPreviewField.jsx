@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import {
- string, func, shape, arrayOf 
-} from 'prop-types';
+import { string, func, shape, arrayOf } from 'prop-types';
 import { Input } from '@bootstrap-styled/v4';
 import { observer } from 'mobx-react';
 

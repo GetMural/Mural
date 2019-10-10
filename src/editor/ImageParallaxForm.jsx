@@ -1,25 +1,17 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import styled from 'styled-components';
 import {
   FormGroup,
   Fieldset,
   Legend,
   Label,
-  FormText,
   Button,
   ButtonGroup,
 } from '@bootstrap-styled/v4';
 
-import MediaPreviewField from './bites/MediaPreviewField';
-import Renditions from './Renditions';
+import ImagePreviewField from './bites/ImagePreviewField';
 import { Title, Subtitle, NavEntry } from './bites';
 import FormLayout from './FormLayout';
-
-const Img = styled.img`
-  max-width: 200px;
-  max-height: 200px;
-`;
 
 function ImageParallaxForm(props) {
   const { draftItem, onSave } = props;
@@ -40,25 +32,7 @@ function ImageParallaxForm(props) {
       <Fieldset>
         <FormGroup>
           <Label>Background Image</Label>
-          <MediaPreviewField
-            media={draftItem.image}
-            onUpdate={(path, name) => {
-              draftItem.image.uploadFile(path, name);
-            }}
-            acceptedMimeTypes={[
-              'image/jpeg',
-              'image/png',
-              'image/webp',
-            ]}
-          >
-            {({ preview }) => (
-              <>
-                <Img src={preview} alt="Feature image preview" />
-                <FormText color="muted">Feature Image</FormText>
-              </>
-            )}
-          </MediaPreviewField>
-          <Renditions image={draftItem.image}></Renditions>
+          <ImagePreviewField image={draftItem.image} />
         </FormGroup>
       </Fieldset>
       <ButtonGroup>

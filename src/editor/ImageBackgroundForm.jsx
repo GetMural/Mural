@@ -1,26 +1,19 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import styled from 'styled-components';
 import {
   FormGroup,
   Fieldset,
   Legend,
   Label,
-  FormText,
   Button,
   ButtonGroup,
 } from '@bootstrap-styled/v4';
 
-import MediaPreviewField from './bites/MediaPreviewField';
-import Renditions from './Renditions';
+import ImagePreviewField from './bites/ImagePreviewField';
+import AudioPreviewField from './bites/AudioPreviewField';
 
 import { Title, Subtitle, Body, NavEntry } from './bites';
 import FormLayout from './FormLayout';
-
-const Img = styled.img`
-  max-width: 200px;
-  max-height: 200px;
-`;
 
 function ImageBackgroundForm(props) {
   const { draftItem, onSave } = props;
@@ -45,49 +38,12 @@ function ImageBackgroundForm(props) {
       <Fieldset>
         <FormGroup>
           <Label>Background Image</Label>
-          <MediaPreviewField
-            media={draftItem.image}
-            onUpdate={(path, name) => {
-              draftItem.image.uploadFile(path, name);
-            }}
-            acceptedMimeTypes={[
-              'image/jpeg',
-              'image/png',
-              'image/webp',
-            ]}
-          >
-            {({ preview }) => (
-              <>
-                <Img src={preview} alt="Feature image preview" />
-                <FormText color="muted">Feature Image</FormText>
-              </>
-            )}
-          </MediaPreviewField>
-          <Renditions image={draftItem.image}></Renditions>
+          <ImagePreviewField image={draftItem.image} />
         </FormGroup>
       </Fieldset>
       <Fieldset>
         <Label>Audio</Label>
-        <MediaPreviewField
-          media={draftItem.audio}
-          onUpdate={(path, name) => {
-            draftItem.audio.uploadFile(path, name);
-          }}
-          acceptedMimeTypes={[
-            'audio/mpeg',
-            'audio/ogg',
-            'audio/vorbis',
-            'audio/opus',
-          ]}
-        >
-          {({ preview }) => (
-            <>
-              {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
-              <audio src={preview} alt="Audio" controls />
-              <FormText color="muted">Background Audio</FormText>
-            </>
-          )}
-        </MediaPreviewField>
+        <AudioPreviewField audio={draftItem.audio} />
       </Fieldset>
       <ButtonGroup>
         <Button color="secondary">Cancel</Button>

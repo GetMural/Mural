@@ -128,12 +128,27 @@ const FeatureImage = types.compose(
   FeatureImageViews,
 );
 
-export const TextImageItem = types.model({
-  title: '',
-  text: '',
-  image: ContentImage,
-  align: types.enumeration(['left', 'center', 'right']),
-});
+export const TextImageItem = types
+  .model({
+    title: '',
+    body: '',
+    image: types.optional(ContentImage, {}),
+    align: types.optional(
+      types.enumeration(['left', 'center', 'right']),
+      'left',
+    ),
+  })
+  .actions(self => ({
+    changeAlignment(align) {
+      self.align = align;
+    },
+    changeTitle(title) {
+      self.title = title;
+    },
+    changeBody(body) {
+      self.body = body;
+    },
+  }));
 
 const HeaderItem = types
   .model({
@@ -172,6 +187,9 @@ export const CentredText = types.compose(
     .actions(self => ({
       toggleLight() {
         self.light = !self.light;
+      },
+      addSnippet() {
+        self.snippets.push(TextImageItem.create());
       },
     })),
   GeneralWrittenItem,

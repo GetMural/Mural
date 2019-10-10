@@ -16,16 +16,16 @@ function CentredTextDraft(props) {
     { reverse_colors: light },
   );
   return (
-    <section class={sectionClasses}>
-      <div class="content container-fluid">
-        <div class="row">
-          <div class="col-sm-12 header">
+    <section className={sectionClasses}>
+      <div className="content container-fluid">
+        <div className="row">
+          <div className="col-sm-12 header">
             <h1 dangerouslySetInnerHTML={{ __html: title }} />
             <h2 dangerouslySetInnerHTML={{ __html: subtitle }} />
           </div>
         </div>
-        <div class="row">
-          <div class="col-xs-12 col-sm-10 col-md-8 col-lg-6 text">
+        <div className="row">
+          <div className="col-xs-12 col-sm-10 col-md-8 col-lg-6 text">
             {body}
 
             {/* <figure class="cms-image {{align}}">
