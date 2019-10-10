@@ -1,14 +1,15 @@
 import React from 'react';
-import { WorkspaceConsumer } from '../WorkspaceContext';
-
-import ImageBackgroundDraft from './preview/ImageBackgroundDraft';
-import ImageParallaxDraft from './preview/ImageParallaxDraft';
-
 import styled from 'styled-components';
 import Frame from 'react-styled-frame';
 
+import { WorkspaceConsumer } from '../WorkspaceContext';
 // eslint-disable-next-line import/no-webpack-loader-syntax
 import draftCSS from '!!raw-loader!../client/styles.scss';
+import {
+  CentredTextDraft,
+  ImageBackgroundDraft,
+  ImageParallaxDraft,
+} from './preview/';
 
 const StoryPreview = styled(Frame)`
   width: 100%;
@@ -16,8 +17,9 @@ const StoryPreview = styled(Frame)`
 `;
 
 const StoryItems = {
-  ImageBackground: ImageBackgroundDraft,
-  ImageParallax: ImageParallaxDraft,
+  ImageBackgroundDraft,
+  ImageParallaxDraft,
+  CentredTextDraft,
 };
 
 const Preview = () => {
@@ -27,7 +29,7 @@ const Preview = () => {
         <WorkspaceConsumer>
           {({ storyState }) =>
             storyState.items.map((storyItem, i) => {
-              const Component = StoryItems[storyItem.type];
+              const Component = StoryItems[`${storyItem.type}Draft`];
               return <Component key={i} item={storyItem}></Component>;
             })
           }
