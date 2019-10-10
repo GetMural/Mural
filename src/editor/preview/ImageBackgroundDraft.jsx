@@ -32,7 +32,7 @@ function ImageBackgroundDraft(props) {
       <div className="content container-fluid">
         <div className="row">
           <div className="col-sm-12 header-fullpage">
-            <div className="middle">
+            <div className="middle text-shadow">
               <h1 dangerouslySetInnerHTML={{ __html: title }} />
               <h2 dangerouslySetInnerHTML={{ __html: subtitle }} />
             </div>
@@ -40,7 +40,7 @@ function ImageBackgroundDraft(props) {
         </div>
         <div className="row">
           <div
-            className="col-xs-12 col-sm-10 col-md-8 col-lg-6 text"
+            className="col-xs-12 col-sm-10 col-md-8 col-lg-6 text text-shadow"
             dangerouslySetInnerHTML={{ __html: body }}
           />
         </div>

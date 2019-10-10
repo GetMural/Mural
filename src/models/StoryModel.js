@@ -163,10 +163,17 @@ const GeneralWrittenItem = types.compose(
 );
 
 export const CentredText = types.compose(
-  types.model({
-    type: types.literal('CentredText'),
-    snippets: types.array(TextImageItem),
-  }),
+  types
+    .model({
+      type: types.literal('CentredText'),
+      light: true,
+      snippets: types.array(TextImageItem),
+    })
+    .actions(self => ({
+      toggleLight() {
+        self.light = !self.light;
+      },
+    })),
   GeneralWrittenItem,
 );
 

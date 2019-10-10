@@ -5,7 +5,7 @@ import { Form, Container, Col, Row } from '@bootstrap-styled/v4';
 import Frame from 'react-styled-frame';
 
 // eslint-disable-next-line import/no-webpack-loader-syntax
-import draftCSS from '!!raw-loader!../client/styles.scss';
+import draftCSS from '!!raw-loader!../client/styles.css';
 import {
   CentredTextDraft,
   ImageBackgroundDraft,

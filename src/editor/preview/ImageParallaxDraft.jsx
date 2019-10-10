@@ -30,7 +30,7 @@ function ImageParallaxDraft(props) {
       <BackgroundImage className="bg-image" srcImages={renditions} />
       <div className="content container-fluid">
         <div className="row">
-          <div className="col-sm-12 header-fullpage">
+          <div className="col-sm-12 header-fullpage text-shadow">
             <h1 dangerouslySetInnerHTML={{ __html: title }} />
             <h2 dangerouslySetInnerHTML={{ __html: subtitle }} />
           </div>

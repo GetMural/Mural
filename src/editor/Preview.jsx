@@ -4,7 +4,7 @@ import Frame from 'react-styled-frame';
 
 import { WorkspaceConsumer } from '../WorkspaceContext';
 // eslint-disable-next-line import/no-webpack-loader-syntax
-import draftCSS from '!!raw-loader!../client/styles.scss';
+import draftCSS from '!!raw-loader!../client/styles.css';
 import {
   CentredTextDraft,
   ImageBackgroundDraft,

@@ -6,6 +6,9 @@ import {
   Legend,
   Button,
   ButtonGroup,
+  Input,
+  Label,
+  FormGroup,
 } from '@bootstrap-styled/v4';
 
 import { Title, Subtitle, Body, NavEntry } from './bites';
@@ -18,6 +21,16 @@ function CentredTextForm(props) {
       <NavEntry />
       <Fieldset>
         <Legend>Item Content</Legend>
+        <FormGroup check>
+          <Label check>
+            <Input
+              type="checkbox"
+              checked={draftItem.light}
+              onChange={draftItem.toggleLight}
+            />{' '}
+            Light
+          </Label>
+        </FormGroup>
         <Title
           title={draftItem.title}
           changeTitle={draftItem.changeTitle}
