@@ -150,7 +150,6 @@ const HeaderItem = types
   }));
 
 const GeneralWrittenItem = types.compose(
-  HeaderItem,
   types
     .model({
       body: '',
@@ -160,6 +159,15 @@ const GeneralWrittenItem = types.compose(
         self.body = body;
       },
     })),
+  HeaderItem,
+);
+
+export const CentredText = types.compose(
+  types.model({
+    type: types.literal('CentredText'),
+    snippets: types.array(TextImageItem),
+  }),
+  GeneralWrittenItem,
 );
 
 export const ImageBackground = types.compose(
@@ -181,7 +189,9 @@ export const ImageParallax = types.compose(
 
 const StoryModel = types
   .model({
-    items: types.array(types.union(ImageBackground, ImageParallax)),
+    items: types.array(
+      types.union(ImageBackground, ImageParallax, CentredText),
+    ),
   })
   .actions(self => ({
     afterCreate() {

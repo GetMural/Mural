@@ -5,11 +5,13 @@ import { WorkspaceConsumer } from '../WorkspaceContext';
 
 import ImageBackgroundForm from './ImageBackgroundForm';
 import ImageParallaxForm from './ImageParallaxForm';
+import CentredTextForm from './CentredTextForm';
 import Layout from './Layout';
 
 const StoryForms = {
   ImageBackground: ImageBackgroundForm,
   ImageParallax: ImageParallaxForm,
+  CentredText: CentredTextForm,
 };
 
 const Editor = props => {

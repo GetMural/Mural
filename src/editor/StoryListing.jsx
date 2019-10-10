@@ -11,12 +11,17 @@ import {
 } from '@bootstrap-styled/v4';
 import { WorkspaceConsumer } from '../WorkspaceContext';
 import Layout from './Layout';
-import { ImageBackground, ImageParallax } from '../models/StoryModel';
+import {
+  ImageBackground,
+  ImageParallax,
+  CentredText,
+} from '../models/StoryModel';
 import ItemList from './ItemList';
 
 const ITEMS = {
   ImageBackground,
   ImageParallax,
+  CentredText,
 };
 
 class StoryListing extends Component {
@@ -42,12 +47,9 @@ class StoryListing extends Component {
                         this.setState({ itemType: e.target.value });
                       }}
                     >
-                      <Option value="ImageBackground">
-                        ImageBackground
-                      </Option>
-                      <Option value="ImageParallax">
-                        ImageParallax
-                      </Option>
+                      {Object.keys(ITEMS).map(storyItem => (
+                        <Option value={storyItem}>{storyItem}</Option>
+                      ))}
                     </Select>
                   </FormGroup>
                   <Button
