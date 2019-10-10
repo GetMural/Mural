@@ -11,8 +11,13 @@ import {
 } from '@bootstrap-styled/v4';
 import { WorkspaceConsumer } from '../WorkspaceContext';
 import Layout from './Layout';
-import { StoryItem } from '../models/StoryModel';
+import { ImageBackground, ImageParallax } from '../models/StoryModel';
 import ItemList from './ItemList';
+
+const ITEMS = {
+  ImageBackground,
+  ImageParallax,
+};
 
 class StoryListing extends Component {
   state = {
@@ -48,7 +53,7 @@ class StoryListing extends Component {
                   <Button
                     onClick={() => {
                       storyState.addItem(
-                        StoryItem.create({
+                        ITEMS[this.state.itemType].create({
                           type: this.state.itemType,
                         }),
                       );

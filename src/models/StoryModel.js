@@ -43,7 +43,8 @@ export const WorkspaceSettings = types
     },
   }));
 
-const renditions = [
+// For responsive feature images.
+const featureRenditions = [
   { w: 320, h: 568, scale: 1 },
   { w: 320, h: 568, scale: 2 },
   { w: 375, h: 667, scale: 1 },
@@ -56,9 +57,16 @@ const renditions = [
   { w: 1920, h: 1080, scale: 2 },
 ];
 
+// For images within text
+const contentRenditions = [
+  { w: 360, h: 0, scale: 1 },
+  { w: 360, h: 0, scale: 2 },
+];
+
 const Media = types
   .model({
     path: '',
+    credits: '',
   })
   .actions(self => ({
     uploadFile(systemPath, name) {
@@ -85,40 +93,52 @@ const Media = types
     };
   });
 
-const ImageViews = types.model({}).views(self => ({
-  get renditions() {
-    if (self.path === '') {
-      return [];
-    }
-    const thumbor = getEnv(self).thumbor;
-    return renditions.map(rendition => {
-      const thumborUrl = thumbor
-        .setImagePath(self.path.substr(USER_DATA_PATH.length + 1))
-        .resize(
-          rendition.w * rendition.scale,
-          rendition.h * rendition.scale,
-        )
-        .smartCrop()
-        .buildUrl();
+function generateImageViews(imageRenditions) {
+  return types.model({}).views(self => ({
+    get renditions() {
+      if (self.path === '') {
+        return [];
+      }
+      const thumbor = getEnv(self).thumbor;
+      return imageRenditions.map(rendition => {
+        const thumborUrl = thumbor
+          .setImagePath(self.path.substr(USER_DATA_PATH.length + 1))
+          .resize(
+            rendition.w * rendition.scale,
+            rendition.h * rendition.scale,
+          )
+          .smartCrop()
+          .buildUrl();
 
-      return { ...rendition, thumborUrl };
-    });
-  },
-}));
+        return { ...rendition, thumborUrl };
+      });
+    },
+  }));
+}
+const ContentImageViews = generateImageViews(contentRenditions);
+const FeatureImageViews = generateImageViews(featureRenditions);
 
-const Image = types.compose(
+const ContentImage = types.compose(
   Media,
-  ImageViews,
+  ContentImageViews,
 );
 
-export const StoryItem = types
+const FeatureImage = types.compose(
+  Media,
+  FeatureImageViews,
+);
+
+export const TextImageItem = types.model({
+  title: '',
+  text: '',
+  image: ContentImage,
+  align: types.enumeration(['left', 'center', 'right']),
+});
+
+const HeaderItem = types
   .model({
-    type: 'ImageBackground',
     title: '',
     subtitle: '',
-    body: '',
-    image: types.optional(Image, {}),
-    audio: types.optional(Media, {}),
   })
   .actions(self => ({
     changeTitle(title) {
@@ -127,14 +147,41 @@ export const StoryItem = types
     changeSubtitle(subtitle) {
       self.subtitle = subtitle;
     },
-    changeBody(body) {
-      self.body = body;
-    },
   }));
+
+const GeneralWrittenItem = types.compose(
+  HeaderItem,
+  types
+    .model({
+      body: '',
+    })
+    .actions(self => ({
+      changeBody(body) {
+        self.body = body;
+      },
+    })),
+);
+
+export const ImageBackground = types.compose(
+  types.model({
+    type: types.literal('ImageBackground'),
+    image: types.optional(FeatureImage, {}),
+    audio: types.optional(Media, {}),
+  }),
+  GeneralWrittenItem,
+);
+
+export const ImageParallax = types.compose(
+  types.model({
+    type: types.literal('ImageParallax'),
+    image: types.optional(FeatureImage, {}),
+  }),
+  HeaderItem,
+);
 
 const StoryModel = types
   .model({
-    items: types.array(StoryItem),
+    items: types.array(types.union(ImageBackground, ImageParallax)),
   })
   .actions(self => ({
     afterCreate() {
