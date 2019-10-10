@@ -7,7 +7,7 @@ import { observer } from 'mobx-react';
 function Body({ changeBody, body }) {
   return (
     <FormGroup>
-      <Label>Subtitle</Label>
+      <Label>Body</Label>
       <RichTextField
         onChange={content => {
           changeBody(content);
