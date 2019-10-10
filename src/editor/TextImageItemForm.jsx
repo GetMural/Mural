@@ -6,34 +6,40 @@ import {
   Label,
   FormGroup,
 } from '@bootstrap-styled/v4';
+import { observer } from 'mobx-react';
 import { Title, Body } from './bites';
 import ImagePreviewField from './bites/ImagePreviewField';
+import Alignment from './bites/Alignment';
 
 const TextImageItemForm = ({ item }) => {
   return (
     <Fieldset>
       <Legend>Image Item</Legend>
-      <FormGroup check>
-        <Label check>
-          <Input type="radio" name="align" value="left" />
-          Left
-        </Label>
-      </FormGroup>
-      <FormGroup check>
-        <Label check>
-          <Input type="radio" name="align" value="center" />
-          Centre
-        </Label>
-      </FormGroup>
-      <FormGroup check>
-        <Label check>
-          <Input type="radio" name="align" value="right" />
-          Right
-        </Label>
-      </FormGroup>
+      <Alignment
+        value={item.align}
+        changeAlignment={item.changeAlignment}
+      />
       <Title title={item.title} changeTitle={item.changeTitle} />
       <Body body={item.body} changeBody={item.changeBody} />
       <ImagePreviewField image={item.image} />
+      <FormGroup>
+        <Label>Image alt</Label>
+        <Input
+          value={item.image.alt}
+          onChange={e => {
+            item.image.changeAlt(e.target.value);
+          }}
+        />
+      </FormGroup>
+      <FormGroup>
+        <Label>Image Credits</Label>
+        <Input
+          value={item.image.credits}
+          onChange={e => {
+            item.image.changeCredits(e.target.value);
+          }}
+        />
+      </FormGroup>
     </Fieldset>
   );
 };

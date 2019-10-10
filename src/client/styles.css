@@ -1119,7 +1119,7 @@ article .header h1 {
   line-height: 1.4em;
 }
 article .header h2 {
-  margin: 0;
+  margin: 0.5em 0 1.5em 0;
   font-size: 1.6em;
   line-height: 1.2em;
   font-style: italic;
@@ -1207,12 +1207,24 @@ s {
 }
 
 .cms-image {
-  margin: 1em 0;
-  max-width: 66%;
+  width: 282px;
+}
+@media (min-width: 321px) {
+  .cms-image {
+    margin: 1em auto;
+  }
 }
 
-.cms-image img {
-  max-width: 100%;
+@media (min-width: 768px) {
+  .cms-image.left {
+    float: left;
+    margin: 1em 1.5em 1em 0;
+  }
+
+  .cms-image.right {
+    float: right;
+    margin: 1em 0 1em 1.5em;
+  }
 }
 
 .cms-image figcaption {
@@ -1231,20 +1243,6 @@ s {
   font-family: arial, sans-serif;
   font-size: 12px;
   margin-top: 3px;
-}
-
-.cms-image.center {
-  margin: 1em auto;
-  max-width: 80%;
-}
-.cms-image.left {
-  float: left;
-  margin: 1em 1.5em 1em 0;
-}
-
-.cms-image.right {
-  float: right;
-  margin: 1em 0 1em 1.5em;
 }
 
 .no_credits .credits {
@@ -1658,24 +1656,18 @@ article .part.box_text p {
 }
 
 .no-effects {
-  min-height: 0px;
-  background: #222;
-  position: relative;
-  z-index: 10;
+  overflow: auto;
 }
 
 .no-effects .content {
   padding-top: 10vh;
   padding-bottom: 10vh;
-  z-index: 2;
-  position: relative;
 }
 
 .no-effects .content .text {
   background: none;
   font-size: 1.4em;
   line-height: 1.8em;
-  z-index: 2;
 }
 
 .slideshow {

@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { observer } from 'mobx-react';
 
 const Img = styled.img`
   max-width: 200px;
@@ -17,4 +18,4 @@ const Renditions = ({ image }) =>
     </div>
   ));
 
-export default Renditions;
+export default observer(Renditions);

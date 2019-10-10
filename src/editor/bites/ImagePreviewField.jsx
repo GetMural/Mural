@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { FormText } from '@bootstrap-styled/v4';
-
+import { observer } from 'mobx-react';
 import MediaPreviewField from './MediaPreviewField';
 import Renditions from './Renditions';
 
@@ -31,4 +31,4 @@ const ImagePreviewField = ({ image }) => {
   );
 };
 
-export default ImagePreviewField;
+export default observer(ImagePreviewField);

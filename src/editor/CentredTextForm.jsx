@@ -1,6 +1,4 @@
 import React from 'react';
-import { observer } from 'mobx-react';
-
 import {
   Fieldset,
   Legend,
@@ -10,6 +8,7 @@ import {
   Label,
   FormGroup,
 } from '@bootstrap-styled/v4';
+import { observer } from 'mobx-react';
 
 import { Title, Subtitle, Body, NavEntry } from './bites';
 import FormLayout from './FormLayout';
@@ -68,4 +67,4 @@ function CentredTextForm(props) {
   );
 }
 
-export default observer(CentredTextForm);
+export default CentredTextForm;

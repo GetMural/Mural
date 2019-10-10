@@ -23,10 +23,10 @@ function createWindow() {
   );
   if (isDev) {
     // Open the DevTools.
-    // BrowserWindow.addDevToolsExtension(
-    //   '/Users/naaro/Library/Application Support/Google/Chrome/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/4.2.0_0',
-    //   '/Users/naaro/Library/Application Support/Google/Chrome/Default/Extensions/pfgnfdagidkfgccljigdamigbcnndkod/0.9.21_0',
-    // );
+    BrowserWindow.addDevToolsExtension(
+      '/Users/naaro/Library/Application Support/Google/Chrome/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/4.2.0_0',
+      '/Users/naaro/Library/Application Support/Google/Chrome/Default/Extensions/pfgnfdagidkfgccljigdamigbcnndkod/0.9.21_0',
+    );
     mainWindow.webContents.openDevTools();
   }
   mainWindow.on('closed', () => (mainWindow = null));

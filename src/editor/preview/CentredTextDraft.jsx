@@ -4,9 +4,11 @@ import { string, shape } from 'prop-types';
 import { observer } from 'mobx-react';
 import classnames from 'classnames';
 
+import SnippetDraft from './SnippetDraft';
+
 function CentredTextDraft(props) {
   const {
-    item: { title, subtitle, body, light },
+    item: { title, subtitle, body, light, snippets },
   } = props;
 
   const sectionClasses = classnames(
@@ -26,16 +28,10 @@ function CentredTextDraft(props) {
         </div>
         <div className="row">
           <div className="col-xs-12 col-sm-10 col-md-8 col-lg-6 text">
-            {body}
-
-            {/* <figure class="cms-image {{align}}">
-             <img data-src="{{src}}" rel="resizable" alt="{{alt}}" />
-             <figcaption>{{title}}
-                <span class="photographer">
-                  {{{credits}}}
-                </span>
-             </figcaption>
-           </figure> */}
+            <div dangerouslySetInnerHTML={{ __html: body }} />
+            {snippets.map((snippet, i) => (
+              <SnippetDraft key={i} snippet={snippet} />
+            ))}
           </div>
         </div>
       </div>

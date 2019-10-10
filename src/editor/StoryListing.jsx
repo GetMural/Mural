@@ -48,7 +48,9 @@ class StoryListing extends Component {
                       }}
                     >
                       {Object.keys(ITEMS).map(storyItem => (
-                        <Option value={storyItem}>{storyItem}</Option>
+                        <Option key={storyItem} value={storyItem}>
+                          {storyItem}
+                        </Option>
                       ))}
                     </Select>
                   </FormGroup>

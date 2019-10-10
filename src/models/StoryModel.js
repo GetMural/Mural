@@ -59,14 +59,13 @@ const featureRenditions = [
 
 // For images within text
 const contentRenditions = [
-  { w: 360, h: 0, scale: 1 },
-  { w: 360, h: 0, scale: 2 },
+  { w: 282, h: 0, scale: 1 },
+  { w: 282, h: 0, scale: 2 },
 ];
 
 const Media = types
   .model({
     path: '',
-    credits: '',
   })
   .actions(self => ({
     uploadFile(systemPath, name) {
@@ -119,6 +118,19 @@ const ContentImageViews = generateImageViews(contentRenditions);
 const FeatureImageViews = generateImageViews(featureRenditions);
 
 const ContentImage = types.compose(
+  types
+    .model({
+      alt: '',
+      credits: '',
+    })
+    .actions(self => ({
+      changeAlt(alt) {
+        self.alt = alt;
+      },
+      changeCredits(credits) {
+        self.credits = credits;
+      },
+    })),
   Media,
   ContentImageViews,
 );
