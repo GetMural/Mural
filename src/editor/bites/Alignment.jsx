@@ -2,15 +2,14 @@ import React from 'react';
 import { Input, Label, FormGroup } from '@bootstrap-styled/v4';
 import { observer } from 'mobx-react';
 
-const Alignment = ({ value, changeAlignment }) => {
+const Alignment = ({ value, changeAlignment, uuid }) => {
   return (
     <>
-      {console.log(value)}
       <FormGroup check>
         <Label check>
           <Input
             type="radio"
-            name="align"
+            name={`align-${uuid}`}
             value="left"
             checked={value === 'left'}
             onChange={e => {
@@ -25,7 +24,7 @@ const Alignment = ({ value, changeAlignment }) => {
         <Label check>
           <Input
             type="radio"
-            name="align"
+            name={`align-${uuid}`}
             value="center"
             checked={value === 'center'}
             onChange={e => {
@@ -40,7 +39,7 @@ const Alignment = ({ value, changeAlignment }) => {
         <Label check>
           <Input
             type="radio"
-            name="align"
+            name={`align-${uuid}`}
             value="right"
             checked={value === 'right'}
             onChange={e => {

@@ -44,8 +44,8 @@ function CentredTextForm(props) {
           changeBody={draftItem.changeBody}
         />
       </Fieldset>
-      {draftItem.snippets.map((snippet, id) => (
-        <TextImageItemForm item={snippet} key={id} />
+      {draftItem.snippets.map(snippet => (
+        <TextImageItemForm item={snippet} key={snippet.id} />
       ))}
       <div>
         <Button
@@ -67,4 +67,4 @@ function CentredTextForm(props) {
   );
 }
 
-export default CentredTextForm;
+export default observer(CentredTextForm);

@@ -13,7 +13,7 @@ const Renditions = ({ image }) =>
       <div>{`${rendition.w}x${rendition.h} scale ${rendition.scale}`}</div>
       <Img
         src={rendition.thumborUrl}
-        alt={`${rendition.w}x${rendition.h}`}
+        alt={`${rendition.w}x${rendition.h} scale ${rendition.scale}`}
       />
     </div>
   ));

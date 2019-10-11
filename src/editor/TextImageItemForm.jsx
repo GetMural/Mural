@@ -18,12 +18,11 @@ const TextImageItemForm = ({ item }) => {
       <Alignment
         value={item.align}
         changeAlignment={item.changeAlignment}
+        uuid={item.id}
       />
-      <Title title={item.title} changeTitle={item.changeTitle} />
-      <Body body={item.body} changeBody={item.changeBody} />
       <ImagePreviewField image={item.image} />
       <FormGroup>
-        <Label>Image alt</Label>
+        <Label>Alternative text</Label>
         <Input
           value={item.image.alt}
           onChange={e => {
@@ -31,8 +30,9 @@ const TextImageItemForm = ({ item }) => {
           }}
         />
       </FormGroup>
+      <Title title={item.title} changeTitle={item.changeTitle} />
       <FormGroup>
-        <Label>Image Credits</Label>
+        <Label>Credits</Label>
         <Input
           value={item.image.credits}
           onChange={e => {
@@ -40,8 +40,9 @@ const TextImageItemForm = ({ item }) => {
           }}
         />
       </FormGroup>
+      <Body body={item.body} changeBody={item.changeBody} />
     </Fieldset>
   );
 };
 
-export default TextImageItemForm;
+export default observer(TextImageItemForm);

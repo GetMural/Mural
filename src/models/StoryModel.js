@@ -3,11 +3,22 @@ import { promisedComputed } from 'computed-async-mobx';
 
 const electron = require('electron');
 const mime = require('mime-types');
+const uuidv4 = require('uuid/v4');
 const { convertMediaToDataurl } = require('../utils/dataurl');
 // Renderer process has to get `app` module via `remote`.
 const USER_DATA_PATH = (electron.app || electron.remote.app).getPath(
   'userData',
 );
+
+const UuidItem = types
+  .model({
+    id: '',
+  })
+  .actions(self => ({
+    afterCreate() {
+      self.id = uuidv4();
+    },
+  }));
 
 const EditorSettings = types.model({
   previewWidth: 4,
@@ -133,34 +144,39 @@ const ContentImage = types.compose(
     })),
   Media,
   ContentImageViews,
+  UuidItem,
 );
 
 const FeatureImage = types.compose(
   Media,
   FeatureImageViews,
+  UuidItem,
 );
 
-export const TextImageItem = types
-  .model({
-    title: '',
-    body: '',
-    image: types.optional(ContentImage, {}),
-    align: types.optional(
-      types.enumeration(['left', 'center', 'right']),
-      'left',
-    ),
-  })
-  .actions(self => ({
-    changeAlignment(align) {
-      self.align = align;
-    },
-    changeTitle(title) {
-      self.title = title;
-    },
-    changeBody(body) {
-      self.body = body;
-    },
-  }));
+export const TextImageItem = types.compose(
+  types
+    .model({
+      title: '',
+      body: '',
+      image: types.optional(ContentImage, {}),
+      align: types.optional(
+        types.enumeration(['left', 'center', 'right']),
+        'left',
+      ),
+    })
+    .actions(self => ({
+      changeAlignment(align) {
+        self.align = align;
+      },
+      changeTitle(title) {
+        self.title = title;
+      },
+      changeBody(body) {
+        self.body = body;
+      },
+    })),
+  UuidItem,
+);
 
 const HeaderItem = types
   .model({
@@ -205,6 +221,7 @@ export const CentredText = types.compose(
       },
     })),
   GeneralWrittenItem,
+  UuidItem,
 );
 
 export const ImageBackground = types.compose(
@@ -214,6 +231,7 @@ export const ImageBackground = types.compose(
     audio: types.optional(Media, {}),
   }),
   GeneralWrittenItem,
+  UuidItem,
 );
 
 export const ImageParallax = types.compose(
@@ -222,6 +240,7 @@ export const ImageParallax = types.compose(
     image: types.optional(FeatureImage, {}),
   }),
   HeaderItem,
+  UuidItem,
 );
 
 const StoryModel = types

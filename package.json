@@ -37,7 +37,8 @@
     "stickybits": "^3.6.7",
     "styled-components": "^4.4.0",
     "summernote": "^0.8.12",
-    "thumbor": "^0.1.5"
+    "thumbor": "^0.1.5",
+    "uuid": "^3.3.3"
   },
   "scripts": {
     "start": "rescripts start",
