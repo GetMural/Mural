@@ -7,7 +7,7 @@ import {
   FormGroup,
 } from '@bootstrap-styled/v4';
 import { observer } from 'mobx-react';
-import { Title, Body } from './bites';
+import { Body } from './bites';
 import ImagePreviewField from './bites/ImagePreviewField';
 import Alignment from './bites/Alignment';
 
@@ -30,7 +30,15 @@ const TextImageItemForm = ({ item }) => {
           }}
         />
       </FormGroup>
-      <Title title={item.title} changeTitle={item.changeTitle} />
+      <FormGroup>
+        <Label>Caption</Label>
+        <Input
+          onChange={e => {
+            item.changeTitle(e.target.value);
+          }}
+          value={item.title}
+        />
+      </FormGroup>
       <FormGroup>
         <Label>Credits</Label>
         <Input
