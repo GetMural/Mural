@@ -5,14 +5,18 @@ import {
   Fieldset,
   Legend,
   Label,
-  Button,
-  ButtonGroup,
 } from '@bootstrap-styled/v4';
 
 import ImagePreviewField from './bites/ImagePreviewField';
 import AudioPreviewField from './bites/AudioPreviewField';
 
-import { Title, Subtitle, Body, NavEntry } from './bites';
+import {
+  Title,
+  Subtitle,
+  Body,
+  NavEntry,
+  ButtonPanel,
+} from './bites';
 import FormLayout from './FormLayout';
 
 function ImageBackgroundForm(props) {
@@ -45,13 +49,7 @@ function ImageBackgroundForm(props) {
         <Label>Audio</Label>
         <AudioPreviewField audio={draftItem.audio} />
       </Fieldset>
-      <ButtonGroup>
-        <Button color="secondary">Cancel</Button>
-        <Button color="secondary">Reset</Button>
-        <Button color="primary" onClick={onSave}>
-          Save
-        </Button>
-      </ButtonGroup>
+      <ButtonPanel onSave={onSave} />
     </FormLayout>
   );
 }

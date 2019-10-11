@@ -3,19 +3,23 @@ import {
   Fieldset,
   Legend,
   Button,
-  ButtonGroup,
   Input,
   Label,
   FormGroup,
 } from '@bootstrap-styled/v4';
 import { observer } from 'mobx-react';
 
-import { Title, Subtitle, Body, NavEntry } from './bites';
+import {
+  Title,
+  Subtitle,
+  Body,
+  NavEntry,
+  ButtonPanel,
+} from './bites';
 import FormLayout from './FormLayout';
 import TextImageItemForm from './TextImageItemForm';
 
-function CentredTextForm(props) {
-  const { draftItem, onSave } = props;
+function CentredTextForm({ draftItem, onSave }) {
   return (
     <FormLayout draftItem={draftItem}>
       <NavEntry />
@@ -56,13 +60,7 @@ function CentredTextForm(props) {
           Add Image
         </Button>
       </div>
-      <ButtonGroup>
-        <Button color="secondary">Cancel</Button>
-        <Button color="secondary">Reset</Button>
-        <Button color="primary" onClick={onSave}>
-          Save
-        </Button>
-      </ButtonGroup>
+      <ButtonPanel onSave={onSave} />
     </FormLayout>
   );
 }

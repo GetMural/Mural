@@ -5,12 +5,10 @@ import {
   Fieldset,
   Legend,
   Label,
-  Button,
-  ButtonGroup,
 } from '@bootstrap-styled/v4';
 
 import ImagePreviewField from './bites/ImagePreviewField';
-import { Title, Subtitle, NavEntry } from './bites';
+import { Title, Subtitle, NavEntry, ButtonPanel } from './bites';
 import FormLayout from './FormLayout';
 
 function ImageParallaxForm(props) {
@@ -35,13 +33,7 @@ function ImageParallaxForm(props) {
           <ImagePreviewField image={draftItem.image} />
         </FormGroup>
       </Fieldset>
-      <ButtonGroup>
-        <Button color="secondary">Cancel</Button>
-        <Button color="secondary">Reset</Button>
-        <Button color="primary" onClick={onSave}>
-          Save
-        </Button>
-      </ButtonGroup>
+      <ButtonPanel onSave={onSave} />
     </FormLayout>
   );
 }
