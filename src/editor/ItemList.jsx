@@ -2,17 +2,26 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import { Link } from 'react-router-dom';
 
+import {
+  ListGroup,
+  ListGroupItem,
+  Button,
+} from '@bootstrap-styled/v4';
+
 const ItemList = props => {
   const { items } = props;
 
   return (
-    <ul>
+    <ListGroup>
       {items.map((storyItem, i) => (
-        <li key={i}>
+        <ListGroupItem key={storyItem.id}>
           <Link to={`${i}`}>{storyItem.type}</Link>
-        </li>
+          <Button color="danger" onClick={storyItem.remove}>
+            Delete
+          </Button>
+        </ListGroupItem>
       ))}
-    </ul>
+    </ListGroup>
   );
 };
 

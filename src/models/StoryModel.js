@@ -1,4 +1,10 @@
-import { types, getEnv, onSnapshot } from 'mobx-state-tree';
+import {
+  types,
+  getEnv,
+  onSnapshot,
+  destroy,
+  getParent,
+} from 'mobx-state-tree';
 import { promisedComputed } from 'computed-async-mobx';
 
 const electron = require('electron');
@@ -205,6 +211,12 @@ const GeneralWrittenItem = types.compose(
   HeaderItem,
 );
 
+const RemovableStoryItem = types.model().actions(self => ({
+  remove() {
+    getParent(self, 2).removeItem(self);
+  },
+}));
+
 export const CentredText = types.compose(
   types
     .model({
@@ -222,6 +234,7 @@ export const CentredText = types.compose(
     })),
   GeneralWrittenItem,
   UuidItem,
+  RemovableStoryItem,
 );
 
 export const ImageBackground = types.compose(
@@ -232,6 +245,7 @@ export const ImageBackground = types.compose(
   }),
   GeneralWrittenItem,
   UuidItem,
+  RemovableStoryItem,
 );
 
 export const ImageParallax = types.compose(
@@ -241,6 +255,7 @@ export const ImageParallax = types.compose(
   }),
   HeaderItem,
   UuidItem,
+  RemovableStoryItem,
 );
 
 const StoryModel = types
@@ -256,6 +271,9 @@ const StoryModel = types
     },
     addItem(item) {
       self.items.push(item);
+    },
+    removeItem(item) {
+      destroy(item);
     },
   }));
 
