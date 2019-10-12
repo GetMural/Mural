@@ -9,6 +9,7 @@ import {
   CentredTextDraft,
   ImageBackgroundDraft,
   ImageParallaxDraft,
+  HorizontalSlideshowDraft,
 } from './preview/';
 
 const StoryPreview = styled(Frame)`
@@ -20,6 +21,7 @@ const StoryItems = {
   ImageBackgroundDraft,
   ImageParallaxDraft,
   CentredTextDraft,
+  HorizontalSlideshowDraft,
 };
 
 const Preview = () => {

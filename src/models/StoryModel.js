@@ -150,10 +150,11 @@ const ContentImageViews = generateImageViews(contentRenditions);
 const LandscapeImageViews = generateImageViews(landscapeRenditions);
 const FeatureImageViews = generateImageViews(featureRenditions);
 
-const ImageCredits = types
+const ImageMetaData = types
   .model({
     alt: '',
     credits: '',
+    title: '',
   })
   .actions(self => ({
     changeAlt(alt) {
@@ -162,18 +163,21 @@ const ImageCredits = types
     changeCredits(credits) {
       self.credits = credits;
     },
+    changeTitle(title) {
+      self.title = title;
+    },
   }));
 
 const ContentImage = types.compose(
   Media,
-  ImageCredits,
+  ImageMetaData,
   ContentImageViews,
   UuidItem,
 );
 
-const LandscapeImage = types.compose(
+const HorizontalSlide = types.compose(
   Media,
-  ImageCredits,
+  ImageMetaData,
   LandscapeImageViews,
   UuidItem,
 );
@@ -187,7 +191,6 @@ const FeatureImage = types.compose(
 export const TextImageItem = types.compose(
   types
     .model({
-      title: '',
       body: '',
       image: types.optional(ContentImage, {}),
       align: types.optional(
@@ -198,9 +201,6 @@ export const TextImageItem = types.compose(
     .actions(self => ({
       changeAlignment(align) {
         self.align = align;
-      },
-      changeTitle(title) {
-        self.title = title;
       },
       changeBody(body) {
         self.body = body;
@@ -287,11 +287,11 @@ export const HorizontalSlideshow = types.compose(
   types
     .model({
       type: types.literal('HorizontalSlideshow'),
-      slides: types.array(LandscapeImage),
+      slides: types.array(HorizontalSlide),
     })
     .actions(self => ({
       addSlide() {
-        self.slides.push(LandscapeImage.create());
+        self.slides.push(HorizontalSlide.create());
       },
     })),
   UuidItem,

@@ -6,15 +6,26 @@ import { observer } from 'mobx-react';
 function HorizontalSlideshowDraft({ item: { slides } }) {
   return (
     <section class="part slideshow-horizontal snap">
-      <div class="blueimp-gallery blueimp-gallery-carousel blueimp-gallery-controls">
+      <div
+        id="blueimp-gallery"
+        class="blueimp-gallery blueimp-gallery-controls"
+      >
         <div class="slides"></div>
-        <a class="prev">&lsaquo;</a>
-        <a class="next">&rsaquo;</a>
-        <div class="slide-caption"></div>
-        <div class="credits"></div>
+        <h3 class="title"></h3>
+        <a class="prev">‹</a>
+        <a class="next">›</a>
+        <a class="close">×</a>
+        <a class="play-pause"></a>
+        <ol class="indicator"></ol>
       </div>
 
-      <div class="slide-container"></div>
+      <div id="links">
+        {slides.map(({ alt, credits }) => (
+          <a href="images/banana.jpg" title="Banana">
+            <img src="images/thumbnails/banana.jpg" alt="Banana" />
+          </a>
+        ))}
+      </div>
     </section>
   );
 }

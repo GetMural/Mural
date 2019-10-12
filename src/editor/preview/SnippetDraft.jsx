@@ -5,9 +5,8 @@ import { observer } from 'mobx-react';
 const SnippetDraft = ({
   snippet: {
     align,
-    title,
     body,
-    image: { renditions, alt, credits },
+    image: { renditions, alt, credits, title },
   },
 }) => {
   const figureClasses = classnames('cms-image', `${align}`);
