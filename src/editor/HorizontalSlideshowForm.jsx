@@ -10,7 +10,7 @@ const HorizontalSlideshowForm = ({ draftItem, onSave }) => {
     <FormLayout draftItem={draftItem}>
       <NavEntry />
       {draftItem.slides.map(slide => (
-        <ImageCreditsForm image={slide} />
+        <ImageCreditsForm image={slide} key={slide.id} />
       ))}
       <div>
         <Button

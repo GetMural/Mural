@@ -3,26 +3,40 @@ import React from 'react';
 import { string, shape, array } from 'prop-types';
 import { observer } from 'mobx-react';
 
+function getSrcSet(renditions) {
+  return renditions
+    .map(
+      rendition =>
+        `${rendition.thumborUrl} ${rendition.w * rendition.scale}w`,
+    )
+    .join(', ');
+}
+
 function HorizontalSlideshowDraft({ item: { slides } }) {
   return (
-    <section class="part slideshow-horizontal snap">
+    <section className="part slideshow-horizontal snap">
       <div
         id="blueimp-gallery"
-        class="blueimp-gallery blueimp-gallery-controls"
+        className="blueimp-gallery blueimp-gallery-controls"
       >
-        <div class="slides"></div>
-        <h3 class="title"></h3>
-        <a class="prev">‹</a>
-        <a class="next">›</a>
-        <a class="close">×</a>
-        <a class="play-pause"></a>
-        <ol class="indicator"></ol>
+        <div className="slides"></div>
+        <h3 className="title"></h3>
+        <a className="prev">‹</a>
+        <a className="next">›</a>
+        <a className="close">×</a>
+        <a className="play-pause"></a>
+        <ol className="indicator"></ol>
       </div>
 
       <div id="links">
-        {slides.map(({ alt, credits }) => (
-          <a href="images/banana.jpg" title="Banana">
-            <img src="images/thumbnails/banana.jpg" alt="Banana" />
+        {slides.map(({ alt, credits, title, renditions, id }) => (
+          <a
+            key={id}
+            urlset={getSrcSet(renditions)}
+            title={title}
+            alt={alt}
+          >
+            <img srcSet={getSrcSet(renditions)}></img>
           </a>
         ))}
       </div>
