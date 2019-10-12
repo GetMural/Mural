@@ -80,6 +80,20 @@ const contentRenditions = [
   { w: 282, h: 0, scale: 2 },
 ];
 
+// For landscape images
+const landscapeRenditions = [
+  { w: 320, h: 0, scale: 1 },
+  { w: 320, h: 0, scale: 2 },
+  { w: 375, h: 0, scale: 1 },
+  { w: 375, h: 0, scale: 2 },
+  { w: 768, h: 0, scale: 1 },
+  { w: 768, h: 0, scale: 2 },
+  { w: 1280, h: 0, scale: 1 },
+  { w: 1280, h: 0, scale: 2 },
+  { w: 1920, h: 0, scale: 1 },
+  { w: 1920, h: 0, scale: 2 },
+];
+
 const Media = types
   .model({
     path: '',
@@ -131,25 +145,36 @@ function generateImageViews(imageRenditions) {
     },
   }));
 }
+
 const ContentImageViews = generateImageViews(contentRenditions);
+const LandscapeImageViews = generateImageViews(landscapeRenditions);
 const FeatureImageViews = generateImageViews(featureRenditions);
 
+const ImageCredits = types
+  .model({
+    alt: '',
+    credits: '',
+  })
+  .actions(self => ({
+    changeAlt(alt) {
+      self.alt = alt;
+    },
+    changeCredits(credits) {
+      self.credits = credits;
+    },
+  }));
+
 const ContentImage = types.compose(
-  types
-    .model({
-      alt: '',
-      credits: '',
-    })
-    .actions(self => ({
-      changeAlt(alt) {
-        self.alt = alt;
-      },
-      changeCredits(credits) {
-        self.credits = credits;
-      },
-    })),
   Media,
+  ImageCredits,
   ContentImageViews,
+  UuidItem,
+);
+
+const LandscapeImage = types.compose(
+  Media,
+  ImageCredits,
+  LandscapeImageViews,
   UuidItem,
 );
 
@@ -258,10 +283,30 @@ export const ImageParallax = types.compose(
   RemovableStoryItem,
 );
 
+export const HorizontalSlideshow = types.compose(
+  types
+    .model({
+      type: types.literal('HorizontalSlideshow'),
+      slides: types.array(LandscapeImage),
+    })
+    .actions(self => ({
+      addSlide() {
+        self.slides.push(LandscapeImage.create());
+      },
+    })),
+  UuidItem,
+  RemovableStoryItem,
+);
+
 const StoryModel = types
   .model({
     items: types.array(
-      types.union(ImageBackground, ImageParallax, CentredText),
+      types.union(
+        ImageBackground,
+        ImageParallax,
+        CentredText,
+        HorizontalSlideshow,
+      ),
     ),
   })
   .actions(self => ({

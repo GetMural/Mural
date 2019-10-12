@@ -6,12 +6,14 @@ import { WorkspaceConsumer } from '../WorkspaceContext';
 import ImageBackgroundForm from './ImageBackgroundForm';
 import ImageParallaxForm from './ImageParallaxForm';
 import CentredTextForm from './CentredTextForm';
+import HorizontalSlideshowForm from './HorizontalSlideshowForm';
 import Layout from './Layout';
 
 const StoryForms = {
-  ImageBackground: ImageBackgroundForm,
-  ImageParallax: ImageParallaxForm,
-  CentredText: CentredTextForm,
+  ImageBackgroundForm,
+  ImageParallaxForm,
+  CentredTextForm,
+  HorizontalSlideshowForm,
 };
 
 const Editor = props => {
@@ -28,7 +30,7 @@ const Editor = props => {
       {({ storyState }) => {
         const item = storyState.items[storyIndex];
         const clonedItem = clone(item);
-        const Component = StoryForms[clonedItem.type];
+        const Component = StoryForms[`${clonedItem.type}Form`];
         return (
           <Layout>
             <Component

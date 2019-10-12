@@ -11,8 +11,7 @@ import ImagePreviewField from './bites/ImagePreviewField';
 import { Title, Subtitle, NavEntry, ButtonPanel } from './bites';
 import FormLayout from './FormLayout';
 
-function ImageParallaxForm(props) {
-  const { draftItem, onSave } = props;
+function ImageParallaxForm({ draftItem, onSave }) {
   return (
     <FormLayout draftItem={draftItem}>
       <NavEntry />

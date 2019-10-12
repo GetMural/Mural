@@ -19,8 +19,7 @@ import {
 } from './bites';
 import FormLayout from './FormLayout';
 
-function ImageBackgroundForm(props) {
-  const { draftItem, onSave } = props;
+function ImageBackgroundForm({ draftItem, onSave }) {
   return (
     <FormLayout draftItem={draftItem}>
       <NavEntry />

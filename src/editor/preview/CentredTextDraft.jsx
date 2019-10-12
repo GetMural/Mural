@@ -6,11 +6,9 @@ import classnames from 'classnames';
 
 import SnippetDraft from './SnippetDraft';
 
-function CentredTextDraft(props) {
-  const {
-    item: { title, subtitle, body, light, snippets },
-  } = props;
-
+function CentredTextDraft({
+  item: { title, subtitle, body, light, snippets },
+}) {
   const sectionClasses = classnames(
     'no-effects',
     'part',
