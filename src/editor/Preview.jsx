@@ -8,7 +8,7 @@ const Preview = () => {
     <DraftStory>
       <WorkspaceConsumer>
         {({ storyState }) =>
-          storyState.items.map((storyItem, i) => {
+          storyState.items.map(storyItem => {
             return (
               <DraftItem
                 key={storyItem.id}

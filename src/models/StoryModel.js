@@ -17,6 +17,7 @@ const USER_DATA_PATH = (electron.app || electron.remote.app).getPath(
 );
 
 const gulp = require('gulp');
+const webpack = require('webpack-stream');
 const through2 = require('through2');
 const cleanCSS = require('gulp-clean-css');
 
@@ -319,6 +320,23 @@ function generateCSS() {
   });
 }
 
+function generateJS() {
+  return new Promise((resolve, reject) => {
+    gulp
+      .src('src/client/app.js')
+      .pipe(webpack())
+      .pipe(
+        through2.obj(function(file, enc, callback) {
+          const contents = file.contents.toString('utf8');
+          this.push(contents);
+          return callback();
+        }),
+      )
+      .on('data', resolve)
+      .on('error', reject);
+  });
+}
+
 const StoryModel = types
   .model({
     items: types.array(
@@ -335,9 +353,17 @@ const StoryModel = types
       const response = await generateCSS(self.items);
       return response;
     });
+
+    const scriptPromise = promisedComputed('', async () => {
+      const response = await generateJS(self.items);
+      return response;
+    });
     return {
       get storyStyles() {
         return stylesPromise.get();
+      },
+      get storyScript() {
+        return scriptPromise.get();
       },
     };
   })

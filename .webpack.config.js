@@ -2,19 +2,22 @@ const webpack = require('webpack');
 const { appendWebpackPlugin } = require('@rescripts/utilities');
 // define child rescript
 module.exports = config => {
-  // config.entry = {
-  //   app: ['./src/index.js'],
-  //   mural: ['./src/client/app.js'],
-  // };
   config.target = 'electron-renderer';
   const jQueryPlugin = new webpack.ProvidePlugin({
     $: 'jquery',
     jQuery: 'jquery',
   });
-  const externalsPlugin = new webpack.ExternalsPlugin(
+  const nodeExternalPlugins = new webpack.ExternalsPlugin(
     'commonjs',
-    'gulp',
+    [
+      'gulp',
+      'through2',
+      'gulp-clean-css',
+      'mime-types',
+      'uuid/v4',
+      'webpack-stream',
+    ],
   );
-  const modified = appendWebpackPlugin(externalsPlugin, config);
+  let modified = appendWebpackPlugin(nodeExternalPlugins, config);
   return appendWebpackPlugin(jQueryPlugin, modified);
 };

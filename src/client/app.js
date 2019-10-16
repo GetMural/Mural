@@ -1,7 +1,5 @@
 /* eslint-env browser */
 /* globals $ */
-import 'blueimp-gallery/css/blueimp-gallery.css';
-import './styles.css';
 import 'scrollstory/jquery.scrollstory';
 import 'stickybits/src/jquery.stickybits';
 import './media/jquery.parallax';

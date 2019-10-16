@@ -1,6 +1,6 @@
 /* eslint-env browser */
 /* globals $ */
-const Hls = require('hls.js');
+// const Hls = require('hls.js');
 const mediaUtils = require('./media');
 
 const MEDIA = [];
