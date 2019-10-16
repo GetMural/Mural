@@ -29,6 +29,10 @@ const Editor = styled.div`
   height: 100vh;
 `;
 
+const FrameHead = observer(({ storyState }) => {
+  return <style>{storyState.storyStyles}</style>;
+});
+
 function FormLayout({ draftItem, children }) {
   const Draft = DRAFTS[`${draftItem.type}Draft`];
   return (
@@ -43,7 +47,7 @@ function FormLayout({ draftItem, children }) {
             </Col>
             <Col xs={4} className="p-0">
               <StoryPreview
-                head={<style>{storyState.storyStyles}</style>}
+                head={<FrameHead storyState={storyState} />}
               >
                 <article>
                   <Draft item={draftItem}></Draft>
@@ -57,4 +61,4 @@ function FormLayout({ draftItem, children }) {
   );
 }
 
-export default observer(FormLayout);
+export default FormLayout;

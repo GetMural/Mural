@@ -1,9 +1,9 @@
 import React from 'react';
 import Navigation from './Navigation';
 import ErrorBoundary from './ErrorBoundary';
+import { observer } from 'mobx-react';
 
-const Layout = props => {
-  const { children } = props;
+const Layout = ({ children }) => {
   return (
     <div className="row">
       <div className="col-1">
@@ -25,4 +25,4 @@ const Layout = props => {
   );
 };
 
-export default Layout;
+export default observer(Layout);

@@ -332,8 +332,7 @@ const StoryModel = types
   })
   .views(self => {
     const stylesPromise = promisedComputed('', async () => {
-      const items = self.items;
-      const response = await generateCSS();
+      const response = await generateCSS(self.items);
       return response;
     });
     return {

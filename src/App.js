@@ -1,10 +1,10 @@
 import React from 'react';
-import './App.css';
 import {
   HashRouter as Router,
   Switch,
   Route,
 } from 'react-router-dom';
+import { observer } from 'mobx-react';
 import Editor, {
   Settings,
   Preview,
@@ -12,7 +12,7 @@ import Editor, {
   StoryListing,
 } from './editor';
 
-export default function App() {
+const App = () => {
   return (
     <Router>
       <Switch>
@@ -24,4 +24,6 @@ export default function App() {
       </Switch>
     </Router>
   );
-}
+};
+
+export default observer(App);

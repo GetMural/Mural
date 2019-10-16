@@ -1,5 +1,4 @@
 import React from 'react';
-import { observer } from 'mobx-react';
 import { clone, applySnapshot, getSnapshot } from 'mobx-state-tree';
 import { WorkspaceConsumer } from '../WorkspaceContext';
 
@@ -49,4 +48,4 @@ const Editor = props => {
   );
 };
 
-export default observer(Editor);
+export default Editor;
