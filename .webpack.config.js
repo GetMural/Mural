@@ -11,5 +11,10 @@ module.exports = config => {
     $: 'jquery',
     jQuery: 'jquery',
   });
-  return appendWebpackPlugin(jQueryPlugin, config);
+  const externalsPlugin = new webpack.ExternalsPlugin(
+    'commonjs',
+    'gulp',
+  );
+  const modified = appendWebpackPlugin(externalsPlugin, config);
+  return appendWebpackPlugin(jQueryPlugin, modified);
 };

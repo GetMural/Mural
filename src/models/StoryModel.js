@@ -16,6 +16,10 @@ const USER_DATA_PATH = (electron.app || electron.remote.app).getPath(
   'userData',
 );
 
+const gulp = require('gulp');
+const through2 = require('through2');
+const cleanCSS = require('gulp-clean-css');
+
 const UuidItem = types
   .model({
     id: '',
@@ -298,6 +302,23 @@ export const HorizontalSlideshow = types.compose(
   RemovableStoryItem,
 );
 
+function generateCSS() {
+  return new Promise((resolve, reject) => {
+    gulp
+      .src('src/client/styles.css')
+      .pipe(cleanCSS({ compatibility: 'ie11' }))
+      .pipe(
+        through2.obj(function(file, enc, callback) {
+          const contents = file.contents.toString('utf8');
+          this.push(contents);
+          return callback();
+        }),
+      )
+      .on('data', resolve)
+      .on('error', reject);
+  });
+}
+
 const StoryModel = types
   .model({
     items: types.array(
@@ -308,6 +329,18 @@ const StoryModel = types
         HorizontalSlideshow,
       ),
     ),
+  })
+  .views(self => {
+    const stylesPromise = promisedComputed('', async () => {
+      const items = self.items;
+      const response = await generateCSS();
+      return response;
+    });
+    return {
+      get storyStyles() {
+        return stylesPromise.get();
+      },
+    };
   })
   .actions(self => ({
     afterCreate() {

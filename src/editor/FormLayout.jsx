@@ -3,9 +3,8 @@ import { observer } from 'mobx-react';
 import styled from 'styled-components';
 import { Form, Container, Col, Row } from '@bootstrap-styled/v4';
 import Frame from 'react-styled-frame';
+import { WorkspaceConsumer } from '../WorkspaceContext';
 
-// eslint-disable-next-line import/no-webpack-loader-syntax
-import draftCSS from '!!raw-loader!../client/styles.css';
 import {
   CentredTextDraft,
   ImageBackgroundDraft,
@@ -33,22 +32,28 @@ const Editor = styled.div`
 function FormLayout({ draftItem, children }) {
   const Draft = DRAFTS[`${draftItem.type}Draft`];
   return (
-    <Container className="m-0 p-0" fluid>
-      <Row>
-        <Col xs={8}>
-          <Editor>
-            <Form>{children}</Form>
-          </Editor>
-        </Col>
-        <Col xs={4} className="p-0">
-          <StoryPreview head={<style>{draftCSS}</style>}>
-            <article>
-              <Draft item={draftItem}></Draft>
-            </article>
-          </StoryPreview>
-        </Col>
-      </Row>
-    </Container>
+    <WorkspaceConsumer>
+      {({ storyState }) => (
+        <Container className="m-0 p-0" fluid>
+          <Row>
+            <Col xs={8}>
+              <Editor>
+                <Form>{children}</Form>
+              </Editor>
+            </Col>
+            <Col xs={4} className="p-0">
+              <StoryPreview
+                head={<style>{storyState.storyStyles}</style>}
+              >
+                <article>
+                  <Draft item={draftItem}></Draft>
+                </article>
+              </StoryPreview>
+            </Col>
+          </Row>
+        </Container>
+      )}
+    </WorkspaceConsumer>
   );
 }
 

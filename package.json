@@ -17,6 +17,8 @@
     "datauri": "^2.0.0",
     "electron": "^6.0.10",
     "electron-is-dev": "^1.1.0",
+    "gulp": "^4.0.2",
+    "gulp-clean-css": "^4.2.0",
     "hls.js": "^0.12.4",
     "jquery": "^3.4.1",
     "mime-types": "^2.1.24",
@@ -37,8 +39,10 @@
     "stickybits": "^3.6.7",
     "styled-components": "^4.4.0",
     "summernote": "^0.8.12",
+    "through2": "^3.0.1",
     "thumbor": "^0.1.5",
-    "uuid": "^3.3.3"
+    "uuid": "^3.3.3",
+    "webpack-stream": "^5.2.1"
   },
   "scripts": {
     "start": "rescripts start",
@@ -75,11 +79,10 @@
     "eslint-plugin-prettier": "^3.1.1",
     "eslint-plugin-react": "^7.14.3",
     "eslint-plugin-react-hooks": "^1.7.0",
-    "mini-css-extract-plugin": "^0.8.0",
     "prettier": "^1.18.2",
-    "raw-loader": "^3.1.0",
     "typescript": "^3.6.3",
-    "wait-on": "^3.3.0"
+    "wait-on": "^3.3.0",
+    "webpack-externals-plugin": "^1.0.0"
   },
   "author": {
     "name": "Naomi Aro",
