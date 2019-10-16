@@ -4,7 +4,6 @@ import {
   Switch,
   Route,
 } from 'react-router-dom';
-import { observer } from 'mobx-react';
 import Editor, {
   Settings,
   Preview,
@@ -26,4 +25,4 @@ const App = () => {
   );
 };
 
-export default observer(App);
+export default App;

@@ -1,7 +1,6 @@
 import React from 'react';
 import Navigation from './Navigation';
 import ErrorBoundary from './ErrorBoundary';
-import { observer } from 'mobx-react';
 
 const Layout = ({ children }) => {
   return (
@@ -25,4 +24,4 @@ const Layout = ({ children }) => {
   );
 };
 
-export default observer(Layout);
+export default Layout;

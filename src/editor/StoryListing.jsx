@@ -9,7 +9,6 @@ import {
   Form,
   Container,
 } from '@bootstrap-styled/v4';
-import { observer } from 'mobx-react';
 import { WorkspaceConsumer } from '../WorkspaceContext';
 import Layout from './Layout';
 import {
@@ -79,4 +78,4 @@ class StoryListing extends Component {
   }
 }
 
-export default observer(StoryListing);
+export default StoryListing;
