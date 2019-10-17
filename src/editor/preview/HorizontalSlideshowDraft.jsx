@@ -14,30 +14,28 @@ function getSrcSet(renditions) {
 
 function HorizontalSlideshowDraft({ item: { slides } }) {
   return (
-    <section className="part slideshow-horizontal snap">
-      <div
-        id="blueimp-gallery"
-        className="blueimp-gallery blueimp-gallery-controls"
-      >
+    <section
+      className="part slideshow-horizontal snap"
+      data-slideshow="true"
+    >
+      <div className="blueimp-gallery blueimp-gallery-carousel blueimp-gallery-controls">
         <div className="slides"></div>
-        <h3 className="title"></h3>
-        <a className="prev">‹</a>
-        <a className="next">›</a>
-        <a className="close">×</a>
-        <a className="play-pause"></a>
-        <ol className="indicator"></ol>
+        <a className="prev">&lsaquo;</a>
+        <a className="next">&rsaquo;</a>
+        <div className="slide-caption"></div>
+        <div className="credits"></div>
       </div>
 
-      <div id="links">
+      <div className="slide-container">
         {slides.map(({ alt, credits, title, renditions, id }) => (
           <a
             key={id}
             urlset={getSrcSet(renditions)}
+            href={renditions[0].thumborUrl}
             title={title}
             alt={alt}
-          >
-            <img srcSet={getSrcSet(renditions)}></img>
-          </a>
+            data-credits={credits}
+          ></a>
         ))}
       </div>
     </section>

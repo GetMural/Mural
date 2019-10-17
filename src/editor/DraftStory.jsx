@@ -3,6 +3,8 @@ import { observer } from 'mobx-react';
 import Frame from 'react-styled-frame';
 import styled from 'styled-components';
 import { WorkspaceConsumer } from '../WorkspaceContext';
+const fs = require('fs');
+const path = require('path');
 
 const StoryPreview = styled(Frame)`
   width: 100%;
@@ -13,24 +15,27 @@ const FrameHead = observer(({ storyState }) => {
   return <style>{storyState.storyStyles}</style>;
 });
 
-const FrameScript = observer(({ storyState }) => {
-  return <script>{storyState.storyScript}</script>;
-});
+// const FrameScript = observer(({ storyState }) => {
+//   return <script>{storyState.storyScript}</script>;
+// });
 
 const DraftStory = ({ children }) => {
+  const StoryJS = fs.readFileSync(
+    '/Users/naaro/Code/Mural/public/story.js',
+  );
   return (
     <WorkspaceConsumer>
       {({ storyState }) => (
-        <StoryPreview head={<FrameHead storyState={storyState} />}>
-          <>
-            <article id="scrollytelling">{children}</article>
-            {/* <script
-              src="https://code.jquery.com/jquery-3.4.1.min.js"
-              integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-              crossorigin="anonymous"
-            ></script> */}
-            <FrameScript storyState={storyState} />
-          </>
+        <StoryPreview
+          initialContent={`<!DOCTYPE html><html><head></head><body><div id="mountHere"></div><script type="text/javascript">${StoryJS}</script></body></html>`}
+          mountTarget="#mountHere"
+          head={
+            <>
+              <FrameHead storyState={storyState} />
+            </>
+          }
+        >
+          <article id="scrollytelling">{children}</article>
         </StoryPreview>
       )}
     </WorkspaceConsumer>

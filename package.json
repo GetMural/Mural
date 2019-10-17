@@ -20,6 +20,7 @@
     "gulp": "^4.0.2",
     "gulp-clean-css": "^4.2.0",
     "hls.js": "^0.12.4",
+    "ismobilejs": "^1.0.3",
     "jquery": "^3.4.1",
     "mime-types": "^2.1.24",
     "mobx": "^5.13.1",
