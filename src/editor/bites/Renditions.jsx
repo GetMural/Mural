@@ -7,15 +7,28 @@ const Img = styled.img`
   max-height: 200px;
 `;
 
-const Renditions = ({ image }) =>
-  image.renditions.map(rendition => (
-    <div key={`${rendition.w}x${rendition.h}x${rendition.scale}`}>
-      <div>{`${rendition.w}x${rendition.h} scale ${rendition.scale}`}</div>
-      <Img
-        src={rendition.thumborUrl}
-        alt={`${rendition.w}x${rendition.h} scale ${rendition.scale}`}
-      />
-    </div>
-  ));
+const Rendition = styled.div`
+  float: left;
+`;
+
+const RenditionContainer = styled.div`
+  overflow: auto;
+`;
+
+const Renditions = ({ image }) => (
+  <RenditionContainer>
+    {image.renditions.map(rendition => (
+      <Rendition
+        key={`${rendition.w}x${rendition.h}x${rendition.scale}`}
+      >
+        <div>{`${rendition.w}x${rendition.h} scale ${rendition.scale}`}</div>
+        <Img
+          src={rendition.thumborUrl}
+          alt={`${rendition.w}x${rendition.h} scale ${rendition.scale}`}
+        />
+      </Rendition>
+    ))}
+  </RenditionContainer>
+);
 
 export default observer(Renditions);

@@ -15,6 +15,7 @@ function js() {
         {
           devtool: 'source-map',
           mode: 'development',
+          watch: true,
           output: { filename: 'HorizontalSlideshow.js' },
           plugins: [jQueryPlugin],
         },
@@ -41,7 +42,7 @@ function css() {
 exports.js = js;
 exports.css = css;
 
-exports.default = function() {
-  watch('src/client/*.css', css);
-  watch('src/client/items/*.js', js);
-};
+// exports.default = function() {
+//   watch('src/client/*.css', css);
+//   watch('src/client/items/*.js', js);
+// };

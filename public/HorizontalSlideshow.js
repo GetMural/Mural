@@ -13991,7 +13991,6 @@ __webpack_require__.r(__webpack_exports__);
 
 function loadItem(item) {
   const slides = item.el.find('.slide-container a').get();
-  console.log(slides);
 
   blueimp_gallery_js_blueimp_gallery__WEBPACK_IMPORTED_MODULE_1___default()(slides, {
     container: item.el.find('.blueimp-gallery')[0],
@@ -14011,6 +14010,7 @@ function loadItem(item) {
 }
 
 $(document).ready(function() {
+  console.log('LOADING');
   const $story = $('#scrollytelling');
 
   const scrollStory = $story

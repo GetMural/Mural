@@ -40,7 +40,7 @@ function HorizontalSlideshowDraft({ item: { slides } }) {
         {slides.map(({ alt, credits, title, renditions, id }) => (
           <a
             key={id}
-            urlset={getSrcSet(renditions)}
+            data-urlset={getSrcSet(renditions)}
             href={getHref(renditions)}
             title={title}
             alt={alt}

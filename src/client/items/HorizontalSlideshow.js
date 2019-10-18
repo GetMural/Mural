@@ -5,7 +5,6 @@ import blueimp from 'blueimp-gallery/js/blueimp-gallery';
 
 function loadItem(item) {
   const slides = item.el.find('.slide-container a').get();
-  console.log(slides);
 
   blueimp(slides, {
     container: item.el.find('.blueimp-gallery')[0],
@@ -25,6 +24,7 @@ function loadItem(item) {
 }
 
 $(document).ready(function() {
+  console.log('LOADING');
   const $story = $('#scrollytelling');
 
   const scrollStory = $story
