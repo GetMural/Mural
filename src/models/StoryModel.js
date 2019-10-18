@@ -362,9 +362,9 @@ const StoryModel = types
       get storyStyles() {
         return stylesPromise.get();
       },
-      get storyScript() {
-        return scriptPromise.get();
-      },
+      // get storyScript() {
+      //   return scriptPromise.get();
+      // },
     };
   })
   .actions(self => ({

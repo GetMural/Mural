@@ -12,7 +12,9 @@ import audioMedia from './media/audio';
 import youtubeMedia from './media/youtube';
 
 $(document).ready(function() {
+  console.log('HELLO STORY');
   const $story = $('#scrollytelling');
+  console.log($story);
   const scrollStory = $story
     .scrollStory({
       contentSelector: '.part',

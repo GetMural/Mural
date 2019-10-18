@@ -9,12 +9,14 @@ function js() {
     jQuery: 'jquery',
   });
   return gulp
-    .src('src/client/app.js')
+    .src('src/client/items/HorizontalSlideshow.js')
     .pipe(
       webpackStream(
         {
           watch: true,
-          output: { filename: 'story.js' },
+          devtool: 'source-map',
+          mode: 'development',
+          output: { filename: 'HorizontalSlideshow.js' },
           plugins: [jQueryPlugin],
         },
         webpack,
