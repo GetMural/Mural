@@ -7,13 +7,9 @@ const Img = styled.img`
   max-height: 200px;
 `;
 
-const Rendition = styled.div`
-  float: left;
-`;
+const Rendition = styled.div``;
 
-const RenditionContainer = styled.div`
-  overflow: auto;
-`;
+const RenditionContainer = styled.div``;
 
 const Renditions = ({ image }) => (
   <RenditionContainer>

@@ -5,10 +5,10 @@ const cleanCSS = require('gulp-clean-css');
 const concat = require('gulp-concat');
 
 function js() {
-  const jQueryPlugin = new webpack.ProvidePlugin({
-    $: 'jquery',
-    jQuery: 'jquery',
-  });
+  // const jQueryPlugin = new webpack.ProvidePlugin({
+  //   $: 'jquery',
+  //   jQuery: 'jquery',
+  // });
   return src('src/client/items/HorizontalSlideshow.js')
     .pipe(
       webpackStream(
@@ -17,7 +17,9 @@ function js() {
           mode: 'development',
           watch: true,
           output: { filename: 'HorizontalSlideshow.js' },
-          plugins: [jQueryPlugin],
+          externals: {
+            jquery: 'jQuery',
+          },
         },
         webpack,
       ).on('error', err => {

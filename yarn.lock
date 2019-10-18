@@ -9985,7 +9985,7 @@ react-event-listener@^0.6.6:
     prop-types "^15.6.0"
     warning "^4.0.1"
 
-react-frame-component@^4.0.1:
+react-frame-component@^4.1.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/react-frame-component/-/react-frame-component-4.1.1.tgz#ea8f7c518ef6b5ad72146dd1f648752369826894"
   integrity sha512-NfJp90AvYA1R6+uSYafQ+n+UM2HjHqi4WGHeprVXa6quU9d8o6ZFRzQ36uemY82dlkZFzf2jigFx6E4UzNFajA==
@@ -10103,13 +10103,6 @@ react-scripts@3.1.2:
     workbox-webpack-plugin "4.3.1"
   optionalDependencies:
     fsevents "2.0.7"
-
-react-styled-frame@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/react-styled-frame/-/react-styled-frame-1.1.0.tgz#8c36168c3b00386e128df16a97c6458e7cc56310"
-  integrity sha512-/qcjXG4ZEySJao1kyUrri+we4sQYNgfkz1/Hw5/dJ+zGUUqkeZSHycSCVqe8CVPT0o9EP4JRA6IqwzjOXyDXCA==
-  dependencies:
-    react-frame-component "^4.0.1"
 
 react-transition-group@^2.6.0:
   version "2.9.0"

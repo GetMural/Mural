@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { observer } from 'mobx-react';
 import { Form, Container, Col, Row } from '@bootstrap-styled/v4';
 import DraftStory from './DraftStory';
 import DraftItem from './DraftItem';
@@ -19,7 +20,7 @@ function FormLayout({ draftItem, children }) {
           </Editor>
         </Col>
         <Col xs={4} className="p-0">
-          <DraftStory>
+          <DraftStory modified={draftItem.lastModified}>
             <DraftItem item={draftItem}></DraftItem>
           </DraftStory>
         </Col>
@@ -28,4 +29,4 @@ function FormLayout({ draftItem, children }) {
   );
 }
 
-export default FormLayout;
+export default observer(FormLayout);

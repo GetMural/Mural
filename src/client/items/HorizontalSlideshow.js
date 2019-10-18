@@ -24,7 +24,6 @@ function loadItem(item) {
 }
 
 $(document).ready(function() {
-  console.log('LOADING');
   const $story = $('#scrollytelling');
 
   const scrollStory = $story

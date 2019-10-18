@@ -27,8 +27,8 @@ function CentredTextDraft({
         <div className="row">
           <div className="col-xs-12 col-sm-10 col-md-8 col-lg-6 text">
             <div dangerouslySetInnerHTML={{ __html: body }} />
-            {snippets.map((snippet, i) => (
-              <SnippetDraft key={i} snippet={snippet} />
+            {snippets.map(snippet => (
+              <SnippetDraft key={snippet.id} snippet={snippet} />
             ))}
           </div>
         </div>

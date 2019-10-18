@@ -2,6 +2,7 @@ import {
   types,
   getEnv,
   onSnapshot,
+  onAction,
   destroy,
   getParent,
 } from 'mobx-state-tree';
@@ -29,6 +30,23 @@ const UuidItem = types
   .actions(self => ({
     afterCreate() {
       self.id = uuidv4();
+    },
+  }));
+
+const ModifiableItem = types
+  .model({
+    lastModified: types.optional(types.Date, Date.now()),
+  })
+  .actions(self => ({
+    updateLastModified() {
+      self.lastModified = Date.now();
+    },
+    afterCreate() {
+      onAction(self, call => {
+        if (call !== 'updateLastModified') {
+          self.updateLastModified();
+        }
+      });
     },
   }));
 
@@ -265,6 +283,7 @@ export const CentredText = types.compose(
     })),
   GeneralWrittenItem,
   UuidItem,
+  ModifiableItem,
   RemovableStoryItem,
 );
 
@@ -276,6 +295,7 @@ export const ImageBackground = types.compose(
   }),
   GeneralWrittenItem,
   UuidItem,
+  ModifiableItem,
   RemovableStoryItem,
 );
 
@@ -286,6 +306,7 @@ export const ImageParallax = types.compose(
   }),
   HeaderItem,
   UuidItem,
+  ModifiableItem,
   RemovableStoryItem,
 );
 
@@ -298,10 +319,10 @@ export const HorizontalSlideshow = types.compose(
     .actions(self => ({
       addSlide() {
         self.slides.push(HorizontalSlide.create());
-        debugger;
       },
     })),
   UuidItem,
+  ModifiableItem,
   RemovableStoryItem,
 );
 
