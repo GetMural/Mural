@@ -16,7 +16,9 @@ const FrameHead = observer(({ storyState }) => {
 const initialContent = `
 <!DOCTYPE html>
 <html>
-  <head></head>
+  <head>
+    <style>@import url('https://fonts.googleapis.com/css?family=Roboto+Slab:400,300,700');</style>
+  </head>
   <body>
     <div id="draft"></div>
     <script type="text/javascript" src="/HorizontalSlideshow.js"></script>

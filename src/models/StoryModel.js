@@ -20,6 +20,7 @@ const gulp = require('gulp');
 const webpack = require('webpack-stream');
 const through2 = require('through2');
 const cleanCSS = require('gulp-clean-css');
+const concat = require('gulp-concat');
 
 const UuidItem = types
   .model({
@@ -297,6 +298,7 @@ export const HorizontalSlideshow = types.compose(
     .actions(self => ({
       addSlide() {
         self.slides.push(HorizontalSlide.create());
+        debugger;
       },
     })),
   UuidItem,
@@ -306,8 +308,12 @@ export const HorizontalSlideshow = types.compose(
 function generateCSS() {
   return new Promise((resolve, reject) => {
     gulp
-      .src('src/client/styles.css')
-      .pipe(cleanCSS({ compatibility: 'ie11' }))
+      .src([
+        'src/client/reset.css',
+        'src/client/blueimp-gallery.css',
+        'src/client/styles.css',
+      ])
+      .pipe(concat('styles.css'))
       .pipe(
         through2.obj(function(file, enc, callback) {
           const contents = file.contents.toString('utf8');

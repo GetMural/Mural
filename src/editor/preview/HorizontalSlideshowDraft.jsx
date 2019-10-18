@@ -14,6 +14,14 @@ function getSrcSet(renditions) {
     .join(', ');
 }
 
+function getHref(renditions) {
+  if (renditions.length) {
+    return renditions[0].thumborUrl;
+  }
+
+  return '';
+}
+
 function HorizontalSlideshowDraft({ item: { slides } }) {
   return (
     <section
@@ -33,7 +41,7 @@ function HorizontalSlideshowDraft({ item: { slides } }) {
           <a
             key={id}
             urlset={getSrcSet(renditions)}
-            href={renditions[0].thumborUrl}
+            href={getHref(renditions)}
             title={title}
             alt={alt}
             data-credits={credits}
