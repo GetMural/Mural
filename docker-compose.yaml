@@ -24,6 +24,10 @@ services:
       - FILE_LOADER_ROOT_PATH=/mural
     volumes:
       # electron Mural user data folder
+      # (Remember to share your local disk in the Docker settings)
+      # Windows: C:\Users\<username>\AppData\Roaming\Mural
+      # Mac: /Users/<username>/Library/Application Support/mural:/mural
+
       - /Users/naaro/Library/Application Support/mural:/mural
     restart: always
     networks:
