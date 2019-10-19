@@ -1,4 +1,4 @@
-/******/ (function(modules) { // webpackBootstrap
+(function(e, a) { for(var i in a) e[i] = a[i]; }(window, /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
 /******/
@@ -3382,7 +3382,7 @@ __webpack_require__.r(__webpack_exports__);
 function loadItem(item) {
   const slides = item.el.find('.slide-container a').get();
 
-  blueimp_gallery_js_blueimp_gallery__WEBPACK_IMPORTED_MODULE_1___default()(slides, {
+  return blueimp_gallery_js_blueimp_gallery__WEBPACK_IMPORTED_MODULE_1___default()(slides, {
     container: item.el.find('.blueimp-gallery')[0],
     carousel: true,
     titleElement: '.slide-caption',
@@ -3399,6 +3399,7 @@ function loadItem(item) {
   });
 }
 
+// code needed to bootstrap editor preview
 $(document).ready(function() {
   const $story = $('#scrollytelling');
 
@@ -3410,8 +3411,17 @@ $(document).ready(function() {
     .data('plugin_scrollStory');
 
   const storyItems = scrollStory.getItems();
-  loadItem(storyItems[0]);
+  window.draftItem = storyItems[0];
+  window.Gallery = loadItem(window.draftItem);
 });
+
+// code needed to refresh editor preview
+window.refresh = function() {
+  window.draftItem.el
+    .find('.blueimp-gallery')
+    .removeClass('blueimp-gallery-single');
+  window.Gallery = loadItem(window.draftItem);
+};
 
 
 /***/ }),
@@ -3423,9 +3433,9 @@ $(document).ready(function() {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = jQuery;
+(function() { module.exports = window["jQuery"]; }());
 
 /***/ })
 
-/******/ });
+/******/ })));
 //# sourceMappingURL=HorizontalSlideshow.js.map

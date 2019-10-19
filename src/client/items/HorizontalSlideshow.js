@@ -6,7 +6,7 @@ import blueimp from 'blueimp-gallery/js/blueimp-gallery';
 function loadItem(item) {
   const slides = item.el.find('.slide-container a').get();
 
-  blueimp(slides, {
+  return blueimp(slides, {
     container: item.el.find('.blueimp-gallery')[0],
     carousel: true,
     titleElement: '.slide-caption',
@@ -23,6 +23,7 @@ function loadItem(item) {
   });
 }
 
+// code needed to bootstrap editor preview
 $(document).ready(function() {
   const $story = $('#scrollytelling');
 
@@ -34,5 +35,14 @@ $(document).ready(function() {
     .data('plugin_scrollStory');
 
   const storyItems = scrollStory.getItems();
-  loadItem(storyItems[0]);
+  window.draftItem = storyItems[0];
+  window.Gallery = loadItem(window.draftItem);
 });
+
+// code needed to refresh editor preview
+window.refresh = function() {
+  window.draftItem.el
+    .find('.blueimp-gallery')
+    .removeClass('blueimp-gallery-single');
+  window.Gallery = loadItem(window.draftItem);
+};

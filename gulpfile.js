@@ -16,7 +16,10 @@ function js() {
           devtool: 'source-map',
           mode: 'development',
           watch: true,
-          output: { filename: 'HorizontalSlideshow.js' },
+          output: {
+            filename: 'HorizontalSlideshow.js',
+            libraryTarget: 'window',
+          },
           externals: {
             jquery: 'jQuery',
           },

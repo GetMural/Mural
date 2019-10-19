@@ -29,7 +29,7 @@ let iFrameDoc;
 function updateIFrame() {
   const script = iFrameDoc.createElement('script');
   script.type = 'text/javascript';
-  script.src = '/HorizontalSlideshow.js';
+  script.text = `window.refresh();`;
   iFrameDoc.body.appendChild(script);
 }
 
