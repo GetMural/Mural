@@ -20,9 +20,8 @@ const AudioPreviewField = ({ audio }) => {
       >
         {({ preview }) => (
           <>
-            {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
             <audio src={preview} alt="Audio" controls />
-            <FormText color="muted">Background Audio</FormText>
+            <FormText color="muted">Audio Preview</FormText>
           </>
         )}
       </MediaPreviewField>

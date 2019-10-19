@@ -3,6 +3,7 @@ import { observer } from 'mobx-react';
 import {
   CentredTextDraft,
   ImageBackgroundDraft,
+  VideoBackgroundDraft,
   ImageParallaxDraft,
   HorizontalSlideshowDraft,
 } from './preview/';
@@ -10,6 +11,7 @@ import {
 const DRAFTS = {
   CentredTextDraft,
   ImageBackgroundDraft,
+  VideoBackgroundDraft,
   ImageParallaxDraft,
   HorizontalSlideshowDraft,
 };

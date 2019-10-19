@@ -16,6 +16,7 @@ import {
   ImageParallax,
   CentredText,
   HorizontalSlideshow,
+  VideoBackground,
 } from '../models/StoryModel';
 import ItemList from './ItemList';
 
@@ -24,6 +25,7 @@ const ITEMS = {
   ImageParallax,
   CentredText,
   HorizontalSlideshow,
+  VideoBackground,
 };
 
 class StoryListing extends Component {

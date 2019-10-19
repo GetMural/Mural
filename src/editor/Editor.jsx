@@ -3,6 +3,7 @@ import { clone, applySnapshot, getSnapshot } from 'mobx-state-tree';
 import { WorkspaceConsumer } from '../WorkspaceContext';
 
 import ImageBackgroundForm from './ImageBackgroundForm';
+import VideoBackgroundForm from './VideoBackgroundForm';
 import ImageParallaxForm from './ImageParallaxForm';
 import CentredTextForm from './CentredTextForm';
 import HorizontalSlideshowForm from './HorizontalSlideshowForm';
@@ -13,6 +14,7 @@ const StoryForms = {
   ImageParallaxForm,
   CentredTextForm,
   HorizontalSlideshowForm,
+  VideoBackgroundForm,
 };
 
 const Editor = props => {

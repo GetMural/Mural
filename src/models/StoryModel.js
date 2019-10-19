@@ -299,6 +299,17 @@ export const ImageBackground = types.compose(
   RemovableStoryItem,
 );
 
+export const VideoBackground = types.compose(
+  types.model({
+    type: types.literal('VideoBackground'),
+    video: types.optional(Media, {}),
+  }),
+  GeneralWrittenItem,
+  UuidItem,
+  ModifiableItem,
+  RemovableStoryItem,
+);
+
 export const ImageParallax = types.compose(
   types.model({
     type: types.literal('ImageParallax'),
@@ -372,6 +383,7 @@ const StoryModel = types
         ImageParallax,
         CentredText,
         HorizontalSlideshow,
+        VideoBackground,
       ),
     ),
   })
