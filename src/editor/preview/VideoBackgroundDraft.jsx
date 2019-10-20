@@ -19,7 +19,9 @@ function VideoBackgroundDraft(props) {
   } = props;
   return (
     <section className="st-video part">
-      <BackgroundVideo className="video-container" src={preview} />
+      <BackgroundVideo className="video-container">
+        <video src={preview}></video>
+      </BackgroundVideo>
       <div className="content container-fluid">
         <div className="row">
           <div className="col-sm-12 header-fullpage">

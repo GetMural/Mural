@@ -1,3 +1,4 @@
+/* eslint-env browser */
 import {
   types,
   getEnv,
@@ -134,6 +135,7 @@ const Media = types
       const response = await convertMediaToDataurl(self.path);
       return response;
     });
+
     return {
       get mimeType() {
         return mime.lookup(self.path);
@@ -180,6 +182,33 @@ const ImageMetaData = types
     credits: '',
     title: '',
   })
+  .views(self => {
+    const NULL_DIMENSIONS = {};
+    const dimensionsPromise = promisedComputed(
+      NULL_DIMENSIONS,
+      async () => {
+        const src = self.preview;
+        return new Promise(function(resolve, reject) {
+          const img = new Image();
+          img.onload = function() {
+            resolve({ w: img.naturalWidth, h: img.naturalHeight });
+          };
+          img.onerror = function(err) {
+            reject(err);
+          };
+          img.src = src;
+        });
+      },
+    );
+    return {
+      get dimensions() {
+        if (self.preview) {
+          return dimensionsPromise.get();
+        }
+        return NULL_DIMENSIONS;
+      },
+    };
+  })
   .actions(self => ({
     changeAlt(alt) {
       self.alt = alt;
@@ -191,6 +220,34 @@ const ImageMetaData = types
       self.title = title;
     },
   }));
+
+const VideoMetaData = types.model().views(self => {
+  const NULL_DIMENSIONS = {};
+  const dimensionsPromise = promisedComputed(
+    NULL_DIMENSIONS,
+    async () => {
+      const src = self.preview;
+      return new Promise(function(resolve, reject) {
+        const video = document.createElement('video');
+        video.onloadedmetadata = function() {
+          resolve({ w: video.videoWidth, h: video.videoHeight });
+        };
+        video.onerror = function(err) {
+          reject(err);
+        };
+        video.src = src;
+      });
+    },
+  );
+  return {
+    get dimensions() {
+      if (self.preview) {
+        return dimensionsPromise.get();
+      }
+      return NULL_DIMENSIONS;
+    },
+  };
+});
 
 const ContentImage = types.compose(
   Media,
@@ -210,6 +267,11 @@ const FeatureImage = types.compose(
   Media,
   FeatureImageViews,
   UuidItem,
+);
+
+const Video = types.compose(
+  Media,
+  VideoMetaData,
 );
 
 export const TextImageItem = types.compose(
@@ -302,7 +364,7 @@ export const ImageBackground = types.compose(
 export const VideoBackground = types.compose(
   types.model({
     type: types.literal('VideoBackground'),
-    video: types.optional(Media, {}),
+    video: types.optional(Video, {}),
   }),
   GeneralWrittenItem,
   UuidItem,

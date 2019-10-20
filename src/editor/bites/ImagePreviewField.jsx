@@ -21,6 +21,9 @@ const ImagePreviewField = ({ image }) => {
         <>
           <Img src={preview} alt="Image preview" />
           <FormText color="muted">Image Preview</FormText>
+          <FormText color="muted">
+            {image.dimensions.w}x{image.dimensions.h}
+          </FormText>
         </>
       )}
     </MediaPreviewField>
