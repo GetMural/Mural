@@ -20,7 +20,13 @@ function VideoBackgroundDraft(props) {
   return (
     <section className="st-video part">
       <BackgroundVideo className="video-container">
-        <video src={preview} className={orientation}></video>
+        <video
+          src={preview}
+          webkit-playsinline="true"
+          playsinline="true"
+          loop="true"
+          className={orientation}
+        ></video>
       </BackgroundVideo>
       <div className="content container-fluid">
         <div className="row">
