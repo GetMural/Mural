@@ -246,6 +246,18 @@ const VideoMetaData = types.model().views(self => {
       }
       return NULL_DIMENSIONS;
     },
+    get orientation() {
+      const dimensions = self.dimensions;
+      if (dimensions) {
+        if (dimensions.w / dimensions.h < 1) {
+          return 'portrait';
+        } else {
+          return 'landscape';
+        }
+      }
+
+      return '';
+    },
   };
 });
 

@@ -14,13 +14,13 @@ function VideoBackgroundDraft(props) {
       title,
       subtitle,
       body,
-      video: { preview },
+      video: { preview, orientation },
     },
   } = props;
   return (
     <section className="st-video part">
       <BackgroundVideo className="video-container">
-        <video src={preview}></video>
+        <video src={preview} className={orientation}></video>
       </BackgroundVideo>
       <div className="content container-fluid">
         <div className="row">

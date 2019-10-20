@@ -1008,31 +1008,13 @@ article .header-fullpage .middle {
 article .header-fullpage h1 {
   font-size: 2.5em;
   line-height: 1.4em;
-  margin: 0;
   margin-bottom: 10px;
-  text-align: center;
 }
 
 article .header-fullpage h2 {
   font-size: 1.5em;
   font-weight: 300;
   line-height: 1.2em;
-  margin: 0;
-  text-align: center;
-}
-
-@media (min-width: 475px) {
-  article .header-fullpage h1 {
-    font-size: 5em;
-    line-height: 1.2em;
-    text-align: left;
-  }
-
-  article .header-fullpage h2 {
-    font-size: 2.2em;
-    line-height: 1.2em;
-    text-align: left;
-  }
 }
 
 article a.nextPart {
@@ -1429,12 +1411,26 @@ article .part.box_text p {
   top: 0;
   left: 0;
   right: 0;
+  bottom: 0;
   backface-visibility: hidden;
   transform: translateZ(0);
+  line-height: 100vh;
 }
-.st-video .video-container video {
-  min-width: 100%;
-  min-height: 100vh;
+
+.st-video .video-container video.portrait {
+  position: absolute;
+  max-height: 100vh;
+}
+
+@media (orientation: landscape) {
+  .st-video .video-container video.portrait {
+    right: 0;
+  }
+}
+
+.st-video .video-container video.landscape {
+  width: 100%;
+  vertical-align: middle;
 }
 
 .st-video .video-container video[poster] {

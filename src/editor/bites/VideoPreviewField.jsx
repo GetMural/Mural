@@ -23,7 +23,8 @@ const VideoPreviewField = ({ video }) => {
             <Video src={preview} alt="Video" controls />
             <FormText color="muted">Video Preview</FormText>
             <FormText color="muted">
-              {video.dimensions.w}x{video.dimensions.h}
+              {video.orientation} {video.dimensions.w}x
+              {video.dimensions.h}
             </FormText>
           </>
         )}
