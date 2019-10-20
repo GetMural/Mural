@@ -1017,6 +1017,18 @@ article .header-fullpage h2 {
   line-height: 1.2em;
 }
 
+@media (min-width: 475px) {
+  article .header-fullpage h1 {
+    font-size: 5em;
+    line-height: 1.2em;
+  }
+
+  article .header-fullpage h2 {
+    font-size: 2.2em;
+    line-height: 1.2em;
+  }
+}
+
 article a.nextPart {
   display: inline-block;
   padding: 3px 6px;
@@ -1430,6 +1442,7 @@ article .part.box_text p {
 
 .st-video .video-container video.landscape {
   width: 100%;
+  max-height: 100%;
   vertical-align: middle;
 }
 
