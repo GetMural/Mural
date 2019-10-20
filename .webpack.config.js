@@ -16,6 +16,7 @@ module.exports = config => {
       'mime-types',
       'uuid/v4',
       'webpack-stream',
+      'vinyl-named',
     ],
   );
   let modified = appendWebpackPlugin(nodeExternalPlugins, config);

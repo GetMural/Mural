@@ -5,7 +5,7 @@ import { observer } from 'mobx-react';
 import styled from 'styled-components';
 
 const BackgroundVideo = styled.div`
-  position: fixed;
+  position: absolute;
 `;
 
 function VideoBackgroundDraft(props) {

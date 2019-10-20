@@ -1797,3 +1797,7 @@ article .part.box_text p {
 .text-shadow {
   text-shadow: 2px 2px 4px #000000;
 }
+
+.fixed {
+  position: fixed !important;
+}

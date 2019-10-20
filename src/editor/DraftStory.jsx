@@ -8,7 +8,17 @@ const FrameHead = observer(({ storyState }) => {
   return <style>{storyState.storyStyles}</style>;
 });
 
-const initialContent = `
+let iFrameDoc;
+
+function updateIFrame() {
+  const script = iFrameDoc.createElement('script');
+  script.type = 'text/javascript';
+  script.text = `window.refresh();`;
+  iFrameDoc.body.appendChild(script);
+}
+
+const DraftStory = ({ children, item }) => {
+  const initialContent = `
 <!DOCTYPE html>
 <html>
   <head>
@@ -20,20 +30,10 @@ const initialContent = `
       src="https://code.jquery.com/jquery-3.4.1.min.js"
       integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
       crossorigin="anonymous"></script>
-    <script type="text/javascript" src="/HorizontalSlideshow.js"></script>
+    <script type="text/javascript" src="/${item.type}.js"></script>
   </body>
 </html>`;
 
-let iFrameDoc;
-
-function updateIFrame() {
-  const script = iFrameDoc.createElement('script');
-  script.type = 'text/javascript';
-  script.text = `window.refresh();`;
-  iFrameDoc.body.appendChild(script);
-}
-
-const DraftStory = ({ children }) => {
   return (
     <WorkspaceConsumer>
       {({ storyState }) => (
@@ -59,18 +59,7 @@ const DraftStory = ({ children }) => {
           <FrameContextConsumer>
             {({ document, window }) => {
               iFrameDoc = document;
-              // const script = document.createElement('script');
-              // script.type = 'text/javascript';
-              // script.text = 'console.log("HELLO FRAME")';
-              // document.body.appendChild(script);
-              // window.addEventListener('load', function(event) {
-              //   console.log('WINDOW LOADED');
-              // });
-              // window.addEventListener('beforeunload', function(
-              //   event,
-              // ) {
-              //   console.log('WINDOW UNLOADED');
-              // });
+
               return (
                 <StyleSheetManager target={document.head}>
                   {<article id="scrollytelling">{children}</article>}

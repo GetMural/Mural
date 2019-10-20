@@ -45,6 +45,7 @@
     "thumbor": "^0.1.5",
     "uuid": "^3.3.3",
     "video.js": "^7.6.5",
+    "vinyl-named": "^1.1.0",
     "webpack-stream": "^5.2.1"
   },
   "scripts": {

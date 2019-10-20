@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./src/client/items/HorizontalSlideshow.js");
+/******/ 	return __webpack_require__(__webpack_require__.s = 0);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -3422,6 +3422,18 @@ window.refresh = function() {
     .removeClass('blueimp-gallery-single');
   window.Gallery = loadItem(window.draftItem);
 };
+
+
+/***/ }),
+
+/***/ 0:
+/*!*******************************************************!*\
+  !*** multi ./src/client/items/HorizontalSlideshow.js ***!
+  \*******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(/*! /Users/naaro/Code/Mural/src/client/items/HorizontalSlideshow.js */"./src/client/items/HorizontalSlideshow.js");
 
 
 /***/ }),
