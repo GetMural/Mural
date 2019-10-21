@@ -2,10 +2,14 @@
 /* globals $ */
 import 'scrollstory/jquery.scrollstory';
 
+function playVideo() {
+  this.play();
+}
+
 function loadItem(item) {
   item.el.find('.video-container').addClass('fixed');
   const video = item.el.find('video').get(0);
-  video.play();
+  video.addEventListener('canplay', playVideo);
 }
 
 // code needed to bootstrap editor preview
@@ -25,6 +29,4 @@ $(document).ready(function() {
 });
 
 // code needed to refresh editor preview
-window.refresh = function() {
-  loadItem(window.draftItem);
-};
+window.refresh = function() {};
