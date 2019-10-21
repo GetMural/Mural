@@ -9,11 +9,10 @@ import {
 
 import ImagePreviewField from './bites/ImagePreviewField';
 import { Title, Subtitle, NavEntry, ButtonPanel } from './bites';
-import FormLayout from './FormLayout';
 
 function ImageParallaxForm({ draftItem, onSave }) {
   return (
-    <FormLayout draftItem={draftItem}>
+    <>
       <NavEntry />
       <Fieldset>
         <Legend>Item Content</Legend>
@@ -33,7 +32,7 @@ function ImageParallaxForm({ draftItem, onSave }) {
         </FormGroup>
       </Fieldset>
       <ButtonPanel onSave={onSave} />
-    </FormLayout>
+    </>
   );
 }
 

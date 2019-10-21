@@ -3,11 +3,10 @@ import { observer } from 'mobx-react';
 import { Button } from '@bootstrap-styled/v4';
 import ImageCreditsForm from './ImageCreditsForm';
 import { NavEntry, ButtonPanel } from './bites';
-import FormLayout from './FormLayout';
 
 const HorizontalSlideshowForm = ({ draftItem, onSave }) => {
   return (
-    <FormLayout draftItem={draftItem}>
+    <>
       <NavEntry />
       {draftItem.slides.map(slide => (
         <ImageCreditsForm image={slide} key={slide.id} />
@@ -22,7 +21,7 @@ const HorizontalSlideshowForm = ({ draftItem, onSave }) => {
         </Button>
       </div>
       <ButtonPanel onSave={onSave} />
-    </FormLayout>
+    </>
   );
 };
 

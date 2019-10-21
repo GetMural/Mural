@@ -11,11 +11,10 @@ import {
   NavEntry,
   ButtonPanel,
 } from './bites';
-import FormLayout from './FormLayout';
 
 function VideoBackgroundForm({ draftItem, onSave }) {
   return (
-    <FormLayout draftItem={draftItem}>
+    <>
       <NavEntry />
       <Fieldset>
         <Legend>Item Content</Legend>
@@ -37,7 +36,7 @@ function VideoBackgroundForm({ draftItem, onSave }) {
         <VideoPreviewField video={draftItem.video} />
       </Fieldset>
       <ButtonPanel onSave={onSave} />
-    </FormLayout>
+    </>
   );
 }
 

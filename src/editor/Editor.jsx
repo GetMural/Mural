@@ -8,6 +8,7 @@ import ImageParallaxForm from './ImageParallaxForm';
 import CentredTextForm from './CentredTextForm';
 import HorizontalSlideshowForm from './HorizontalSlideshowForm';
 import Layout from './Layout';
+import FormLayout from './FormLayout';
 
 const StoryForms = {
   ImageBackgroundForm,
@@ -34,15 +35,17 @@ const Editor = props => {
         const Component = StoryForms[`${clonedItem.type}Form`];
         return (
           <Layout>
-            <Component
-              draftItem={clonedItem}
-              onSave={() => {
-                applySnapshot(
-                  storyState.items[storyIndex],
-                  getSnapshot(clonedItem),
-                );
-              }}
-            />
+            <FormLayout draftItem={clonedItem}>
+              <Component
+                draftItem={clonedItem}
+                onSave={() => {
+                  applySnapshot(
+                    storyState.items[storyIndex],
+                    getSnapshot(clonedItem),
+                  );
+                }}
+              />
+            </FormLayout>
           </Layout>
         );
       }}

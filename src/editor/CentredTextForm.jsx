@@ -16,12 +16,11 @@ import {
   NavEntry,
   ButtonPanel,
 } from './bites';
-import FormLayout from './FormLayout';
 import TextImageItemForm from './TextImageItemForm';
 
 function CentredTextForm({ draftItem, onSave }) {
   return (
-    <FormLayout draftItem={draftItem}>
+    <>
       <NavEntry />
       <Fieldset>
         <Legend>Item Content</Legend>
@@ -61,7 +60,7 @@ function CentredTextForm({ draftItem, onSave }) {
         </Button>
       </div>
       <ButtonPanel onSave={onSave} />
-    </FormLayout>
+    </>
   );
 }
 

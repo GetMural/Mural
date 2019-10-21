@@ -17,11 +17,10 @@ import {
   NavEntry,
   ButtonPanel,
 } from './bites';
-import FormLayout from './FormLayout';
 
 function ImageBackgroundForm({ draftItem, onSave }) {
   return (
-    <FormLayout draftItem={draftItem}>
+    <>
       <NavEntry />
       <Fieldset>
         <Legend>Item Content</Legend>
@@ -49,7 +48,7 @@ function ImageBackgroundForm({ draftItem, onSave }) {
         <AudioPreviewField audio={draftItem.audio} />
       </Fieldset>
       <ButtonPanel onSave={onSave} />
-    </FormLayout>
+    </>
   );
 }
 

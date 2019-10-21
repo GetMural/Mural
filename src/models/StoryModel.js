@@ -277,6 +277,7 @@ const HorizontalSlide = types.compose(
 
 const FeatureImage = types.compose(
   Media,
+  ImageMetaData,
   FeatureImageViews,
   UuidItem,
 );

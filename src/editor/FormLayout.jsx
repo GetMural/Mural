@@ -20,10 +20,7 @@ function FormLayout({ draftItem, children }) {
           </Editor>
         </Col>
         <Col xs={4} className="p-0">
-          <DraftStory
-            modified={draftItem.lastModified}
-            item={draftItem}
-          >
+          <DraftStory>
             <DraftItem item={draftItem}></DraftItem>
           </DraftStory>
         </Col>
