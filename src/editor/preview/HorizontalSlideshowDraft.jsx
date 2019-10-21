@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable react/no-danger */
 import React from 'react';
-import { string, shape, array } from 'prop-types';
+import { shape, array } from 'prop-types';
 import { observer } from 'mobx-react';
 
 function getSrcSet(renditions) {

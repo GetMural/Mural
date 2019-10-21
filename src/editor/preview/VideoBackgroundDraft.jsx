@@ -22,9 +22,8 @@ function VideoBackgroundDraft(props) {
       <BackgroundVideo className="video-container">
         <video
           src={preview}
-          webkit-playsinline="true"
-          playsinline="true"
-          loop="true"
+          playsInline={true}
+          loop={true}
           className={orientation}
         ></video>
       </BackgroundVideo>

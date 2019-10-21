@@ -1,5 +1,7 @@
 import React from 'react';
+import styled from 'styled-components';
 import { clone, applySnapshot, getSnapshot } from 'mobx-state-tree';
+import { Observer } from 'mobx-react';
 import { WorkspaceConsumer } from '../WorkspaceContext';
 
 import ImageBackgroundForm from './ImageBackgroundForm';
@@ -8,7 +10,9 @@ import ImageParallaxForm from './ImageParallaxForm';
 import CentredTextForm from './CentredTextForm';
 import HorizontalSlideshowForm from './HorizontalSlideshowForm';
 import Layout from './Layout';
-import FormLayout from './FormLayout';
+import { Form, Container, Col, Row } from '@bootstrap-styled/v4';
+import DraftStory from './DraftStory';
+import DraftItem from './DraftItem';
 
 const StoryForms = {
   ImageBackgroundForm,
@@ -17,6 +21,11 @@ const StoryForms = {
   HorizontalSlideshowForm,
   VideoBackgroundForm,
 };
+
+const FormEditor = styled.div`
+  overflow: auto;
+  height: 100vh;
+`;
 
 const Editor = props => {
   const {
@@ -29,23 +38,45 @@ const Editor = props => {
 
   return (
     <WorkspaceConsumer>
-      {({ storyState }) => {
+      {({ storyState, createDraftStory, currentStory }) => {
+        const draftStory = createDraftStory(currentStory);
         const item = storyState.items[storyIndex];
-        const clonedItem = clone(item);
+        const clonedItem = clone(item, false);
+        draftStory.addItem(clonedItem);
         const Component = StoryForms[`${clonedItem.type}Form`];
         return (
           <Layout>
-            <FormLayout draftItem={clonedItem}>
-              <Component
-                draftItem={clonedItem}
-                onSave={() => {
-                  applySnapshot(
-                    storyState.items[storyIndex],
-                    getSnapshot(clonedItem),
-                  );
-                }}
-              />
-            </FormLayout>
+            <Container className="m-0 p-0" fluid>
+              <Row>
+                <Col xs={8}>
+                  <FormEditor>
+                    <Form>
+                      <Component
+                        draftItem={clonedItem}
+                        onSave={() => {
+                          applySnapshot(
+                            storyState.items[storyIndex],
+                            getSnapshot(clonedItem),
+                          );
+                        }}
+                      />
+                    </Form>
+                  </FormEditor>
+                </Col>
+                <Col xs={4} className="p-0">
+                  <Observer>
+                    {() => (
+                      <DraftStory
+                        draftStory={draftStory}
+                        modified={draftStory.lastModified}
+                      >
+                        <DraftItem item={clonedItem}></DraftItem>
+                      </DraftStory>
+                    )}
+                  </Observer>
+                </Col>
+              </Row>
+            </Container>
           </Layout>
         );
       }}

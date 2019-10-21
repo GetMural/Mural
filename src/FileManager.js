@@ -49,6 +49,7 @@ class FileManager {
       'uploads',
       opts.storyName,
     );
+    this.readOnly = !!opts.readOnly;
   }
 
   read() {
@@ -56,10 +57,12 @@ class FileManager {
   }
 
   write(snapshot) {
-    try {
-      fs.writeFileSync(this.path, JSON.stringify(snapshot));
-    } catch (e) {
-      console.log(e);
+    if (!this.readOnly) {
+      try {
+        fs.writeFileSync(this.path, JSON.stringify(snapshot));
+      } catch (e) {
+        console.log(e);
+      }
     }
   }
 

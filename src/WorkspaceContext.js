@@ -13,6 +13,19 @@ const settingsState = WorkspaceSettings.create(
   },
 );
 
+const createDraftStory = storyName => {
+  return StoryModel.create(
+    {},
+    {
+      fileManager: new FileManager({ storyName, readOnly: true }),
+      thumbor: new Thumbor(
+        settingsState.thumbor.key,
+        settingsState.thumbor.host,
+      ),
+    },
+  );
+};
+
 const getStoryState = storyName => {
   const fileManager = new FileManager({ storyName });
   const storyJson = fileManager.read();
@@ -46,6 +59,7 @@ class WorkspaceProvider extends React.Component {
         value={{
           ...this.state,
           onSelectStory: this.handleSelectStory,
+          createDraftStory,
         }}
       >
         {this.props.children}
