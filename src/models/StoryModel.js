@@ -34,6 +34,19 @@ const UuidItem = types
     },
   }));
 
+const AlignableItem = types
+  .model({
+    align: types.optional(
+      types.enumeration(['left', 'center', 'right']),
+      'left',
+    ),
+  })
+  .actions(self => ({
+    changeAlignment(align) {
+      self.align = align;
+    },
+  }));
+
 const ModifiableItem = types
   .model({
     lastModified: types.optional(types.Date, Date.now()),
@@ -292,20 +305,14 @@ export const TextImageItem = types.compose(
     .model({
       body: '',
       image: types.optional(ContentImage, {}),
-      align: types.optional(
-        types.enumeration(['left', 'center', 'right']),
-        'left',
-      ),
     })
     .actions(self => ({
-      changeAlignment(align) {
-        self.align = align;
-      },
       changeBody(body) {
         self.body = body;
       },
     })),
   UuidItem,
+  AlignableItem,
 );
 
 const HeaderItem = types
@@ -370,16 +377,19 @@ export const ImageBackground = types.compose(
   GeneralWrittenItem,
   UuidItem,
   RemovableStoryItem,
+  AlignableItem,
 );
 
 export const VideoBackground = types.compose(
   types.model({
     type: types.literal('VideoBackground'),
     video: types.optional(Video, {}),
+    offset: 0,
   }),
   GeneralWrittenItem,
   UuidItem,
   RemovableStoryItem,
+  AlignableItem,
 );
 
 export const ImageParallax = types.compose(
@@ -390,6 +400,7 @@ export const ImageParallax = types.compose(
   HeaderItem,
   UuidItem,
   RemovableStoryItem,
+  AlignableItem,
 );
 
 export const HorizontalSlideshow = types.compose(

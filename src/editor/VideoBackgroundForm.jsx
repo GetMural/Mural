@@ -3,6 +3,7 @@ import { observer } from 'mobx-react';
 import { Fieldset, Legend, Label } from '@bootstrap-styled/v4';
 
 import VideoPreviewField from './bites/VideoPreviewField';
+import Alignment from './bites/Alignment';
 
 import {
   Title,
@@ -34,6 +35,11 @@ function VideoBackgroundForm({ draftItem, onSave }) {
       <Fieldset>
         <Label>Background Video</Label>
         <VideoPreviewField video={draftItem.video} />
+        <Alignment
+          value={draftItem.align}
+          changeAlignment={draftItem.changeAlignment}
+          uuid={draftItem.id}
+        />
       </Fieldset>
       <ButtonPanel onSave={onSave} />
     </>
