@@ -6,7 +6,11 @@ import styled from 'styled-components';
 import classnames from 'classnames';
 
 const BackgroundVideo = styled.div`
-  position: absolute;
+  position: fixed;
+  margin-left: calc(
+    ${props =>
+      `(${props.videoWidth}px - 100%) * -${props.videoOffset}/100`}
+  );
 `;
 
 function VideoBackgroundDraft({
@@ -14,10 +18,15 @@ function VideoBackgroundDraft({
     title,
     subtitle,
     body,
-    video: { preview, orientation },
+    video: { preview, orientation, dimensions },
     align,
+    offset,
+    useOffset,
   },
 }) {
+  const videoClasses = classnames(`${orientation}`, {
+    offset: useOffset,
+  });
   const contentClasses = classnames(
     'col-sm-12',
     'header-fullpage',
@@ -25,12 +34,18 @@ function VideoBackgroundDraft({
   );
   return (
     <section className="st-video part">
-      <BackgroundVideo className="video-container">
+      <BackgroundVideo
+        className="video-container"
+        videoOffset={useOffset ? offset : 0}
+        videoWidth={
+          (window.innerHeight / dimensions.h) * dimensions.w
+        }
+      >
         <video
           src={preview}
           playsInline={true}
           loop={true}
-          className={orientation}
+          className={videoClasses}
         ></video>
       </BackgroundVideo>
       <div className="content container-fluid">

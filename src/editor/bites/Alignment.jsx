@@ -13,7 +13,6 @@ const Alignment = ({ value, changeAlignment, uuid }) => {
             value="left"
             checked={value === 'left'}
             onChange={e => {
-              debugger;
               changeAlignment(e.target.value);
             }}
           />
@@ -28,7 +27,6 @@ const Alignment = ({ value, changeAlignment, uuid }) => {
             value="center"
             checked={value === 'center'}
             onChange={e => {
-              debugger;
               changeAlignment(e.target.value);
             }}
           />
@@ -43,7 +41,6 @@ const Alignment = ({ value, changeAlignment, uuid }) => {
             value="right"
             checked={value === 'right'}
             onChange={e => {
-              debugger;
               changeAlignment(e.target.value);
             }}
           />

@@ -381,11 +381,21 @@ export const ImageBackground = types.compose(
 );
 
 export const VideoBackground = types.compose(
-  types.model({
-    type: types.literal('VideoBackground'),
-    video: types.optional(Video, {}),
-    offset: 0,
-  }),
+  types
+    .model({
+      type: types.literal('VideoBackground'),
+      video: types.optional(Video, {}),
+      useOffset: false,
+      offset: 0,
+    })
+    .actions(self => ({
+      toggleOffsetUse() {
+        self.useOffset = !self.useOffset;
+      },
+      updateOffset(offset) {
+        self.offset = offset;
+      },
+    })),
   GeneralWrittenItem,
   UuidItem,
   RemovableStoryItem,

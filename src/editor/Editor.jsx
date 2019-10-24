@@ -61,7 +61,7 @@ const Editor = props => {
                 </Form>
               </FormEditor>
             </div>
-            <div>
+            <div className="col-xs-auto">
               <Observer>
                 {() => (
                   <DraftStory

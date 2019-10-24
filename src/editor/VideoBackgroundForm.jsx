@@ -1,6 +1,12 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import { Fieldset, Legend, Label } from '@bootstrap-styled/v4';
+import {
+  Fieldset,
+  Legend,
+  Label,
+  FormGroup,
+  Input,
+} from '@bootstrap-styled/v4';
 
 import VideoPreviewField from './bites/VideoPreviewField';
 import Alignment from './bites/Alignment';
@@ -41,6 +47,33 @@ function VideoBackgroundForm({ draftItem, onSave }) {
         <Label>Background Video</Label>
         <VideoPreviewField video={draftItem.video} />
       </Fieldset>
+      {draftItem.video.orientation === 'landscape' && (
+        <FormGroup>
+          <Label check>
+            <Input
+              type="checkbox"
+              checked={draftItem.useOffset}
+              onChange={draftItem.toggleOffsetUse}
+            />{' '}
+            Use Offset
+          </Label>
+        </FormGroup>
+      )}
+      {draftItem.useOffset && (
+        <FormGroup>
+          <Label>Offset</Label>
+          <Input
+            type="range"
+            min={0}
+            max={100}
+            step={1}
+            value={draftItem.offset}
+            onChange={e => {
+              draftItem.updateOffset(parseInt(e.target.value, 10));
+            }}
+          />{' '}
+        </FormGroup>
+      )}
       <ButtonPanel onSave={onSave} />
     </>
   );
