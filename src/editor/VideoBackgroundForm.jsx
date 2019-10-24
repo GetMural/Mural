@@ -19,6 +19,11 @@ function VideoBackgroundForm({ draftItem, onSave }) {
       <NavEntry />
       <Fieldset>
         <Legend>Item Content</Legend>
+        <Alignment
+          value={draftItem.align}
+          changeAlignment={draftItem.changeAlignment}
+          uuid={draftItem.id}
+        />
         <Title
           title={draftItem.title}
           changeTitle={draftItem.changeTitle}
@@ -35,11 +40,6 @@ function VideoBackgroundForm({ draftItem, onSave }) {
       <Fieldset>
         <Label>Background Video</Label>
         <VideoPreviewField video={draftItem.video} />
-        <Alignment
-          value={draftItem.align}
-          changeAlignment={draftItem.changeAlignment}
-          uuid={draftItem.id}
-        />
       </Fieldset>
       <ButtonPanel onSave={onSave} />
     </>

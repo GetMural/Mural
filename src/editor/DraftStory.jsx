@@ -39,7 +39,7 @@ const DraftStory = ({ draftStory, children }) => {
         display: 'block',
         overflow: 'scroll',
         border: 0,
-        width: '100%',
+        width: '375px',
         height: '100vh',
       }}
       initialContent={initialContent}

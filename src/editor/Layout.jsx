@@ -1,11 +1,12 @@
 import React from 'react';
+import { Container, Row } from '@bootstrap-styled/v4';
 import Navigation from './Navigation';
 import ErrorBoundary from './ErrorBoundary';
 
 const Layout = ({ children }) => {
   return (
-    <div className="row">
-      <div className="col-1">
+    <Container className="m-0 p-0" fluid>
+      <Row className="no-gutters">
         <div
           className="nav flex-column nav-pills"
           id="v-pills-tab"
@@ -14,13 +15,9 @@ const Layout = ({ children }) => {
         >
           <Navigation />
         </div>
-      </div>
-      <div className="col-11">
-        <div className="tab-content" id="v-pills-tabContent">
-          <ErrorBoundary>{children}</ErrorBoundary>
-        </div>
-      </div>
-    </div>
+        <ErrorBoundary>{children}</ErrorBoundary>
+      </Row>
+    </Container>
   );
 };
 

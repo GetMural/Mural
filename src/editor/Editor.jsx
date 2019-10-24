@@ -10,7 +10,7 @@ import ImageParallaxForm from './ImageParallaxForm';
 import CentredTextForm from './CentredTextForm';
 import HorizontalSlideshowForm from './HorizontalSlideshowForm';
 import Layout from './Layout';
-import { Form, Container, Col, Row } from '@bootstrap-styled/v4';
+import { Form } from '@bootstrap-styled/v4';
 import DraftStory from './DraftStory';
 import DraftItem from './DraftItem';
 
@@ -46,37 +46,33 @@ const Editor = props => {
         const Component = StoryForms[`${clonedItem.type}Form`];
         return (
           <Layout>
-            <Container className="m-0 p-0" fluid>
-              <Row>
-                <Col xs={8}>
-                  <FormEditor>
-                    <Form>
-                      <Component
-                        draftItem={clonedItem}
-                        onSave={() => {
-                          applySnapshot(
-                            storyState.items[storyIndex],
-                            getSnapshot(clonedItem),
-                          );
-                        }}
-                      />
-                    </Form>
-                  </FormEditor>
-                </Col>
-                <Col xs={4} className="p-0">
-                  <Observer>
-                    {() => (
-                      <DraftStory
-                        draftStory={draftStory}
-                        modified={draftStory.lastModified}
-                      >
-                        <DraftItem item={clonedItem}></DraftItem>
-                      </DraftStory>
-                    )}
-                  </Observer>
-                </Col>
-              </Row>
-            </Container>
+            <div className="flex-fill">
+              <FormEditor>
+                <Form>
+                  <Component
+                    draftItem={clonedItem}
+                    onSave={() => {
+                      applySnapshot(
+                        storyState.items[storyIndex],
+                        getSnapshot(clonedItem),
+                      );
+                    }}
+                  />
+                </Form>
+              </FormEditor>
+            </div>
+            <div>
+              <Observer>
+                {() => (
+                  <DraftStory
+                    draftStory={draftStory}
+                    modified={draftStory.lastModified}
+                  >
+                    <DraftItem item={clonedItem}></DraftItem>
+                  </DraftStory>
+                )}
+              </Observer>
+            </div>
           </Layout>
         );
       }}
