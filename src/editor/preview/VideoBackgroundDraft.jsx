@@ -36,7 +36,9 @@ function VideoBackgroundDraft({
     <section className="st-video part">
       <BackgroundVideo
         className="video-container"
-        videoOffset={useOffset ? offset : 0}
+        videoOffset={
+          orientation === 'landscape' && useOffset ? offset : 0
+        }
         videoWidth={
           (window.innerHeight / dimensions.h) * dimensions.w
         }

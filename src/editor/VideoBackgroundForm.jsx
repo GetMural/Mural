@@ -59,21 +59,22 @@ function VideoBackgroundForm({ draftItem, onSave }) {
           </Label>
         </FormGroup>
       )}
-      {draftItem.useOffset && (
-        <FormGroup>
-          <Label>Offset</Label>
-          <Input
-            type="range"
-            min={0}
-            max={100}
-            step={1}
-            value={draftItem.offset}
-            onChange={e => {
-              draftItem.updateOffset(parseInt(e.target.value, 10));
-            }}
-          />{' '}
-        </FormGroup>
-      )}
+      {draftItem.video.orientation === 'landscape' &&
+        draftItem.useOffset && (
+          <FormGroup>
+            <Label>Offset</Label>
+            <Input
+              type="range"
+              min={0}
+              max={100}
+              step={1}
+              value={draftItem.offset}
+              onChange={e => {
+                draftItem.updateOffset(parseInt(e.target.value, 10));
+              }}
+            />{' '}
+          </FormGroup>
+        )}
       <ButtonPanel onSave={onSave} />
     </>
   );
