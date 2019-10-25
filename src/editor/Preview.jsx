@@ -10,6 +10,7 @@ const Preview = () => {
         <DraftStory
           draftStory={storyState}
           modified={storyState.lastModified}
+          width="100%"
         >
           {storyState.items.map(storyItem => {
             return (

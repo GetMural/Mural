@@ -16,7 +16,7 @@ function updateIFrame() {
   iFrameDoc.body.appendChild(script);
 }
 
-const DraftStory = ({ draftStory, children }) => {
+const DraftStory = ({ draftStory, children, width }) => {
   // TODO rework to look at all item JS
   const initialContent = `
   <!DOCTYPE html>
@@ -39,7 +39,7 @@ const DraftStory = ({ draftStory, children }) => {
         display: 'block',
         overflow: 'scroll',
         border: 0,
-        width: '375px',
+        width,
         height: '100vh',
       }}
       initialContent={initialContent}

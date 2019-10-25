@@ -75,6 +75,7 @@ const Editor = props => {
                   <DraftStory
                     draftStory={draftStory}
                     modified={draftStory.lastModified}
+                    width="375px"
                   >
                     <DraftItem item={clonedItem}></DraftItem>
                   </DraftStory>
