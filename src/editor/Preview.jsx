@@ -5,20 +5,23 @@ import { WorkspaceConsumer } from '../WorkspaceContext';
 
 const Preview = () => {
   return (
-    <DraftStory>
-      <WorkspaceConsumer>
-        {({ storyState }) =>
-          storyState.items.map(storyItem => {
+    <WorkspaceConsumer>
+      {({ storyState }) => (
+        <DraftStory
+          draftStory={storyState}
+          modified={storyState.lastModified}
+        >
+          {storyState.items.map(storyItem => {
             return (
               <DraftItem
                 key={storyItem.id}
                 item={storyItem}
               ></DraftItem>
             );
-          })
-        }
-      </WorkspaceConsumer>
-    </DraftStory>
+          })}
+        </DraftStory>
+      )}
+    </WorkspaceConsumer>
   );
 };
 
