@@ -27,6 +27,14 @@ const FormEditor = styled.div`
   height: 100vh;
 `;
 
+const FormContainer = styled.div`
+  flex: 1;
+`;
+
+const Preview = styled.div`
+  flex: 0 0 375px;
+`;
+
 const Editor = props => {
   const {
     match: {
@@ -46,7 +54,7 @@ const Editor = props => {
         const Component = StoryForms[`${clonedItem.type}Form`];
         return (
           <Layout>
-            <div className="flex-fill">
+            <FormContainer>
               <FormEditor>
                 <Form>
                   <Component
@@ -60,8 +68,8 @@ const Editor = props => {
                   />
                 </Form>
               </FormEditor>
-            </div>
-            <div className="col-xs-auto">
+            </FormContainer>
+            <Preview>
               <Observer>
                 {() => (
                   <DraftStory
@@ -72,7 +80,7 @@ const Editor = props => {
                   </DraftStory>
                 )}
               </Observer>
-            </div>
+            </Preview>
           </Layout>
         );
       }}
