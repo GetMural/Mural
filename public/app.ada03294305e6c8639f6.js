@@ -10794,7 +10794,7 @@ $.fn.moveIt = function () {
   $(this).each(function () {
     instances.push(new MoveItItem($(this)));
   });
-  window.addEventListener('scroll', function (e) {
+  window.addEventListener("scroll", function (e) {
     var scrollTop = $window.scrollTop();
     instances.forEach(function (inst) {
       inst.update(scrollTop);
@@ -10806,8 +10806,8 @@ $.fn.moveIt = function () {
 
 var MoveItItem = function MoveItItem(el) {
   this.el = $(el);
-  this.container = this.el.parent('.part');
-  this.speed = parseInt(this.el.attr('data-scroll-speed')); // 60 fps
+  this.container = this.el.parent(".part");
+  this.speed = parseInt(this.el.attr("data-scroll-speed")); // 60 fps
 
   this.fpsInterval = 1000 / 60;
   this.top = null;
@@ -10825,16 +10825,16 @@ MoveItItem.prototype.animate = function (time) {
     // Get ready for next frame by setting then=now, but...
     // Also, adjust for fpsInterval not being multiple of 16.67
     this.then = now - elapsed % this.fpsInterval;
-    this.el.css('transform', 'translateY(' + -(this.top / this.speed) + 'px)');
+    this.el.css("transform", "translateY(" + -(this.top / this.speed) + "px)");
   }
 
   this.rafID = requestAnimationFrame(this.animate.bind(this));
 };
 
 MoveItItem.prototype.update = function (scrollTop) {
-  if (this.container.hasClass('inviewport')) {
+  if (this.container.hasClass("inviewport")) {
     if (!this.inView) {
-      this.el.css('willChange', 'transform');
+      this.el.css("willChange", "transform");
       this.then = performance.now();
       this.rafID = requestAnimationFrame(this.animate.bind(this));
     }
@@ -10844,7 +10844,7 @@ MoveItItem.prototype.update = function (scrollTop) {
   } else {
     if (this.inView) {
       cancelAnimationFrame(this.rafID);
-      this.el.css('willChange', 'auto');
+      this.el.css("willChange", "auto");
     }
 
     this.inView = false;
@@ -10867,21 +10867,21 @@ var scrKey;
 var attrKey;
 
 if (WINDOW_WIDTH > 1024) {
-  scrKey = 'src';
-  attrKey = 'src';
+  scrKey = "src";
+  attrKey = "src";
 } else if (WINDOW_WIDTH > 600) {
-  scrKey = 'srcMedium';
-  attrKey = 'src-medium';
+  scrKey = "srcMedium";
+  attrKey = "src-medium";
 } else {
-  scrKey = 'srcPhone';
-  attrKey = 'src-phone';
+  scrKey = "srcPhone";
+  attrKey = "src-phone";
 }
 
-var $story = $('#scrollytelling');
+var $story = $("#scrollytelling");
 var scrollStory = $story.scrollStory({
-  contentSelector: '.part',
+  contentSelector: ".part",
   triggerOffset: 0
-}).data('plugin_scrollStory');
+}).data("plugin_scrollStory");
 var storyItems = scrollStory.getItems();
 var LOAD_PROMISES = [];
 var LOADED_STORY_SECTIONS = [];
@@ -10891,7 +10891,7 @@ function getVideoAttrs(item) {
   var muted = !isSoundEnabled;
   var autoplay; // TODO we only have full page videos atm.
 
-  if (item.el.hasClass('st-content-video')) {
+  if (item.el.hasClass("st-content-video")) {
     autoplay = !isMobile.any;
   } else {
     autoplay = true;
@@ -10928,7 +10928,7 @@ function loadItem(item) {
   }
 
   if (item.data.slideshow) {
-    var slides = item.el.find('.slide-container a').get();
+    var slides = item.el.find(".slide-container a").get();
     var slidePromises = [];
 
     for (var i = 0; i < slides.length; i++) {
@@ -10940,14 +10940,14 @@ function loadItem(item) {
 
     var horizontalSlidePromise = Promise.all(slidePromises).then(function () {
       blueimp(slides, {
-        container: item.el.find('.blueimp-gallery')[0],
+        container: item.el.find(".blueimp-gallery")[0],
         urlProperty: attrKey,
         carousel: true,
-        titleElement: '.slide-caption',
+        titleElement: ".slide-caption",
         startSlideshow: false,
         onslide: function onslide(index, slide) {
-          var text = this.list[index].getAttribute('data-credits');
-          var node = this.container.find('.credits');
+          var text = this.list[index].getAttribute("data-credits");
+          var node = this.container.find(".credits");
           node.empty();
 
           if (text) {
@@ -10960,11 +10960,11 @@ function loadItem(item) {
   }
 
   if (item.data.slides) {
-    item.el.find('.bg-image').each(function (i) {
+    item.el.find(".bg-image").each(function (i) {
       var $el = $(this);
       var src = $el.data(scrKey);
       var loadPromise = imageMedia.imageLoadPromise(src).then(function () {
-        $el.css('background-image', "url(".concat(src, ")"));
+        $el.css("background-image", "url(".concat(src, ")"));
       });
       returnPromises.push(loadPromise);
     }).stickybits();
@@ -10974,7 +10974,7 @@ function loadItem(item) {
     var _src = item.data[scrKey];
 
     var _loadPromise = imageMedia.imageLoadPromise(_src).then(function () {
-      item.el.find('.bg-image').css('background-image', "url(".concat(_src, ")"));
+      item.el.find(".bg-image").css("background-image", "url(".concat(_src, ")"));
     });
 
     returnPromises.push(_loadPromise);
@@ -10989,13 +10989,13 @@ function loadItem(item) {
 
   if (item.data.video) {
     var videoLoaded = videoMedia.prepareVideo(scrollStory, item.el, item.index, [{
-      type: 'video/mp4',
+      type: "video/mp4",
       src: item.data.mp4
     }, {
-      type: 'video/webm',
+      type: "video/webm",
       src: item.data.webm
     }, {
-      type: 'application/vnd.apple.mpegurl',
+      type: "application/vnd.apple.mpegurl",
       src: item.data.hls
     }], getVideoAttrs(item));
     returnPromises.push(videoLoaded);
@@ -11003,10 +11003,10 @@ function loadItem(item) {
 
   if (item.data.audio) {
     var audioLoaded = audioMedia.prepareAudio(item.index, [{
-      type: 'audio/mp3',
+      type: "audio/mp3",
       src: item.data.mp3
     }, {
-      type: 'audio/ogg',
+      type: "audio/ogg",
       src: item.data.ogg
     }]);
     returnPromises.push(audioLoaded);
@@ -11015,7 +11015,7 @@ function loadItem(item) {
   return Promise.all(returnPromises);
 }
 
-$story.on('itemfocus', function (ev, item) {
+$story.on("itemfocus", function (ev, item) {
   if (item.data.image) {
     imageMedia.fixBackgroundImage(item.el, item.data[scrKey], true);
   }
@@ -11036,7 +11036,7 @@ $story.on('itemfocus', function (ev, item) {
     });
   }
 });
-$story.on('itemblur', function (ev, item) {
+$story.on("itemblur", function (ev, item) {
   if (item.data.image) {
     imageMedia.unfixBackgroundImage(item.el);
   }
@@ -11053,7 +11053,7 @@ $story.on('itemblur', function (ev, item) {
     audioMedia.removeBackgroundAudio(item.index);
   }
 });
-$story.on('itementerviewport', function (ev, item) {
+$story.on("itementerviewport", function (ev, item) {
   loadItem(item); // load another in advance
 
   if (item.index + 1 < storyItems.length) {
@@ -11066,21 +11066,21 @@ $story.on('itementerviewport', function (ev, item) {
   }
 }); // parallax.
 
-$('[data-scroll-speed]').moveIt(); // give mobile a special "unmute button" per video.
+$("[data-scroll-speed]").moveIt(); // give mobile a special "unmute button" per video.
 
 if (isMobile.any) {
-  $('.mute').remove();
+  $(".mute").remove();
 } else {
-  $('.mobile-mute').remove();
-  $('.mute').click(function () {
+  $(".mobile-mute").remove();
+  $(".mute").click(function () {
     var $this = $(this);
 
-    if ($this.hasClass('muted')) {
+    if ($this.hasClass("muted")) {
       isSoundEnabled = true;
-      $this.removeClass('muted');
+      $this.removeClass("muted");
     } else {
       isSoundEnabled = false;
-      $this.addClass('muted');
+      $this.addClass("muted");
     }
 
     storyItems.forEach(function (item) {
@@ -11099,10 +11099,10 @@ if (isMobile.any) {
   });
 }
 
-$('.sticks_wrapper').click(function () {
-  $('body').toggleClass('paneOpen');
+$(".sticks_wrapper").click(function () {
+  $("body").toggleClass("paneOpen");
 });
-$('nav').on('click', 'li', function () {
+$("nav").on("click", "li", function () {
   scrollStory.index(parseInt(this.dataset.id, 10));
 });
 var active = scrollStory.getActiveItem();
@@ -11132,12 +11132,12 @@ if (active.index + 2 < storyItems.length) {
 }
 
 Promise.all(LOAD_PROMISES).then(function () {
-  var overlay = document.getElementById('loading_overlay');
-  var playStart = document.getElementById('play_start');
+  var overlay = document.getElementById("loading_overlay");
+  var playStart = document.getElementById("play_start");
   playStart.style.display = "block";
-  playStart.addEventListener('click', function () {
+  playStart.addEventListener("click", function () {
     document.body.removeChild(overlay);
-    document.body.classList.remove('frozen');
+    document.body.classList.remove("frozen");
 
     if (active.data.video) {
       videoMedia.playBackgroundVideo(active.index, getVideoAttrs(active));
@@ -11148,6 +11148,11 @@ Promise.all(LOAD_PROMISES).then(function () {
       audioMedia.playBackgroundAudio(active.index, {
         muted: !isSoundEnabled
       });
+    }
+
+    if (active.data.youtubeId) {
+      youtubeMedia.play(active, isSoundEnabled);
+      youtubeMedia.stick(active);
     }
 
     overlay = null;
