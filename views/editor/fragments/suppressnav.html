@@ -3,15 +3,14 @@
     <legend>Navigation Entry</legend>
     <div>
       <label for="nav_title">Navigation Title</label>
-      <input type="text" id="nav_title" name="nav_title" {{#nav_title}}
-      value="{{nav_title}}"{{/nav_title}}>
+      <input type="text" class="form-control" id="nav_title" name="nav_title"
+      {{#nav_title}} value="{{nav_title}}"{{/nav_title}}>
     </div>
-    <div>
+    <div class="checkbox">
       <label for="suppress">
-        Suppress from Navigation
+        <input id="suppress" name="suppress" type="checkbox"{{#suppress}}
+        checked="checked"{{/suppress}} > Suppress from Navigation
       </label>
-      <input id="suppress" name="suppress" type="checkbox"{{#suppress}}
-      checked="checked"{{/suppress}} />
     </div>
   </fieldset>
 </div>
