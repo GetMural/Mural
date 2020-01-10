@@ -396,7 +396,6 @@ Promise.all(LOAD_PROMISES)
 
       if (active.data.video) {
         videoMedia.playBackgroundVideo(active.index, getVideoAttrs(active));
-
         videoMedia.fixBackgroundVideo(active.el);
       }
 
