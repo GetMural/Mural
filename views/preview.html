@@ -274,39 +274,38 @@
                    {{#snippets}}
                     data-dynamic-image="true"
                    {{/snippets}}>
-                <div class="content container-fluid">
-                  <div class="row">
-                    <div class="col-sm-12 header">
-                      {{#title}}
-                        <h1>{{{title}}}</h1>
-                      {{/title}}
-                      {{#subtitle}}
-                        <h2>{{{subtitle}}}</h2>
-                      {{/subtitle}}
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-xs-12 col-sm-10 col-md-8 col-lg-6 text">
-                      {{#intro}}
-                        {{{intro}}}
-                      {{/intro}}
-                      {{#snippets}}
-                        {{#src}}
-                          <figure class="cms-image {{align}}">
-                            <img data-src="{{src}}" rel="resizable" alt="{{alt}}" />
-                            <figcaption>{{title}}
-                               <span class="photographer">
-                                 {{{credits}}}
-                               </span>
-                            </figcaption>
-                          </figure>
-                        {{/src}}
-                        {{{text}}}
-                      {{/snippets}}
-                    </div>
-                  </div>
+            <div class="content container-fluid">
+              <div class="row">
+                <div class="col-sm-12 header">
+                  {{#title}}
+                    <h1>{{{title}}}</h1>
+                  {{/title}}
+                  {{#subtitle}}
+                    <h2>{{{subtitle}}}</h2>
+                  {{/subtitle}}
                 </div>
               </div>
+              <div class="row">
+                <div class="col-xs-12 col-sm-10 col-md-8 col-lg-6 text">
+                  {{#intro}}
+                    {{{intro}}}
+                  {{/intro}}
+                  {{#snippets}}
+                    {{#src}}
+                      <figure class="cms-image {{align}}">
+                        <img data-src="{{src}}" rel="resizable" alt="{{alt}}" />
+                        <figcaption>{{title}}
+                            <span class="photographer">
+                              {{{credits}}}
+                            </span>
+                        </figcaption>
+                      </figure>
+                    {{/src}}
+                    {{{text}}}
+                  {{/snippets}}
+                </div>
+              </div>
+            </div>
           </section>
         {{/textcentred}}
 
