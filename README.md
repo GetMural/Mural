@@ -16,8 +16,6 @@ Mural is released as open source under the GNU Affero General Public License. Se
 
 Mural is written in NodeJS and uses Electron.
 
-An end-user manual is available here: https://www.getmural.io/Mural-manual-v0.2.8.pdf
-
 ## Site Output
 
 Once a Mural story is ready to be published, the user clicks the 'Download' button and the program sends a .ZIP file which contains all the files needed to publish the story on a standard web server (HTML, CSS, JavaScript and media files, in addition to the JSON file used by Mural internally).
@@ -34,21 +32,6 @@ Clone/download the repo and run:
 
 ## Installation and running the app
 
-**Pre-compiled binaries are available:**
-
-**Windows 64bit:** https://www.getmural.io/Mural-0.3.0-win32-x64.zip
-
-**Windows 32bit:** https://www.getmural.io/Mural-0.3.0-win32-ia32.zip
-
-**Mac OSX:** https://www.getmural.io/Mural-0.3.0-mac.zip
-
-**Debian Linux AMD 64:** https://www.getmural.io/Mural-0.3.0-amd64.deb.zip
-
 **Compiling from source:**
 
 So far it's as easy as `npm install` but you'll also need to have a global installation of https://github.com/electron/electron and https://github.com/electron-userland/electron-packager to build the app.
-
-
-## Build dist index.html
-
-From the command line run `npm run build`.  This will create the in public/dist/index.html which can be used as a standalone file.
