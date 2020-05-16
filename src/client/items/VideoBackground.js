@@ -1,6 +1,5 @@
 /* eslint-env browser */
 /* globals $ */
-import 'scrollstory/jquery.scrollstory';
 
 function playVideo() {
   this.play();

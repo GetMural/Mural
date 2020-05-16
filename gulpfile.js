@@ -2,7 +2,7 @@ const { src, dest } = require('gulp');
 const webpackStream = require('webpack-stream');
 const named = require('vinyl-named');
 
-const EDITOR_TYPES = ['HorizontalSlideshow', 'VideoBackground'];
+const EDITOR_TYPES = ['HorizontalSlideshow', 'VideoBackground', 'ImageBackground'];
 
 function js() {
   return src(EDITOR_TYPES.map(type => `src/client/items/${type}.js`))

@@ -56,7 +56,8 @@
     "postinstall": "electron-builder install-app-deps",
     "pack": "electron-builder --dir",
     "dist": "electron-builder",
-    "electron": "electron ."
+    "electron": "electron .",
+    "gulp": "gulp"
   },
   "browserslist": {
     "production": [

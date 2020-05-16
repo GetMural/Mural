@@ -28,7 +28,7 @@ services:
       # Windows: C:\Users\<username>\AppData\Roaming\Mural
       # Mac: /Users/<username>/Library/Application Support/mural:/mural
 
-      - /Users/naaro/Library/Application Support/mural:/mural
+      - /Users/naro/Library/Application Support/mural:/mural
     restart: always
     networks:
       - app

@@ -1,6 +1,5 @@
 /* eslint-env browser */
 /* globals $ */
-import 'scrollstory/jquery.scrollstory';
 import blueimp from 'blueimp-gallery/js/blueimp-gallery';
 
 function loadItem(item) {
