@@ -1403,10 +1403,9 @@ article .part.box_text p {
   left: 0;
   right: 0;
 }
-/* .sticky-image.inviewport.active .bg-image {
+.sticky-image.inviewport.active .bg-image {
   position: fixed;
-  top: 0;
-} */
+}
 .sticky-image .content {
   position: relative;
   z-index: 10;

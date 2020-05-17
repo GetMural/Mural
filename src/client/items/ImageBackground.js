@@ -1,12 +1,8 @@
 function loadItem(item) {}
 
-function activateItem(item) {
-  item.el.find('.bg-image').addClass('fixed');
-}
+function activateItem(item) {}
 
-function deactivateItem(item) {
-  item.el.find('.bg-image').removeClass('fixed');
-}
+function deactivateItem(item) {}
 
 // code needed to bootstrap editor preview
 $(document).ready(function() {
@@ -16,6 +12,7 @@ $(document).ready(function() {
     .scrollStory({
       contentSelector: '.part',
       triggerOffset: 0,
+      autoActivateFirstItem: true,
     })
     .data('plugin_scrollStory');
 
