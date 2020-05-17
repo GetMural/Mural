@@ -319,6 +319,7 @@ const HeaderItem = types
   .model({
     title: '',
     subtitle: '',
+    isFullPage: false,
   })
   .actions(self => ({
     changeTitle(title) {
@@ -326,6 +327,9 @@ const HeaderItem = types
     },
     changeSubtitle(subtitle) {
       self.subtitle = subtitle;
+    },
+    toggleIsFullPage() {
+      self.isFullPage = !self.isFullPage;
     },
   }));
 

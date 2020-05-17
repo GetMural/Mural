@@ -72,10 +72,12 @@ const Editor = props => {
             <Preview>
               <Observer>
                 {() => (
+                  // size the right hand side to a standard iPhone 6/7/8 screen
                   <DraftStory
                     draftStory={draftStory}
                     modified={draftStory.lastModified}
                     width="375px"
+                    height="667px"
                   >
                     <DraftItem item={clonedItem}></DraftItem>
                   </DraftStory>

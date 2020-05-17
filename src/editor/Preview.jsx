@@ -12,11 +12,12 @@ const Preview = () => {
           modified={storyState.lastModified}
           width="100%"
         >
-          {storyState.items.map(storyItem => {
+          {storyState.items.map((storyItem, i) => {
             return (
               <DraftItem
                 key={storyItem.id}
                 item={storyItem}
+                isActive={i === 0}
               ></DraftItem>
             );
           })}

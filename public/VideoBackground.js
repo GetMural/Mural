@@ -101,7 +101,6 @@ function playVideo() {
 }
 
 function loadItem(item) {
-  item.el.find('.video-container').addClass('fixed');
   const video = item.el.find('video').get(0);
   video.addEventListener('canplay', playVideo);
 }

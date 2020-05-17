@@ -6,7 +6,6 @@ import styled from 'styled-components';
 import classnames from 'classnames';
 
 const BackgroundVideo = styled.div`
-  position: fixed;
   margin-left: calc(
     ${props =>
       `(${props.videoWidth}px - 100%) * -${props.videoOffset}/100`}

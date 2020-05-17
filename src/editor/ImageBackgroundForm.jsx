@@ -5,6 +5,7 @@ import {
   Fieldset,
   Legend,
   Label,
+  Input,
 } from '@bootstrap-styled/v4';
 
 import ImagePreviewField from './bites/ImagePreviewField';
@@ -24,6 +25,16 @@ function ImageBackgroundForm({ draftItem, onSave }) {
       <NavEntry />
       <Fieldset>
         <Legend>Item Content</Legend>
+        <FormGroup>
+          <Label check>
+            <Input
+              type="checkbox"
+              checked={draftItem.isFullPage}
+              onChange={draftItem.toggleIsFullPage}
+            />{' '}
+            Fullpage
+          </Label>
+        </FormGroup>
         <Title
           title={draftItem.title}
           changeTitle={draftItem.changeTitle}

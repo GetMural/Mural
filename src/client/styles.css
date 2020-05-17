@@ -1395,10 +1395,18 @@ article .part.box_text p {
   height: 100vh;
   background-position: center center;
   background-size: cover;
-  z-index: 1;
   backface-visibility: hidden;
   transform: translateZ(0);
+  z-index: 1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
 }
+/* .sticky-image.inviewport.active .bg-image {
+  position: fixed;
+  top: 0;
+} */
 .sticky-image .content {
   position: relative;
   z-index: 10;
@@ -1414,6 +1422,9 @@ article .part.box_text p {
 .st-video {
   position: relative;
   overflow: hidden;
+}
+.st-video.active .video-container {
+  position: fixed;
 }
 .st-video .video-container {
   width: 100%;
