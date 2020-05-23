@@ -122,10 +122,6 @@ $(document).ready(function() {
   $story.on('itemblur', function(ev, item) {
     deactivateItem(item);
   });
-
-  const storyItems = scrollStory.getItems();
-  console.log(storyItems);
-  window.draftItem = storyItems[0];
 });
 
 // code needed to refresh editor preview
