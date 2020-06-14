@@ -1422,10 +1422,11 @@ article .part.box_text p {
   position: relative;
   overflow: hidden;
 }
-.st-video.active .video-container {
+.st-video.inviewport.active .video-container {
   position: fixed;
 }
 .st-video .video-container {
+  position: absolute;
   width: 100%;
   height: 100vh;
   background-position: center center;
@@ -1452,20 +1453,54 @@ article .part.box_text p {
   }
 }
 
-.st-video .video-container video.landscape {
-  width: 100%;
-  max-height: 100%;
-  vertical-align: middle;
+/* .st-video .video-container video.landscape {
+  object-fit: cover;
+  object-position: center;
+  width: 100vw;
+  height: 100vh;
+} */
+
+@media (orientation: landscape) {
+  .st-video .video-container video.landscape {
+    object-fit: cover;
+    object-position: center;
+    width: 100vw;
+    height: 100vh;
+  }
 }
 
-.st-video .video-container video.landscape.offset {
+@media (orientation: portrait) {
+  .st-video .video-container video.landscape {
+    width: 100%;
+    max-height: 100%;
+    vertical-align: middle;
+  }
+
+  .st-video .video-container video.landscape.offset {
+    width: auto;
+    max-height: 100vh;
+    vertical-align: middle;
+  }
+}
+
+/* @media (orientation: portrait) {
+  .st-video .video-container video.landscape.offset {
+    width: auto;
+    max-height: 100vh;
+    vertical-align: middle;
+  }
+} */
+
+/* .st-video .video-container video.landscape.offset {
   width: auto;
   max-height: 100vh;
   vertical-align: middle;
-}
+} */
 
 .st-video .video-container video[poster] {
   object-fit: cover;
+  object-position: center;
+  width: 100vw;
   height: 100vh;
 }
 .st-video .content {

@@ -16,9 +16,9 @@ const DRAFTS = {
   HorizontalSlideshowDraft,
 };
 
-const DraftItem = ({ item, isActive = true }) => {
+const DraftItem = ({ item, height, isActive = true }) => {
   const Draft = DRAFTS[`${item.type}Draft`];
-  return <Draft item={item} isActive></Draft>;
+  return <Draft item={item} height={height} isActive></Draft>;
 };
 
 export default observer(DraftItem);

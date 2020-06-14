@@ -6,10 +6,12 @@ import styled from 'styled-components';
 import classnames from 'classnames';
 
 const BackgroundVideo = styled.div`
-  margin-left: calc(
-    ${props =>
-      `(${props.videoWidth}px - 100%) * -${props.videoOffset}/100`}
-  );
+  @media (orientation: portrait) {
+    margin-left: calc(
+      ${props =>
+        `(${props.videoWidth}px - 100%) * -${props.videoOffset}/100`}
+    );
+  }
 `;
 
 function VideoBackgroundDraft({
@@ -22,6 +24,7 @@ function VideoBackgroundDraft({
     offset,
     useOffset,
   },
+  height,
 }) {
   const videoClasses = classnames(`${orientation}`, {
     offset: useOffset,
@@ -31,6 +34,7 @@ function VideoBackgroundDraft({
     'header-fullpage',
     `text-${align}`,
   );
+
   return (
     <section className="st-video part">
       <BackgroundVideo
@@ -38,9 +42,7 @@ function VideoBackgroundDraft({
         videoOffset={
           orientation === 'landscape' && useOffset ? offset : 0
         }
-        videoWidth={
-          (window.innerHeight / dimensions.h) * dimensions.w
-        }
+        videoWidth={(height / dimensions.h) * dimensions.w}
       >
         <video
           src={preview}

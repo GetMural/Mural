@@ -79,7 +79,10 @@ const Editor = props => {
                     width="375px"
                     height="667px"
                   >
-                    <DraftItem item={clonedItem}></DraftItem>
+                    <DraftItem
+                      item={clonedItem}
+                      height="667"
+                    ></DraftItem>
                   </DraftStory>
                 )}
               </Observer>
