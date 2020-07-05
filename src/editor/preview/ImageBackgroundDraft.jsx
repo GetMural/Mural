@@ -16,29 +16,22 @@ const BackgroundImage = styled.div`
     )}
 `;
 
-function ImageBackgroundDraft(props) {
-  const {
-    item: {
-      title,
-      subtitle,
-      body,
-      image: { renditions },
-      isFullPage,
-    },
-    isActive,
-  } = props;
-
+function ImageBackgroundDraft({
+  item: {
+    title,
+    subtitle,
+    body,
+    image: { renditions },
+    isFullPage,
+  },
+}) {
   const headerClasses = classnames('col-sm-12', {
     'header-fullpage': isFullPage,
   });
 
   return (
     <section className="part sticky-image">
-      <BackgroundImage
-        className="bg-image"
-        srcImages={renditions}
-        isActive={isActive}
-      />
+      <BackgroundImage className="bg-image" srcImages={renditions} />
       <div className="content container-fluid">
         <div className="row">
           <div className={headerClasses}>

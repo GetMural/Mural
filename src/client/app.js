@@ -274,64 +274,64 @@ $(document).ready(function() {
     scrollStory.index(parseInt(this.dataset.id, 10));
   });
 
-  // const active = scrollStory.getActiveItem();
+  const active = scrollStory.getActiveItem();
 
-  // scrollStory.getItemsInViewport().forEach(function(item) {
-  //   const loadPromise = loadItem(item);
+  scrollStory.getItemsInViewport().forEach(function(item) {
+    const loadPromise = loadItem(item);
 
-  //   if (loadPromise) {
-  //     LOAD_PROMISES.push(loadPromise);
-  //   }
-  // });
+    if (loadPromise) {
+      LOAD_PROMISES.push(loadPromise);
+    }
+  });
 
-  // // push two in advance
-  // if (active.index + 1 < storyItems.length) {
-  //   const loadPromise = loadItem(storyItems[active.index + 1]);
+  // push two in advance
+  if (active.index + 1 < storyItems.length) {
+    const loadPromise = loadItem(storyItems[active.index + 1]);
 
-  //   if (loadPromise) {
-  //     LOAD_PROMISES.push(loadPromise);
-  //   }
-  // }
+    if (loadPromise) {
+      LOAD_PROMISES.push(loadPromise);
+    }
+  }
 
-  // // push two in advance
-  // if (active.index + 2 < storyItems.length) {
-  //   const loadPromise = loadItem(storyItems[active.index + 2]);
+  // push two in advance
+  if (active.index + 2 < storyItems.length) {
+    const loadPromise = loadItem(storyItems[active.index + 2]);
 
-  //   if (loadPromise) {
-  //     LOAD_PROMISES.push(loadPromise);
-  //   }
-  // }
+    if (loadPromise) {
+      LOAD_PROMISES.push(loadPromise);
+    }
+  }
 
-  // Promise.all(LOAD_PROMISES)
-  //   .then(() => {
-  //     let overlay = document.getElementById('loading_overlay');
-  //     let playStart = document.getElementById('play_start');
-  //     playStart.style.display = 'block';
+  Promise.all(LOAD_PROMISES)
+    .then(() => {
+      let overlay = document.getElementById('loading_overlay');
+      let playStart = document.getElementById('play_start');
+      playStart.style.display = 'block';
 
-  //     playStart.addEventListener('click', () => {
-  //       document.body.removeChild(overlay);
-  //       document.body.classList.remove('frozen');
+      playStart.addEventListener('click', () => {
+        document.body.removeChild(overlay);
+        document.body.classList.remove('frozen');
 
-  //       if (active.data.video) {
-  //         videoMedia.playBackgroundVideo(
-  //           active.index,
-  //           getVideoAttrs(active),
-  //         );
+        if (active.data.video) {
+          videoMedia.playBackgroundVideo(
+            active.index,
+            getVideoAttrs(active),
+          );
 
-  //         videoMedia.fixBackgroundVideo(active.el);
-  //       }
+          videoMedia.fixBackgroundVideo(active.el);
+        }
 
-  //       if (active.data.audio) {
-  //         audioMedia.playBackgroundAudio(active.index, {
-  //           muted: !isSoundEnabled,
-  //         });
-  //       }
+        if (active.data.audio) {
+          audioMedia.playBackgroundAudio(active.index, {
+            muted: !isSoundEnabled,
+          });
+        }
 
-  //       overlay = null;
-  //       playStart = null;
-  //     });
-  //   })
-  //   .catch(e => {
-  //     console.error(e);
-  //   });
+        overlay = null;
+        playStart = null;
+      });
+    })
+    .catch(e => {
+      console.error(e);
+    });
 });

@@ -23,6 +23,7 @@
     "hls.js": "^0.12.4",
     "ismobilejs": "^1.0.3",
     "jquery": "^3.4.1",
+    "lodash.template": "^4.5.0",
     "mime-types": "^2.1.24",
     "mobx": "^5.13.1",
     "mobx-react": "^6.1.3",
