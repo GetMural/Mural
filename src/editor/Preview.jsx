@@ -2,10 +2,6 @@ import React from 'react';
 import { WorkspaceConsumer } from '../WorkspaceContext';
 import Frame from 'react-frame-component';
 
-import render from './preview/ImageBackground.template.js';
-
-import { getSnapshot } from 'mobx-state-tree';
-
 function previewContent(items) {
   return `
 <!DOCTYPE html>
@@ -41,13 +37,11 @@ const Preview = () => {
   return (
     <WorkspaceConsumer>
       {({ storyState }) => {
-        const storyHtml = storyState.items.map((storyItem, i) => {
-          return render(storyItem, i);
-        });
-
         return (
           <Frame
-            initialContent={previewContent(storyHtml.join(''))}
+            initialContent={previewContent(
+              storyState.renderMuralTemplate(),
+            )}
             style={styles}
             head={
               <link

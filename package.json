@@ -14,7 +14,7 @@
     "bootstrap-styled": "^2.5.3",
     "classnames": "^2.2.6",
     "computed-async-mobx": "^4.2.1",
-    "datauri": "^2.0.0",
+    "datauri": "^3.0.0",
     "electron": "^6.0.10",
     "electron-is-dev": "^1.1.0",
     "gulp": "^4.0.2",

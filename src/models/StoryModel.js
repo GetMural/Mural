@@ -516,6 +516,26 @@ const StoryModel = types.compose(
       removeItem(item) {
         destroy(item);
       },
+      renderMuralTemplate() {
+        const items = self.items;
+
+        const itemHtml = items.map((item, i) => {
+          const type = item.type;
+          let render;
+
+          try {
+            render = require(`../editor/preview/${type}.template.js`);
+          } catch (e) {
+            render = function() {
+              return '';
+            };
+          }
+
+          return render(item, i);
+        });
+
+        return itemHtml.join('');
+      },
     })),
   ModifiableItem,
 );
