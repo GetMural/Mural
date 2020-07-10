@@ -15,6 +15,7 @@ function createWindow() {
     webPreferences: {
       nodeIntegration: true,
     },
+    show: false,
   });
   mainWindow.loadURL(
     isDev
@@ -29,6 +30,9 @@ function createWindow() {
     // );
     mainWindow.webContents.openDevTools();
   }
+  mainWindow.once('ready-to-show', () => {
+    mainWindow.show();
+  });
   mainWindow.on('closed', () => (mainWindow = null));
 }
 
