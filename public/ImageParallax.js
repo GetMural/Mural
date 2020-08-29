@@ -81,87 +81,66 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 4);
+/******/ 	return __webpack_require__(__webpack_require__.s = 1);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "./src/editor/items/VideoBackground.js":
-/*!*********************************************!*\
-  !*** ./src/editor/items/VideoBackground.js ***!
-  \*********************************************/
+/***/ "./src/editor/items/ImageParallax.js":
+/*!*******************************************!*\
+  !*** ./src/editor/items/ImageParallax.js ***!
+  \*******************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-/* eslint-env browser */
-/* globals $ */
+function loadItem(item) {}
 
-// keep track of active status in case of timing issues with scrolling and async playback.
-let $story;
+function activateItem(item) {}
 
-function loadItem(item) {
-  const video = item.el.find('video').get(0);
-
-  return new Promise((resolve, reject) => {
-    video.addEventListener('loadeddata', function() {
-      if (video.readyState > 3) {
-        resolve();
-      }
-    });
-    video.addEventListener('canplaythrough', function() {
-      resolve();
-    });
-    video.addEventListener('error', function() {
-      reject();
-    });
-
-    const timeRanges = video.buffered;
-
-    if (timeRanges.length) {
-      resolve();
-    }
-  }).then(() => {
-    video.play();
-  });
-}
+function deactivateItem(item) {}
 
 // code needed to bootstrap editor preview
 $(document).ready(function() {
-  $story = $('#scrollytelling');
+  const $story = $('#scrollytelling');
 
   $story
     .scrollStory({
       contentSelector: '.part',
       triggerOffset: 0,
       autoActivateFirstItem: true,
-      containeractive: function() {
-        const item = this.getActiveItem();
-        loadItem(item);
-      },
     })
     .data('plugin_scrollStory');
+
+  $story.on('itementerviewport', function(ev, item) {
+    loadItem(item);
+  });
+
+  $story.on('itemfocus', function(ev, item) {
+    activateItem(item);
+  });
+
+  $story.on('itemblur', function(ev, item) {
+    deactivateItem(item);
+  });
 });
 
 // code needed to refresh editor preview
-window.refresh = function() {
-  const item = $story.data('plugin_scrollStory').getActiveItem();
-  loadItem(item);
-};
+window.refresh = function() {};
 
 
 /***/ }),
 
-/***/ 4:
-/*!***************************************************!*\
-  !*** multi ./src/editor/items/VideoBackground.js ***!
-  \***************************************************/
+/***/ 1:
+/*!*************************************************!*\
+  !*** multi ./src/editor/items/ImageParallax.js ***!
+  \*************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/naro/Code/Mural/src/editor/items/VideoBackground.js */"./src/editor/items/VideoBackground.js");
+module.exports = __webpack_require__(/*! /Users/naro/Code/Mural/src/editor/items/ImageParallax.js */"./src/editor/items/ImageParallax.js");
 
 
 /***/ })
 
 /******/ })));
-//# sourceMappingURL=VideoBackground.js.map
+//# sourceMappingURL=ImageParallax.js.map

@@ -3,6 +3,9 @@ const webpackStream = require('webpack-stream');
 const named = require('vinyl-named');
 
 const EDITOR_TYPES = [
+  'VerticalSlideshow',
+  'ImageParallax',
+  'CentredText',
   'HorizontalSlideshow',
   'VideoBackground',
   'ImageBackground',

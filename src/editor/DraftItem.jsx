@@ -6,6 +6,7 @@ import {
   VideoBackgroundDraft,
   ImageParallaxDraft,
   HorizontalSlideshowDraft,
+  VerticalSlideshowDraft,
 } from './preview/';
 
 const DRAFTS = {
@@ -14,6 +15,7 @@ const DRAFTS = {
   VideoBackgroundDraft,
   ImageParallaxDraft,
   HorizontalSlideshowDraft,
+  VerticalSlideshowDraft,
 };
 
 const DraftItem = ({ item, height, isActive = true }) => {

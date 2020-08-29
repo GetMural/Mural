@@ -81,14 +81,14 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 2);
+/******/ 	return __webpack_require__(__webpack_require__.s = 5);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "./src/client/items/ImageBackground.js":
+/***/ "./src/editor/items/ImageBackground.js":
 /*!*********************************************!*\
-  !*** ./src/client/items/ImageBackground.js ***!
+  !*** ./src/editor/items/ImageBackground.js ***!
   \*********************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
@@ -103,7 +103,7 @@ function deactivateItem(item) {}
 $(document).ready(function() {
   const $story = $('#scrollytelling');
 
-  const scrollStory = $story
+  $story
     .scrollStory({
       contentSelector: '.part',
       triggerOffset: 0,
@@ -130,14 +130,14 @@ window.refresh = function() {};
 
 /***/ }),
 
-/***/ 2:
+/***/ 5:
 /*!***************************************************!*\
-  !*** multi ./src/client/items/ImageBackground.js ***!
+  !*** multi ./src/editor/items/ImageBackground.js ***!
   \***************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/naro/Code/Mural/src/client/items/ImageBackground.js */"./src/client/items/ImageBackground.js");
+module.exports = __webpack_require__(/*! /Users/naro/Code/Mural/src/editor/items/ImageBackground.js */"./src/editor/items/ImageBackground.js");
 
 
 /***/ })

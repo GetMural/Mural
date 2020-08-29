@@ -3,6 +3,7 @@ import ImageBackgroundDraft from './ImageBackgroundDraft';
 import VideoBackgroundDraft from './VideoBackgroundDraft';
 import ImageParallaxDraft from './ImageParallaxDraft';
 import HorizontalSlideshowDraft from './HorizontalSlideshowDraft';
+import VerticalSlideshowDraft from './VerticalSlideshowDraft';
 
 export {
   CentredTextDraft,
@@ -10,4 +11,5 @@ export {
   VideoBackgroundDraft,
   ImageParallaxDraft,
   HorizontalSlideshowDraft,
+  VerticalSlideshowDraft,
 };

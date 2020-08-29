@@ -288,6 +288,13 @@ const HorizontalSlide = types.compose(
   UuidItem,
 );
 
+const VerticalSlide = types.compose(
+  Media,
+  ImageMetaData,
+  FeatureImageViews,
+  UuidItem,
+);
+
 const FeatureImage = types.compose(
   Media,
   ImageMetaData,
@@ -429,6 +436,21 @@ export const HorizontalSlideshow = types.compose(
   RemovableStoryItem,
 );
 
+export const VerticalSlideshow = types.compose(
+  types
+    .model({
+      type: types.literal('VerticalSlideshow'),
+      slides: types.array(VerticalSlide),
+    })
+    .actions(self => ({
+      addSlide() {
+        self.slides.push(VerticalSlide.create());
+      },
+    })),
+  UuidItem,
+  RemovableStoryItem,
+);
+
 function generateCSS() {
   return new Promise((resolve, reject) => {
     gulp
@@ -477,6 +499,7 @@ const StoryModel = types.compose(
           ImageParallax,
           CentredText,
           HorizontalSlideshow,
+          VerticalSlideshow,
           VideoBackground,
         ),
       ),
