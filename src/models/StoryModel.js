@@ -295,10 +295,7 @@ const FeatureImage = types.compose(
   UuidItem,
 );
 
-const Video = types.compose(
-  Media,
-  VideoMetaData,
-);
+const Video = types.compose(Media, VideoMetaData);
 
 export const TextImageItem = types.compose(
   types
