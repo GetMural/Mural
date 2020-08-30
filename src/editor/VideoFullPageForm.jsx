@@ -81,6 +81,7 @@ function VideoFullPageForm({ draftItem, onSave }) {
           <Input
             type="radio"
             name="playback"
+            value="autoAdvance"
             checked={draftItem.playback === 'autoAdvance'}
             onChange={e => {
               draftItem.changePlayback('autoAdvance');
