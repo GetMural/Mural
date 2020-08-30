@@ -11,6 +11,8 @@ const Video = styled.video`
     top: 50%;
     left: ${props => `${props.videoOffset}%`};
     transform: ${props => `translate(-${props.videoOffset}%, -50%)`};
+    height: 100%;
+    min-height: 0 !important;
   }
 `;
 
