@@ -32,10 +32,13 @@ function render(
   ${
     useOffset
       ? `<style>
-  @media (orientation:portrait) {
-    section[name="story${position}"] .video-container { 
-      margin-left: calc(calc((100% / ${dimensions.h}) * ${dimensions.w}) - 100%) * -${offset}/100)
-    }
+  @media (orientation: portrait) {
+    section[name="story${position}"] video { 
+      position: absolute;
+      top: 50%;
+      left: ${offset}%;
+      transform: translate(-${offset}%, -50%);
+    } 
   }
 </style>`
       : ''

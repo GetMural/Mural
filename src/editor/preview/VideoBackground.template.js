@@ -38,10 +38,13 @@ function render(
   ${
     useOffset
       ? `<style>
-  @media (orientation:portrait) {
-    section[name="story${position}"] .video-container {
-      margin-left: ${offset}vw;
-    }
+  @media (orientation: portrait) {
+    section[name="story${position}"] video { 
+      position: absolute;
+      top: 50%;
+      left: ${offset}%;
+      transform: translate(-${offset}%, -50%);
+    } 
   }
 </style>`
       : ''

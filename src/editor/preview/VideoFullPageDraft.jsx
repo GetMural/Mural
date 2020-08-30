@@ -5,22 +5,20 @@ import { observer } from 'mobx-react';
 import styled from 'styled-components';
 import classnames from 'classnames';
 
-const BackgroundVideo = styled.div`
+const Video = styled.video`
   @media (orientation: portrait) {
-    margin-left: calc(
-      ${props =>
-        `(${props.videoWidth}px - 100%) * -${props.videoOffset}/100`}
-    );
+    position: absolute;
+    top: 50%;
+    left: ${props => `${props.videoOffset}%`};
+    transform: ${props => `translate(-${props.videoOffset}%, -50%)`};
   }
 `;
 
 function VideoFullPageDraft({
   item: {
     title,
-    subtitle,
     body,
-    video: { preview, orientation, dimensions },
-    align,
+    video: { preview, orientation },
     offset,
     useOffset,
   },
@@ -32,20 +30,17 @@ function VideoFullPageDraft({
 
   return (
     <section className="st-content-video part snap">
-      <BackgroundVideo
-        className="video-container"
-        videoOffset={
-          orientation === 'landscape' && useOffset ? offset : 0
-        }
-        videoWidth={(height / dimensions.h) * dimensions.w}
-      >
-        <video
+      <div className="video-container">
+        <Video
           src={preview}
           playsInline={true}
           loop={true}
           className={videoClasses}
-        ></video>
-      </BackgroundVideo>
+          videoOffset={
+            orientation === 'landscape' && useOffset ? offset : 0
+          }
+        ></Video>
+      </div>
       <div className="caption">
         <div
           className="button-container play"
