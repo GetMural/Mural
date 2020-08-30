@@ -32,7 +32,7 @@ function VideoFullPageForm({ draftItem, onSave }) {
         <VideoPreviewField video={draftItem.video} />
       </Fieldset>
       {draftItem.video.orientation === 'landscape' && (
-        <FormGroup>
+        <FormGroup check>
           <Label check>
             <Input
               type="checkbox"
@@ -41,24 +41,54 @@ function VideoFullPageForm({ draftItem, onSave }) {
             />{' '}
             Use Offset
           </Label>
+          {draftItem.video.orientation === 'landscape' &&
+            draftItem.useOffset && (
+              <FormGroup>
+                <Label>Offset</Label>
+                <Input
+                  type="range"
+                  min={0}
+                  max={100}
+                  step={1}
+                  value={draftItem.offset}
+                  onChange={e => {
+                    draftItem.updateOffset(
+                      parseInt(e.target.value, 10),
+                    );
+                  }}
+                />{' '}
+              </FormGroup>
+            )}
         </FormGroup>
       )}
-      {draftItem.video.orientation === 'landscape' &&
-        draftItem.useOffset && (
-          <FormGroup>
-            <Label>Offset</Label>
-            <Input
-              type="range"
-              min={0}
-              max={100}
-              step={1}
-              value={draftItem.offset}
-              onChange={e => {
-                draftItem.updateOffset(parseInt(e.target.value, 10));
-              }}
-            />{' '}
-          </FormGroup>
-        )}
+      <FormGroup check>
+        <Label check>
+          <Input
+            type="radio"
+            name="playback"
+            value="loop"
+            defaultChecked
+            checked={draftItem.playback === 'loop'}
+            onChange={e => {
+              draftItem.changePlayback('loop');
+            }}
+          />{' '}
+          Loop
+        </Label>
+      </FormGroup>
+      <FormGroup check>
+        <Label check>
+          <Input
+            type="radio"
+            name="autoAdvance"
+            checked={draftItem.playback === 'autoAdvance'}
+            onChange={e => {
+              draftItem.changePlayback('autoAdvance');
+            }}
+          />{' '}
+          Auto Advance
+        </Label>
+      </FormGroup>
       <ButtonPanel onSave={onSave} />
     </>
   );

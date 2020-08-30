@@ -8,8 +8,7 @@ function render(
     video: { path, mimeType, dimensions },
     offset,
     useOffset,
-    loop,
-    autoAdvance,
+    playback,
   },
   position,
 ) {
@@ -24,8 +23,8 @@ function render(
       ? `data-video="true" data-autoplay="true" data-muted="false" data-fullpage="true"`
       : ''
   }
-  ${loop === true ? `data-loop="true"` : ''}
-  ${autoAdvance === true ? `data-auto-advance="true"` : ''}
+  ${playback === 'loop' ? `data-loop="true"` : ''}
+  ${playback === 'autoAdvance' ? `data-auto-advance="true"` : ''}
 
   ${mimeType === 'video/mp4' ? `data-mp4="${meta.content}"` : ''}
   ${mimeType === 'video/webm' ? `data-webm="${meta.content}"` : ''}
