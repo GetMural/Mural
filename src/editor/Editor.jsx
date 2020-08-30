@@ -6,6 +6,7 @@ import { WorkspaceConsumer } from '../WorkspaceContext';
 
 import ImageBackgroundForm from './ImageBackgroundForm';
 import VideoBackgroundForm from './VideoBackgroundForm';
+import VideoFullPageForm from './VideoFullPageForm';
 import ImageParallaxForm from './ImageParallaxForm';
 import CentredTextForm from './CentredTextForm';
 import HorizontalSlideshowForm from './HorizontalSlideshowForm';
@@ -22,6 +23,7 @@ const StoryForms = {
   HorizontalSlideshowForm,
   VerticalSlideshowForm,
   VideoBackgroundForm,
+  VideoFullPageForm,
 };
 
 const FormEditor = styled.div`

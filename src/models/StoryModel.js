@@ -410,6 +410,27 @@ export const VideoBackground = types.compose(
   AlignableItem,
 );
 
+export const VideoFullPage = types.compose(
+  types
+    .model({
+      type: types.literal('VideoFullPage'),
+      video: types.optional(Video, {}),
+      useOffset: false,
+      offset: 0,
+    })
+    .actions(self => ({
+      toggleOffsetUse() {
+        self.useOffset = !self.useOffset;
+      },
+      updateOffset(offset) {
+        self.offset = offset;
+      },
+    })),
+  GeneralWrittenItem,
+  UuidItem,
+  RemovableStoryItem,
+);
+
 export const ImageParallax = types.compose(
   types.model({
     type: types.literal('ImageParallax'),
@@ -501,6 +522,7 @@ const StoryModel = types.compose(
           HorizontalSlideshow,
           VerticalSlideshow,
           VideoBackground,
+          VideoFullPage,
         ),
       ),
     })

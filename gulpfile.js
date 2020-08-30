@@ -8,6 +8,7 @@ const EDITOR_TYPES = [
   'CentredText',
   'HorizontalSlideshow',
   'VideoBackground',
+  'VideoFullPage',
   'ImageBackground',
 ];
 
