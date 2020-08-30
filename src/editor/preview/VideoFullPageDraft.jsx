@@ -47,7 +47,10 @@ function VideoFullPageDraft({
         ></video>
       </BackgroundVideo>
       <div className="caption">
-        <div className="button-container play"></div>
+        <div
+          className="button-container play"
+          style={{ display: 'none' }}
+        ></div>
         <div className="button-container pause"></div>
         <div className="text">
           <h3>{title}</h3>

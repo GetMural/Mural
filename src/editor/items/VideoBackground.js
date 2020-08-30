@@ -1,7 +1,6 @@
 /* eslint-env browser */
 /* globals $ */
 
-// keep track of active status in case of timing issues with scrolling and async playback.
 let $story;
 
 function loadItem(item) {

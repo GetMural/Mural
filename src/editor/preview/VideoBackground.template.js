@@ -6,7 +6,7 @@ function render(
     title,
     subtitle,
     body,
-    video: { path, mimeType },
+    video: { path, mimeType, dimensions },
     align,
     offset,
     useOffset,
@@ -28,7 +28,7 @@ function render(
 
   ${
     path
-      ? 'data-video=true data-loop=true data-autoplay-true data-muted=false'
+      ? `data-video="true" data-loop="true" data-autoplay="true" data-muted="false"`
       : ''
   }
 

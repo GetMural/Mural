@@ -1,11 +1,23 @@
 /* eslint-env browser */
 /* globals $ */
 
-// keep track of active status in case of timing issues with scrolling and async playback.
 let $story;
 
 function loadItem(item) {
-  const video = item.el.find('video').get(0);
+  const $el = item.el;
+  const video = $el.find('video').get(0);
+
+  $el.find('.play').click(function() {
+    video.play();
+    $(this).hide();
+    $el.find('.pause').show();
+  });
+
+  $el.find('.pause').click(function() {
+    video.pause();
+    $(this).hide();
+    $el.find('.play').show();
+  });
 
   return new Promise((resolve, reject) => {
     video.addEventListener('loadeddata', function() {
