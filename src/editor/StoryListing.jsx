@@ -19,6 +19,7 @@ import {
   VerticalSlideshow,
   VideoBackground,
   VideoFullPage,
+  Youtube,
 } from '../models/StoryModel';
 import ItemList from './ItemList';
 
@@ -30,6 +31,7 @@ const ITEMS = {
   VerticalSlideshow,
   VideoBackground,
   VideoFullPage,
+  Youtube,
 };
 
 class StoryListing extends Component {

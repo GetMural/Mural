@@ -438,6 +438,29 @@ export const VideoFullPage = types.compose(
   RemovableStoryItem,
 );
 
+export const Youtube = types.compose(
+  types
+    .model({
+      type: types.literal('Youtube'),
+      controls: false,
+      autoAdvance: false,
+      youtubeId: '',
+    })
+    .actions(self => ({
+      toggleControls() {
+        self.controls = !self.controls;
+      },
+      toggleAutoAdvance() {
+        self.autoAdvance = !self.autoAdvance;
+      },
+      changeYoutubeId(youtubeId) {
+        self.youtubeId = youtubeId;
+      },
+    })),
+  UuidItem,
+  RemovableStoryItem,
+);
+
 export const ImageParallax = types.compose(
   types.model({
     type: types.literal('ImageParallax'),
@@ -530,6 +553,7 @@ const StoryModel = types.compose(
           VerticalSlideshow,
           VideoBackground,
           VideoFullPage,
+          Youtube,
         ),
       ),
     })

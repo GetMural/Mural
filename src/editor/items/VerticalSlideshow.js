@@ -3,11 +3,16 @@
 
 import 'stickybits/src/jquery.stickybits';
 
+let $story;
 let stickybitsInstance;
+
+function loadItem(item) {
+  stickybitsInstance = item.el.find('.bg-image').stickybits();
+}
 
 // code needed to bootstrap editor preview
 $(document).ready(function() {
-  const $story = $('#scrollytelling');
+  $story = $('#scrollytelling');
 
   $story
     .scrollStory({
@@ -16,7 +21,7 @@ $(document).ready(function() {
       autoActivateFirstItem: true,
       containeractive: function() {
         const item = this.getActiveItem();
-        stickybitsInstance = item.el.find('.bg-image').stickybits();
+        loadItem(item);
       },
     })
     .data('plugin_scrollStory');
@@ -25,4 +30,6 @@ $(document).ready(function() {
 // code needed to refresh editor preview
 window.refresh = function() {
   stickybitsInstance.cleanup();
+  const item = $story.data('plugin_scrollStory').getActiveItem();
+  loadItem(item);
 };

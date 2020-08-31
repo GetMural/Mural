@@ -22,7 +22,6 @@ const DraftStory = ({
   width,
   height = '100vh',
 }) => {
-  // TODO rework to look at all item JS
   const initialContent = `
   <!DOCTYPE html>
   <html>

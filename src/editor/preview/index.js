@@ -5,6 +5,7 @@ import VideoFullPageDraft from './VideoFullPageDraft';
 import ImageParallaxDraft from './ImageParallaxDraft';
 import HorizontalSlideshowDraft from './HorizontalSlideshowDraft';
 import VerticalSlideshowDraft from './VerticalSlideshowDraft';
+import YoutubeDraft from './YoutubeDraft';
 
 export {
   CentredTextDraft,
@@ -14,4 +15,5 @@ export {
   ImageParallaxDraft,
   HorizontalSlideshowDraft,
   VerticalSlideshowDraft,
+  YoutubeDraft,
 };

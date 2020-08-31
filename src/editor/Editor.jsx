@@ -11,6 +11,7 @@ import ImageParallaxForm from './ImageParallaxForm';
 import CentredTextForm from './CentredTextForm';
 import HorizontalSlideshowForm from './HorizontalSlideshowForm';
 import VerticalSlideshowForm from './VerticalSlideshowForm';
+import YoutubeForm from './YoutubeForm';
 import Layout from './Layout';
 import { Form } from '@bootstrap-styled/v4';
 import DraftStory from './DraftStory';
@@ -24,6 +25,7 @@ const StoryForms = {
   VerticalSlideshowForm,
   VideoBackgroundForm,
   VideoFullPageForm,
+  YoutubeForm,
 };
 
 const FormEditor = styled.div`

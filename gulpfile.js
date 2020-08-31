@@ -10,6 +10,7 @@ const EDITOR_TYPES = [
   'VideoBackground',
   'VideoFullPage',
   'ImageBackground',
+  'Youtube',
 ];
 
 function js() {

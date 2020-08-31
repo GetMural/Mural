@@ -8,6 +8,7 @@ import {
   ImageParallaxDraft,
   HorizontalSlideshowDraft,
   VerticalSlideshowDraft,
+  YoutubeDraft,
 } from './preview/';
 
 const DRAFTS = {
@@ -18,11 +19,12 @@ const DRAFTS = {
   ImageParallaxDraft,
   HorizontalSlideshowDraft,
   VerticalSlideshowDraft,
+  YoutubeDraft,
 };
 
-const DraftItem = ({ item, height, isActive = true }) => {
+const DraftItem = ({ item, height }) => {
   const Draft = DRAFTS[`${item.type}Draft`];
-  return <Draft item={item} height={height} isActive></Draft>;
+  return <Draft item={item} height={height}></Draft>;
 };
 
 export default observer(DraftItem);
