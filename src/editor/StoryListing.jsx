@@ -76,7 +76,10 @@ class StoryListing extends Component {
                     Add
                   </Button>
                 </Form>
-                <ItemList items={storyState.items} />
+                <ItemList
+                  items={storyState.items}
+                  setItems={storyState.setItems}
+                />
               </Container>
             </Layout>
           );

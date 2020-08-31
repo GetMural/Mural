@@ -589,6 +589,9 @@ const StoryModel = types.compose(
       removeItem(item) {
         destroy(item);
       },
+      setItems(items) {
+        self.items = items;
+      },
       renderMuralTemplate() {
         const items = self.items;
 
