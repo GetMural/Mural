@@ -79,6 +79,7 @@ class StoryListing extends Component {
                 <ItemList
                   items={storyState.items}
                   setItems={storyState.setItems}
+                  lastModified={storyState.lastModified}
                 />
               </Container>
             </Layout>

@@ -1,57 +1,21 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { observer } from 'mobx-react';
 import { Link } from 'react-router-dom';
-import { ReactSortable } from 'react-sortablejs';
 
-import {
-  ListGroupItem,
-  Button,
-  ButtonGroup,
-} from '@bootstrap-styled/v4';
+import { ListGroupItem, Button } from '@bootstrap-styled/v4';
 
-function getItemsJson(items) {
-  return items.map(item => Object.assign({}, item.toJSON()));
-}
-
-const ItemList = props => {
-  const { items, setItems } = props;
-  const [state, setState] = useState(getItemsJson(items));
-
+const ItemList = ({ items, setItems }) => {
   return (
     <>
-      <ReactSortable
-        tag="ul"
-        list={state}
-        setList={setState}
-        className="list-group"
-      >
-        {state.map((storyItem, i) => (
-          <ListGroupItem key={storyItem.id}>
-            <Link to={`${i}`}>{storyItem.type}</Link>
-            <Button color="danger" onClick={storyItem.remove}>
-              Delete
-            </Button>
-          </ListGroupItem>
-        ))}
-      </ReactSortable>
-      <ButtonGroup>
-        <Button
-          color="warning"
-          onClick={() => {
-            setState(getItemsJson(items));
-          }}
-        >
-          Reset
-        </Button>
-        <Button
-          color="success"
-          onClick={() => {
-            setItems(state);
-          }}
-        >
-          Save
-        </Button>
-      </ButtonGroup>
+      {items.map((storyItem, i) => (
+        <ListGroupItem key={storyItem.id}>
+          <div className="dragging">D</div>
+          <Link to={`${i}`}>{storyItem.type}</Link>
+          <Button color="danger" onClick={storyItem.remove}>
+            Delete
+          </Button>
+        </ListGroupItem>
+      ))}
     </>
   );
 };

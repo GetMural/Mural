@@ -22,9 +22,9 @@ const DRAFTS = {
   YoutubeDraft,
 };
 
-const DraftItem = ({ item, height }) => {
+const DraftItem = ({ item }) => {
   const Draft = DRAFTS[`${item.type}Draft`];
-  return <Draft item={item} height={height}></Draft>;
+  return <Draft item={item}></Draft>;
 };
 
 export default observer(DraftItem);

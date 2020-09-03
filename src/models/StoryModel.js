@@ -2,6 +2,7 @@
 import {
   types,
   getEnv,
+  getSnapshot,
   onSnapshot,
   onAction,
   destroy,
@@ -608,6 +609,10 @@ const StoryModel = types.compose(
         destroy(item);
       },
       setItems(items) {
+        // console.log(items);
+        // self.items = items.map(item =>
+        //   Object.assign({}, getSnapshot(item)),
+        // );
         self.items = items;
       },
       renderMuralTemplate() {

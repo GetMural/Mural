@@ -38,7 +38,7 @@ class MediaPreviewField extends Component {
 
   render() {
     const {
-      media: { path, preview, type, changeType, changePath },
+      media: { path, preview, type, changeType, changePath, id },
       children,
     } = this.props;
 
@@ -50,7 +50,7 @@ class MediaPreviewField extends Component {
           <Label check>
             <Input
               type="radio"
-              name="type"
+              name={`type-${id}`}
               value="local"
               checked={type === 'local'}
               onChange={e => {
@@ -63,7 +63,7 @@ class MediaPreviewField extends Component {
           <Label check>
             <Input
               type="radio"
-              name="type"
+              name={`type-${id}`}
               value="remote"
               checked={type === 'remote'}
               onChange={e => {
@@ -95,7 +95,6 @@ MediaPreviewField.propTypes = {
     preview: string,
   }),
   acceptedMimeTypes: arrayOf(string),
-  onUpdate: func,
   children: func,
 };
 
@@ -105,7 +104,6 @@ MediaPreviewField.defaultProps = {
     preview: '',
   },
   acceptedMimeTypes: [],
-  onUpdate() {},
   children() {},
 };
 
