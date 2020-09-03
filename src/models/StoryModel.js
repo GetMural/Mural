@@ -2,7 +2,6 @@
 import {
   types,
   getEnv,
-  getSnapshot,
   onSnapshot,
   onAction,
   destroy,

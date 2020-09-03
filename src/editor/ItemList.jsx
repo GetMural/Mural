@@ -9,7 +9,6 @@ const ItemList = ({ items, setItems }) => {
     <>
       {items.map((storyItem, i) => (
         <ListGroupItem key={storyItem.id}>
-          <div className="dragging">D</div>
           <Link to={`${i}`}>{storyItem.type}</Link>
           <Button color="danger" onClick={storyItem.remove}>
             Delete
