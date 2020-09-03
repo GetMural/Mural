@@ -132,8 +132,14 @@ const landscapeRenditions = [
   { w: 1920, h: 0, scale: 2 },
 ];
 
+const MediaStub = { type: 'local' };
+
 const Media = types
   .model({
+    type: types.union(
+      types.literal('local'),
+      types.literal('remote'),
+    ),
     path: '',
   })
   .actions(self => ({
@@ -141,6 +147,12 @@ const Media = types
       const { fileManager } = getEnv(self);
       const uploadPath = fileManager.importMedia(systemPath, name);
       self.path = uploadPath;
+    },
+    changeType(type) {
+      self.type = type;
+    },
+    changePath(path) {
+      self.path = path;
     },
   }))
   .views(self => {
@@ -154,8 +166,11 @@ const Media = types
         return mime.lookup(self.path);
       },
       get preview() {
-        if (self.mimeType) {
+        if (self.type === 'local' && self.mimeType) {
           return dataUrlPromise.get();
+        }
+        if (self.type === 'remote') {
+          return self.path;
         }
         return '';
       },
@@ -308,7 +323,10 @@ export const TextImageItem = types.compose(
   types
     .model({
       body: '',
-      image: types.optional(ContentImage, {}),
+      image: types.optional(
+        ContentImage,
+        Object.assign({}, MediaStub),
+      ),
     })
     .actions(self => ({
       changeBody(body) {
@@ -379,8 +397,8 @@ export const CentredText = types.compose(
 export const ImageBackground = types.compose(
   types.model({
     type: types.literal('ImageBackground'),
-    image: types.optional(FeatureImage, {}),
-    audio: types.optional(Media, {}),
+    image: types.optional(FeatureImage, Object.assign({}, MediaStub)),
+    audio: types.optional(Media, Object.assign({}, MediaStub)),
   }),
   GeneralWrittenItem,
   UuidItem,
@@ -392,7 +410,7 @@ export const VideoBackground = types.compose(
   types
     .model({
       type: types.literal('VideoBackground'),
-      video: types.optional(Video, {}),
+      video: types.optional(Video, Object.assign({}, MediaStub)),
       useOffset: false,
       offset: 0,
     })
@@ -414,7 +432,7 @@ export const VideoFullPage = types.compose(
   types
     .model({
       type: types.literal('VideoFullPage'),
-      video: types.optional(Video, {}),
+      video: types.optional(Video, Object.assign({}, MediaStub)),
       useOffset: false,
       offset: 0,
       playback: types.union(
@@ -464,7 +482,7 @@ export const Youtube = types.compose(
 export const ImageParallax = types.compose(
   types.model({
     type: types.literal('ImageParallax'),
-    image: types.optional(FeatureImage, {}),
+    image: types.optional(FeatureImage, Object.assign({}, MediaStub)),
   }),
   HeaderItem,
   UuidItem,

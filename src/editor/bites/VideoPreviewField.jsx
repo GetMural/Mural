@@ -13,10 +13,7 @@ const VideoPreviewField = ({ video }) => {
   return (
     <MediaPreviewField
       media={video}
-      onUpdate={(path, name) => {
-        video.uploadFile(path, name);
-      }}
-      acceptedMimeTypes={['video/mp4', 'video/ogg', 'video/webm']}
+      acceptedMimeTypes={['video/mp4']}
     >
       {({ preview }) => (
         <>

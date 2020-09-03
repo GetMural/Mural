@@ -12,9 +12,6 @@ const ImagePreviewField = ({ image }) => {
   return (
     <MediaPreviewField
       media={image}
-      onUpdate={(path, name) => {
-        image.uploadFile(path, name);
-      }}
       acceptedMimeTypes={['image/jpeg', 'image/png', 'image/webp']}
     >
       {({ preview }) => (

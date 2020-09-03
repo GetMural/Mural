@@ -12,7 +12,7 @@ function render(
   },
   position,
 ) {
-  const meta = Datauri(path);
+  const preview = mimeType ? Datauri(path).content : path;
 
   return `<section class="st-content-video part snap"
   name="story${position}"
@@ -20,14 +20,11 @@ function render(
 
   ${
     path
-      ? `data-video="true" data-autoplay="true" data-muted="false" data-fullpage="true"`
+      ? `data-video="true" data-autoplay="true" data-muted="false" data-fullpage="true" data-mp4="${preview}"`
       : ''
   }
   ${playback === 'loop' ? `data-loop="true"` : ''}
   ${playback === 'autoAdvance' ? `data-auto-advance="true"` : ''}
-
-  ${mimeType === 'video/mp4' ? `data-mp4="${meta.content}"` : ''}
-  ${mimeType === 'video/webm' ? `data-webm="${meta.content}"` : ''}
 >
   ${
     useOffset

@@ -6,7 +6,7 @@ function render(
     title,
     subtitle,
     body,
-    video: { path, mimeType, dimensions },
+    video: { path, mimeType, type },
     align,
     offset,
     useOffset,
@@ -20,7 +20,7 @@ function render(
     right: 'offset-right',
   };
 
-  const meta = Datauri(path);
+  const preview = mimeType ? Datauri(path).content : path;
 
   return `<section class="st-video part"
   name="story${position}"
@@ -28,12 +28,9 @@ function render(
 
   ${
     path
-      ? `data-video="true" data-loop="true" data-autoplay="true" data-muted="false"`
+      ? `data-video="true" data-loop="true" data-autoplay="true" data-muted="false" data-mp4="${preview}"`
       : ''
   }
-
-  ${mimeType === 'video/mp4' ? `data-mp4="${meta.content}"` : ''}
-  ${mimeType === 'video/webm' ? `data-webm="${meta.content}"` : ''}
 >
   ${
     useOffset

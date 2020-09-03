@@ -8,9 +8,6 @@ const AudioPreviewField = ({ audio }) => {
     <>
       <MediaPreviewField
         media={audio}
-        onUpdate={(path, name) => {
-          audio.uploadFile(path, name);
-        }}
         acceptedMimeTypes={[
           'audio/mpeg',
           'audio/ogg',

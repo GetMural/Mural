@@ -67,7 +67,6 @@ function VideoFullPageForm({ draftItem, onSave }) {
             type="radio"
             name="playback"
             value="loop"
-            defaultChecked
             checked={draftItem.playback === 'loop'}
             onChange={e => {
               draftItem.changePlayback('loop');
