@@ -136,9 +136,9 @@ const MediaStub = { type: 'local' };
 
 const Media = types
   .model({
-    type: types.union(
-      types.literal('local'),
-      types.literal('remote'),
+    type: types.optional(
+      types.union(types.literal('local'), types.literal('remote')),
+      'local',
     ),
     path: '',
   })
