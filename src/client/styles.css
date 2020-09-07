@@ -1447,56 +1447,6 @@ article .part.box_text p {
   max-height: 100vh;
 }
 
-@media (orientation: landscape) {
-  .st-video .video-container video.portrait {
-    right: 0;
-  }
-}
-
-/* .st-video .video-container video.landscape {
-  object-fit: cover;
-  object-position: center;
-  width: 100vw;
-  height: 100vh;
-} */
-
-@media (orientation: landscape) {
-  .st-video .video-container video.landscape {
-    object-fit: cover;
-    object-position: center;
-    width: 100vw;
-    height: 100vh;
-  }
-}
-
-@media (orientation: portrait) {
-  .st-video .video-container video.landscape {
-    width: 100%;
-    max-height: 100%;
-    vertical-align: middle;
-  }
-
-  .st-video .video-container video.landscape.offset {
-    width: auto;
-    max-height: 100vh;
-    vertical-align: middle;
-  }
-}
-
-/* @media (orientation: portrait) {
-  .st-video .video-container video.landscape.offset {
-    width: auto;
-    max-height: 100vh;
-    vertical-align: middle;
-  }
-} */
-
-/* .st-video .video-container video.landscape.offset {
-  width: auto;
-  max-height: 100vh;
-  vertical-align: middle;
-} */
-
 .st-video .video-container video[poster] {
   object-fit: cover;
   object-position: center;

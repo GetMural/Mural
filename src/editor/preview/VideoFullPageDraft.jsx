@@ -24,7 +24,6 @@ function VideoFullPageDraft({
     offset,
     useOffset,
   },
-  height,
 }) {
   const videoClasses = classnames(`${orientation}`, {
     offset: useOffset,

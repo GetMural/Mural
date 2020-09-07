@@ -26,7 +26,6 @@ function VideoBackgroundDraft({
     offset,
     useOffset,
   },
-  height,
 }) {
   const videoClasses = classnames(`${orientation}`, {
     offset: useOffset,
