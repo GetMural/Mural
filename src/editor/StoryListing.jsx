@@ -78,8 +78,7 @@ class StoryListing extends Component {
                 </Form>
                 <ItemList
                   items={storyState.items}
-                  setItems={storyState.setItems}
-                  lastModified={storyState.lastModified}
+                  moveItem={storyState.moveItem}
                 />
               </Container>
             </Layout>

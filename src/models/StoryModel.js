@@ -607,12 +607,11 @@ const StoryModel = types.compose(
       removeItem(item) {
         destroy(item);
       },
-      setItems(items) {
-        // console.log(items);
-        // self.items = items.map(item =>
-        //   Object.assign({}, getSnapshot(item)),
-        // );
-        self.items = items;
+      moveItem(dragIndex, hoverIndex) {
+        const dragged = self.items[dragIndex];
+
+        self.items.splice(dragIndex, 1);
+        self.items.splice(hoverIndex, 0, dragged.toJSON());
       },
       renderMuralTemplate() {
         const items = self.items;
