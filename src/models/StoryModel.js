@@ -435,9 +435,12 @@ export const VideoFullPage = types.compose(
       video: types.optional(Video, Object.assign({}, MediaStub)),
       useOffset: false,
       offset: 0,
-      playback: types.union(
-        types.literal('loop'),
-        types.literal('autoAdvance'),
+      playback: types.optional(
+        types.union(
+          types.literal('loop'),
+          types.literal('autoAdvance'),
+        ),
+        'loop',
       ),
     })
     .actions(self => ({
