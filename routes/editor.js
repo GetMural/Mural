@@ -162,6 +162,41 @@ router.get('/fragment/fullpage', function (req, res) {
     });
 });
 
+// Gradient Animation Direction Fragment
+router.get('/fragment/gradientanimationdirection', function (req, res) {
+    res.render('editor/fragments/gradientanimationdirection', {
+        gradientanimationdirection: 'gradientanimationdirection'
+    });
+});
+
+// Gradient Direction Fragment
+router.get('/fragment/gradientdirection', function (req, res) {
+    res.render('editor/fragments/gradientdirection', {
+        gradientdirection: 'gradientdirection'
+    });
+});
+
+// Gradient Stop Fragment
+router.get('/fragment/gradientspeed', function (req, res) {
+    res.render('editor/fragments/gradientspeed', {
+        gradientspeed: 'gradientspeed'
+    });
+});
+
+// Gradient Stop Fragment
+router.get('/fragment/gradientstop', function (req, res) {
+    res.render('editor/fragments/gradientstop', {
+        gradientstop: 'gradientstop'
+    });
+});
+
+// Gradient Stops Fragment
+router.get('/fragment/gradientstops', function (req, res) {
+    res.render('editor/fragments/gradientstops', {
+        gradientstops: 'gradientstops'
+    });
+});
+
 // Nav Suppression Toggle Fragment
 router.get('/fragment/suppressnav', function (req, res) {
     res.render('editor/fragments/suppressnav', {
@@ -216,6 +251,13 @@ router.get('/fragment/intro', function (req, res) {
 router.get('/fragment/loadingimage', function (req, res) {
     res.render('editor/fragments/loadingimage', {
         loadingimage: 'loadingimage'
+    });
+});
+
+// Image Offset Fragment
+router.get('/fragment/offset', function (req, res) {
+    res.render('editor/fragments/offset', {
+        offset: 'offset'
     });
 });
 
@@ -288,7 +330,6 @@ router.post('/page/meta', function (req, res) {
         var newMeta = req.body;
         var meta = data.meta;
         var items = data.items;
-
 
         // TODO: refactor to Storybaord.updateMeta() function
         meta['title'] = newMeta['title'];
@@ -408,6 +449,10 @@ router.get('/page/imagebackground/id/:id', function (req, res) {
                 audiosources: 'editor/fragments/audiosources',
                 formcontrols: 'editor/fragments/formcontrols',
                 fullpage: 'editor/fragments/fullpage',
+                gradientanimationdirection: 'editor/fragments/gradientanimationdirection',
+                gradientdirection: 'editor/fragments/gradientdirection',
+                gradientspeed: 'editor/fragments/gradientspeed',
+                gradientstops: 'editor/fragments/gradientstops',
                 imagesources: 'editor/fragments/imagesources',
                 offset: 'editor/fragments/offset-bgimage',
                 plaintext: 'editor/fragments/plaintext',
@@ -430,7 +475,6 @@ router.post('/page/imagebackground/id/:id', function (req, res) {
             var item = items[qId].imagebackground;
             var newItem = req.body;
         };
-
         // format and save new item
         var fullpage = (newItem['fullpage'] === 'on') ? true : false;
         item['format'] = { fullpage: fullpage };
@@ -447,6 +491,38 @@ router.post('/page/imagebackground/id/:id', function (req, res) {
             srcphone: newItem['srcphone'],
             srcmedium: newItem['srcmedium']
         };
+        var gradientEnable = (newItem['gradientEnable'] ? true : false);
+        var gradientAnimate = (newItem['gradientAnimate']) ? true : false;
+        var gradientDirection = newItem['gradientDirection'];
+        var gradientSpeed = newItem['speed'];
+        var gradientStops = newItem['stops'];
+        var gradientAnimTop = (newItem['gradientAnimTop']) ? true : false;
+        var gradientAnimTopRight = (newItem['gradientAnimTopRight']) ? true : false;
+        var gradientAnimRight = (newItem['gradientAnimRight']) ? true : false;
+        var gradientAnimBottomRight = (newItem['gradientAnimBottomRight']) ? true : false;
+        var gradientAnimBottom = (newItem['gradientAnimBottom']) ? true : false;
+        var gradientAnimBottomLeft = (newItem['gradientAnimBottomLeft']) ? true : false;
+        var gradientAnimLeft = (newItem['gradientAnimLeft']) ? true : false;
+        var gradientAnimTopLeft = (newItem['gradientAnimTopLeft']) ? true : false;
+        var gradientAnim = {
+          top: gradientAnimTop,
+          topright: gradientAnimTopRight,
+          right: gradientAnimRight,
+          bottomright: gradientAnimBottomRight,
+          bottom: gradientAnimBottom,
+          bottomleft: gradientAnimBottomLeft,
+          left: gradientAnimLeft,
+          topleft: gradientAnimTopLeft
+        };
+        item['gradient'] = {
+          animate: gradientAnimate,
+          animation: gradientAnim,
+          enable: gradientEnable,
+          direction: gradientDirection,
+          speed: gradientSpeed,
+          stops: gradientStops
+        };
+        console.log(item['gradient']);
         var offsetLeft = (newItem['offset-left'] === 'on') ? true : false;
         var offsetCentre = (newItem['offset-centre'] === 'on') ? true : false;
         var offsetRight = (newItem['offset-right'] === 'on') ? true : false;

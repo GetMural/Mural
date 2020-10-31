@@ -29,6 +29,7 @@ button#save
 
 label {
   clear: left;
+  user-select: none;
 }
 
 [draggable] {
@@ -60,7 +61,7 @@ fieldset {
 }
 
 input {
-  margin-bottom: 0.5em;
+  margin-bottom: 1em;
 }
 
 .ctrls {

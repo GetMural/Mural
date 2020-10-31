@@ -1,0 +1,45 @@
+<script>
+  var initVal = {{#gradient}}{{#direction}}{{direction}}{{/direction}}{{^direction}}180{{/direction}}{{/gradient}};
+  $('.gradient').each(function(){
+    if ($(this).val() == initVal) {
+      $('.gradient').prop('checked', false);
+      $(this).prop('checked', true);
+    }
+  });
+</script>
+
+<fieldset>
+  <legend>Gradient Direction</legend>
+  <div>
+    <label for="gradientTop">Top</label>
+    <input id="gradientTop" class="gradient" name="gradientDirection" type="radio" value="180" checked="checked" />
+  </div>
+  <div>
+    <label for="gradientTopRight">Top-Right</label>
+    <input id="gradientTopRight" class="gradient" name="gradientDirection" type="radio" value="225" />
+  </div>
+  <div>
+    <label for="gradientRight">Right</label>
+    <input id="gradientRight" class="gradient" name="gradientDirection" type="radio" value="270" />
+  </div>
+  <div>
+    <label for="gradientBottomRight">Bottom-Right</label>
+    <input id="gradientBottomRight" class="gradient" name="gradientDirection" type="radio" value="315" />
+  </div>
+  <div>
+    <label for="gradientBottom">Bottom</label>
+    <input id="gradientBottom" class="gradient" name="gradientDirection" type="radio" value="0" />
+  </div>
+  <div>
+    <label for="gradientBottomLeft">Bottom-Left</label>
+    <input id="gradientBottomLeft" class="gradient" name="gradientDirection" type="radio" value="45" />
+  </div>
+  <div>
+    <label for="gradientLeft">Left</label>
+    <input id="gradientLeft" class="gradient" name="gradientDirection" type="radio" value="90" />
+  </div>
+  <div>
+    <label for="gradientTopLeft">Top-Left</label>
+    <input id="gradientTopLeft" class="gradient" name="gradientDirection" type="radio" value="135" />
+  </div>
+</fieldset>

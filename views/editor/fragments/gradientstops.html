@@ -1,0 +1,30 @@
+<fieldset>
+  <legend>Animate</legend>
+  <div>
+    <label for="gradientEnable">Enable Gradient</label>
+    <input id="gradientEnable" class="gradientenable" name="gradientEnable" type="checkbox" {{#gradient.enable}}checked="checked"{{/gradient.enable}} />
+  </div>
+  <div>
+    <label for="gradientAnimate">Enable Gradient Animation</label>
+    <input id="gradientAnimate" class="gradientanimate" name="gradientAnimate" type="checkbox" {{#gradient.animate}}checked="checked"{{/gradient.animate}} />
+  </div>
+</fieldset>
+
+<fieldset>
+  <legend>Stops</legend>
+  <p>A gradient needs at least two colours to display. You can use hexadecimal values <code>#efefef, #ff0000</code> or named HTML colour entities <code>goldenrod, pink</code>.</p>
+  <div>
+    <label>Colour</label>
+    <div class="js-ContentDynamic">
+    {{#gradient}}
+    {{#stops}}
+      <div class="js-Stop js-Dynamic">
+        <input type="text" placeholder="&hellip;" class="stop" name="stops[]" value="{{.}}" />
+        <button type="button" class="js-Remove btn btn-danger pull-right">Delete</button>
+      </div>
+    {{/stops}}
+    {{/gradient}}
+    </div>
+    <button type="button" class="js-AddStop btn btn-success pull-right">Add Stop [+]</button>
+  </div>
+</fieldset>
