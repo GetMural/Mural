@@ -37,6 +37,16 @@
       <meta content="yes" name="apple-mobile-web-app-capable">
       <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
       <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+      {{#analytics}}
+      <script async src="https://www.googletagmanager.com/gtag/js?id={{analytics}}"></script>
+      <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', '{{analytics}}');
+      </script>
+      {{/analytics}}
     {{/meta}}
     <link rel="shortcut icon" href="img/favicon.ico">
     <link rel="apple-touch-icon" href="img/touch-icon.png">
@@ -53,9 +63,9 @@
     <div id="loading_overlay" class="loading" {{#meta}}{{#site_img}} style="background-image:url('{{site_img}}');background-position:center center;background-size:cover;" {{/site_img}}{{/meta}}>
       <div class="opacity-pane"></div>
 
-      <img src="img/logo.svg" alt="Mural is Loading...">
-      <h3>{{#meta}}{{title}}{{/meta}}</h3>
-      <div class="loading-text">LOADING...</div>
+      <img src="img/logo.svg" alt="Mural is Loading..." class="logo">
+      <h3 class="story-name">{{#meta}}{{title}}{{/meta}}</h3>
+      <img id="play_start" class="play-start animated bounce" src="img/tuska_play.svg" style="display: none; fill:white">
     </div>
 
     <span class="mute">Mute</span>
@@ -328,39 +338,38 @@
                    {{#snippets}}
                     data-dynamic-image="true"
                    {{/snippets}}>
-                <div class="content container-fluid">
-                  <div class="row">
-                    <div class="col-sm-12 header">
-                      {{#title}}
-                        <h1>{{{title}}}</h1>
-                      {{/title}}
-                      {{#subtitle}}
-                        <h2>{{{subtitle}}}</h2>
-                      {{/subtitle}}
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-xs-12 col-sm-10 col-md-8 col-lg-6 text">
-                      {{#intro}}
-                        {{{intro}}}
-                      {{/intro}}
-                      {{#snippets}}
-                        {{#src}}
-                          <figure class="cms-image {{align}}">
-                            <img data-src="{{src}}" rel="resizable" alt="{{alt}}" />
-                            <figcaption>{{title}}
-                               <span class="photographer">
-                                 {{{credits}}}
-                               </span>
-                            </figcaption>
-                          </figure>
-                        {{/src}}
-                        {{{text}}}
-                      {{/snippets}}
-                    </div>
-                  </div>
+            <div class="content container-fluid">
+              <div class="row">
+                <div class="col-sm-12 header">
+                  {{#title}}
+                    <h1>{{{title}}}</h1>
+                  {{/title}}
+                  {{#subtitle}}
+                    <h2>{{{subtitle}}}</h2>
+                  {{/subtitle}}
                 </div>
               </div>
+              <div class="row">
+                <div class="col-xs-12 col-sm-10 col-md-8 col-lg-6 text">
+                  {{#intro}}
+                    {{{intro}}}
+                  {{/intro}}
+                  {{#snippets}}
+                    {{#src}}
+                      <figure class="cms-image {{align}}">
+                        <img data-src="{{src}}" rel="resizable" alt="{{alt}}" />
+                        <figcaption>{{title}}
+                            <span class="photographer">
+                              {{{credits}}}
+                            </span>
+                        </figcaption>
+                      </figure>
+                    {{/src}}
+                    {{{text}}}
+                  {{/snippets}}
+                </div>
+              </div>
+            </div>
           </section>
         {{/textcentred}}
 
@@ -476,6 +485,26 @@
             </div>
           </section>
         {{/videofullpage}}
+
+        {{#youtube}}
+          <section class="st-video part"
+            name="story{{id}}"
+            {{#youtube_id}}
+              data-youtube-id="{{youtube_id}}"
+            {{/youtube_id}}
+            {{#controls}}
+              data-controls=true
+            {{/controls}}
+            {{#autoAdvance}}
+              data-auto-advance=true
+            {{/autoAdvance}}
+              >
+            <div class="video-container">
+              <div id="ytplayer_{{youtube_id}}_{{id}}"></div>
+            </div>
+          </section>
+        {{/youtube}}
+
       {{/items}}
     </article>
     {{#manifest}}

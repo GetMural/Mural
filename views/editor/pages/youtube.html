@@ -1,0 +1,28 @@
+<form action="/editor/page/youtube/id/{{id}}" method="post">
+
+  <h4>YouTube</h4>
+
+  {{#item}}
+    <input type="hidden" name="id" value="{{id}}">
+    {{> suppressnav}}
+
+    <fieldset>
+      {{> youtubesource}}
+      <fieldset>
+        <legend>Options</legend>
+        <div>
+        <label for="controls">Controls</label>
+        <input id="controls" name="controls" type="checkbox"{{#controls}} checked="checked"{{/controls}}>
+      </div>
+      <div>
+        <label for="autoAdvance">Auto Advance</label>
+        <input id="autoAdvance" name="autoAdvance" type="checkbox"{{#autoAdvance}} checked="checked"{{/autoAdvance}}>
+      </div>
+      </fieldset>
+    </fieldset>
+
+  {{/item}}
+
+  {{> formcontrols}}
+
+</form>
