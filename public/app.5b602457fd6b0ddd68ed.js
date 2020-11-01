@@ -11144,10 +11144,10 @@ var WINDOW_WIDTH = $(window).width();
 var scrKey;
 var attrKey;
 
-if (WINDOW_WIDTH > 1024) {
+if (WINDOW_WIDTH >= 1024) {
   scrKey = "src";
   attrKey = "src";
-} else if (WINDOW_WIDTH > 600) {
+} else if (WINDOW_WIDTH >= 600) {
   scrKey = "srcMedium";
   attrKey = "src-medium";
 } else {

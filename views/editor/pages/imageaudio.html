@@ -19,8 +19,7 @@
     <fieldset>
       <div>
         <label for="alt">Alternative Text</label>
-        <input type="text" class="form-control" id="alt" name="alt"
-        {{#image}}{{#alt}} value="{{alt}}"{{/alt}}{{/image}}>
+        <textarea class="form-control" id="alt" name="alt">{{#image}}{{#alt}} value="{{alt}}"{{/alt}}{{/image}}</textarea>
       </div>
       <div>
         <label for="image_caption">Image Caption</label>

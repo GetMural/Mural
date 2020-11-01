@@ -1,4 +1,15 @@
 <div>
   <label for="credits" class="control-label">Credits</label>
-  <input name="credits" data-name="credits" type="text" {{#credits}}value="{{{credits}}}" {{/credits}}placeholder="No credits" />
+  <textarea id="credits" name="credits" class="form-control js-RichText">{{{credits}}}</textarea>
 </div>
+
+<script>
+$('#credits').summernote({
+  toolbar: [
+    ['style', ['bold', 'italic', 'underline', 'clear']],
+    ['font', ['strikethrough', 'superscript', 'subscript']],
+    ['color', ['color']],
+    ['tools', ['link']]
+  ]
+});
+</script>

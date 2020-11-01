@@ -69,15 +69,33 @@ $(function() {
         })
     });
 
-    $('#btn-tools').on('click', function() {
-        $('#btn-tools').toggleClass('collapsed');
-        $('#toolbar').toggleClass('collapsed');
-        if ($('#editor').width() === 0) {
-            $('#editor').width('50vw');
-            $('#preview').width('50vw');
-        } else {
-            $('#editor').width('0vw');
-            $('#preview').width('100vw');
-        }
+    // $('#btn-tools').on('click', function() {
+    //     $('#btn-tools').toggleClass('collapsed');
+    //     $('#toolbar').toggleClass('collapsed');
+    //     if ($('#editor').width() === 0) {
+    //         $('#editor').width('50vw');
+    //         $('#preview').width('50vw');
+    //     } else {
+    //         $('#editor').width('0vw');
+    //         $('#preview').width('100vw');
+    //     }
+    // });
+
+    $('#btn-phone').on('click', function() {
+        $('#editor').width('calc(100vw - 375px)');
+        $('#preview').width('375px').height('667px');
+        $('#preview').attr( 'src', function ( i, val ) { return val; });
+    });
+
+    $('#btn-tablet').on('click', function() {
+        $('#editor').width('calc(100vw - 600px)');
+        $('#preview').width('600px').height('800px');
+        $('#preview').attr( 'src', function ( i, val ) { return val; });
+    });
+
+    $('#btn-desktop').on('click', function() {
+        $('#editor').width('0px');
+        $('#preview').width('100vw').height('100vh');
+        $('#preview').attr( 'src', function ( i, val ) { return val; });
     });
 });

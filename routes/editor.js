@@ -712,7 +712,8 @@ router.get('/page/textcentred/id/:id', function (req, res) {
                 snippetimage: 'editor/fragments/snippetimage',
                 subtitle: 'editor/fragments/subtitle',
                 suppressnav: 'editor/fragments/suppressnav',
-                title: 'editor/fragments/title'
+                title: 'editor/fragments/title',
+                credits: 'editor/fragments/credits'
             }
         });
     });
