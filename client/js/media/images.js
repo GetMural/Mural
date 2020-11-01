@@ -18,12 +18,18 @@ function imageLoadPromise(src) {
 
 function insertBackgroundImage($el, src, active=false) {
   return imageLoadPromise(src).then(() => {
-    const isFixed = $el.find('.bg-image').not('.no-stick').length && active;
-    const styles = {
-      'background-image': `url(${src})`,
-       position: isFixed ? 'fixed' : ''
-    };
-    $el.find('.bg-image').css(styles);
+    const $bgImage = $el.find('.bg-image');
+    if ($bgImage.length) {
+      const styles = {
+        'background-image': `url(${src})`,
+        position: active ? 'fixed' : ''
+      };
+      $bgImage.css(styles);
+      return false;
+    } else {
+      $el.find('img').get(0).src = src;
+      return true;
+    }
   });
 }
 

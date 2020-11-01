@@ -376,7 +376,9 @@ router.get('/page/imageaudio/id/:id', function (req, res) {
             partials: {
                 formcontrols: 'editor/fragments/formcontrols',
                 audiosources: 'editor/fragments/audiosources',
+                audiocredits: 'editor/fragments/audiocredits',
                 imagesources: 'editor/fragments/imagesources',
+                imagecredits: 'editor/fragments/imagecredits',
                 suppressnav: 'editor/fragments/suppressnav',
                 title: 'editor/fragments/title'
             }
@@ -394,7 +396,7 @@ router.post('/page/imageaudio/id/:id', function (req, res) {
             var item = items[qId].imageaudio;
             var newItem = req.body;
         };
-        var suppress = (newItem['suppress'] === 'on') ? true : false;
+        var suppress = newItem['suppress'] === 'on';
 
         // format and save new item
         item['suppress'] = suppress;
@@ -404,18 +406,30 @@ router.post('/page/imageaudio/id/:id', function (req, res) {
             srcmain: newItem['srcmain'],
             srcphone: newItem['srcphone'],
             srcmedium: newItem['srcmedium'],
-            "no_stick": newItem['no_stick'] === 'on',
-            "background_position": newItem['background_position']
+            alt: newItem['alt']
         };
 
+        if (newItem['image_caption']) {
+            item['image']['image_caption'] = newItem['image_caption'];
+        }
+        if (newItem['image_credits']) {
+            item['image']['image_credits'] = newItem['image_credits'];
+        }
+        
         if (newItem['mp3'] || newItem['ogg']) {
             item['audio'] = {
                 mp3: newItem['mp3'],
                 ogg: newItem['ogg']
             };
+
+            if (newItem['audio_credits']) {
+                item['audio']['audio_credits'] = newItem['audio_credits'];
+            }
         } else {
             delete item['audio'];
         }
+
+        console.log(item);
 
         // save the file
         items[qId].imageaudio = item;
@@ -487,11 +501,6 @@ router.post('/page/imagebackground/id/:id', function (req, res) {
         item['subtitle'] = newItem['subtitle'];
         item['text'] = newItem['text'];
 
-        item['image'] = {
-            srcmain: newItem['srcmain'],
-            srcphone: newItem['srcphone'],
-            srcmedium: newItem['srcmedium']
-        };
         var gradientEnable = newItem['gradientEnable'] === 'on';
         var gradientAnimate = newItem['gradientAnimate'] === 'on';
         var gradientDirection = newItem['gradientDirection'];
@@ -524,8 +533,16 @@ router.post('/page/imagebackground/id/:id', function (req, res) {
           stops: gradientStops
         };
 
+        item['image'] = {
+            srcmain: newItem['srcmain'],
+            srcphone: newItem['srcphone'],
+            srcmedium: newItem['srcmedium']
+        };
+
         if (!gradientEnable) {
             delete item['gradient'];
+        } else {
+            delete item['image'];
         }
 
         console.log(item['gradient']);

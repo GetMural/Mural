@@ -148,7 +148,11 @@ function loadItem(item) {
       item.el,
       item.data[scrKey],
       item.active
-    );
+    ).then((shouldUpdateOffsets) => {
+      if (shouldUpdateOffsets) {
+        scrollStory.updateOffsets();
+      }
+    });
     returnPromises.push(imageLoaded);
   }
 
@@ -262,7 +266,7 @@ function loadItem(item) {
 
 $story.on("itemfocus", function(ev, item) {
   if (item.data.image) {
-    imageMedia.fixBackgroundImage(item.el, item.data[scrKey], true);
+    imageMedia.fixBackgroundImage(item.el);
   }
 
   if (item.data.video) {

@@ -204,7 +204,7 @@
         {{/imagebackground}}
 
         {{#imageaudio}}
-          <section class="part sticky-image" name="story{{id}}"
+          <section class="part imageaudio" name="story{{id}}"
             {{#audio}}
               data-audio=true
               {{#mp3}}
@@ -227,9 +227,13 @@
               {{/srcphone}}
             {{/image}}>
             {{#image}}
-              <div class="bg-image {{#no_stick}}no-stick{{/no_stick}}" {{#background_position}}
-                style="background-position: {{background_position}};"{{/background_position}}></div>
+              <img class="feature-image" {{#alt}}alt="{{alt}}"{{/alt}}></img>
+              {{#image_caption}}<div class="image-caption">{{{image_caption}}}</div>{{/image_caption}}
+              {{#image_credits}}<small class="image-credits">{{{image_credits}}}</small>{{/image_credits}}
             {{/image}}
+            {{#audio}}
+              {{#audio_credits}}<small class="audio-credits">{{{audio_credits}}}</small>{{/audio_credits}}
+            {{/audio}}
           </section>
         {{/imageaudio}}
 

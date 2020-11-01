@@ -11201,7 +11201,11 @@ function loadItem(item) {
   }
 
   if (item.data.image) {
-    var imageLoaded = imageMedia.insertBackgroundImage(item.el, item.data[scrKey], item.active);
+    var imageLoaded = imageMedia.insertBackgroundImage(item.el, item.data[scrKey], item.active).then(function (shouldUpdateOffsets) {
+      if (shouldUpdateOffsets) {
+        scrollStory.updateOffsets();
+      }
+    });
     returnPromises.push(imageLoaded);
   }
 
@@ -11295,7 +11299,7 @@ function loadItem(item) {
 
 $story.on("itemfocus", function (ev, item) {
   if (item.data.image) {
-    imageMedia.fixBackgroundImage(item.el, item.data[scrKey], true);
+    imageMedia.fixBackgroundImage(item.el);
   }
 
   if (item.data.video) {
@@ -34443,12 +34447,19 @@ function imageLoadPromise(src) {
 function insertBackgroundImage($el, src) {
   var active = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
   return imageLoadPromise(src).then(function () {
-    var isFixed = $el.find('.bg-image').not('.no-stick').length && active;
-    var styles = {
-      'background-image': "url(".concat(src, ")"),
-      position: isFixed ? 'fixed' : ''
-    };
-    $el.find('.bg-image').css(styles);
+    var $bgImage = $el.find('.bg-image');
+
+    if ($bgImage.length) {
+      var styles = {
+        'background-image': "url(".concat(src, ")"),
+        position: active ? 'fixed' : ''
+      };
+      $bgImage.css(styles);
+      return false;
+    } else {
+      $el.find('img').get(0).src = src;
+      return true;
+    }
   });
 }
 
