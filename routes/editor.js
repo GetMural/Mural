@@ -478,34 +478,33 @@ router.post('/page/imagebackground/id/:id', function (req, res) {
             var newItem = req.body;
         };
         // format and save new item
-        var fullpage = (newItem['fullpage'] === 'on') ? true : false;
+        var fullpage = newItem['fullpage'] === 'on';
         item['format'] = { fullpage: fullpage };
-        var suppress = (newItem['suppress'] === 'on') ? true : false;
+        var suppress = newItem['suppress'] === 'on';
         item['suppress'] = suppress;
         item['nav_title'] = newItem['nav_title'];
         item['title'] = newItem['title'];
         item['subtitle'] = newItem['subtitle'];
         item['text'] = newItem['text'];
-        // TODO: item['navthumb'] is missing from form
-        // TODO: item['navlevel'] is missing from form
+
         item['image'] = {
             srcmain: newItem['srcmain'],
             srcphone: newItem['srcphone'],
             srcmedium: newItem['srcmedium']
         };
-        var gradientEnable = (newItem['gradientEnable'] ? true : false);
-        var gradientAnimate = (newItem['gradientAnimate']) ? true : false;
+        var gradientEnable = newItem['gradientEnable'] === 'on';
+        var gradientAnimate = newItem['gradientAnimate'] === 'on';
         var gradientDirection = newItem['gradientDirection'];
         var gradientSpeed = newItem['speed'];
         var gradientStops = newItem['stops'];
-        var gradientAnimTop = (newItem['gradientAnimTop']) ? true : false;
-        var gradientAnimTopRight = (newItem['gradientAnimTopRight']) ? true : false;
-        var gradientAnimRight = (newItem['gradientAnimRight']) ? true : false;
-        var gradientAnimBottomRight = (newItem['gradientAnimBottomRight']) ? true : false;
-        var gradientAnimBottom = (newItem['gradientAnimBottom']) ? true : false;
-        var gradientAnimBottomLeft = (newItem['gradientAnimBottomLeft']) ? true : false;
-        var gradientAnimLeft = (newItem['gradientAnimLeft']) ? true : false;
-        var gradientAnimTopLeft = (newItem['gradientAnimTopLeft']) ? true : false;
+        var gradientAnimTop = newItem['gradientAnimTop'] === 'on';
+        var gradientAnimTopRight = newItem['gradientAnimTopRight'] === 'on';
+        var gradientAnimRight = newItem['gradientAnimRight'] === 'on';
+        var gradientAnimBottomRight = newItem['gradientAnimBottomRight'] === 'on';
+        var gradientAnimBottom = newItem['gradientAnimBottom'] === 'on';
+        var gradientAnimBottomLeft = newItem['gradientAnimBottomLeft'] === 'on';
+        var gradientAnimLeft = newItem['gradientAnimLeft'] === 'on';
+        var gradientAnimTopLeft = newItem['gradientAnimTopLeft'] === 'on';
         var gradientAnim = {
           top: gradientAnimTop,
           topright: gradientAnimTopRight,
@@ -524,18 +523,13 @@ router.post('/page/imagebackground/id/:id', function (req, res) {
           speed: gradientSpeed,
           stops: gradientStops
         };
+
+        if (!gradientEnable) {
+            delete item['gradient'];
+        }
+
         console.log(item['gradient']);
-        var offsetLeft = (newItem['offset-left'] === 'on') ? true : false;
-        var offsetCentre = (newItem['offset-centre'] === 'on') ? true : false;
-        var offsetRight = (newItem['offset-right'] === 'on') ? true : false;
-        var offsetCustom = (newItem['offset-custom'] === 'on') ? true : false;
-        item['offset'] = {
-          left: offsetLeft,
-          centre: offsetCentre,
-          right: offsetRight,
-          custom: offsetCustom,
-          value: newItem['offset-value']
-        };
+
         if (newItem['mp3'] || newItem['ogg']) {
             item['audio'] = {
                 mp3: newItem['mp3'],
