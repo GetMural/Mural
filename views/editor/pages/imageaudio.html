@@ -17,6 +17,20 @@
     </fieldset>
 
     <fieldset>
+      <div>
+        <label for="background_position">Background Position</label>
+        <input type="text" class="form-control" id="background_position" name="background_position"
+        {{#image}}{{#background_position}} value="{{background_position}}"{{/background_position}}{{/image}}>
+      </div>
+      <div class="checkbox">
+        <label for="no_stick">
+          <input id="no_stick" name="no_stick" type="checkbox" {{#image}}{{#no_stick}}
+          checked="checked"{{/no_stick}}{{/image}} >Don't stick image
+        </label>
+      </div>
+    </fieldset>
+
+    <fieldset>
       {{#audio}}
         {{> audiosources}}
       {{/audio}}

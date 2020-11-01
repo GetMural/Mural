@@ -236,7 +236,8 @@
               {{/srcphone}}
             {{/image}}>
             {{#image}}
-              <div class="bg-image"></div>
+              <div class="bg-image {{#no_stick}}no-stick{{/no_stick}}" {{#background_position}}
+                style="background-position: {{background_position}};"{{/background_position}}></div>
             {{/image}}
           </section>
         {{/imageaudio}}

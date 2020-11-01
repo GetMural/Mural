@@ -34443,26 +34443,17 @@ function imageLoadPromise(src) {
 function insertBackgroundImage($el, src) {
   var active = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
   return imageLoadPromise(src).then(function () {
+    var isFixed = $el.find('.bg-image').not('.no-stick').length && active;
     var styles = {
       'background-image': "url(".concat(src, ")"),
-      position: active ? 'fixed' : ''
+      position: isFixed ? 'fixed' : ''
     };
     $el.find('.bg-image').css(styles);
   });
 }
 
-function insertBackgroundGradient($el) {
-  var active = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-  return imageLoadPromise(src).then(function () {
-    var styles = {
-      position: active ? 'fixed' : ''
-    };
-    $el.find('.bg-gradient').css(styles);
-  });
-}
-
 function fixBackgroundImage($el) {
-  var $container = $el.find('.bg-image, .bg-gradient');
+  var $container = $el.find('.bg-image, .bg-gradient').not('.no-stick');
   $container.css('position', 'fixed');
 }
 
@@ -34487,7 +34478,6 @@ function loadImages($el) {
 
 module.exports = {
   insertBackgroundImage: insertBackgroundImage,
-  insertBackgroundGradient: insertBackgroundGradient,
   fixBackgroundImage: fixBackgroundImage,
   unfixBackgroundImage: unfixBackgroundImage,
   loadImages: loadImages,

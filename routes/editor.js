@@ -403,7 +403,9 @@ router.post('/page/imageaudio/id/:id', function (req, res) {
         item['image'] = {
             srcmain: newItem['srcmain'],
             srcphone: newItem['srcphone'],
-            srcmedium: newItem['srcmedium']
+            srcmedium: newItem['srcmedium'],
+            "no_stick": newItem['no_stick'] === 'on',
+            "background_position": newItem['background_position']
         };
 
         if (newItem['mp3'] || newItem['ogg']) {
