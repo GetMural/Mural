@@ -2643,12 +2643,14 @@ article .part.box_text p {
 
   .image-caption {
     padding-top: 1rem;
+    padding-bottom: 0.5rem;
     padding-left: 1rem;
     font-size: 1.75rem;
   }
   .image-credits,
   .audio-credits {
     padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
     padding-left: 1rem;
   }
 }
