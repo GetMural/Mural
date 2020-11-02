@@ -7,6 +7,11 @@
     {{> suppressnav}}
 
     <fieldset>
+      <label for="id">Light</label>
+      <input id="light" name="light" type="checkbox" {{#light}} checked{{/light}} />
+    </fieldset>
+
+    <fieldset>
       {{#image}}
         {{> imagesources}}
       {{/image}}

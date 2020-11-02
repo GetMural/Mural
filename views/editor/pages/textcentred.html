@@ -9,9 +9,9 @@
   <fieldset>
 
     <div>
-      <input type="hidden" name="id" value="{{id}}">
+      <input for="light" type="hidden" name="id" value="{{id}}">
       <label>Light</label>
-      <input name="light" type="checkbox" {{#light}} checked{{/light}} />
+      <input id="light" name="light" type="checkbox" {{#light}} checked{{/light}} />
     </div>
 
     {{> title}}

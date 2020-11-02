@@ -402,6 +402,8 @@ router.post('/page/imageaudio/id/:id', function (req, res) {
         item['suppress'] = suppress;
         item['nav_title'] = newItem['nav_title'];
 
+        item['light'] = newItem['light'] === 'on';
+
         item['image'] = {
             srcmain: newItem['srcmain'],
             srcphone: newItem['srcphone'],
