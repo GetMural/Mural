@@ -1,4 +1,5 @@
 require("blueimp-gallery/css/blueimp-gallery.css");
+require("blueimp-gallery/css/blueimp-gallery-indicator.css");
 require("../css/style.scss");
 
 const $ = require("expose-loader?$!jquery");
@@ -72,6 +73,7 @@ MoveItItem.prototype.update = function(scrollTop) {
 };
 
 const blueimp = require("blueimp-gallery/js/blueimp-gallery");
+require("blueimp-gallery/js/blueimp-gallery-indicator");
 const videoMedia = require("./media/video");
 const imageMedia = require("./media/images");
 const audioMedia = require("./media/audio");

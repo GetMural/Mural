@@ -181,7 +181,7 @@
             {{/gradient}}
             <div class="content container-fluid">
               <div class="row">
-                <div class="col-sm-12 {{#format}}{{#fullpage}}header-fullpage{{/fullpage}}{{/format}}">
+                <div class="col-sm-12 {{#format}}{{#fullpage}}header-fullpage{{/fullpage}}{{^fullpage}}header{{/fullpage}}{{/format}}">
                   <div class="middle">
                   {{#title}}
                     <h1>{{{title}}}</h1>
@@ -277,6 +277,7 @@
               <div class="slides"></div>
               <a class="prev">&lsaquo;</a>
               <a class="next">&rsaquo;</a>
+              <ol class="indicator"></ol>
               <div class="slide-caption"></div>
               <div class="credits"></div>
             </div>

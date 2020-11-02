@@ -1905,12 +1905,12 @@ article .header {
 }
 article .header h1 {
   margin: 0;
-  font-size: 3em;
+  font-size: 2.5em;
   line-height: 1.4em;
 }
 article .header h2 {
   margin: 0;
-  font-size: 1.8em;
+  font-size: 1.5em;
   font-weight: 300;
   line-height: 1.2em;
 }
@@ -1943,6 +1943,18 @@ article .header-fullpage h2 {
 }
 
 @media (min-width: 475px) {
+  article .header h1 {
+    margin: 0;
+    font-size: 3em;
+    line-height: 1.4em;
+  }
+  article .header h2 {
+    margin: 0;
+    font-size: 1.8em;
+    font-weight: 300;
+    line-height: 1.2em;
+  }
+
   article .header-fullpage h1 {
     font-size: 5em;
     line-height: 1.2em;
@@ -2546,6 +2558,8 @@ article .part.box_text p {
   overflow: hidden;
   z-index: 1;
   font-family: "Roboto Slab", arial, serif;
+  background: #222;
+  color: white;
 }
 
 .slideshow-horizontal .slide-caption {
@@ -2593,6 +2607,12 @@ article .part.box_text p {
   z-index: 3;
   margin-top: -50vh;
   height: 100vh;
+}
+
+@media (prefers-color-scheme: light) {
+  .blueimp-gallery-carousel {
+      background: black;
+  }
 }
 
 .blueimp-gallery-carousel {
