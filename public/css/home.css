@@ -22,7 +22,7 @@ iframe {
 #toolbar {
   padding: 5px;
   position: absolute;
-  top: 10px;
+  right: 125px;
   z-index: 999;
 }
 
@@ -30,12 +30,6 @@ iframe {
   width: 55px;
   height: 44px;
   overflow: hidden;
-}
-
-#btn-tools {
-}
-
-#btn-tools.collapsed {
 }
 
 .btn-xs, .btn-group-xs > .btn {
