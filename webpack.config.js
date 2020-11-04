@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const WebpackMd5Hash = require('webpack-md5-hash');
@@ -9,8 +10,9 @@ const extractSass = new ExtractTextPlugin({
 
 module.exports = {
   entry: {
-    app: path.resolve(__dirname, 'client', 'js', 'app.js')
+    "app": path.resolve(__dirname, 'client', 'js', 'app.js'),
   },
+  devtool: "source-map",
   output: {
     filename: "[name].[chunkhash].js",
     path: path.resolve(__dirname, 'public')
@@ -73,6 +75,9 @@ module.exports = {
   },
   plugins: [
     extractSass,
+    new webpack.optimize.UglifyJsPlugin({
+      minimize: true
+    }),
     new ManifestPlugin(),
     new WebpackMd5Hash()
   ],
