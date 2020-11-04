@@ -440,13 +440,16 @@
             {{#offset.custom}}
             <style>
               @media (orientation:portrait) {
-                section[name="story{{id}}"] .video-container {
-                  margin-left: {{offset.value}}vw;
+                section[name="story{{id}}"] video {
+                  position: absolute;
+                  top: 50%;
+                  left: {{offset.value}}%;
+                  transform: translate(-{{offset.value}}%, -50%);
                 }
               }
             </style>
             {{/offset.custom}}
-            <div class="video-container{{#offset}}{{#left}} offset-left{{/left}}{{#centre}} offset-centre{{/centre}}{{#right}} offset-right{{/right}}{{/offset}}">
+            <div class="video-container{{#offset}} offset{{#left}} offset-left{{/left}}{{#centre}} offset-centre{{/centre}}{{#right}} offset-right{{/right}}{{/offset}}">
             </div>
             <div class="content container-fluid">
 
@@ -514,13 +517,16 @@
             {{#offset.custom}}
             <style>
               @media (orientation:portrait) {
-                section[name="story{{id}}"] .video-container {
-                  margin-left: {{offset.value}}vw;
+                section[name="story{{id}}"] video {
+                  position: absolute;
+                  top: 50%;
+                  left: {{offset.value}}%;
+                  transform: translate(-{{offset.value}}%, -50%);
                 }
               }
             </style>
             {{/offset.custom}}
-            <div class="video-container{{#offset}}{{#left}} offset-left{{/left}}{{#centre}} offset-centre{{/centre}}{{#right}} offset-right{{/right}}{{/offset}}"></div>
+            <div class="video-container{{#offset}} offset{{#left}} offset-left{{/left}}{{#centre}} offset-centre{{/centre}}{{#right}} offset-right{{/right}}{{/offset}}"></div>
             <div class="caption">
               <div class="button-container play"></div>
               <div class="button-container pause"></div>

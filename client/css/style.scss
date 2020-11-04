@@ -1844,14 +1844,23 @@ address {
 // portrait view offset rules
 @media (orientation: portrait) {
   // this works for videobackground and videofullpage
-  .video-container.offset-left {
-    margin-left: 0;
+  .video-container.offset video {
+    position: absolute;
   }
-  .video-container.offset-centre {
-    margin-left: -50vw;
+  .video-container.offset-left video {
+    top: 50%;
+    left: 0%;
+    transform: translate(0%, -50%);
   }
-  .video-container.offset-right {
-    margin-left: -100vw;
+  .video-container.offset-centre video {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .video-container.offset-right video {
+    top: 50%;
+    left: 100%;
+    transform: translate(-100%, -50%);
   }
 }
 

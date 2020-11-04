@@ -483,7 +483,6 @@ router.get('/page/imagebackground/id/:id', function (req, res) {
                 gradientspeed: 'editor/fragments/gradientspeed',
                 gradientstops: 'editor/fragments/gradientstops',
                 imagesources: 'editor/fragments/imagesources',
-                offset: 'editor/fragments/offset-bgimage',
                 plaintext: 'editor/fragments/plaintext',
                 subtitle: 'editor/fragments/subtitle',
                 suppressnav: 'editor/fragments/suppressnav',
@@ -840,9 +839,9 @@ router.post('/page/videobackground/id/:id', function (req, res) {
             var newItem = req.body;
         };
         // format and save new values to videobackground
-        var fullpage = (newItem['fullpage'] === 'on') ? true : false;
-        var suppress = (newItem['suppress'] === 'on') ? true : false;
-        var active = (newItem['bg-active'] === 'on') ? true : false;
+        var fullpage = newItem['fullpage'] === 'on';
+        var suppress = newItem['suppress'] === 'on';
+
         item['suppress'] = suppress;
         item['nav_title'] = newItem['nav_title'];
         item['format'] = { fullpage: fullpage };
@@ -854,10 +853,10 @@ router.post('/page/videobackground/id/:id', function (req, res) {
         item['image'] = {
             loading: newItem['loading']
         };
-        var offsetLeft = (newItem['offset-left'] === 'on') ? true : false;
-        var offsetCentre = (newItem['offset-centre'] === 'on') ? true : false;
-        var offsetRight = (newItem['offset-right'] === 'on') ? true : false;
-        var offsetCustom = (newItem['offset-custom'] === 'on') ? true : false;
+        var offsetLeft = newItem['offset-left'] === 'on';
+        var offsetCentre = newItem['offset-centre'] === 'on';
+        var offsetRight = newItem['offset-right'] === 'on';
+        var offsetCustom = newItem['offset-custom'] === 'on';
         item['offset'] = {
           left: offsetLeft,
           centre: offsetCentre,
@@ -929,8 +928,8 @@ router.post('/page/videofullpage/id/:id', function (req, res) {
         };
 
         // format and save new values to videofullpage
-        var fullpage = (newItem['fullpage'] === 'on') ? true : false;
-        var suppress = (newItem['suppress'] === 'on') ? true : false;
+        var fullpage = newItem['fullpage'] === 'on';
+        var suppress = newItem['suppress'] === 'on';
         item['suppress'] = suppress;
         item['nav_title'] = newItem['nav_title'];
         var playback = newItem['playback'];
@@ -941,10 +940,10 @@ router.post('/page/videofullpage/id/:id', function (req, res) {
             item['loop'] = true;
             item['autoAdvance'] = false;
         }
-        var offsetLeft = (newItem['offset-left'] === 'on') ? true : false;
-        var offsetCentre = (newItem['offset-centre'] === 'on') ? true : false;
-        var offsetRight = (newItem['offset-right'] === 'on') ? true : false;
-        var offsetCustom = (newItem['offset-custom'] === 'on') ? true : false;
+        var offsetLeft = newItem['offset-left'] === 'on';
+        var offsetCentre = newItem['offset-centre'] === 'on';
+        var offsetRight = newItem['offset-right'] === 'on';
+        var offsetCustom = newItem['offset-custom'] === 'on';
         item['offset'] = {
           left: offsetLeft,
           centre: offsetCentre,
