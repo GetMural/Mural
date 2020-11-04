@@ -1,10 +1,14 @@
 const YOUTUBE = {};
+let loaded = false;
 
 function loadYouTube () {
-  var tag = document.createElement('script');
-  tag.src = "https://www.youtube.com/player_api";
-  var firstScriptTag = document.getElementsByTagName('script')[0];
-  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+  if (!loaded) {
+    const tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/player_api";
+    const firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    loaded = true;
+  }
 }
 
 const YouTubePromise = new Promise(function(resolve, reject) {
@@ -12,7 +16,6 @@ const YouTubePromise = new Promise(function(resolve, reject) {
     resolve();
   }
 });
-loadYouTube();
 
 function resizePlayers() {
   Object.keys(YOUTUBE).forEach(function (ytid) {
@@ -68,6 +71,7 @@ function stick(item) {
 }
 
 function prepare(scrollStory, item) {
+  loadYouTube();
   const videoId = item.data.youtubeId;
   const hasControls = item.data.controls;
   const autoAdvance = item.data.autoAdvance;

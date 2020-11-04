@@ -34,7 +34,6 @@
     "electron": "^6.0.10",
     "express": "~4.15.5",
     "fs-extra": "^7.0.1",
-    "hls.js": "^0.10.1",
     "hogan-express": "^0.5.2",
     "ismobilejs": "^0.4.1",
     "jquery": "^3.4.0",
@@ -44,7 +43,6 @@
     "rimraf": "^2.6.2",
     "scrollstory": "^1.1.0",
     "serve-favicon": "~2.4.5",
-    "sortablejs": "^1.7.0",
     "stickybits": "^3.3.1",
     "summernote": "^0.8.10",
     "vex-js": "^4.1.0"

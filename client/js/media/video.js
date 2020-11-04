@@ -66,7 +66,7 @@ function prepareVideo (scrollStory, $el, id, srcs, attrs) {
   const hslSource = sources.filter(src => src.type === HSL_TYPE)[0];
   const normalSources = sources.filter(src => src.type !== HSL_TYPE);
 
-  if (hslSource && Hls.isSupported()) {
+  if (Hls && hslSource && Hls.isSupported()) {
     canPlayThrough = new Promise(function(resolve, reject) {
       const hls = new Hls();
         hls.loadSource(hslSource.src);
@@ -75,7 +75,7 @@ function prepareVideo (scrollStory, $el, id, srcs, attrs) {
           resolve();
         });
     });
-  } else if (hslSource && video.canPlayType(HSL_TYPE)) {
+  } else if (Hls && hslSource && video.canPlayType(HSL_TYPE)) {
     canPlayThrough = new Promise(function(resolve, reject) {
       video.src = hslSource.src;
       video.addEventListener('loadedmetadata',function() {

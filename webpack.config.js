@@ -75,5 +75,8 @@ module.exports = {
     extractSass,
     new ManifestPlugin(),
     new WebpackMd5Hash()
-  ]
+  ],
+  externals: {
+    'hls.js': 'Hls'
+  }
 };
