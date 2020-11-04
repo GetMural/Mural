@@ -74,10 +74,10 @@ MoveItItem.prototype.update = function(scrollTop) {
 
 const blueimp = require("blueimp-gallery/js/blueimp-gallery");
 require("blueimp-gallery/js/blueimp-gallery-indicator");
-// const videoMedia = require("./media/video");
+const videoMedia = require("./media/video");
 const imageMedia = require("./media/images");
 const audioMedia = require("./media/audio");
-// const youtubeMedia = require("./media/youtube");
+const youtubeMedia = require("./media/youtube");
 const isMobile = window.isMobile;
 
 const WINDOW_WIDTH = $(window).width();
