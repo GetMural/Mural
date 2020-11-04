@@ -1,8 +1,4 @@
 $(function() {
-    $('#btn-refresh-preview').on('click', function() {
-        $('#preview').attr( 'src', function ( i, val ) { return val; });
-    });
-
     $('#btn-download').on('click', function() {
         window.open('/editor/buyusbeer', '', 'width=620,height=700');
     });
@@ -15,7 +11,6 @@ $(function() {
     // on filename select
     $('#story-selector').on('change', function() {
         const filename = this.value;
-        console.log('updating storyboard preference', filename);
         $.post('/preferences/storyboard', {filename: filename}, function(response) {
             console.log('storyboard preference has been updated', response);
             $('#preview').attr( 'src', function ( i, val ) { return val; });
