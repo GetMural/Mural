@@ -2488,7 +2488,7 @@ article .part.box_text p {
   }
 
   &.play {
-    background: transparent url("img/play.png") center center no-repeat;
+    background: transparent url("img/play.svg") center center no-repeat;
   }
 }
 
@@ -2629,13 +2629,6 @@ article .part.box_text p {
   padding: 0;
   box-shadow: none;
   height: 100vh;
-}
-.blueimp-gallery > .prev,
-.blueimp-gallery > .next {
-  font-family: Tahoma, Arial, sans-serif;
-  font-size: 70px;
-  border: none;
-  background: none;
 }
 
 .imageaudio {

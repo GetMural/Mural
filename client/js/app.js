@@ -1,5 +1,5 @@
-require("blueimp-gallery/css/blueimp-gallery.css");
-require("blueimp-gallery/css/blueimp-gallery-indicator.css");
+require("../css/blueimp-gallery.css");
+require("../css/blueimp-gallery-indicator.css");
 require("../css/style.scss");
 
 const $ = require("expose-loader?$!jquery");
