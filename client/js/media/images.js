@@ -34,7 +34,7 @@ function insertBackgroundImage($el, src, active=false) {
 }
 
 function fixBackgroundImage($el) {
-  const $container = $el.find('.bg-image, .bg-gradient').not('.no-stick');
+  const $container = $el.find('.bg-image, .bg-gradient');
   $container.css('position', 'fixed');
 }
 
