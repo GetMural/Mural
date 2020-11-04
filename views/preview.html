@@ -15,23 +15,29 @@
       {{#author}}
        <meta name="author" content="{{author}}">
       {{/author}}
-      {{#rsspingback}}
-        <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="{{rsspingback}}">
-      {{/rsspingback}}
+
+      <meta name="twitter:card" content="summary_large_image">
+      {{#twitter_site}}
+        <meta name="twitter:site" content="{{twitter_site}}">
+      {{/twitter_site}}
+      {{#twitter_creator}}
+        <meta name="twitter:creator" content="{{twitter_creator}}">
+      {{/twitter_creator}}
+
       {{#title}}
-        <meta property="og:title" content="{{title}}" />
+        <meta property="og:title" content="{{title}}">
       {{/title}}
       {{#src}}
-        <meta property="og:url" content="{{src}}" />
+        <meta property="og:url" content="{{src}}">
       {{/src}}
       {{#site_name}}
-        <meta property="og:site_name" content="{{site_name}}" />
+        <meta property="og:site_name" content="{{site_name}}">
       {{/site_name}}
       {{#description}}
-        <meta property="og:description" content="{{description}}" />
+        <meta property="og:description" content="{{description}}">
       {{/description}}
       {{#site_img}}
-        <meta property="og:image" content="{{site_img}}" />
+        <meta property="og:image" content="{{site_img}}">
       {{/site_img}}
       <meta property="og:type" content="article" />
       <meta content="yes" name="apple-mobile-web-app-capable">

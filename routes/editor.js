@@ -338,6 +338,8 @@ router.post('/page/meta', function (req, res) {
         meta['description'] = newMeta['description'];
         meta['src'] = newMeta['src'];
         meta['analytics'] = newMeta['analytics'];
+        meta['twitter_site'] = newMeta['twitter_site'];
+        meta['twitter_creator'] = newMeta['twitter_creator'];
 
         if (newMeta['font_base_link']) {
             meta['font_base_link'] = newMeta['font_base_link'];
