@@ -324,9 +324,7 @@ $story.on("itementerviewport", function(ev, item) {
 $("[data-scroll-speed]").moveIt();
 
 // give mobile a special "unmute button" per video.
-if (isMobile.any) {
-  $(".mute").remove();
-} else {
+if (!isMobile.any) {
   $(".mobile-mute").remove();
   $(".mute").click(function() {
     const $this = $(this);
