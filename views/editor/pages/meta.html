@@ -50,6 +50,40 @@
     {{/meta}}
 
   </fieldset>
+
+  <h4>Custom Font Settings</h4>
+
+  <fieldset>
+
+    {{#meta}}
+
+      <div class="form-group">
+        <label for="font_base_link" class="control-label">Main font (all body/intro text) embed</label>
+        <p>To embed a font, copy the code <code>&lt;link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet"&gt;</code></p>
+        <input name="font_base_link" type="text" class="form-control" value="{{font_base_link}}" />
+      </div>
+
+      <div class="form-group">
+        <label for="font_base_rules" class="control-label">Main font (all body/intro text) CSS rules</label>
+        <p>CSS rules to specify families <code>font-family: 'Roboto Slab', serif;</code></p>
+        <input name="font_base_rules" type="text" class="form-control" value="{{font_base_rules}}" />
+      </div>
+
+      <div class="form-group">
+        <label for="font_headers_link" class="control-label">Headers font (titles/subtitles) embed</label>
+        <p>To embed a font, copy the code <code>&lt;link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet"&gt;</code></p>
+        <input name="font_headers_link" type="text" class="form-control" value="{{font_headers_link}}" />
+      </div>
+
+      <div class="form-group">
+        <label for="font_headers_rules" class="control-label">Main font (titles/subtitles) CSS rules</label>
+        <p>CSS rules to specify families <code>font-family: 'Roboto Slab', serif;</code></p>
+        <input name="font_headers_rules" type="text" class="form-control" value="{{font_headers_rules}}" />
+      </div>
+
+    {{/meta}}
+
+  </fieldset>
   {{> formcontrols}}
 
 </form>

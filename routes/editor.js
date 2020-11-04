@@ -318,7 +318,6 @@ router.get('/page/meta', function (req, res) {
         res.render('editor/pages/meta', {
             meta: meta,
             partials: {
-                title: 'editor/fragments/title',
                 formcontrols: 'editor/fragments/formcontrols'
             }
         });
@@ -331,21 +330,25 @@ router.post('/page/meta', function (req, res) {
         var meta = data.meta;
         var items = data.items;
 
-        // TODO: refactor to Storybaord.updateMeta() function
         meta['title'] = newMeta['title'];
         meta['site_name'] = newMeta['site_name'];
         meta['site_img'] = newMeta['site_img'];
-        // TODO: meta['subtitle'] is missing from form
         meta['author'] = newMeta['author'];
         meta['rsspingback'] = newMeta['rsspingback'];
         meta['description'] = newMeta['description'];
         meta['src'] = newMeta['src'];
         meta['analytics'] = newMeta['analytics'];
-        // TODO: meta['share'] is missing from form
-        // TODO: meta['facebook'] is missing from form
-        // TODO: meta['twitter'] is missing from form
 
-        // TODO: move this to a global file save function with its own button in the frontend
+        if (newMeta['font_base_link']) {
+            meta['font_base_link'] = newMeta['font_base_link'];
+            meta['font_base_rules'] = newMeta['font_base_rules'];
+        }
+
+        if (newMeta['font_headers_link']) {
+            meta['font_headers_link'] = newMeta['font_headers_link'];
+            meta['font_headers_rules'] = newMeta['font_headers_rules'];
+        }
+
         storyboard.writeFile({ meta: meta, items: items });
 
         res.render('editor/editor', {
