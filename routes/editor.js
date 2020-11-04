@@ -342,11 +342,17 @@ router.post('/page/meta', function (req, res) {
         if (newMeta['font_base_link']) {
             meta['font_base_link'] = newMeta['font_base_link'];
             meta['font_base_rules'] = newMeta['font_base_rules'];
+        } else {
+            delete meta['font_base_link'];
+            delete meta['font_base_rules'];
         }
 
         if (newMeta['font_headers_link']) {
             meta['font_headers_link'] = newMeta['font_headers_link'];
             meta['font_headers_rules'] = newMeta['font_headers_rules'];
+        } else {
+            delete meta['font_headers_link'];
+            delete meta['font_headers_rules'];
         }
 
         storyboard.writeFile({ meta: meta, items: items });
