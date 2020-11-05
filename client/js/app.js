@@ -185,8 +185,6 @@ function loadItem(item) {
           }
         }
       });
-
-      console.log(blueimp)
     });
 
     returnPromises.push(horizontalSlidePromise);
