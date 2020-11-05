@@ -35,7 +35,7 @@
     "express": "~4.15.5",
     "fs-extra": "^7.0.1",
     "hogan-express": "^0.5.2",
-    "ismobilejs": "^0.4.1",
+    "ismobilejs": "^1.1.1",
     "jquery": "^3.4.0",
     "json-fmt": "^1.1.2",
     "mkdirp": "^0.5.1",

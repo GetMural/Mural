@@ -326,31 +326,32 @@ $("[data-scroll-speed]").moveIt();
 // give mobile a special "unmute button" per video.
 if (!isMobile.any) {
   $(".mobile-mute").remove();
-  $(".mute").click(function() {
-    const $this = $(this);
-    if ($this.hasClass("muted")) {
-      isSoundEnabled = true;
-      $this.removeClass("muted");
-    } else {
-      isSoundEnabled = false;
-      $this.addClass("muted");
+}
+
+$(".mute").click(function() {
+  const $this = $(this);
+  if ($this.hasClass("muted")) {
+    isSoundEnabled = true;
+    $this.removeClass("muted");
+  } else {
+    isSoundEnabled = false;
+    $this.addClass("muted");
+  }
+
+  storyItems.forEach(function(item) {
+    if (item.data.video) {
+      const muted = !isSoundEnabled || item.data.muted;
+      videoMedia.setMuted(item.index, muted);
     }
 
-    storyItems.forEach(function(item) {
-      if (item.data.video) {
-        const muted = !isSoundEnabled || item.data.muted;
-        videoMedia.setMuted(item.index, muted);
-      }
-
-      if (item.data.audio) {
-        const muted = !isSoundEnabled;
-        audioMedia.setMuted(item.index, muted);
-      }
-    });
-
-    youtubeMedia.setMuted(!isSoundEnabled);
+    if (item.data.audio) {
+      const muted = !isSoundEnabled;
+      audioMedia.setMuted(item.index, muted);
+    }
   });
-}
+
+  youtubeMedia.setMuted(!isSoundEnabled);
+});
 
 $(".sticks_wrapper").click(function() {
   $("body").toggleClass("paneOpen");
