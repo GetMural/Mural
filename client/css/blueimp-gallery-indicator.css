@@ -27,6 +27,7 @@
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  z-index: 99;
 }
 .blueimp-gallery > .indicator > li {
   display: inline-block;
