@@ -446,7 +446,6 @@ h1 {
 h1,
 h2,
 .slide-caption,
-.caption,
 .credits,
 .text {
   text-shadow: 2px 2px 4px #000000;
@@ -2553,6 +2552,7 @@ article .part.box_text p {
   padding: 30px 30px 80px 30px;
   font-size: 1.4em;
   z-index: 9999;
+  background: linear-gradient(180deg, #222, transparent);
 }
 
 .slideshow .caption span {
