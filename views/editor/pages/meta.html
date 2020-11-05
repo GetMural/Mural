@@ -8,43 +8,86 @@
 
       <div class="form-group">
         <label for="title" class="control-label">Title</label>
-        <input name="title" type="text" class="form-control" value="{{title}}" />
+        <input id="title" name="title" type="text" class="form-control" value="{{title}}" />
       </div>
 
       <div class="form-group">
         <label for="site_name" class="control-label">Site Name</label>
-        <input name="site_name" type="text" class="form-control" value="{{site_name}}" />
+        <input id="site_name" name="site_name" type="text" class="form-control" value="{{site_name}}" />
       </div>
 
       <div class="form-group">
         <label for="site_img" class="control-label">Site Image (Full URI)</label>
-        <input name="site_img" type="text" class="form-control" value="{{site_img}}" placeholder="https://..." />
+        <p>ex <code>https://stories.getmural.io/millroad-halloween-2020/uploads/GradientTest-20201031125851197/standalone_night4_1920x1080.jpg</code></p>
+        <input id="site_img" name="site_img" type="text" class="form-control" value="{{site_img}}" placeholder="https://..." />
       </div>
 
       <div class="form-group">
         <label for="author" class="control-label">Author</label>
-        <input name="author" type="text" class="form-control" value="{{author}}" />
-      </div>
-
-      <div class="form-group">
-        <label for="rsspingback" class="control-label">RSS Pingback</label>
-        <input name="rsspingback" type="text" class="form-control" value="{{rsspingback}}" />
+        <input id="author" name="author" type="text" class="form-control" value="{{author}}" />
       </div>
 
       <div class="form-group">
         <label for="description" class="control-label">Description</label>
-        <textarea name="description" class="form-control">{{description}}</textarea>
+        <textarea id="description" name="description" class="form-control">{{description}}</textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="twitter_site" class="control-label">Twitter Site</label>
+        <p>ex: <code>@muralstories</code></p>
+        <input id="twitter_site" name="twitter_site" type="text" class="form-control" value="{{twitter_site}}" />
+      </div>
+
+      <div class="form-group">
+        <label for="twitter_creator" class="control-label">Twitter Creator</label>
+        <p>ex: <code>@naomiaro</code></p>
+        <input id="twitter_creator" name="twitter_creator" type="text" class="form-control" value="{{twitter_creator}}" />
       </div>
 
       <div class="form-group">
         <label for="src" class="control-label">Canonical URI</label>
-        <input name="src" type="text" class="form-control src-input" value="{{src}}" placeholder="https://..." />
+        <p>Where your story is hosted <code>https://stories.getmural.io/millroad-halloween-2020/</code></p>
+        <input id="src" name="src" type="text" class="form-control src-input" value="{{src}}" placeholder="https://..." />
       </div>
 
       <div class="form-group">
         <label for="analytics" class="control-label">Google Analytics ID</label>
         <p>Your Google analytics ID is in the format of <code>UA-xxxxxxxx-x</code></p>
         <input name="analytics" type="text" class="form-control" value="{{analytics}}" />
+      </div>
+
+    {{/meta}}
+
+  </fieldset>
+
+  <h4>Custom Font Settings</h4>
+
+  <fieldset>
+
+    {{#meta}}
+
+      <div class="form-group">
+        <label for="font_base_link" class="control-label">Main font (all body/intro text) embed</label>
+        <p>To embed a font, copy the code <code>&lt;link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet"&gt;</code></p>
+        <input id="font_base_link" name="font_base_link" type="text" class="form-control" value="{{font_base_link}}" />
+      </div>
+
+      <div class="form-group">
+        <label for="font_base_rules" class="control-label">Main font (all body/intro text) CSS rules</label>
+        <p>CSS rules to specify families <code>font-family: 'Roboto Slab', serif;</code></p>
+        <input id="font_base_rules" name="font_base_rules" type="text" class="form-control" value="{{font_base_rules}}" />
+      </div>
+
+      <div class="form-group">
+        <label for="font_headers_link" class="control-label">Headers font (titles/subtitles) embed</label>
+        <p>To embed a font, copy the code <code>&lt;link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet"&gt;</code></p>
+        <input id="font_headers_link" name="font_headers_link" type="text" class="form-control" value="{{font_headers_link}}" />
+      </div>
+
+      <div class="form-group">
+        <label for="font_headers_rules" class="control-label">Headers font (titles/subtitles) CSS rules</label>
+        <p>CSS rules to specify families <code>font-family: 'Roboto Slab', serif;</code></p>
+        <input id="font_headers_rules" name="font_headers_rules" type="text" class="form-control" value="{{font_headers_rules}}" />
       </div>
 
     {{/meta}}

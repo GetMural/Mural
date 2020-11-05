@@ -1,7 +1,7 @@
 <script>
-  $('#offset_value').text(Math.round($('#offsetValue').val()) + 100);
+  $('#offset_value').text($('#offsetValue').val());
   $('#offsetValue').change(function(){
-    $('#offset_value').text(Math.round($(this).val()) + 100);
+    $('#offset_value').text($(this).val());
     $('.offset').prop('checked', false);
     $('#offsetCustom').prop('checked', true);
   });
@@ -30,5 +30,5 @@
 </div>
 <div>
   <label for="offset-value">Offset Value: <span id="offset_value">0</span>%</label>
-  <input type="range" min="-100" max="0" {{#offset}} value="{{value}}"{{/offset}} step="1" data-for="offsetValue" id="offsetValue" name="offset-value" />
+  <input type="range" min="0" max="100" {{#offset}} value="{{value}}"{{/offset}} step="1" data-for="offsetValue" id="offsetValue" name="offset-value" />
 </div>

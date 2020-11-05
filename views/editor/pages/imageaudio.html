@@ -7,6 +7,11 @@
     {{> suppressnav}}
 
     <fieldset>
+      <label for="id">Light</label>
+      <input id="light" name="light" type="checkbox" {{#light}} checked{{/light}} />
+    </fieldset>
+
+    <fieldset>
       {{#image}}
         {{> imagesources}}
       {{/image}}
@@ -17,12 +22,41 @@
     </fieldset>
 
     <fieldset>
+      <div>
+        <label for="alt">Alternative Text</label>
+        <textarea class="form-control" id="alt" name="alt">{{#image}}{{#alt}}{{{alt}}}{{/alt}}{{/image}}</textarea>
+      </div>
+      <div>
+        <label for="image_caption">Image Caption</label>
+        <input type="text" class="form-control" id="image_caption" name="image_caption"
+        {{#image}}{{#image_caption}} value="{{image_caption}}"{{/image_caption}}{{/image}}>
+      </div>
+      {{#image}}
+        {{> imagecredits}}
+      {{/image}}
+
+      {{^image}}
+        {{> imagecredits}}
+      {{/image}}
+    </fieldset>
+
+    <fieldset>
       {{#audio}}
         {{> audiosources}}
       {{/audio}}
 
       {{^audio}}
         {{> audiosources}}
+      {{/audio}}
+     </fieldset>
+
+     <fieldset>
+      {{#audio}}
+        {{> audiocredits}}
+      {{/audio}}
+
+      {{^audio}}
+        {{> audiocredits}}
       {{/audio}}
      </fieldset>
 

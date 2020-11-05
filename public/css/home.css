@@ -7,22 +7,26 @@ body {
 }
 iframe {
   border: none;
-  height: 100vh;
   position: absolute;
-  width: 50vw;
 }
 .preview {
   border: none;
   left: 0;
 }
+#preview {
+  width: 600px;
+  height: 800px;
+}
 .editor {
   right: 0;
+  height: 100vh;
+  width: calc(100vw - 600px);
 }
 
 #toolbar {
   padding: 5px;
   position: absolute;
-  top: 10px;
+  right: 125px;
   z-index: 999;
 }
 
@@ -30,12 +34,6 @@ iframe {
   width: 55px;
   height: 44px;
   overflow: hidden;
-}
-
-#btn-tools {
-}
-
-#btn-tools.collapsed {
 }
 
 .btn-xs, .btn-group-xs > .btn {

@@ -1,4 +1,5 @@
-require("blueimp-gallery/css/blueimp-gallery.css");
+require("../css/blueimp-gallery.css");
+require("../css/blueimp-gallery-indicator.css");
 require("../css/style.scss");
 
 const $ = require("expose-loader?$!jquery");
@@ -72,6 +73,7 @@ MoveItItem.prototype.update = function(scrollTop) {
 };
 
 const blueimp = require("blueimp-gallery/js/blueimp-gallery");
+require("blueimp-gallery/js/blueimp-gallery-indicator");
 const videoMedia = require("./media/video");
 const imageMedia = require("./media/images");
 const audioMedia = require("./media/audio");
@@ -82,10 +84,10 @@ const WINDOW_WIDTH = $(window).width();
 let scrKey;
 let attrKey;
 
-if (WINDOW_WIDTH > 1024) {
+if (WINDOW_WIDTH >= 1024) {
   scrKey = "src";
   attrKey = "src";
-} else if (WINDOW_WIDTH > 600) {
+} else if (WINDOW_WIDTH >= 600) {
   scrKey = "srcMedium";
   attrKey = "src-medium";
 } else {
@@ -148,7 +150,11 @@ function loadItem(item) {
       item.el,
       item.data[scrKey],
       item.active
-    );
+    ).then((shouldUpdateOffsets) => {
+      if (shouldUpdateOffsets) {
+        scrollStory.updateOffsets();
+      }
+    });
     returnPromises.push(imageLoaded);
   }
 
@@ -179,6 +185,8 @@ function loadItem(item) {
           }
         }
       });
+
+      console.log(blueimp)
     });
 
     returnPromises.push(horizontalSlidePromise);
@@ -262,7 +270,7 @@ function loadItem(item) {
 
 $story.on("itemfocus", function(ev, item) {
   if (item.data.image) {
-    imageMedia.fixBackgroundImage(item.el, item.data[scrKey], true);
+    imageMedia.fixBackgroundImage(item.el);
   }
 
   if (item.data.video) {
@@ -318,9 +326,7 @@ $story.on("itementerviewport", function(ev, item) {
 $("[data-scroll-speed]").moveIt();
 
 // give mobile a special "unmute button" per video.
-if (isMobile.any) {
-  $(".mute").remove();
-} else {
+if (!isMobile.any) {
   $(".mobile-mute").remove();
   $(".mute").click(function() {
     const $this = $(this);

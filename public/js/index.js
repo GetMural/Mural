@@ -1,8 +1,4 @@
 $(function() {
-    $('#btn-refresh-preview').on('click', function() {
-        $('#preview').attr( 'src', function ( i, val ) { return val; });
-    });
-
     $('#btn-download').on('click', function() {
         window.open('/editor/buyusbeer', '', 'width=620,height=700');
     });
@@ -15,7 +11,6 @@ $(function() {
     // on filename select
     $('#story-selector').on('change', function() {
         const filename = this.value;
-        console.log('updating storyboard preference', filename);
         $.post('/preferences/storyboard', {filename: filename}, function(response) {
             console.log('storyboard preference has been updated', response);
             $('#preview').attr( 'src', function ( i, val ) { return val; });
@@ -69,15 +64,24 @@ $(function() {
         })
     });
 
-    $('#btn-tools').on('click', function() {
-        $('#btn-tools').toggleClass('collapsed');
-        $('#toolbar').toggleClass('collapsed');
-        if ($('#editor').width() === 0) {
-            $('#editor').width('50vw');
-            $('#preview').width('50vw');
-        } else {
-            $('#editor').width('0vw');
-            $('#preview').width('100vw');
-        }
+    $('#btn-phone').on('click', function() {
+        $('#editor').width('calc(100vw - 375px)');
+        $('#preview').width('375px').height('667px');
+        $('#preview').attr( 'src', function ( i, val ) { return val; });
+        $("#preview").get(0).contentWindow.screen.orientation.lock('portrait');
+    });
+
+    $('#btn-tablet').on('click', function() {
+        $('#editor').width('calc(100vw - 600px)');
+        $('#preview').width('600px').height('800px');
+        $('#preview').attr( 'src', function ( i, val ) { return val; });
+        $("#preview").get(0).contentWindow.screen.orientation.lock('portrait');
+    });
+
+    $('#btn-desktop').on('click', function() {
+        $('#editor').width('0px');
+        $('#preview').width('100vw').height('100vh');
+        $('#preview').attr( 'src', function ( i, val ) { return val; });
+        $("#preview").get(0).contentWindow.screen.orientation.lock('landscape');
     });
 });

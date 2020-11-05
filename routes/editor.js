@@ -318,7 +318,6 @@ router.get('/page/meta', function (req, res) {
         res.render('editor/pages/meta', {
             meta: meta,
             partials: {
-                title: 'editor/fragments/title',
                 formcontrols: 'editor/fragments/formcontrols'
             }
         });
@@ -331,21 +330,33 @@ router.post('/page/meta', function (req, res) {
         var meta = data.meta;
         var items = data.items;
 
-        // TODO: refactor to Storybaord.updateMeta() function
         meta['title'] = newMeta['title'];
         meta['site_name'] = newMeta['site_name'];
         meta['site_img'] = newMeta['site_img'];
-        // TODO: meta['subtitle'] is missing from form
         meta['author'] = newMeta['author'];
         meta['rsspingback'] = newMeta['rsspingback'];
         meta['description'] = newMeta['description'];
         meta['src'] = newMeta['src'];
         meta['analytics'] = newMeta['analytics'];
-        // TODO: meta['share'] is missing from form
-        // TODO: meta['facebook'] is missing from form
-        // TODO: meta['twitter'] is missing from form
+        meta['twitter_site'] = newMeta['twitter_site'];
+        meta['twitter_creator'] = newMeta['twitter_creator'];
 
-        // TODO: move this to a global file save function with its own button in the frontend
+        if (newMeta['font_base_link']) {
+            meta['font_base_link'] = newMeta['font_base_link'];
+            meta['font_base_rules'] = newMeta['font_base_rules'];
+        } else {
+            delete meta['font_base_link'];
+            delete meta['font_base_rules'];
+        }
+
+        if (newMeta['font_headers_link']) {
+            meta['font_headers_link'] = newMeta['font_headers_link'];
+            meta['font_headers_rules'] = newMeta['font_headers_rules'];
+        } else {
+            delete meta['font_headers_link'];
+            delete meta['font_headers_rules'];
+        }
+
         storyboard.writeFile({ meta: meta, items: items });
 
         res.render('editor/editor', {
@@ -376,7 +387,9 @@ router.get('/page/imageaudio/id/:id', function (req, res) {
             partials: {
                 formcontrols: 'editor/fragments/formcontrols',
                 audiosources: 'editor/fragments/audiosources',
+                audiocredits: 'editor/fragments/audiocredits',
                 imagesources: 'editor/fragments/imagesources',
+                imagecredits: 'editor/fragments/imagecredits',
                 suppressnav: 'editor/fragments/suppressnav',
                 title: 'editor/fragments/title'
             }
@@ -394,26 +407,42 @@ router.post('/page/imageaudio/id/:id', function (req, res) {
             var item = items[qId].imageaudio;
             var newItem = req.body;
         };
-        var suppress = (newItem['suppress'] === 'on') ? true : false;
+        var suppress = newItem['suppress'] === 'on';
 
         // format and save new item
         item['suppress'] = suppress;
         item['nav_title'] = newItem['nav_title'];
 
+        item['light'] = newItem['light'] === 'on';
+
         item['image'] = {
             srcmain: newItem['srcmain'],
             srcphone: newItem['srcphone'],
-            srcmedium: newItem['srcmedium']
+            srcmedium: newItem['srcmedium'],
+            alt: newItem['alt']
         };
 
+        if (newItem['image_caption']) {
+            item['image']['image_caption'] = newItem['image_caption'];
+        }
+        if (newItem['image_credits']) {
+            item['image']['image_credits'] = newItem['image_credits'];
+        }
+        
         if (newItem['mp3'] || newItem['ogg']) {
             item['audio'] = {
                 mp3: newItem['mp3'],
                 ogg: newItem['ogg']
             };
+
+            if (newItem['audio_credits']) {
+                item['audio']['audio_credits'] = newItem['audio_credits'];
+            }
         } else {
             delete item['audio'];
         }
+
+        console.log(item);
 
         // save the file
         items[qId].imageaudio = item;
@@ -454,7 +483,6 @@ router.get('/page/imagebackground/id/:id', function (req, res) {
                 gradientspeed: 'editor/fragments/gradientspeed',
                 gradientstops: 'editor/fragments/gradientstops',
                 imagesources: 'editor/fragments/imagesources',
-                offset: 'editor/fragments/offset-bgimage',
                 plaintext: 'editor/fragments/plaintext',
                 subtitle: 'editor/fragments/subtitle',
                 suppressnav: 'editor/fragments/suppressnav',
@@ -476,34 +504,28 @@ router.post('/page/imagebackground/id/:id', function (req, res) {
             var newItem = req.body;
         };
         // format and save new item
-        var fullpage = (newItem['fullpage'] === 'on') ? true : false;
+        var fullpage = newItem['fullpage'] === 'on';
         item['format'] = { fullpage: fullpage };
-        var suppress = (newItem['suppress'] === 'on') ? true : false;
+        var suppress = newItem['suppress'] === 'on';
         item['suppress'] = suppress;
         item['nav_title'] = newItem['nav_title'];
         item['title'] = newItem['title'];
         item['subtitle'] = newItem['subtitle'];
         item['text'] = newItem['text'];
-        // TODO: item['navthumb'] is missing from form
-        // TODO: item['navlevel'] is missing from form
-        item['image'] = {
-            srcmain: newItem['srcmain'],
-            srcphone: newItem['srcphone'],
-            srcmedium: newItem['srcmedium']
-        };
-        var gradientEnable = (newItem['gradientEnable'] ? true : false);
-        var gradientAnimate = (newItem['gradientAnimate']) ? true : false;
+
+        var gradientEnable = newItem['gradientEnable'] === 'on';
+        var gradientAnimate = newItem['gradientAnimate'] === 'on';
         var gradientDirection = newItem['gradientDirection'];
         var gradientSpeed = newItem['speed'];
         var gradientStops = newItem['stops'];
-        var gradientAnimTop = (newItem['gradientAnimTop']) ? true : false;
-        var gradientAnimTopRight = (newItem['gradientAnimTopRight']) ? true : false;
-        var gradientAnimRight = (newItem['gradientAnimRight']) ? true : false;
-        var gradientAnimBottomRight = (newItem['gradientAnimBottomRight']) ? true : false;
-        var gradientAnimBottom = (newItem['gradientAnimBottom']) ? true : false;
-        var gradientAnimBottomLeft = (newItem['gradientAnimBottomLeft']) ? true : false;
-        var gradientAnimLeft = (newItem['gradientAnimLeft']) ? true : false;
-        var gradientAnimTopLeft = (newItem['gradientAnimTopLeft']) ? true : false;
+        var gradientAnimTop = newItem['gradientAnimTop'] === 'on';
+        var gradientAnimTopRight = newItem['gradientAnimTopRight'] === 'on';
+        var gradientAnimRight = newItem['gradientAnimRight'] === 'on';
+        var gradientAnimBottomRight = newItem['gradientAnimBottomRight'] === 'on';
+        var gradientAnimBottom = newItem['gradientAnimBottom'] === 'on';
+        var gradientAnimBottomLeft = newItem['gradientAnimBottomLeft'] === 'on';
+        var gradientAnimLeft = newItem['gradientAnimLeft'] === 'on';
+        var gradientAnimTopLeft = newItem['gradientAnimTopLeft'] === 'on';
         var gradientAnim = {
           top: gradientAnimTop,
           topright: gradientAnimTopRight,
@@ -522,18 +544,21 @@ router.post('/page/imagebackground/id/:id', function (req, res) {
           speed: gradientSpeed,
           stops: gradientStops
         };
-        console.log(item['gradient']);
-        var offsetLeft = (newItem['offset-left'] === 'on') ? true : false;
-        var offsetCentre = (newItem['offset-centre'] === 'on') ? true : false;
-        var offsetRight = (newItem['offset-right'] === 'on') ? true : false;
-        var offsetCustom = (newItem['offset-custom'] === 'on') ? true : false;
-        item['offset'] = {
-          left: offsetLeft,
-          centre: offsetCentre,
-          right: offsetRight,
-          custom: offsetCustom,
-          value: newItem['offset-value']
+
+        item['image'] = {
+            srcmain: newItem['srcmain'],
+            srcphone: newItem['srcphone'],
+            srcmedium: newItem['srcmedium']
         };
+
+        if (!gradientEnable) {
+            delete item['gradient'];
+        } else {
+            delete item['image'];
+        }
+
+        console.log(item['gradient']);
+
         if (newItem['mp3'] || newItem['ogg']) {
             item['audio'] = {
                 mp3: newItem['mp3'],
@@ -699,7 +724,8 @@ router.get('/page/textcentred/id/:id', function (req, res) {
                 snippetimage: 'editor/fragments/snippetimage',
                 subtitle: 'editor/fragments/subtitle',
                 suppressnav: 'editor/fragments/suppressnav',
-                title: 'editor/fragments/title'
+                title: 'editor/fragments/title',
+                credits: 'editor/fragments/credits'
             }
         });
     });
@@ -813,9 +839,9 @@ router.post('/page/videobackground/id/:id', function (req, res) {
             var newItem = req.body;
         };
         // format and save new values to videobackground
-        var fullpage = (newItem['fullpage'] === 'on') ? true : false;
-        var suppress = (newItem['suppress'] === 'on') ? true : false;
-        var active = (newItem['bg-active'] === 'on') ? true : false;
+        var fullpage = newItem['fullpage'] === 'on';
+        var suppress = newItem['suppress'] === 'on';
+
         item['suppress'] = suppress;
         item['nav_title'] = newItem['nav_title'];
         item['format'] = { fullpage: fullpage };
@@ -827,10 +853,10 @@ router.post('/page/videobackground/id/:id', function (req, res) {
         item['image'] = {
             loading: newItem['loading']
         };
-        var offsetLeft = (newItem['offset-left'] === 'on') ? true : false;
-        var offsetCentre = (newItem['offset-centre'] === 'on') ? true : false;
-        var offsetRight = (newItem['offset-right'] === 'on') ? true : false;
-        var offsetCustom = (newItem['offset-custom'] === 'on') ? true : false;
+        var offsetLeft = newItem['offset-left'] === 'on';
+        var offsetCentre = newItem['offset-centre'] === 'on';
+        var offsetRight = newItem['offset-right'] === 'on';
+        var offsetCustom = newItem['offset-custom'] === 'on';
         item['offset'] = {
           left: offsetLeft,
           centre: offsetCentre,
@@ -902,8 +928,8 @@ router.post('/page/videofullpage/id/:id', function (req, res) {
         };
 
         // format and save new values to videofullpage
-        var fullpage = (newItem['fullpage'] === 'on') ? true : false;
-        var suppress = (newItem['suppress'] === 'on') ? true : false;
+        var fullpage = newItem['fullpage'] === 'on';
+        var suppress = newItem['suppress'] === 'on';
         item['suppress'] = suppress;
         item['nav_title'] = newItem['nav_title'];
         var playback = newItem['playback'];
@@ -914,10 +940,10 @@ router.post('/page/videofullpage/id/:id', function (req, res) {
             item['loop'] = true;
             item['autoAdvance'] = false;
         }
-        var offsetLeft = (newItem['offset-left'] === 'on') ? true : false;
-        var offsetCentre = (newItem['offset-centre'] === 'on') ? true : false;
-        var offsetRight = (newItem['offset-right'] === 'on') ? true : false;
-        var offsetCustom = (newItem['offset-custom'] === 'on') ? true : false;
+        var offsetLeft = newItem['offset-left'] === 'on';
+        var offsetCentre = newItem['offset-centre'] === 'on';
+        var offsetRight = newItem['offset-right'] === 'on';
+        var offsetCustom = newItem['offset-custom'] === 'on';
         item['offset'] = {
           left: offsetLeft,
           centre: offsetCentre,

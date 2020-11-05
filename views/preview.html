@@ -15,23 +15,29 @@
       {{#author}}
        <meta name="author" content="{{author}}">
       {{/author}}
-      {{#rsspingback}}
-        <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="{{rsspingback}}">
-      {{/rsspingback}}
+
+      <meta name="twitter:card" content="summary_large_image">
+      {{#twitter_site}}
+        <meta name="twitter:site" content="{{twitter_site}}">
+      {{/twitter_site}}
+      {{#twitter_creator}}
+        <meta name="twitter:creator" content="{{twitter_creator}}">
+      {{/twitter_creator}}
+
       {{#title}}
-        <meta property="og:title" content="{{title}}" />
+        <meta property="og:title" content="{{title}}">
       {{/title}}
       {{#src}}
-        <meta property="og:url" content="{{src}}" />
+        <meta property="og:url" content="{{src}}">
       {{/src}}
       {{#site_name}}
-        <meta property="og:site_name" content="{{site_name}}" />
+        <meta property="og:site_name" content="{{site_name}}">
       {{/site_name}}
       {{#description}}
-        <meta property="og:description" content="{{description}}" />
+        <meta property="og:description" content="{{description}}">
       {{/description}}
       {{#site_img}}
-        <meta property="og:image" content="{{site_img}}" />
+        <meta property="og:image" content="{{site_img}}">
       {{/site_img}}
       <meta property="og:type" content="article" />
       <meta content="yes" name="apple-mobile-web-app-capable">
@@ -50,9 +56,52 @@
     {{/meta}}
     <link rel="shortcut icon" href="img/favicon.ico">
     <link rel="apple-touch-icon" href="img/touch-icon.png">
+    
+
+    {{#meta}}
+      {{#font_base_link}}
+        {{{#font_base_link}}}
+      {{/font_base_link}}
+      {{^font_base_link}}
+        <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:ital,wght@0,400;0,700;1,300&display=swap" rel="stylesheet">
+      {{/font_base_link}}
+    {{/meta}}
+    
+    {{#meta}}
+      {{#font_headers_link}}
+        {{{font_headers_link}}}
+      {{/font_headers_link}}
+    {{/meta}}
+
     {{#manifest}}
       <link rel="stylesheet" type="text/css" href="{{css}}">
     {{/manifest}}
+
+    <style>
+    {{#meta}}
+      {{#font_base_rules}}
+        /* Set a font for the main article - focus on readability. */
+        body,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        .slideshow,
+        .slideshow-horizontal {
+          {{{font_base_rules}}}
+        }
+      {{/font_base_rules}}
+
+      {{#font_headers_rules}}
+        /* Set a special font just for item headers. */
+        .header h1,.header h2,.header-fullpage h1,.header-fullpage h2{
+          {{{font_headers_rules}}}
+        }
+      {{/font_headers_rules}}
+    {{/meta}}
+    </style>
 
     <script type="text/javascript">
       !function(a){var b=/iPhone/i,c=/iPod/i,d=/iPad/i,e=/(?=.*\bAndroid\b)(?=.*\bMobile\b)/i,f=/Android/i,g=/(?=.*\bAndroid\b)(?=.*\bSD4930UR\b)/i,h=/(?=.*\bAndroid\b)(?=.*\b(?:KFOT|KFTT|KFJWI|KFJWA|KFSOWI|KFTHWI|KFTHWA|KFAPWI|KFAPWA|KFARWI|KFASWI|KFSAWI|KFSAWA)\b)/i,i=/Windows Phone/i,j=/(?=.*\bWindows\b)(?=.*\bARM\b)/i,k=/BlackBerry/i,l=/BB10/i,m=/Opera Mini/i,n=/(CriOS|Chrome)(?=.*\bMobile\b)/i,o=/(?=.*\bFirefox\b)(?=.*\bMobile\b)/i,p=new RegExp("(?:Nexus 7|BNTV250|Kindle Fire|Silk|GT-P1000)","i"),q=function(a,b){return a.test(b)},r=function(a){var r=a||navigator.userAgent,s=r.split("[FBAN");if("undefined"!=typeof s[1]&&(r=s[0]),s=r.split("Twitter"),"undefined"!=typeof s[1]&&(r=s[0]),this.apple={phone:q(b,r),ipod:q(c,r),tablet:!q(b,r)&&q(d,r),device:q(b,r)||q(c,r)||q(d,r)},this.amazon={phone:q(g,r),tablet:!q(g,r)&&q(h,r),device:q(g,r)||q(h,r)},this.android={phone:q(g,r)||q(e,r),tablet:!q(g,r)&&!q(e,r)&&(q(h,r)||q(f,r)),device:q(g,r)||q(h,r)||q(e,r)||q(f,r)},this.windows={phone:q(i,r),tablet:q(j,r),device:q(i,r)||q(j,r)},this.other={blackberry:q(k,r),blackberry10:q(l,r),opera:q(m,r),firefox:q(o,r),chrome:q(n,r),device:q(k,r)||q(l,r)||q(m,r)||q(o,r)||q(n,r)},this.seven_inch=q(p,r),this.any=this.apple.device||this.android.device||this.windows.device||this.other.device||this.seven_inch,this.phone=this.apple.phone||this.android.phone||this.windows.phone,this.tablet=this.apple.tablet||this.android.tablet||this.windows.tablet,"undefined"==typeof window)return this},s=function(){var a=new r;return a.Class=r,a};"undefined"!=typeof module&&module.exports&&"undefined"==typeof window?module.exports=r:"undefined"!=typeof module&&module.exports&&"undefined"!=typeof window?module.exports=s():"function"==typeof define&&define.amd?define("isMobile",[],a.isMobile=s()):a.isMobile=s()}(this);
@@ -112,21 +161,12 @@
                 data-src-phone="{{srcphone}}"
               {{/srcphone}}
             {{/image}}>
-            {{#offset.custom}}
-            <style>
-              @media (orientation:portrait) {
-                section[name="story{{id}}"] .bg-image {
-                  background-position: {{offset.value}}%;
-                }
-              }
-            </style>
-            {{/offset.custom}}
             {{#image}}
-              <div class="bg-image{{#offset}}{{#left}} offset-left{{/left}}{{#centre}} offset-centre{{/centre}}{{#right}} offset-right{{/right}}{{/offset}}"></div>
+              <div class="bg-image"></div>
             {{/image}}
             {{#gradient}}
               {{#enable}}
-              <div class="bg-gradient" style="position: fixed;"></div>
+              <div class="bg-gradient"></div>
               <style>
                 @keyframes gradient{{id}} {
                   {{#animation}}
@@ -190,7 +230,7 @@
             {{/gradient}}
             <div class="content container-fluid">
               <div class="row">
-                <div class="col-sm-12 {{#format}}{{#fullpage}}header-fullpage{{/fullpage}}{{/format}}">
+                <div class="col-sm-12 {{#format}}{{#fullpage}}header-fullpage{{/fullpage}}{{^fullpage}}header{{/fullpage}}{{/format}}">
                   <div class="middle">
                   {{#title}}
                     <h1>{{{title}}}</h1>
@@ -213,7 +253,7 @@
         {{/imagebackground}}
 
         {{#imageaudio}}
-          <section class="part sticky-image" name="story{{id}}"
+          <section class="part imageaudio {{#light}} reverse_colors {{/light}}" name="story{{id}}"
             {{#audio}}
               data-audio=true
               {{#mp3}}
@@ -236,8 +276,13 @@
               {{/srcphone}}
             {{/image}}>
             {{#image}}
-              <div class="bg-image"></div>
+              <img class="feature-image" {{#alt}}alt="{{alt}}"{{/alt}}></img>
+              {{#image_caption}}<div class="image-caption">{{{image_caption}}}</div>{{/image_caption}}
+              {{#image_credits}}<small class="image-credits">{{{image_credits}}}</small>{{/image_credits}}
             {{/image}}
+            {{#audio}}
+              {{#audio_credits}}<small class="audio-credits">{{{audio_credits}}}</small>{{/audio_credits}}
+            {{/audio}}
           </section>
         {{/imageaudio}}
 
@@ -279,8 +324,9 @@
           <section class="part slideshow-horizontal snap" name="story{{id}}" data-slideshow=true>
             <div class="blueimp-gallery blueimp-gallery-carousel blueimp-gallery-controls">
               <div class="slides"></div>
-              <a class="prev">&lsaquo;</a>
-              <a class="next">&rsaquo;</a>
+              <a class="prev"></a>
+              <a class="next"></a>
+              <ol class="indicator"></ol>
               <div class="slide-caption"></div>
               <div class="credits"></div>
             </div>
@@ -394,18 +440,21 @@
             {{#offset.custom}}
             <style>
               @media (orientation:portrait) {
-                section[name="story{{id}}"] .video-container {
-                  margin-left: {{offset.value}}vw;
+                section[name="story{{id}}"] video {
+                  position: absolute;
+                  top: 50%;
+                  left: {{offset.value}}%;
+                  transform: translate(-{{offset.value}}%, -50%);
                 }
               }
             </style>
             {{/offset.custom}}
-            <div class="video-container{{#offset}}{{#left}} offset-left{{/left}}{{#centre}} offset-centre{{/centre}}{{#right}} offset-right{{/right}}{{/offset}}">
+            <div class="video-container{{#offset}} offset{{#left}} offset-left{{/left}}{{#centre}} offset-centre{{/centre}}{{#right}} offset-right{{/right}}{{/offset}}">
             </div>
             <div class="content container-fluid">
 
                   <div class="row">
-                    <div class="col-sm-12 {{#format}}{{#fullpage}}header-fullpage{{/fullpage}}{{/format}}">
+                    <div class="col-sm-12 {{#format}}{{#fullpage}}header-fullpage{{/fullpage}}{{^fullpage}}header{{/fullpage}}{{/format}}">
                       <div class="middle">
                         {{#title}}
                           <h1>{{{title}}}</h1>
@@ -468,13 +517,16 @@
             {{#offset.custom}}
             <style>
               @media (orientation:portrait) {
-                section[name="story{{id}}"] .video-container {
-                  margin-left: {{offset.value}}vw;
+                section[name="story{{id}}"] video {
+                  position: absolute;
+                  top: 50%;
+                  left: {{offset.value}}%;
+                  transform: translate(-{{offset.value}}%, -50%);
                 }
               }
             </style>
             {{/offset.custom}}
-            <div class="video-container{{#offset}}{{#left}} offset-left{{/left}}{{#centre}} offset-centre{{/centre}}{{#right}} offset-right{{/right}}{{/offset}}"></div>
+            <div class="video-container{{#offset}} offset{{#left}} offset-left{{/left}}{{#centre}} offset-centre{{/centre}}{{#right}} offset-right{{/right}}{{/offset}}"></div>
             <div class="caption">
               <div class="button-container play"></div>
               <div class="button-container pause"></div>
@@ -508,6 +560,8 @@
       {{/items}}
     </article>
     {{#manifest}}
+      <!-- <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script> -->
+      <script>Hls = {}; // remove me if you use the script above.</script>
       <script type="text/javascript" src="{{js}}"></script>
     {{/manifest}}
   </body>
