@@ -4,6 +4,8 @@ body {
   padding: 0;
   position: relative;
   width: 100vw;
+  display: flex;
+  align-items: center;
 }
 iframe {
   border: none;
@@ -27,6 +29,7 @@ iframe {
   padding: 5px;
   position: absolute;
   right: 125px;
+  top: 0;
   z-index: 999;
 }
 

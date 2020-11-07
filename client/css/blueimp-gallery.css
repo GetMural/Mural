@@ -69,6 +69,7 @@
 }
 .blueimp-gallery-carousel > .slides {
   position: absolute;
+  padding: 6rem 0 14rem 0;
 }
 .blueimp-gallery > .slides > .slide {
   visibility: hidden;

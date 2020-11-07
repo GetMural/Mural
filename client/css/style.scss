@@ -436,32 +436,10 @@ strong {
 dfn {
   font-style: italic;
 }
-// custom text-shadow
 h1 {
   font-size: 2em;
   margin: 0.67em 0;
 }
-#loading_overlay h3,
-#loading_overlay .loading-text,
-h1,
-h2,
-.slide-caption,
-.credits,
-.text {
-  text-shadow: 2px 2px 4px #000000;
-}
-
-.text_align-center {
-  h1,
-  h2,
-  .slide-caption,
-  .caption,
-  .credits,
-  .text {
-    text-shadow: none;
-  }
-}
-// end custom text-shadow
 mark {
   background: #ff0;
   color: #000;
@@ -2549,7 +2527,7 @@ article .part.box_text p {
   left: 0;
   top: 0;
   right: 0;
-  padding: 30px 30px 80px 30px;
+  padding: 1.5rem 2rem 6rem;
   font-size: 1.4em;
   z-index: 9999;
   background: linear-gradient(180deg, #222, transparent);
@@ -2571,24 +2549,26 @@ article .part.box_text p {
   color: white;
 }
 
-.slideshow-horizontal .slide-caption {
+.slideshow-horizontal header {
+  font-size: 1.8em;
+  padding: 1.5rem 2rem;
+  width: calc(100% - 85px);
+}
+
+.slideshow-horizontal .slide-info {
+  padding: 2rem 2rem 5rem;
   position: absolute;
   right: 0;
   left: 0;
   bottom: 0;
-  z-index: 10;
-  padding: 80px 30px 50px 30px;
-  font-size: 1.4em;
+}
+
+.slideshow-horizontal .slide-caption {
+  font-size: 1.2em;
 }
 .slideshow-horizontal .credits {
-  display: block;
   font-size: 0.9em;
-  position: absolute;
-  right: 0;
-  left: 0;
-  bottom: 0;
-  z-index: 10;
-  padding: 80px 30px 30px 30px;
+  color: #999;
 }
 
 .slide-container {

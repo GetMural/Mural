@@ -96,7 +96,7 @@
 
       {{#font_headers_rules}}
         /* Set a special font just for item headers. */
-        .header h1,.header h2,.header-fullpage h1,.header-fullpage h2{
+        .header h1,.header h2,.header-fullpage h1,.header-fullpage h2, header{
           {{{font_headers_rules}}}
         }
       {{/font_headers_rules}}
@@ -327,8 +327,13 @@
               <a class="prev"></a>
               <a class="next"></a>
               <ol class="indicator"></ol>
-              <div class="slide-caption"></div>
-              <div class="credits"></div>
+              {{#title}}
+                  <header>{{title}}</header>
+              {{/title}}
+              <div class="slide-info">
+                <p class="slide-caption"></p>
+                <span class="credits"></span>
+              </div>
             </div>
 
             <div class='slide-container'>
@@ -366,11 +371,14 @@
                    {{/srcphone}}
                    >
                 <div class="caption">
+                  {{#slideshowvertical.title}}
+                    <span class="v-slide-group">{{slideshowvertical.title}}</span>
+                  {{/slideshowvertical.title}}
                   {{#title}}
-                    {{title}}
+                    <div class="v-slide-title">{{title}}</div>
                   {{/title}}
                   {{#credits}}
-                    <span>{{credits}}</span>
+                    <span class="credits">{{credits}}</span>
                   {{/credits}}
                 </div>
               </div>
