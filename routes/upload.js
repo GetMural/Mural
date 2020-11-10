@@ -4,6 +4,7 @@ const path = require('path');
 const fs = require('fs');
 const mkdirp = require('mkdirp');
 const electron = require('electron');
+const sanitize = require("sanitize-filename");
 
 const USER_DATA_FOLDER = electron.app.getPath('userData');
 const Preferences = require('../models/preferences');
@@ -24,7 +25,7 @@ router.post('/', function (req, res) {
             } else {
                 req.pipe(req.busboy);
                 req.busboy.on('file', function (fieldname, file, filename) {
-                    filename = filename.toLowerCase();
+                    filename = sanitize(filename);
                     filename = filename.split(" ").join("-");
                     console.log("Uploading: " + filename);
                     const fstream = fs.createWriteStream(path.join(uploadPath, filename));
