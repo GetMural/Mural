@@ -2508,6 +2508,9 @@ article .part.box_text p {
 .slideshow {
   font-family: "Roboto Slab", arial, serif;
 }
+.slideshow.reverse_colors {
+  color: #000;
+}
 
 .slideshow .bg-image {
   width: 100%;
@@ -2533,12 +2536,20 @@ article .part.box_text p {
   background: linear-gradient(180deg, #222, transparent);
 }
 
+.slideshow.reverse_colors .caption {
+  background: linear-gradient(180deg, #ddd, transparent);
+}
+
 .slideshow .caption span {
   font-size: 0.6em;
 }
 
 .slideshow .credits {
   color: #ddd;
+}
+
+.slideshow.reverse_colors .credits {
+  color: #222;
 }
 
 .slideshow-horizontal {
