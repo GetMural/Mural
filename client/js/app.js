@@ -174,15 +174,22 @@ function loadItem(item) {
         container: item.el.find(".blueimp-gallery")[0],
         urlProperty: attrKey,
         carousel: true,
-        titleElement: ".slide-caption",
         startSlideshow: false,
+        thumbnailIndicators: true,
         onslide: function(index, slide) {
-          const text = this.list[index].getAttribute("data-credits");
-          const node = this.container.find(".credits");
-          node.empty();
-          if (text) {
-            node[0].appendChild(document.createTextNode(text));
-          }
+          const info = [
+            {selector: ".slide-caption", attr: "title"},
+            {selector: ".credits", attr: "data-credits"}
+          ];
+        
+          info.forEach(({selector, attr}) => {
+            const text = this.list[index].getAttribute(attr);
+            const node = $(this.container).parent().find(selector);
+            node.empty();
+            if (text) {
+              node[0].appendChild(document.createTextNode(text));
+            }
+          });
         }
       });
     });

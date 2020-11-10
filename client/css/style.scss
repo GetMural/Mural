@@ -2545,7 +2545,7 @@ article .part.box_text p {
   overflow: hidden;
   z-index: 1;
   font-family: "Roboto Slab", arial, serif;
-  background: #222;
+  background: black;
   color: white;
 }
 
@@ -2553,6 +2553,9 @@ article .part.box_text p {
   font-size: 1.8em;
   padding: 1.5rem 2rem;
   width: calc(100% - 85px);
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 .slideshow-horizontal .slide-info {
@@ -2569,6 +2572,13 @@ article .part.box_text p {
 .slideshow-horizontal .credits {
   font-size: 0.9em;
   color: #999;
+}
+
+@media (min-width: 992px) {
+  .slideshow-horizontal .slide-info {
+    width: 300px;
+    left: auto;
+  }
 }
 
 .slide-container {
@@ -2595,19 +2605,6 @@ article .part.box_text p {
   position: relative;
   z-index: 3;
   margin-top: -50vh;
-  height: 100vh;
-}
-
-@media (prefers-color-scheme: light) {
-  .blueimp-gallery-carousel {
-      background: black;
-  }
-}
-
-.blueimp-gallery-carousel {
-  margin: 0;
-  padding: 0;
-  box-shadow: none;
   height: 100vh;
 }
 

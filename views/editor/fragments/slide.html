@@ -3,13 +3,13 @@
   <legend>Slide</legend>
 
   <div class="form-group">
-    <label class="control-label">Title</label>
-    <input name="images[{{index}}][title]" class="form-control" type="text" value="{{title}}" placeholder="No title"/>
+    <label for="images_{{index}}_title" class="control-label">Caption</label>
+    <textarea id="images_{{index}}_title" name="images[{{index}}][title]" class="form-control">{{title}}</textarea>
   </div>
 
   <div class="form-group">
-    <label class="control-label">Credits</label>
-    <input name="images[{{index}}][credits]" class="form-control" type="text" value="{{{credits}}}" placeholder="No credits" />
+    <label for="images_{{index}}_credits" class="control-label">Credits</label>
+    <input id="images_{{index}}_credits" name="images[{{index}}][credits]" class="form-control" type="text" value="{{{credits}}}" placeholder="No credits" />
   </div>
 
   <div>

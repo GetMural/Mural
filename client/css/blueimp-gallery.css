@@ -50,14 +50,22 @@
 .blueimp-gallery-carousel {
   position: relative;
   z-index: auto;
-  margin: 1em auto;
-  /* Set the carousel width/height ratio to 16/9: */
-  padding-bottom: 56.25%;
-  box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
   -ms-touch-action: pan-y pinch-zoom;
   touch-action: pan-y pinch-zoom;
   display: block;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  box-shadow: none;
+  height: 100vh;
 }
+
+@media (min-width: 992px) {
+  .blueimp-gallery-carousel {
+    max-width: calc(100% - 300px);
+  }
+}
+
 .blueimp-gallery-display {
   display: block;
   opacity: 1;
@@ -71,6 +79,21 @@
   position: absolute;
   padding: 6rem 0 14rem 0;
 }
+
+@media (min-width: 768px) {
+  .blueimp-gallery-carousel > .slides {
+    position: absolute;
+    padding: 8rem 0 18rem 0;
+  }
+}
+
+@media (min-width: 992px) {
+  .blueimp-gallery-carousel > .slides {
+    position: absolute;
+    padding: 6rem 0;
+  }
+}
+
 .blueimp-gallery > .slides > .slide {
   visibility: hidden;
   position: relative;
@@ -240,11 +263,5 @@
     width: 100%;
     height: 100%;
     object-fit: contain;
-  }
-}
-
-@media (prefers-color-scheme: light) {
-  .blueimp-gallery-carousel {
-    background: #fff;
   }
 }
