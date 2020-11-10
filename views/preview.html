@@ -321,7 +321,7 @@
         {{/imageparallax}}
 
         {{#slideshowhorizontal}}
-          <section class="part slideshow-horizontal snap" name="story{{id}}" data-slideshow=true>
+          <section class="part slideshow-horizontal snap {{#light}} reverse_colors {{/light}}" name="story{{id}}" data-slideshow=true>
             <div class="blueimp-gallery blueimp-gallery-carousel blueimp-gallery-controls">
               <div class="slides"></div>
               <a class="prev"></a>
@@ -357,7 +357,7 @@
         {{/slideshowhorizontal}}
 
         {{#slideshowvertical}}
-          <section class="part slideshow" name="story{{id}}" data-slides=true>
+          <section class="part slideshow {{#light}} reverse_colors {{/light}}" name="story{{id}}" data-slides=true>
             {{#images}}
               <div class="bg-image"
                   {{#srcmain}}

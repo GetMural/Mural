@@ -7,8 +7,12 @@
     {{> suppressnav}}
 
       <fieldset>
+        <input type="hidden" name="id" value="{{id}}">
         <div class="form-group">
-          <input type="hidden" name="id" value="{{id}}">
+          <label>Light</label>
+          <input id="light" name="light" type="checkbox" {{#light}} checked{{/light}} />
+        </div>
+        <div class="form-group">
           <label for="title" class="control-label">Title</label>
           <input name="title" type="text" class="form-control" value="{{title}}" placeholder="No title"/>
         </div>

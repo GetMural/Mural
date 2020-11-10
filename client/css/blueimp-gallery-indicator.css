@@ -38,25 +38,13 @@
   -webkit-box-sizing: content-box;
   -moz-box-sizing: content-box;
   box-sizing: content-box;
-  border: 1px solid transparent;
-  background: #ccc;
-  background: rgba(255, 255, 255, 0.25) center no-repeat;
   border-radius: 5px;
-  box-shadow: 0 0 2px #000;
-  opacity: 0.5;
   cursor: pointer;
 }
 
 /* IE7 fixes */
 * + html .blueimp-gallery > .indicator > li {
   display: inline;
-}
-
-.blueimp-gallery > .indicator > li:hover,
-.blueimp-gallery > .indicator > .active {
-  background-color: #fff;
-  border-color: #fff;
-  opacity: 1;
 }
 
 .blueimp-gallery > .indicator > li:after {

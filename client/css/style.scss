@@ -2548,8 +2548,60 @@ article .part.box_text p {
   overflow: hidden;
   z-index: 1;
   font-family: "Roboto Slab", arial, serif;
-  background: black;
-  color: white;
+}
+
+.blueimp-gallery > .prev:hover,
+.blueimp-gallery > .next:hover {
+  color: #fff;
+  opacity: 1;
+}
+
+.slideshow-horizontal,
+.blueimp-gallery {
+  background: #000;
+  color: #fff;
+}
+
+.blueimp-gallery > .indicator > li {
+  border: 1px solid transparent;
+  background: #ccc;
+  background: rgba(255, 255, 255, 0.25) center no-repeat;
+  box-shadow: 0 0 2px #000;
+  opacity: 0.5;
+}
+
+.blueimp-gallery > .indicator > li:hover,
+.blueimp-gallery > .indicator > .active {
+  background-color: #fff;
+  border-color: #fff;
+  opacity: 1;
+}
+
+.slideshow-horizontal.reverse_colors,
+.slideshow-horizontal.reverse_colors .blueimp-gallery {
+  background: #fff;
+  color: #000;
+}
+
+.slideshow-horizontal.reverse_colors .blueimp-gallery > .prev:hover,
+.slideshow-horizontal.reverse_colors .blueimp-gallery > .next:hover {
+  color: #000;
+  opacity: 1;
+}
+
+.slideshow-horizontal.reverse_colors .blueimp-gallery > .indicator > li {
+  border: 1px solid transparent;
+  background: #333;
+  background: rgba(0, 0, 0, 0.25) center no-repeat;
+  box-shadow: 0 0 2px #fff;
+  opacity: 0.5;
+}
+
+.slideshow-horizontal.reverse_colors .blueimp-gallery > .indicator > li:hover,
+.slideshow-horizontal.reverse_colors .blueimp-gallery > .indicator > .active {
+  background-color: #000;
+  border-color: #000;
+  opacity: 1;
 }
 
 .slideshow-horizontal header {
@@ -2567,6 +2619,11 @@ article .part.box_text p {
   right: 0;
   left: 0;
   bottom: 0;
+  background: black;
+}
+
+.slideshow-horizontal.reverse_colors .slide-info {
+  background: white;
 }
 
 .slideshow-horizontal .slide-caption {
@@ -2575,6 +2632,10 @@ article .part.box_text p {
 .slideshow-horizontal .credits {
   font-size: 0.9em;
   color: #999;
+}
+
+.slideshow-horizontal.reverse_colors .credits {
+  color: #555;
 }
 
 @media (min-width: 992px) {
