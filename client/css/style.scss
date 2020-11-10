@@ -2534,8 +2534,11 @@ article .part.box_text p {
 }
 
 .slideshow .caption span {
-  display: block;
   font-size: 0.6em;
+}
+
+.slideshow .credits {
+  color: #ddd;
 }
 
 .slideshow-horizontal {
