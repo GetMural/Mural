@@ -8,16 +8,9 @@
   <link type="text/css" rel="stylesheet" href="/css/home.css" />
 
   <script type="text/javascript" src="/node_modules/jquery/dist/jquery.min.js"></script>
-
 </head>
 <body>
   <div id="toolbar">
-    <button id="btn-phone" class="btn btn-xs" data-toggle="tooltip" title="Show Phone">Phone</button>
-    <button id="btn-tablet" class="btn btn-xs" data-toggle="tooltip" title="Show Tablet">Tablet</button>
-    <button id="btn-desktop" class="btn btn-xs" data-toggle="tooltip" title="Show Full">Desktop</button>
-    <button id="btn-copy-story" class="btn btn-xs" data-toggle="tooltip" title="Copy Story">Copy</button>
-    <button id="btn-delete-story" class="btn btn-xs"data-toggle="tooltip" title="Delete Story">Delete</button>
-    <button id="btn-download" class="btn btn-xs" data-toggle="tooltip" title="Download Story">Download</button>
     <select id="story-selector" name="storySelector" data-toggle="tooltip" title="Choose Story">
       <option>{{filename}}</option>
       {{#files}}

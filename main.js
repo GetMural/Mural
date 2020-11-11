@@ -1,127 +1,153 @@
-var app = require('electron').app;
-var Window = require('electron').BrowserWindow; // jshint ignore:line
-var Tray = require('electron').Tray; // jshint ignore:line
-var Menu = require('electron').Menu; // jshint ignore:line
-var path = require('path');
-const fs = require('fs-extra')
-var nativeImage = require('electron').nativeImage;
-const USER_DATA_FOLDER = app.getPath('userData');
+const { app, globalShortcut, BrowserWindow, Tray, Menu } = require("electron");
+const path = require("path");
+const fs = require("fs-extra");
+const nativeImage = require("electron").nativeImage;
+const USER_DATA_FOLDER = app.getPath("userData");
 
 // copy the data folder for new users.
 function checkDirectories(directory) {
-    const DATA_DIR = path.join(USER_DATA_FOLDER, 'data')
-    const DIST_DIR = path.join(USER_DATA_FOLDER, 'dist')
+  const DATA_DIR = path.join(USER_DATA_FOLDER, "data");
+  const DIST_DIR = path.join(USER_DATA_FOLDER, "dist");
   try {
     fs.statSync(DATA_DIR);
-  } catch(e) {
-    fs.mkdirSync(DATA_DIR, {recursive: true});
-    fs.copySync(path.join(__dirname, 'data'), DATA_DIR);
+  } catch (e) {
+    fs.mkdirSync(DATA_DIR, { recursive: true });
+    fs.copySync(path.join(__dirname, "data"), DATA_DIR);
   }
 
   try {
     fs.statSync(DIST_DIR);
-  } catch(e) {
-    fs.mkdirSync(DIST_DIR, {recursive: true});
+  } catch (e) {
+    fs.mkdirSync(DIST_DIR, { recursive: true });
   }
 }
 
 checkDirectories();
 
-var server = require('./app');
+var server = require("./app");
 
 var mainWindow = null;
 
-app.on('ready', function () {
-    'use strict';
+app.on("ready", function () {
+  var iconPath = path.join(__dirname, "public", "img", "favicon.png");
+  let nimage = nativeImage.createFromPath(iconPath);
+  const appIcon = new Tray(nimage);
+  mainWindow = new BrowserWindow({
+    show: false,
+    autoHideMenuBar: false,
+    useContentSize: true,
+    resizable: true,
+    icon: iconPath,
+    webPreferences: {
+      nodeIntegration: true,
+    },
+  });
+  mainWindow.maximize();
+  mainWindow.show();
 
-    var iconPath = path.join(__dirname, 'public', 'img', 'favicon.png');
-    let nimage = nativeImage.createFromPath(iconPath);
-    const appIcon = new Tray(nimage);
-    mainWindow = new Window({
-        width: 1280,
-        height: 1024,
-        autoHideMenuBar: false,
-        useContentSize: true,
-        resizable: true,
-        icon: iconPath
-        //  'node-integration': false // otherwise various client-side things may break
-    });
+  var port = process.env.MURAL_PORT || 3000;
+  mainWindow.loadURL(`http://localhost:${port}/`);
 
-    var port = process.env.MURAL_PORT || 3000;
-    mainWindow.loadURL(`http://localhost:${port}/`);
-
-    var template = [
+  const template = [
+    {
+      role: "fileMenu",
+    },
+    {
+      role: "editMenu",
+    },
+    {
+      role: "viewMenu",
+    },
+    {
+      role: "windowMenu",
+    },
+    {
+      label: "Story",
+      submenu: [
         {
-            label: 'Application',
-            submenu: [
-                {
-                    label: 'Reload',
-                    accelerator: 'CmdOrCtrl+R',
-                    click: function(item, focusedWindow) {
-                        if (focusedWindow) {
-                            focusedWindow.reload();
-                        }
-                    }
-                },
-                {
-                    label: 'Toggle Full Screen',
-                    accelerator: (function() {
-                        if (process.platform === 'darwin') {
-                            return 'Ctrl+Command+F';
-                        } else {
-                            return 'F11';
-                        }
-                    })(),
-                    click: function(item, focusedWindow) {
-                        if (focusedWindow) {
-                            focusedWindow.setFullScreen(!focusedWindow.isFullScreen());
-                        }
-                    }
-                },
-                {
-                    label: 'Toggle Developer Tools',
-                    accelerator: (function() {
-                        if (process.platform === 'darwin') {
-                            return 'Alt+Command+I';
-                        } else {
-                            return 'Ctrl+Shift+I';
-                        }
-                    })(),
-                    click: function(item, focusedWindow) {
-                        if (focusedWindow) {
-                            focusedWindow.toggleDevTools();
-                        }
-                    }
-                },
-                { type: "separator" },
-                { label: "Quit", accelerator: "Command+Q", click: function() { app.quit(); }}
-            ]
+          label: "Copy",
+          accelerator: "Shift+C",
+          click: function () {
+            mainWindow.webContents.send("story-copy");
+          },
         },
         {
-            label: "Edit",
-            submenu: [
-                { label: "Undo", accelerator: "CmdOrCtrl+Z", selector: "undo:" },
-                { label: "Redo", accelerator: "Shift+CmdOrCtrl+Z", selector: "redo:" },
-                { type: "separator" },
-                { label: "Cut", accelerator: "CmdOrCtrl+X", selector: "cut:" },
-                { label: "Copy", accelerator: "CmdOrCtrl+C", selector: "copy:" },
-                { label: "Paste", accelerator: "CmdOrCtrl+V", selector: "paste:" },
-                { label: "Select All", accelerator: "CmdOrCtrl+A", selector: "selectAll:" }
-            ]
-        }
-    ];
+          label: "Delete",
+          accelerator: "Shift+D",
+          click: function () {
+            mainWindow.webContents.send("story-delete");
+          },
+        },
+        {
+          label: "Download",
+          accelerator: "Shift+E",
+          click: function () {
+            mainWindow.webContents.send("story-download");
+          },
+        },
+      ],
+    },
+    {
+      label: "Preview",
+      submenu: [
+        {
+          label: "Phone",
+          accelerator: "Option+P",
+          click: function () {
+            mainWindow.webContents.send("preview-phone");
+          },
+        },
+        {
+          label: "Tablet",
+          accelerator: "Option+T",
+          click: function () {
+            mainWindow.webContents.send("preview-tablet");
+          },
+        },
+        {
+          label: "Desktop",
+          accelerator: "Option+D",
+          click: function () {
+            mainWindow.webContents.send("preview-desktop");
+          },
+        },
+      ],
+    },
+  ];
 
-    var menu = Menu.buildFromTemplate(template);
-    appIcon.setToolTip('Mural');
-    appIcon.setContextMenu(menu);
-    Menu.setApplicationMenu(menu);
+  globalShortcut.register("Option+P", () => {
+    mainWindow.webContents.send("preview-phone");
+  });
 
-    mainWindow.focus();
+  globalShortcut.register("Option+T", () => {
+    mainWindow.webContents.send("preview-tablet");
+  });
 
+  globalShortcut.register("Option+D", () => {
+    mainWindow.webContents.send("preview-desktop");
+  });
+
+  globalShortcut.register("Shift+C", () => {
+    mainWindow.webContents.send("story-copy");
+  });
+
+  globalShortcut.register("Shift+D", () => {
+    mainWindow.webContents.send("story-delete");
+  });
+
+  globalShortcut.register("Shift+E", () => {
+    mainWindow.webContents.send("story-download");
+  });
+
+  const menu = Menu.buildFromTemplate(template);
+  appIcon.setToolTip("Mural");
+  appIcon.setContextMenu(menu);
+  Menu.setApplicationMenu(menu);
+
+  mainWindow.focus();
 });
 
 // shut down all parts to app after windows all closed.
-app.on('window-all-closed', function () {
-    'use strict';
-    app.quit();
+app.on("window-all-closed", function () {
+  app.quit();
 });

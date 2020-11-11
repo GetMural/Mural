@@ -33,16 +33,3 @@ iframe {
   z-index: 999;
 }
 
-#toolbar.collapsed {
-  width: 55px;
-  height: 44px;
-  overflow: hidden;
-}
-
-.btn-xs, .btn-group-xs > .btn {
-  padding: 0.15rem 0.5rem;
-  font-size: 0.725rem;
-  line-height: 1.0;
-  border-radius: 0.2rem;
-}
-
