@@ -324,14 +324,24 @@
           <section class="part slideshow-horizontal snap {{#light}} reverse_colors {{/light}}" name="story{{id}}" data-slideshow=true>
             <div class="blueimp-gallery blueimp-gallery-carousel blueimp-gallery-controls">
               <div class="slides"></div>
-              <a class="prev"></a>
-              <a class="next"></a>
+              <a
+                class="prev"
+                aria-controls="blueimp-gallery"
+                aria-label="previous slide"
+                aria-keyshortcuts="ArrowUp"
+              ></a>
+              <a
+                class="next"
+                aria-controls="blueimp-gallery"
+                aria-label="next slide"
+                aria-keyshortcuts="ArrowDown"
+              ></a>
               <ol class="indicator"></ol>
             </div>
             {{#title}}
                 <header>{{title}}</header>
             {{/title}}
-            <div class="slide-info">
+            <div class="slide-info" aria-live="polite">
               <p class="slide-caption"></p>
               <span class="credits"></span>
             </div>

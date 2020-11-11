@@ -80,6 +80,36 @@ const audioMedia = require("./media/audio");
 const youtubeMedia = require("./media/youtube");
 const isMobile = window.isMobile;
 
+
+// Override this function so we can change the arrow keys.
+blueimp.prototype.onkeydown = function (event) {
+  if (this.options.storyItem.active) {
+    switch (event.which || event.keyCode) {
+      case 13: // Enter
+        if (this.options.toggleControlsOnEnter) {
+          this.preventDefault(event)
+          this.toggleControls()
+        }
+        break
+      case 38: // ArrowUp
+        if (this.options.enableKeyboardNavigation) {
+          this.preventDefault(event)
+          this.prev()
+        }
+        break
+      case 40: // ArrowDown
+        if (this.options.enableKeyboardNavigation) {
+          this.preventDefault(event)
+          this.next()
+        }
+        break
+    }
+  }
+};
+
+
+
+
 const WINDOW_WIDTH = $(window).width();
 let scrKey;
 let attrKey;
@@ -176,6 +206,9 @@ function loadItem(item) {
         carousel: true,
         startSlideshow: false,
         thumbnailIndicators: true,
+        enableKeyboardNavigation: true,
+        toggleControlsOnEnter: false,
+        storyItem: item, // use this in our custom keydown mod.
         onslide: function(index, slide) {
           const info = [
             {selector: ".slide-caption", attr: "title"},
