@@ -68,20 +68,17 @@ $(function() {
         $('#editor').width('calc(100vw - 375px)');
         $('#preview').width('375px').height('667px');
         $('#preview').attr( 'src', function ( i, val ) { return val; });
-        $("#preview").get(0).contentWindow.screen.orientation.lock('portrait');
     });
 
     $('#btn-tablet').on('click', function() {
         $('#editor').width('calc(100vw - 600px)');
         $('#preview').width('600px').height('800px');
         $('#preview').attr( 'src', function ( i, val ) { return val; });
-        $("#preview").get(0).contentWindow.screen.orientation.lock('portrait');
     });
 
     $('#btn-desktop').on('click', function() {
         $('#editor').width('0px');
         $('#preview').width('100vw').height('100vh');
         $('#preview').attr( 'src', function ( i, val ) { return val; });
-        $("#preview").get(0).contentWindow.screen.orientation.lock('landscape');
     });
 });
