@@ -2575,8 +2575,7 @@ article .part.box_text p {
 
 .blueimp-gallery > .indicator > li {
   border: 1px solid transparent;
-  background: #ccc;
-  background: rgba(255, 255, 255, 0.25) center no-repeat;
+  background: #999;
   box-shadow: 0 0 2px #000;
   opacity: 0.5;
 }
@@ -2602,10 +2601,7 @@ article .part.box_text p {
 
 .slideshow-horizontal.reverse_colors .blueimp-gallery > .indicator > li {
   border: 1px solid transparent;
-  background: #333;
-  background: rgba(0, 0, 0, 0.25) center no-repeat;
   box-shadow: 0 0 2px #fff;
-  opacity: 0.5;
 }
 
 .slideshow-horizontal.reverse_colors .blueimp-gallery > .indicator > li:hover,
