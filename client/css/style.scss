@@ -1943,12 +1943,20 @@ article .header-fullpage h2 {
   article .header-fullpage h1 {
     font-size: 5em;
     line-height: 1.2em;
-    text-align: left;
   }
 
   article .header-fullpage h2 {
     font-size: 2.2em;
     line-height: 1.2em;
+  }
+}
+
+@media (min-width: 992px) {
+  article .header-fullpage h1 {
+    text-align: left;
+  }
+
+  article .header-fullpage h2 {
     text-align: left;
   }
 }
@@ -2380,7 +2388,7 @@ article .part.box_text p {
   height: 100vh;
   background-position: center center;
   background-size: cover;
-  z-index: 1;
+  z-index: 0;
   position: absolute;
   top: 0;
   left: 0;
@@ -2421,7 +2429,7 @@ article .part.box_text p {
   height: 100vh;
   background-position: center center;
   background-size: cover;
-  z-index: 1;
+  z-index: 0;
   position: absolute;
   top: 0;
   left: 0;
