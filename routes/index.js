@@ -5,6 +5,8 @@ const fs = require("fs");
 const rimraf = require("rimraf");
 const electron = require("electron");
 const USER_DATA_FOLDER = electron.app.getPath("userData");
+const sanitize = require("sanitize-filename");
+const slugify = require('@sindresorhus/slugify');
 
 var Preferences = require("../models/preferences");
 var preferences = new Preferences();
@@ -22,18 +24,23 @@ router.get("/", function (req, res) {
 });
 
 router.post("/copy-story", function (req, res) {
-  let newFileName = req.body.filename
-    .split(" ")
-    .join("_")
-    .replace(/[^A-Za-z0-9_]/g, "");
-  let datestr = new Date().toISOString().replace(/[-T:\.Z]/g, "");
-  newFileName = `${newFileName}-${datestr}.json`;
+  let newFileName = slugify(sanitize(req.body.filename));
+
+  try {
+    newFilePath = `${newFileName}.json`;
+    fs.statSync(path.join(DATA_STORIES_PATH, newFilePath));
+    let datestr = new Date().toISOString().replace(/[-T:\.Z]/g, "");
+    newFilePath = `${newFileName}-${datestr}.json`;
+  }
+  catch(err) {
+    // newFilePath doesn't exist good.
+  }
 
   preferences.readFile(null, function (err, data) {
     const currentStory = path.join(DATA_STORIES_PATH, data.storyboard);
-    const newStory = path.join(DATA_STORIES_PATH, newFileName);
+    const newStory = path.join(DATA_STORIES_PATH, newFilePath);
     fs.createReadStream(currentStory).pipe(fs.createWriteStream(newStory));
-    data.storyboard = newFileName;
+    data.storyboard = newFilePath;
     preferences.writeFile(null, data, function (err, response) {
       if (err) {
         console.log("Error setting new preferences");

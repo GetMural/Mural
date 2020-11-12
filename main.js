@@ -88,21 +88,21 @@ const template = [
     submenu: [
       {
         label: "Copy",
-        accelerator: "Shift+C",
+        accelerator: "CmdOrCtrl+Shift+C",
         click: function () {
           mainWindow.webContents.send("story-copy");
         },
       },
       {
         label: "Delete",
-        accelerator: "Shift+D",
+        accelerator: "CmdOrCtrl+Shift+D",
         click: function () {
           mainWindow.webContents.send("story-delete");
         },
       },
       {
         label: "Download",
-        accelerator: "Shift+E",
+        accelerator: "CmdOrCtrl+Shift+E",
         click: function () {
           mainWindow.webContents.send("story-download");
         },

@@ -5,6 +5,7 @@ const fs = require('fs');
 const mkdirp = require('mkdirp');
 const electron = require('electron');
 const sanitize = require("sanitize-filename");
+const slugify = require('@sindresorhus/slugify');
 
 const USER_DATA_FOLDER = electron.app.getPath('userData');
 const Preferences = require('../models/preferences');
@@ -24,16 +25,16 @@ router.post('/', function (req, res) {
                 res.json({"error":err});
             } else {
                 req.pipe(req.busboy);
-                req.busboy.on('file', function (fieldname, file, filename) {
-                    filename = sanitize(filename);
-                    filename = filename.split(" ").join("-");
-                    console.log("Uploading: " + filename);
-                    const fstream = fs.createWriteStream(path.join(uploadPath, filename));
+                req.busboy.on('file', function (fieldname, file, filename, encoding, mimetype) {
+                    const basename = filename.split(".")[0];
+                    const ext = path.extname(filename);
+                    const uploadedFilename = `${slugify(sanitize(basename))}${ext}`;
+                    const fstream = fs.createWriteStream(path.join(uploadPath, uploadedFilename));
                     file.pipe(fstream);
                     fstream.on('close', function () {
                         res.json({
                             status:"ok",
-                            path: `uploads/${story}/${filename}`
+                            path: `uploads/${story}/${uploadedFilename}`
                         });
                     });
                 });
