@@ -112,3 +112,8 @@ input {
   margin-left: 10px;
   width: 30px;
 }
+
+.stop {
+  width: 250px !important;
+  margin-right: 1rem;
+}

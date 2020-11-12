@@ -12,17 +12,19 @@
 
 <fieldset>
   <legend>Stops</legend>
-  <p>A gradient needs at least two colours to display. You can use hexadecimal values <code>#efefef, #ff0000</code> or named HTML colour entities <code>goldenrod, pink</code>.</p>
+  <p>A gradient needs at least two colours to display. You can use hexadecimal values <code>#efefef, #ff0000</code>, named HTML colour entities <code>goldenrod, pink</code>, RGB values <code>rgb(0,0,0) or rgba(0,0,0,0.5)</code> or any other colour stop value that's supported in CSS <code>linear-gradient()</code>.</p>
   <div>
     <label>Colour</label>
     <div class="js-ContentDynamic">
     {{#gradient}}
-    {{#stops}}
-      <div class="js-Stop js-Dynamic">
-        <input type="text" placeholder="&hellip;" class="stop" name="stops[]" value="{{.}}" />
-        <button type="button" class="js-Remove btn btn-danger pull-right">Delete</button>
-      </div>
-    {{/stops}}
+      {{#stops}}
+        <div class="form-inline">
+          <div class="js-Stop js-Dynamic form-group">
+            <input type="text" placeholder="#efefef" class="form-control stop" name="stops[]" value="{{.}}"/>
+            <button type="button" class="js-Remove btn btn-danger pull-right">Delete</button>
+          </div>
+        </div>
+      {{/stops}}
     {{/gradient}}
     </div>
     <button type="button" class="js-AddStop btn btn-success pull-right">Add Stop [+]</button>

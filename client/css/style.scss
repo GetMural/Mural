@@ -2329,7 +2329,7 @@ article .part.box_text p {
   height: 100vh;
   background-position: center center;
   background-size: cover;
-  z-index: 0;
+  z-index: -1;
   position: absolute;
   top: 0;
   left: 0;
@@ -2340,7 +2340,7 @@ article .part.box_text p {
   transform: translateZ(0);
 }
 .sticky-image .bg-image + .bg-gradient {
-  z-index: 1;
+  z-index: 0;
 }
 .sticky-image .content {
   position: relative;
