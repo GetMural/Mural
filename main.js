@@ -7,7 +7,7 @@ const DATA_DIR = path.join(USER_DATA_FOLDER, "data");
 const STORIES_DIR = path.join(DATA_DIR, "stories");
 const DIST_DIR = path.join(USER_DATA_FOLDER, "dist");
 
-const Preferences = require('./models/preferences');
+const Preferences = require("./models/preferences");
 const preferences = new Preferences();
 
 // copy the data folder for new users.
@@ -32,6 +32,111 @@ var server = require("./app");
 
 var mainWindow = null;
 
+const template = [
+  {
+    label: "File",
+    submenu: [
+      {
+        label: "Open Story",
+        accelerator: "CmdOrCtrl+O",
+        click() {
+          dialog
+            .showOpenDialog({
+              defaultPath: STORIES_DIR,
+              properties: ["openFile"],
+              filters: [{ name: "Stories", extensions: ["json"] }],
+            })
+            .then(function (fileObj) {
+              if (!fileObj.canceled) {
+                const filename = path.basename(fileObj.filePaths[0]);
+
+                preferences.readFile(null, function (err, data) {
+                  data.storyboard = filename;
+                  preferences.writeFile(null, data, function (err, data) {
+                    if (!err) {
+                      mainWindow.webContents.send("STORY_OPEN", filename);
+                    }
+                  });
+                });
+              }
+            })
+            .catch(function (err) {
+              console.error(err);
+            });
+        },
+      },
+      {
+        label: "Exit",
+        accelerator: "CmdOrCtrl+Q",
+        click() {
+          app.quit();
+        },
+      },
+    ],
+  },
+  {
+    role: "editMenu",
+  },
+  {
+    role: "viewMenu",
+  },
+  {
+    role: "windowMenu",
+  },
+  {
+    label: "Story",
+    submenu: [
+      {
+        label: "Copy",
+        accelerator: "Shift+C",
+        click: function () {
+          mainWindow.webContents.send("story-copy");
+        },
+      },
+      {
+        label: "Delete",
+        accelerator: "Shift+D",
+        click: function () {
+          mainWindow.webContents.send("story-delete");
+        },
+      },
+      {
+        label: "Download",
+        accelerator: "Shift+E",
+        click: function () {
+          mainWindow.webContents.send("story-download");
+        },
+      },
+    ],
+  },
+  {
+    label: "Preview",
+    submenu: [
+      {
+        label: "Phone",
+        accelerator: "Option+P",
+        click: function () {
+          mainWindow.webContents.send("preview-phone");
+        },
+      },
+      {
+        label: "Tablet",
+        accelerator: "Option+T",
+        click: function () {
+          mainWindow.webContents.send("preview-tablet");
+        },
+      },
+      {
+        label: "Desktop",
+        accelerator: "Option+D",
+        click: function () {
+          mainWindow.webContents.send("preview-desktop");
+        },
+      },
+    ],
+  },
+];
+
 app.on("ready", function () {
   var iconPath = path.join(__dirname, "public", "img", "favicon.png");
   let nimage = nativeImage.createFromPath(iconPath);
@@ -51,111 +156,6 @@ app.on("ready", function () {
 
   var port = process.env.MURAL_PORT || 3000;
   mainWindow.loadURL(`http://localhost:${port}/`);
-
-  const template = [
-    {
-      label: "File",
-      submenu: [
-        {
-          label: "Open Story",
-          accelerator: "CmdOrCtrl+O",
-          click() {
-            dialog
-              .showOpenDialog({
-                defaultPath: STORIES_DIR,
-                properties: ["openFile"],
-                filters: [{ name: "Stories", extensions: ["json"] }],
-              })
-              .then(function (fileObj) {
-                if (!fileObj.canceled) {
-                  const filename = path.basename(fileObj.filePaths[0]);
-
-                  preferences.readFile(null, function (err, data) {
-                    data.storyboard = filename;
-                    preferences.writeFile(null, data, function (err, data) {
-                      if (!err) {
-                        mainWindow.webContents.send("STORY_OPEN", filename);
-                      }
-                    });
-                  });
-                }
-              })
-              .catch(function (err) {
-                console.error(err);
-              });
-          },
-        },
-        {
-          label: "Exit",
-          accelerator: "CmdOrCtrl+Q",
-          click() {
-            app.quit();
-          },
-        },
-      ],
-    },
-    {
-      role: "editMenu",
-    },
-    {
-      role: "viewMenu",
-    },
-    {
-      role: "windowMenu",
-    },
-    {
-      label: "Story",
-      submenu: [
-        {
-          label: "Copy",
-          accelerator: "Shift+C",
-          click: function () {
-            mainWindow.webContents.send("story-copy");
-          },
-        },
-        {
-          label: "Delete",
-          accelerator: "Shift+D",
-          click: function () {
-            mainWindow.webContents.send("story-delete");
-          },
-        },
-        {
-          label: "Download",
-          accelerator: "Shift+E",
-          click: function () {
-            mainWindow.webContents.send("story-download");
-          },
-        },
-      ],
-    },
-    {
-      label: "Preview",
-      submenu: [
-        {
-          label: "Phone",
-          accelerator: "Option+P",
-          click: function () {
-            mainWindow.webContents.send("preview-phone");
-          },
-        },
-        {
-          label: "Tablet",
-          accelerator: "Option+T",
-          click: function () {
-            mainWindow.webContents.send("preview-tablet");
-          },
-        },
-        {
-          label: "Desktop",
-          accelerator: "Option+D",
-          click: function () {
-            mainWindow.webContents.send("preview-desktop");
-          },
-        },
-      ],
-    },
-  ];
 
   const menu = Menu.buildFromTemplate(template);
   appIcon.setToolTip("Mural");
