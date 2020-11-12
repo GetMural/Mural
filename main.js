@@ -1,13 +1,17 @@
-const { app, globalShortcut, BrowserWindow, Tray, Menu } = require("electron");
+const { app, BrowserWindow, Tray, Menu, dialog } = require("electron");
 const path = require("path");
 const fs = require("fs-extra");
 const nativeImage = require("electron").nativeImage;
 const USER_DATA_FOLDER = app.getPath("userData");
+const DATA_DIR = path.join(USER_DATA_FOLDER, "data");
+const STORIES_DIR = path.join(DATA_DIR, "stories");
+const DIST_DIR = path.join(USER_DATA_FOLDER, "dist");
+
+const Preferences = require('./models/preferences');
+const preferences = new Preferences();
 
 // copy the data folder for new users.
 function checkDirectories(directory) {
-  const DATA_DIR = path.join(USER_DATA_FOLDER, "data");
-  const DIST_DIR = path.join(USER_DATA_FOLDER, "dist");
   try {
     fs.statSync(DATA_DIR);
   } catch (e) {
@@ -50,7 +54,45 @@ app.on("ready", function () {
 
   const template = [
     {
-      role: "fileMenu",
+      label: "File",
+      submenu: [
+        {
+          label: "Open File",
+          accelerator: "CmdOrCtrl+O",
+          click() {
+            dialog
+              .showOpenDialog({
+                defaultPath: STORIES_DIR,
+                properties: ["openFile"],
+                filters: [{ name: "Stories", extensions: ["json"] }],
+              })
+              .then(function (fileObj) {
+                if (!fileObj.canceled) {
+                  const filename = path.basename(fileObj.filePaths[0]);
+
+                  preferences.readFile(null, function (err, data) {
+                    data.storyboard = filename;
+                    preferences.writeFile(null, data, function (err, data) {
+                      if (!err) {
+                        mainWindow.webContents.send("STORY_OPEN", filename);
+                      }
+                    });
+                  });
+                }
+              })
+              .catch(function (err) {
+                console.error(err);
+              });
+          },
+        },
+        {
+          label: "Exit",
+          accelerator: "CmdOrCtrl+Q",
+          click() {
+            app.quit();
+          },
+        },
+      ],
     },
     {
       role: "editMenu",
@@ -114,30 +156,6 @@ app.on("ready", function () {
       ],
     },
   ];
-
-  globalShortcut.register("Option+P", () => {
-    mainWindow.webContents.send("preview-phone");
-  });
-
-  globalShortcut.register("Option+T", () => {
-    mainWindow.webContents.send("preview-tablet");
-  });
-
-  globalShortcut.register("Option+D", () => {
-    mainWindow.webContents.send("preview-desktop");
-  });
-
-  globalShortcut.register("Shift+C", () => {
-    mainWindow.webContents.send("story-copy");
-  });
-
-  globalShortcut.register("Shift+D", () => {
-    mainWindow.webContents.send("story-delete");
-  });
-
-  globalShortcut.register("Shift+E", () => {
-    mainWindow.webContents.send("story-download");
-  });
 
   const menu = Menu.buildFromTemplate(template);
   appIcon.setToolTip("Mural");

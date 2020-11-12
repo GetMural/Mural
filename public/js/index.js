@@ -1,7 +1,11 @@
 const ipcRenderer = require("electron").ipcRenderer;
 
 ipcRenderer.on("story-download", () => {
-  window.open("/editor/buyusbeer", "Download your story", "width=620,height=700");
+  window.open(
+    "/editor/buyusbeer",
+    "Download your story",
+    "width=620,height=700"
+  );
 });
 
 // Preview Refresh Event Listener
@@ -11,19 +15,12 @@ $(document).on("refresh-preview", function () {
   });
 });
 
-// on filename select
-$("#story-selector").on("change", function () {
-  const filename = this.value;
-  $.post("/preferences/storyboard", { filename: filename }, function (
-    response
-  ) {
-    console.log("storyboard preference has been updated", response);
-    $("#preview").attr("src", function (i, val) {
-      return val;
-    });
-    $("#editor").attr("src", function (i, val) {
-      return val;
-    });
+ipcRenderer.on("STORY_OPEN", (event, args) => {
+  $("#preview").attr("src", function (i, val) {
+    return val;
+  });
+  $("#editor").attr("src", function (i, val) {
+    return val;
   });
 });
 

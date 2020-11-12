@@ -24,12 +24,3 @@ iframe {
   height: 100vh;
   width: calc(100vw - 600px);
 }
-
-#toolbar {
-  padding: 5px;
-  position: absolute;
-  right: 125px;
-  top: 0;
-  z-index: 999;
-}
-

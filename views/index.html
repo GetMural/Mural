@@ -10,15 +10,6 @@
   <script type="text/javascript" src="/node_modules/jquery/dist/jquery.min.js"></script>
 </head>
 <body>
-  <div id="toolbar">
-    <select id="story-selector" name="storySelector" data-toggle="tooltip" title="Choose Story">
-      <option>{{filename}}</option>
-      {{#files}}
-          <option>{{name}}</option>
-      {{/files}}
-    </select>
-  </div>
-
   <iframe id="preview" src="/preview"></iframe>
   <iframe id="editor" class="editor" src="/editor"></iframe>
 
