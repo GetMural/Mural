@@ -57,7 +57,7 @@ app.on("ready", function () {
       label: "File",
       submenu: [
         {
-          label: "Open File",
+          label: "Open Story",
           accelerator: "CmdOrCtrl+O",
           click() {
             dialog
