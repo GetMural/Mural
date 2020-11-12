@@ -48,10 +48,6 @@ ipcRenderer.on("story-copy", () => {
 });
 
 ipcRenderer.on("story-delete", () => {
-  if ($("#story-selector").val() === "default.json") {
-    vex.dialog.alert("Sorry, you can not delete the default story!");
-    return false;
-  }
   vex.dialog.confirm({
     message: "Are you absolutely sure you want to delete the current story?",
     callback: function (value) {
@@ -60,7 +56,9 @@ ipcRenderer.on("story-delete", () => {
           url: "/delete-story",
           type: "DELETE",
           success: function (response) {
-            console.log("Successfully deleted the story.");
+            if (response.error) {
+              alert(response.error);
+            }
             location.reload(true);
           },
         });

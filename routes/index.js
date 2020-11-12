@@ -6,7 +6,7 @@ const rimraf = require("rimraf");
 const electron = require("electron");
 const USER_DATA_FOLDER = electron.app.getPath("userData");
 const sanitize = require("sanitize-filename");
-const slugify = require('@sindresorhus/slugify');
+const slugify = require("@sindresorhus/slugify");
 
 var Preferences = require("../models/preferences");
 var preferences = new Preferences();
@@ -31,8 +31,7 @@ router.post("/copy-story", function (req, res) {
     fs.statSync(path.join(DATA_STORIES_PATH, newFilePath));
     let datestr = new Date().toISOString().replace(/[-T:\.Z]/g, "");
     newFilePath = `${newFileName}-${datestr}.json`;
-  }
-  catch(err) {
+  } catch (err) {
     // newFilePath doesn't exist good.
   }
 
@@ -55,6 +54,12 @@ router.post("/copy-story", function (req, res) {
 
 router.delete("/delete-story", function (req, res) {
   preferences.readFile(null, function (err, data) {
+    if (data.storyboard === "default.json") {
+      return res.json({
+        error: "Can't delete the default story",
+      });
+    }
+
     const story = data.storyboard.split(".")[0];
     console.log("deleting story", data.storyboard);
     fs.unlink(path.join(DATA_STORIES_PATH, data.storyboard), function (err) {
@@ -62,18 +67,15 @@ router.delete("/delete-story", function (req, res) {
         const uploadPath = path.join(USER_DATA_FOLDER, "uploads", story);
         rimraf(uploadPath, function (err) {
           if (err) {
-            console.log(err);
+            res.json({error: err.message});
           }
         });
         data.storyboard = "default.json";
         preferences.writeFile(null, data, function (err, response) {
-          console.log("New story set to preferences");
-          console.log("story deleted.");
-          res.send("{status: 'ok'}");
+          res.json({status: 'ok'});
         });
       } else {
-        console.log("Error deleting story", filename);
-        res.send("{status: 'error'}");
+        res.json({error: err.message});
       }
     });
   });
