@@ -16,13 +16,12 @@ function imageLoadPromise(src) {
   return loadPromise;
 }
 
-function insertBackgroundImage($el, src, active=false) {
+function insertBackgroundImage($el, src) {
   return imageLoadPromise(src).then(() => {
     const $bgImage = $el.find('.bg-image');
     if ($bgImage.length) {
       const styles = {
         'background-image': `url(${src})`,
-        position: active ? 'fixed' : ''
       };
       $bgImage.css(styles);
       return false;
@@ -31,16 +30,6 @@ function insertBackgroundImage($el, src, active=false) {
       return true;
     }
   });
-}
-
-function fixBackgroundImage($el) {
-  const $container = $el.find('.bg-image, .bg-gradient');
-  $container.css('position', 'fixed');
-}
-
-function unfixBackgroundImage($el) {
-  const $container = $el.find('.bg-image, .bg-gradient');
-  $container.css('position', '');
 }
 
 function loadImages($el) {
@@ -59,8 +48,6 @@ function loadImages($el) {
 
 module.exports = {
   insertBackgroundImage,
-  fixBackgroundImage,
-  unfixBackgroundImage,
   loadImages,
   imageLoadPromise
 };

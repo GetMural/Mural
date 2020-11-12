@@ -545,19 +545,15 @@ router.post('/page/imagebackground/id/:id', function (req, res) {
           stops: gradientStops
         };
 
-        item['image'] = {
-            srcmain: newItem['srcmain'],
-            srcphone: newItem['srcphone'],
-            srcmedium: newItem['srcmedium']
-        };
-
-        if (!gradientEnable) {
-            delete item['gradient'];
+        if (newItem['srcmain'] || newItem['srcphone'] || newItem['srcmedium']) {
+            item['image'] = {
+                srcmain: newItem['srcmain'],
+                srcphone: newItem['srcphone'],
+                srcmedium: newItem['srcmedium']
+            };
         } else {
             delete item['image'];
         }
-
-        console.log(item['gradient']);
 
         if (newItem['mp3'] || newItem['ogg']) {
             item['audio'] = {

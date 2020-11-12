@@ -107,9 +107,6 @@ blueimp.prototype.onkeydown = function (event) {
   }
 };
 
-
-
-
 const WINDOW_WIDTH = $(window).width();
 let scrKey;
 let attrKey;
@@ -178,8 +175,7 @@ function loadItem(item) {
   if (item.data.image) {
     const imageLoaded = imageMedia.insertBackgroundImage(
       item.el,
-      item.data[scrKey],
-      item.active
+      item.data[scrKey]
     ).then((shouldUpdateOffsets) => {
       if (shouldUpdateOffsets) {
         scrollStory.updateOffsets();
@@ -307,10 +303,6 @@ function loadItem(item) {
 }
 
 $story.on("itemfocus", function(ev, item) {
-  if (item.data.image) {
-    imageMedia.fixBackgroundImage(item.el);
-  }
-
   if (item.data.video) {
     videoMedia.playBackgroundVideo(item.index, getVideoAttrs(item));
     videoMedia.fixBackgroundVideo(item.el);
@@ -329,10 +321,6 @@ $story.on("itemfocus", function(ev, item) {
 });
 
 $story.on("itemblur", function(ev, item) {
-  if (item.data.image) {
-    imageMedia.unfixBackgroundImage(item.el);
-  }
-
   if (item.data.youtubeId) {
     youtubeMedia.remove(item);
   }

@@ -2329,7 +2329,7 @@ article .part.box_text p {
   height: 100vh;
   background-position: center center;
   background-size: cover;
-  z-index: 1;
+  z-index: 0;
   position: absolute;
   top: 0;
   left: 0;
@@ -2340,31 +2340,7 @@ article .part.box_text p {
   transform: translateZ(0);
 }
 .sticky-image .bg-image + .bg-gradient {
-  z-index: 2;
-}
-
-.text iframe {
-  position: static !important;
-}
-
-.sticky-image {
-  position: relative;
-  overflow: hidden;
-}
-.sticky-image .bg-image {
-  width: 100%;
-  height: 100vh;
-  background-position: center center;
-  background-size: cover;
-  z-index: 0;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-  -webkit-transform: translateZ(0);
-  transform: translateZ(0);
+  z-index: 1;
 }
 .sticky-image .content {
   position: relative;
@@ -2377,6 +2353,14 @@ article .part.box_text p {
   line-height: 1.8em;
   font-weight: 300;
   padding-top: 10vh;
+}
+.sticky-image.active .bg-image,
+.sticky-image.active .bg-gradient {
+  position: fixed;
+}
+
+.text iframe {
+  position: static !important;
 }
 
 .st-video {
