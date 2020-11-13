@@ -28,8 +28,8 @@
       </div>
       <div>
         <label for="image_caption">Image Caption</label>
-        <input type="text" class="form-control" id="image_caption" name="image_caption"
-        {{#image}}{{#image_caption}} value="{{image_caption}}"{{/image_caption}}{{/image}}>
+        <textarea class="form-control" id="image_caption" name="image_caption"
+        >{{#image}}{{#image_caption}}{{image_caption}}{{/image_caption}}{{/image}}</textarea>
       </div>
       {{#image}}
         {{> imagecredits}}
