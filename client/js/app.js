@@ -294,7 +294,7 @@ function loadItem(item) {
         type: "audio/ogg",
         src: item.data.ogg
       }
-    ]);
+    ], item.data.loop);
 
     returnPromises.push(audioLoaded);
   }

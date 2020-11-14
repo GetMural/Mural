@@ -432,7 +432,8 @@ router.post('/page/imageaudio/id/:id', function (req, res) {
         if (newItem['mp3'] || newItem['ogg']) {
             item['audio'] = {
                 mp3: newItem['mp3'],
-                ogg: newItem['ogg']
+                ogg: newItem['ogg'],
+                loop: newItem['loop'] === 'on'
             };
 
             if (newItem['audio_credits']) {

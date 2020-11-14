@@ -256,6 +256,9 @@
           <section class="part imageaudio {{#light}} reverse_colors {{/light}}" name="story{{id}}"
             {{#audio}}
               data-audio=true
+              {{#loop}}
+                data-loop="{{loop}}"
+              {{/loop}}
               {{#mp3}}
                 data-mp3="{{mp3}}"
               {{/mp3}}

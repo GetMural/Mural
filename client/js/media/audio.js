@@ -5,7 +5,6 @@ const DATA = [];
 
 function stopAudio(id) {
   const audio = MEDIA[id];
-  $(audio).stop(true);
   DATA[id].active = false;
 
   if (audio.paused) {
@@ -13,16 +12,18 @@ function stopAudio(id) {
     return;
   }
 
+  $(audio).stop(true);
+
   mediaUtils.fadeout(id, audio, function() {
     return DATA[id].active === false;
   });
 }
 
-function prepareAudio (id, srcs) {
+function prepareAudio (id, srcs, loop) {
   const audio = new Audio();
   MEDIA[id] = audio;
   DATA[id] = {};
-  audio.loop = true;
+  audio.loop = !!loop;
   audio.preload = 'auto';
 
   const sources = srcs.filter(src => src.src !== undefined);
