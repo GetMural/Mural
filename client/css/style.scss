@@ -178,13 +178,6 @@ textarea {
 body {
   margin: 0;
 }
-a:focus {
-  outline: thin dotted;
-}
-a:active,
-a:hover {
-  outline: 0;
-}
 h1 {
   font-size: 2em;
   margin: 0.67em 0;
@@ -580,19 +573,38 @@ textarea {
   line-height: inherit;
 }
 a {
-  color: #337ab7;
+  color: #488bd6;
+}
+.part.reverse_colors a {
+  color: #1d70b8;
+}
+a:active {
+  color: #898a8a;
+}
+.part.reverse_colors a:active {
+  color: #0b0c0c;
+}
+a:hover {
+  color: #7583d7;
+}
+.part.reverse_colors a:hover {
+  color: #003078;
+}
+a:visited {
+  color: #9e75e4;
+}
+.part.reverse_colors a:visited {
+  color: #4c2c92;
+}
+a:focus,
+.part.reverse_colors a:focus {
+  color: #0b0c0c;
+  outline: 3px solid transparent;
+  background-color: #fd0;
+  box-shadow: 0 -2px #fd0, 0 4px #0b0c0c;
   text-decoration: none;
 }
-a:hover,
-a:focus {
-  color: #23527c;
-  text-decoration: underline;
-}
-a:focus {
-  outline: thin dotted;
-  outline: 5px auto -webkit-focus-ring-color;
-  outline-offset: -2px;
-}
+
 figure {
   margin: 0;
 }
