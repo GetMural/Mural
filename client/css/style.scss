@@ -1878,7 +1878,7 @@ iframe {
 article {
   position: relative;
 }
-article .part:not(.text_align-center) {
+article .part:not(.text_align-center):not(.imageaudio) {
   min-height: 100vh;
   position: relative;
 }

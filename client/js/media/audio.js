@@ -15,6 +15,10 @@ function stopAudio(id) {
   $(audio).stop(true);
 
   mediaUtils.fadeout(id, audio, function() {
+    // Allow it to restart from the beginning.
+    if (!audio.loop) {
+      audio.currentTime = 0;
+    } 
     return DATA[id].active === false;
   });
 }
