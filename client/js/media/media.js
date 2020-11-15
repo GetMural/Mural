@@ -1,5 +1,5 @@
 const $ = require('jquery');
-const FADE_DURATION = 0;
+const FADE_DURATION = 20;
 
 function fadeout(id, media, shouldPause) {
   $(media).animate({volume: 0}, {

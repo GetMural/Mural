@@ -213,10 +213,10 @@ function loadItem(item) {
         
           info.forEach(({selector, attr}) => {
             const text = this.list[index].getAttribute(attr);
-            const node = $(this.container).parent().find(selector);
-            node.empty();
+            const $node = $(this.container).parent().find(selector);
+            $node.empty();
             if (text) {
-              node[0].appendChild(document.createTextNode(text));
+              $node[0].innerHTML = text;
             }
           });
         }
@@ -285,16 +285,22 @@ function loadItem(item) {
   }
 
   if (item.data.audio) {
-    const audioLoaded = audioMedia.prepareAudio(item.index, [
-      {
-        type: "audio/mp3",
-        src: item.data.mp3
-      },
-      {
-        type: "audio/ogg",
-        src: item.data.ogg
-      }
-    ], item.data.loop);
+    const audioLoaded = audioMedia.prepareAudio(
+      scrollStory,
+      item.el,
+      item.index,
+      [
+        {
+          type: "audio/mp3",
+          src: item.data.mp3
+        },
+        {
+          type: "audio/ogg",
+          src: item.data.ogg
+        }
+      ],
+      {loop:item.data.loop}
+    );
 
     returnPromises.push(audioLoaded);
   }

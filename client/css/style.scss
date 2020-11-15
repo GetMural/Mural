@@ -2357,10 +2357,10 @@ article .part.box_text p {
 
 //  Lower the z-index on active items so that scrolling will occur properly.
 .sticky-image.active .bg-image {
-  z-index: -1;
+  z-index: -2;
 }
 .sticky-image.active .bg-image + .bg-gradient {
-  z-index: 0;
+  z-index: -1;
 }
 
 
