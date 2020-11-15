@@ -93,6 +93,31 @@
     {{/meta}}
 
   </fieldset>
+
+  <h4>Custom CSS</h4>
+
+  <fieldset>
+
+    {{#meta}}
+
+      <div class="form-group">
+        <label for="custom_css" class="control-label">Custom CSS</label>
+        <p>Add some custom CSS to your story. CSS will be thrown into a <code>&lt;style&gt;</code> tag in the document <code>&lt;head&gt;</code>
+          <br/>
+          Example:
+          <br/>
+          <code>
+            .my-class {
+              text-align: left;
+            }
+          </code>
+        </p>
+        <textarea id="custom_css" name="custom_css" class="form-control">{{custom_css}}</textarea>
+      </div>
+
+    {{/meta}}
+
+  </fieldset>
   {{> formcontrols}}
 
 </form>

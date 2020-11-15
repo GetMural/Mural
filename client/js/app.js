@@ -320,7 +320,7 @@ $story.on("itemfocus", function(ev, item) {
   }
 
   if (item.data.audio) {
-    audioMedia.playBackgroundAudio(item.index, {
+    audioMedia.playBackgroundAudio(item, {
       muted: !isSoundEnabled
     });
   }
@@ -439,7 +439,7 @@ Promise.all(LOAD_PROMISES)
       }
 
       if (active.data.audio) {
-        audioMedia.playBackgroundAudio(active.index, {
+        audioMedia.playBackgroundAudio(active, {
           muted: !isSoundEnabled
         });
       }

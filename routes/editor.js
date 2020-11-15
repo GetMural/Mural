@@ -341,21 +341,13 @@ router.post('/page/meta', function (req, res) {
         meta['twitter_site'] = newMeta['twitter_site'];
         meta['twitter_creator'] = newMeta['twitter_creator'];
 
-        if (newMeta['font_base_link']) {
-            meta['font_base_link'] = newMeta['font_base_link'];
-            meta['font_base_rules'] = newMeta['font_base_rules'];
-        } else {
-            delete meta['font_base_link'];
-            delete meta['font_base_rules'];
-        }
+        meta['font_base_link'] = newMeta['font_base_link'];
+        meta['font_base_rules'] = newMeta['font_base_rules'];
+        meta['font_headers_link'] = newMeta['font_headers_link'];
+        meta['font_headers_rules'] = newMeta['font_headers_rules'];
 
-        if (newMeta['font_headers_link']) {
-            meta['font_headers_link'] = newMeta['font_headers_link'];
-            meta['font_headers_rules'] = newMeta['font_headers_rules'];
-        } else {
-            delete meta['font_headers_link'];
-            delete meta['font_headers_rules'];
-        }
+        meta['custom_css'] = newMeta['custom_css'];
+
 
         storyboard.writeFile({ meta: meta, items: items });
 

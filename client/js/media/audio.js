@@ -62,10 +62,12 @@ function setMuted (id, muted) {
   }
 }
 
-function playBackgroundAudio (id, attrs) {
+function playBackgroundAudio (item, attrs) {
+  const id = item.index;
   const audio = MEDIA[id];
   $(audio).stop(true);
   DATA[id].active = true;
+  item.el.removeClass('heard');
 
   if (!audio.paused) {
     return;
