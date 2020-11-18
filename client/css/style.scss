@@ -2363,7 +2363,6 @@ article .part.box_text p {
   z-index: -1;
 }
 
-
 .sticky-image .content {
   position: relative;
   z-index: 10;
@@ -2861,4 +2860,15 @@ article .part.box_text p {
 .bounce {
   -webkit-animation-name: bounce;
   animation-name: bounce;
+}
+.subtitles {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 3rem;
+  min-width: 300px;
+  max-width: 600px;
+  padding: 1rem 2rem;
+  font-size: 3rem;
+  background: rgba(0, 0, 0, 0.6);
 }
