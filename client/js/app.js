@@ -299,7 +299,10 @@ function loadItem(item) {
           src: item.data.ogg
         }
       ],
-      {loop:item.data.loop}
+      {
+        loop: item.data.loop,
+        vtt: item.data.vtt
+      }
     );
 
     returnPromises.push(audioLoaded);
@@ -432,6 +435,9 @@ Promise.all(LOAD_PROMISES)
     playStart.addEventListener("click", () => {
       document.body.removeChild(overlay);
       document.body.classList.remove("frozen");
+
+      // hotfix for Flanders story
+      window.MEDIA[1].load();
 
       if (active.data.video) {
         videoMedia.playBackgroundVideo(active.index, getVideoAttrs(active));

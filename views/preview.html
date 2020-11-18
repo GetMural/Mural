@@ -273,6 +273,9 @@
               {{#ogg}}
                 data-ogg="{{ogg}}"
               {{/ogg}}
+              {{#vtt}}
+                data-vtt="{{vtt}}"
+              {{/vtt}}
             {{/audio}}
             {{#image}}
               data-image=true
@@ -587,6 +590,7 @@
 
       {{/items}}
     </article>
+    <div class="subtitles" style="display:none"></div>
     {{#manifest}}
       <!-- <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script> -->
       <script>Hls = {}; // remove me if you use the script above.</script>

@@ -16,12 +16,20 @@ function fadein(id, media) {
   media.volume = 0;
   const playPromise = media.play();
 
+  console.log(playPromise);
+
   playPromise.then(
     function() {
       $(media).animate({volume: 1}, {
         duration: FADE_DURATION,
         fail: function () {
           console.log("couldn't animate volume");
+        },
+        done: function () {
+          console.log("finished animating volume");
+        },
+        always: function () {
+          console.log("always audio");
         }
       });
     },
@@ -51,7 +59,7 @@ function fadein(id, media) {
   return playPromise;
 }
 
-function canPlayThroughPromise(media, srcs) {
+function canPlayThroughPromise(media, srcs, vtt) {
   return new Promise(function(resolve, reject) {
     function canPlayThrough() {
       media.removeEventListener('canplaythrough', canPlayThrough);
@@ -89,6 +97,27 @@ function canPlayThroughPromise(media, srcs) {
         });
       }
     });
+
+    if (vtt) {
+      const textTrack = document.createElement('track'); 
+      textTrack.kind='subtitles';
+      textTrack.srclang='en';
+      textTrack.label='English';
+      textTrack.src = vtt;
+      textTrack.default = true;
+  
+      textTrack.addEventListener('cuechange', function () {
+        let cues = textTrack.track.activeCues;  // array of current cues
+        if (cues.length) {
+          console.log(cues[0].text)
+          $('.subtitles').text(cues[0].text).show();
+        } else {
+          $('.subtitles').hide();
+        }
+      });
+  
+      media.appendChild(textTrack);
+    }
 
     // resolve incase of invalid sources.
     if (!srcs.length) {

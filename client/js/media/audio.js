@@ -3,6 +3,8 @@ const mediaUtils = require('./media');
 const MEDIA = [];
 const DATA = [];
 
+window.MEDIA = MEDIA;
+
 function stopAudio(id) {
   const audio = MEDIA[id];
   DATA[id].active = false;
@@ -38,6 +40,8 @@ function prepareAudio (scrollStory, $el, id, srcs, attrs) {
     //   scrollStory.index(next);
     // }
 
+    console.log("ended");
+
     $el.addClass('heard');
 
     // Allow it to restart from the beginning.
@@ -45,7 +49,7 @@ function prepareAudio (scrollStory, $el, id, srcs, attrs) {
   });
 
   const sources = srcs.filter(src => src.src !== undefined);
-  const canPlayThrough = mediaUtils.canPlayThroughPromise(audio, sources);
+  const canPlayThrough = mediaUtils.canPlayThroughPromise(audio, sources, attrs.vtt);
   audio.load();
 
   return canPlayThrough;
