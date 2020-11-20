@@ -42,6 +42,17 @@
       {{/audio}}
     </fieldset>
 
+    <fieldset>
+       <legend>Audio Playback</legend>
+
+      <div>
+        <label id="loop">Loop</label>
+        <input for="loop" name="loop" type="checkbox" {{#audio}}{{#loop}} checked {{/loop}}{{/audio}} />
+        <!-- <label>Auto Advance</label>
+        <input name="playback" value="advance" type="check" {{#autoAdvance}} checked{{/autoAdvance}} /> -->
+      </div>
+    </fieldset>
+
   {{/item}}
 
   {{> formcontrols}}

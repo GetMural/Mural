@@ -551,7 +551,8 @@ router.post('/page/imagebackground/id/:id', function (req, res) {
         if (newItem['mp3'] || newItem['ogg']) {
             item['audio'] = {
                 mp3: newItem['mp3'],
-                ogg: newItem['ogg']
+                ogg: newItem['ogg'],
+                loop: newItem['loop'] === 'on'
             };
         } else {
             delete item['audio'];

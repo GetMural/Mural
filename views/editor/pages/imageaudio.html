@@ -64,8 +64,8 @@
        <legend>Audio Playback</legend>
 
       <div>
-        <label>Loop</label>
-        <input name="loop" value="loop" type="checkbox" {{#loop}} checked {{/loop}} />
+        <label id="loop">Loop</label>
+        <input for="loop" name="loop" type="checkbox" {{#audio}}{{#loop}} checked {{/loop}}{{/audio}} />
         <!-- <label>Auto Advance</label>
         <input name="playback" value="advance" type="check" {{#autoAdvance}} checked{{/autoAdvance}} /> -->
       </div>
