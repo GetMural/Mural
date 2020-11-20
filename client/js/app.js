@@ -452,9 +452,9 @@ Promise.all(LOAD_PROMISES)
     playStart.addEventListener("click", () => {
       const MURAL_MEDIA = scrollStory.MURAL_AUDIO.concat(scrollStory.MURAL_VIDEO);
       // load a media element within scope of the user gesture to make sure Safari works.
-      MURAL_MEDIA[MURAL_MEDIA.length - 1].load();
-
-      console.log(scrollStory);
+      if (MURAL_MEDIA.length) {
+        MURAL_MEDIA[MURAL_MEDIA.length - 1].load();
+      }
 
       document.body.removeChild(overlay);
       document.body.classList.remove("frozen");
