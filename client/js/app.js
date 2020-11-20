@@ -433,11 +433,11 @@ Promise.all(LOAD_PROMISES)
     playStart.style.display = "block";
 
     playStart.addEventListener("click", () => {
-      document.body.removeChild(overlay);
-      document.body.classList.remove("frozen");
-
       // hotfix for Flanders story
       window.MEDIA[1].load();
+
+      document.body.removeChild(overlay);
+      document.body.classList.remove("frozen");
 
       if (active.data.video) {
         videoMedia.playBackgroundVideo(active.index, getVideoAttrs(active));

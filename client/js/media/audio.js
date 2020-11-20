@@ -3,6 +3,7 @@ const mediaUtils = require('./media');
 const MEDIA = [];
 const DATA = [];
 
+// TODO rework this.
 window.MEDIA = MEDIA;
 
 function stopAudio(id) {
@@ -39,10 +40,9 @@ function prepareAudio (scrollStory, $el, id, srcs, attrs) {
     // if (next < count) {
     //   scrollStory.index(next);
     // }
-
-    console.log("ended");
-
+    
     $el.addClass('heard');
+    $el.removeClass('playing');
 
     // Allow it to restart from the beginning.
     audio.currentTime = 0;
@@ -78,7 +78,9 @@ function playBackgroundAudio (item, attrs) {
   }
 
   audio.muted = attrs.muted;
-  DATA[id].playPromise = mediaUtils.fadein(id, audio);
+  DATA[id].playPromise = mediaUtils.fadein(id, audio).then(() => {
+    item.el.addClass('playing');
+  });
 }
 
 module.exports = {

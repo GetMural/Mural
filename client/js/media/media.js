@@ -16,21 +16,10 @@ function fadein(id, media) {
   media.volume = 0;
   const playPromise = media.play();
 
-  console.log(playPromise);
-
   playPromise.then(
     function() {
       $(media).animate({volume: 1}, {
-        duration: FADE_DURATION,
-        fail: function () {
-          console.log("couldn't animate volume");
-        },
-        done: function () {
-          console.log("finished animating volume");
-        },
-        always: function () {
-          console.log("always audio");
-        }
+        duration: FADE_DURATION
       });
     },
     function(e) {
@@ -104,12 +93,14 @@ function canPlayThroughPromise(media, srcs, vtt) {
       textTrack.srclang='en';
       textTrack.label='English';
       textTrack.src = vtt;
+      // for safari
       textTrack.default = true;
+      // for iPhones
+      textTrack.track.mode = 'hidden';
   
       textTrack.addEventListener('cuechange', function () {
         let cues = textTrack.track.activeCues;  // array of current cues
         if (cues.length) {
-          console.log(cues[0].text)
           $('.subtitles').text(cues[0].text).show();
         } else {
           $('.subtitles').hide();
