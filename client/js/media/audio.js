@@ -14,7 +14,7 @@ function stopAudio(id) {
 
   $(audio).stop(true);
 
-  mediaUtils.fadeout(id, audio, function() {
+  mediaUtils.fadeout(audio, function() {
     // Allow it to restart from the beginning.
     if (!audio.loop) {
       audio.currentTime = 0;
@@ -24,25 +24,11 @@ function stopAudio(id) {
 }
 
 function prepareAudio (scrollStory, $el, id, srcs, attrs) {
-  const audio = new Audio();
+  const audio = scrollStory.MURAL_AUDIO[id];
   MEDIA[id] = audio;
   DATA[id] = {};
   audio.loop = !!attrs.loop;
   audio.preload = 'auto';
-
-  audio.addEventListener('ended', () => {
-    // const count = scrollStory.getItems().length;
-    // const next = id + 1;
-
-    // if (next < count) {
-    //   scrollStory.index(next);
-    // }
-
-    $el.addClass('heard');
-
-    // Allow it to restart from the beginning.
-    audio.currentTime = 0;
-  });
 
   const sources = srcs.filter(src => src.src !== undefined);
   const canPlayThrough = mediaUtils.canPlayThroughPromise(audio, sources);
@@ -67,14 +53,13 @@ function playBackgroundAudio (item, attrs) {
   const audio = MEDIA[id];
   $(audio).stop(true);
   DATA[id].active = true;
-  item.el.removeClass('heard');
 
   if (!audio.paused) {
     return;
   }
 
   audio.muted = attrs.muted;
-  DATA[id].playPromise = mediaUtils.fadein(id, audio);
+  DATA[id].playPromise = mediaUtils.fadein(audio);
 }
 
 module.exports = {

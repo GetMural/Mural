@@ -16,7 +16,7 @@ function stopVideo(id) {
     return;
   }
 
-  mediaUtils.fadeout(id, video, function() {
+  mediaUtils.fadeout(video, function() {
     return DATA[id].active === false;
   });
 }
@@ -35,7 +35,7 @@ function playBackgroundVideo (id, attrs) {
 
   if ((!DATA[id].paused && attrs.autoplay) ||
       (DATA[id].playTriggered && !DATA[id].paused)) {
-    DATA[id].playPromise = mediaUtils.fadein(id, video);
+    DATA[id].playPromise = mediaUtils.fadein(video);
     DATA[id].active = true;
   }
 }
@@ -52,7 +52,7 @@ function fixBackgroundVideo ($el) {
 }
 
 function prepareVideo (scrollStory, $el, id, srcs, attrs) {
-  let video = document.createElement('video');
+  let video = scrollStory.MURAL_VIDEO[id];
   video.poster = attrs.poster;
   video.muted = attrs.muted;
   video.preload = 'auto';
@@ -89,7 +89,7 @@ function prepareVideo (scrollStory, $el, id, srcs, attrs) {
   $el.find('.video-container').append(video);
 
   $el.find('.play').click(function() {
-    DATA[id].playPromise = mediaUtils.fadein(id, video);
+    DATA[id].playPromise = mediaUtils.fadein(video);
     DATA[id].paused = false;
     DATA[id].playTriggered = true;
     $(this).hide();
@@ -124,7 +124,6 @@ function prepareVideo (scrollStory, $el, id, srcs, attrs) {
   }
 
   video.load();
-
   return canPlayThrough;
 }
 

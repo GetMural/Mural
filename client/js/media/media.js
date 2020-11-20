@@ -1,7 +1,7 @@
 const $ = require('jquery');
 const FADE_DURATION = 20;
 
-function fadeout(id, media, shouldPause) {
+function fadeout(media, shouldPause) {
   $(media).animate({volume: 0}, {
     duration: FADE_DURATION,
     always: function() {
@@ -12,7 +12,7 @@ function fadeout(id, media, shouldPause) {
   });
 }
 
-function fadein(id, media) {
+function fadein(media) {
   media.volume = 0;
   const playPromise = media.play();
 
@@ -24,27 +24,8 @@ function fadein(id, media) {
           console.log("couldn't animate volume");
         }
       });
-    },
-    function(e) {
-      // mute video & audio for mobile platform autoplay.
-      media.muted = true;
-      // insert an unmute button for mobile.
-      const $storyItem = $(`#story0-${id}`);
-      if ($storyItem.find('.mobile-mute').length === 0) {
-        const mobileUnmute = $('<span/>', {
-          class: 'mobile-mute muted'
-        }).click(function() {
-          media.muted = false;
-          $(media).animate({volume: 1}, FADE_DURATION);
-          $(this).remove();
-        });
-        $storyItem.append(mobileUnmute);
-      }
-
-      return media.play();
     }
   ).catch(function(e) {
-    console.log('Muted play not working either :(');
     console.log(e);
   });
 
@@ -96,7 +77,6 @@ function canPlayThroughPromise(media, srcs) {
     }
   });
 }
-
 
 module.exports = {
   canPlayThroughPromise,

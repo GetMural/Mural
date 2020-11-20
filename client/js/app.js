@@ -107,6 +107,23 @@ blueimp.prototype.onkeydown = function (event) {
   }
 };
 
+function prepMediaElements (scrollStory) {
+  // need a central media registry for user gesture purposes.
+  scrollStory.MURAL_AUDIO = [];
+  scrollStory.MURAL_VIDEO = [];
+
+  const items = scrollStory.getItems();
+  items.forEach(function(item) {
+    if (item.data.video) {
+      scrollStory.MURAL_VIDEO[item.index] = document.createElement('video');
+    }
+
+    if (item.data.audio) {
+      scrollStory.MURAL_AUDIO[item.index] = document.createElement('audio');
+    }
+  });
+}
+
 const WINDOW_WIDTH = $(window).width();
 let scrKey;
 let attrKey;
@@ -129,6 +146,9 @@ const scrollStory = $story
     triggerOffset: 0
   })
   .data("plugin_scrollStory");
+
+prepMediaElements(scrollStory);
+
 
 const storyItems = scrollStory.getItems();
 
@@ -430,6 +450,12 @@ Promise.all(LOAD_PROMISES)
     playStart.style.display = "block";
 
     playStart.addEventListener("click", () => {
+      const MURAL_MEDIA = scrollStory.MURAL_AUDIO.concat(scrollStory.MURAL_VIDEO);
+      // load a media element within scope of the user gesture to make sure Safari works.
+      MURAL_MEDIA[MURAL_MEDIA.length - 1].load();
+
+      console.log(scrollStory);
+
       document.body.removeChild(overlay);
       document.body.classList.remove("frozen");
 
