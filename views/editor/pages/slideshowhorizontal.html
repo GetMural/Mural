@@ -14,7 +14,7 @@
         </div>
         <div class="form-group">
           <label for="title" class="control-label">Title</label>
-          <input name="title" type="text" class="form-control" value="{{title}}" placeholder="No title"/>
+          <textarea id="title" name="title" type="text" class="form-control">{{title}}</textarea>
         </div>
         <button type="button" class="js-AddSlide btn btn-success pull-right">Add Slide [+]</button>
       </fieldset>
@@ -30,3 +30,14 @@
     {{> formcontrols}}
   </fieldset>
 </form>
+
+<script>
+$('#title').summernote({
+  toolbar: [
+    ['style', ['bold', 'italic', 'underline', 'clear']],
+    ['font', ['strikethrough', 'superscript', 'subscript']],
+    ['color', ['color']],
+    ['tools', ['link', 'codeview']]
+  ]
+});
+</script>

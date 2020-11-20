@@ -350,7 +350,7 @@
               <ol class="indicator"></ol>
             </div>
             {{#title}}
-                <header>{{title}}</header>
+                <header>{{{title}}}</header>
             {{/title}}
             <div class="slide-info" aria-live="polite">
               <p class="slide-caption"></p>
@@ -393,11 +393,11 @@
                    >
                 <div class="caption">
                   {{#slideshowvertical.title}}
-                    <span class="v-slide-group">{{slideshowvertical.title}}</span>
+                    <span class="v-slide-group">{{{slideshowvertical.title}}}</span>
                   {{/slideshowvertical.title}}
                   {{#title}}
-                    <div class="v-slide-title">{{title}} {{#credits}}
-                    <span class="credits">{{credits}}</span>
+                    <div class="v-slide-title">{{{title}}} {{#credits}}
+                    <span class="credits">{{{credits}}}</span>
                   {{/credits}}</div>
                   {{/title}}
                 </div>

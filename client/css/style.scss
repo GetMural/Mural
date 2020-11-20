@@ -2544,14 +2544,14 @@ article .part.box_text p {
   left: 0;
   top: 0;
   right: 0;
-  padding: 1.5rem 2rem 6rem;
+  padding: 1.5rem 2rem 7rem;
   font-size: 1.4em;
   z-index: 9999;
   background: linear-gradient(180deg, #222, transparent);
 }
 
 .slideshow.reverse_colors .caption {
-  background: linear-gradient(180deg, #ddd, transparent);
+  background: linear-gradient(180deg, #eee, transparent);
 }
 
 .slideshow .caption span {
@@ -2559,6 +2559,7 @@ article .part.box_text p {
 }
 
 .slideshow .credits {
+  display: inline-block;
   color: #ddd;
 }
 
