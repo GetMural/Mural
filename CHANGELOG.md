@@ -9,7 +9,7 @@ Notable changes to Mural will be documented in this file.
 * Keycuts (ex. Cmd+Shift+c) have been enabled for story editing options (copy, delete, download, opening)
 * New preview modes - phone/tablet/desktop - including keycuts to navigate between views.
 * Storynames are made websafe
-* file import - paths are sanitised and made websafe.
+* File import - paths are sanitised and made websafe.
 
 ### Story Metadata
 * Twitter card support.
