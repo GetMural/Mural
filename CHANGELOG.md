@@ -49,6 +49,9 @@ Notable changes to Mural will be documented in this file.
 ### Fullpage Video & Background Video
 * left, center, right, & custom - improvements on panning for portrait screens.
 
+### Improvements
+* faster loading speed for your story as javascript has been optimised and minified.
+
 ### Bugs
 * Fixed a bug which would have caused autoplay issues on safari.
 
