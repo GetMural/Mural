@@ -12,6 +12,7 @@ Notable changes to Mural will be documented in this file.
 ### Image Background
 * Gradient background feature added. Gradients can be stand alone or imposed ontop of an image.
 * Loop option for audio playback
+* Removed image offset - please crop images as needed for the different sources.
 
 ### Image Audio
 * Item reworked to allow for long scrolling images.
@@ -37,6 +38,9 @@ Notable changes to Mural will be documented in this file.
 
 ### Centred Text
 * Alt text field provided for images.
+
+### Fullpage Video & Background Video
+* left, center, right improvements on panning for portrait screens.
 
 ## 0.2.5 (June 6, 2018)
 
