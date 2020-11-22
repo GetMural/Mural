@@ -8,6 +8,8 @@ Notable changes to Mural will be documented in this file.
 * Toolbar has been moved into the native app tool bar to enable more screen space for story preview and editing.
 * Keycuts (ex. Cmd+Shift+c) have been enabled for story editing options (copy, delete, download, opening)
 * New preview modes - phone/tablet/desktop - including keycuts to navigate between views.
+* Storynames are made websafe
+* file import - paths are sanitised and made websafe.
 
 ### Story Metadata
 * Twitter card support.
