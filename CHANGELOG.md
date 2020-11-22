@@ -47,6 +47,9 @@ Notable changes to Mural will be documented in this file.
 ### Fullpage Video & Background Video
 * left, center, right, & custom - improvements on panning for portrait screens.
 
+### Bugs
+* Fixed a bug which would have caused autoplay issues on safari.
+
 ## 0.2.5 (June 6, 2018)
 
 ### Changed
