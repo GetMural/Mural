@@ -4,6 +4,11 @@ Notable changes to Mural will be documented in this file.
 
 ## 0.4.0
 
+### Editor Updates
+* Toolbar has been moved into the native app tool bar to enable more screen space for story preview and editing.
+* Keycuts (ex. Cmd+Shift+c) have been enabled for story editing options (copy, delete, download, opening)
+* New preview modes - phone/tablet/desktop - including keycuts to navigate between views.
+
 ### Story Metadata
 * Twitter card support.
 * Custom font support - for body/reading text as well as a separate font can be provided for titles/subtitles.
@@ -40,7 +45,7 @@ Notable changes to Mural will be documented in this file.
 * Alt text field provided for images.
 
 ### Fullpage Video & Background Video
-* left, center, right improvements on panning for portrait screens.
+* left, center, right, & custom - improvements on panning for portrait screens.
 
 ## 0.2.5 (June 6, 2018)
 
