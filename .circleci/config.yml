@@ -1,0 +1,62 @@
+version: 2.1 # Use v2.1 to enable orb usage.
+
+# The Windows orb gives you everything you
+# need to start using the Windows executor.
+orbs:
+  win: circleci/windows@2.2.0
+
+jobs:
+  mural_linux:
+    working_directory: ~/repo
+    docker:
+      - image: circleci/node:11
+    steps:
+      - checkout
+      - run:
+          name: Update NPM
+          command: "sudo npm install -g npm"
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+      - run:
+          name: Install Dependencies
+          command: npm install
+      - run:
+          name: Install dpkg and fakeroot
+          command: |
+            sudo apt-get update -y
+            sudo apt-get install -y dpkg fakeroot
+      - save_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+          paths:
+            - ./node_modules
+      - run:
+          name: Generate Builds
+          command: npm run make
+      - store_artifacts:
+          path: ~/repo/out/make
+
+  mural_windows:
+    executor: win/default
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+      - run:
+          name: Install Dependencies
+          command: npm install
+      - save_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+          paths:
+            - ./node_modules
+      - run:
+          name: Generate Builds
+          command: npm run make
+      - store_artifacts:
+          path: ~/repo/out/make
+
+workflows:
+  build_electron:
+    jobs:
+      - mural_linux
+      - mural_windows
