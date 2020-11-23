@@ -64,7 +64,7 @@
         {
           "name": "@electron-forge/maker-squirrel",
           "config": {
-            "name": "electron_test_scaffold"
+            "name": "mural"
           }
         },
         {
