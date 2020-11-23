@@ -6,7 +6,7 @@ orbs:
   win: circleci/windows@2.2.0
 
 jobs:
-  linux:
+  mural_linux:
     working_directory: ~/repo
     docker:
       - image: circleci/node:11
@@ -35,7 +35,7 @@ jobs:
       - store_artifacts:
           path: ~/repo/out/make
 
-  windows: # name of your job
+  mural_windows: # name of your job
     executor: win/default # executor type
     working_directory: ~/repo
     docker:
@@ -64,5 +64,5 @@ jobs:
 workflows:
   build_and_test:
     jobs:
-      - linux
-      - windows
+      - mural_linux
+      - mural_windows
