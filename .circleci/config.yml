@@ -38,8 +38,6 @@ jobs:
   mural_windows: # name of your job
     executor: win/default # executor type
     working_directory: ~/repo
-    docker:
-      - image: circleci/node:11
     steps:
       - checkout
       - run:
