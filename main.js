@@ -144,7 +144,7 @@ const template = [
 ];
 
 app.on("ready", function () {
-  var iconPath = path.join(__dirname, "public", "img", "favicon.png");
+  var iconPath = path.join(__dirname, "assets", "mural.png");
   let nimage = nativeImage.createFromPath(iconPath);
   const appIcon = new Tray(nimage);
   mainWindow = new BrowserWindow({
@@ -152,7 +152,8 @@ app.on("ready", function () {
     autoHideMenuBar: false,
     useContentSize: true,
     resizable: true,
-    icon: iconPath,
+    // you can also leave it undefined so the executable's icon will be used (do this if it's not linux)
+    icon: (['win32', 'darwin'].indexOf(process.platform) < 0 ) ? nimage : undefined,
     webPreferences: {
       nodeIntegration: true,
     },

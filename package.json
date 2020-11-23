@@ -59,7 +59,9 @@
   "homepage": "https://www.getmural.io",
   "config": {
     "forge": {
-      "packagerConfig": {},
+      "packagerConfig": {
+        "icon": "./assets/mural"
+      },
       "makers": [
         {
           "name": "@electron-forge/maker-squirrel",
