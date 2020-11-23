@@ -1,7 +1,7 @@
 const { app, BrowserWindow, Tray, Menu, dialog, nativeImage } = require("electron");
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
-if (require('electron-squirrel-startup')) { // eslint-disable-line global-require
+if (require('electron-squirrel-startup')) {
   app.quit();
 }
 
@@ -144,14 +144,15 @@ const template = [
 ];
 
 app.on("ready", function () {
-  var iconPath = path.join(__dirname, "assets", "mural.png");
-  let nimage = nativeImage.createFromPath(iconPath);
+  const iconPath = path.join(__dirname, "assets", "mural.png");
+  const nimage = nativeImage.createFromPath(iconPath);
   const appIcon = new Tray(nimage);
   mainWindow = new BrowserWindow({
     show: false,
     autoHideMenuBar: false,
     useContentSize: true,
     resizable: true,
+    // https://www.electronjs.org/docs/api/browser-window#new-browserwindowoptions
     // you can also leave it undefined so the executable's icon will be used (do this if it's not linux)
     icon: (['win32', 'darwin'].indexOf(process.platform) < 0 ) ? nimage : undefined,
     webPreferences: {
@@ -161,7 +162,7 @@ app.on("ready", function () {
   mainWindow.maximize();
   mainWindow.show();
 
-  var port = process.env.MURAL_PORT || 3000;
+  const port = process.env.MURAL_PORT || 3000;
   mainWindow.loadURL(`http://localhost:${port}/`);
 
   const menu = Menu.buildFromTemplate(template);

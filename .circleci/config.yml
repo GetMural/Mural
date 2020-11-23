@@ -35,8 +35,8 @@ jobs:
       - store_artifacts:
           path: ~/repo/out/make
 
-  mural_windows: # name of your job
-    executor: win/default # executor type
+  mural_windows:
+    executor: win/default
     working_directory: ~/repo
     steps:
       - checkout
@@ -55,9 +55,8 @@ jobs:
       - store_artifacts:
           path: ~/repo/out/make
 
-# Orchestrate our job run sequence
 workflows:
-  build_and_test:
+  build_electron:
     jobs:
       - mural_linux
       - mural_windows
