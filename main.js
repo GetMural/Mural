@@ -1,7 +1,13 @@
-const { app, BrowserWindow, Tray, Menu, dialog } = require("electron");
+const { app, BrowserWindow, Tray, Menu, dialog, nativeImage } = require("electron");
+
+// Handle creating/removing shortcuts on Windows when installing/uninstalling.
+if (require('electron-squirrel-startup')) { // eslint-disable-line global-require
+  app.quit();
+}
+
 const path = require("path");
 const fs = require("fs-extra");
-const nativeImage = require("electron").nativeImage;
+
 const USER_DATA_FOLDER = app.getPath("userData");
 const DATA_DIR = path.join(USER_DATA_FOLDER, "data");
 const STORIES_DIR = path.join(DATA_DIR, "stories");
