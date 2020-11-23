@@ -1,4 +1,10 @@
-version: 2.1
+version: 2.1 # Use v2.1 to enable orb usage.
+
+# The Windows orb gives you everything you
+# need to start using the Windows executor.
+orbs:
+  win: circleci/windows@2.2.0
+
 jobs:
   build:
     working_directory: ~/repo
@@ -18,7 +24,32 @@ jobs:
           name: Install dpkg and fakeroot
           command: |
             sudo apt-get update -y
-            sudo apt-get install -y dpkg fakeroot rpm
+            sudo apt-get install -y dpkg fakeroot
+      - save_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+          paths:
+            - ./node_modules
+      - run:
+          name: Generate Builds
+          command: npm run make
+
+      - store_artifacts:
+          path: ~/repo/out/make
+
+  build-windows: # name of your job
+    executor: win/default # executor type
+    steps:
+      # Commands are run in a Windows
+      # virtual machine environment
+      - checkout
+      - run:
+          name: Update NPM
+          command: "sudo npm install -g npm"
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+      - run:
+          name: Install Dependencies
+          command: npm install
       - save_cache:
           key: dependency-cache-{{ checksum "package.json" }}
           paths:
