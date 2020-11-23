@@ -6,7 +6,7 @@ orbs:
   win: circleci/windows@2.2.0
 
 jobs:
-  build:
+  linux:
     working_directory: ~/repo
     docker:
       - image: circleci/node:11
@@ -32,15 +32,15 @@ jobs:
       - run:
           name: Generate Builds
           command: npm run make
-
       - store_artifacts:
           path: ~/repo/out/make
 
-  build-windows: # name of your job
+  windows: # name of your job
     executor: win/default # executor type
+    working_directory: ~/repo
+    docker:
+      - image: circleci/node:11
     steps:
-      # Commands are run in a Windows
-      # virtual machine environment
       - checkout
       - run:
           name: Update NPM
@@ -57,6 +57,12 @@ jobs:
       - run:
           name: Generate Builds
           command: npm run make
-
       - store_artifacts:
           path: ~/repo/out/make
+
+# Orchestrate our job run sequence
+workflows:
+  build_and_test:
+    jobs:
+      - linux
+      - windows
