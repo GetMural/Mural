@@ -1883,6 +1883,10 @@ article .part:not(.text_align-center):not(.imageaudio) {
   position: relative;
 }
 
+article .part.active {
+  z-index: -1;
+}
+
 article .article-wrapper {
   position: relative;
   top: 50vh;
@@ -1897,7 +1901,6 @@ article .article-wrapper .header-fullpage {
 
 article .header {
   font-weight: 200;
-  z-index: 2;
   margin-bottom: 2vh;
 }
 article .header h1 {
@@ -2131,19 +2134,17 @@ article .part.box_text p {
 
 .longform .nav {
   backface-visibility: hidden;
-  transform: translateZ(0);
   position: fixed;
   top: 0;
   bottom: 0px;
   width: 250px;
   background: rgba(51, 51, 51, 0.95);
-  z-index: 9999;
+  z-index: 99;
   padding: 0px;
   box-shadow: 0 0 3px #000;
   right: -150px;
   height: 100%;
   transition: all 0.3s;
-  z-index: 99;
   display: none;
   color: white;
 
@@ -2341,32 +2342,16 @@ article .part.box_text p {
   height: 100vh;
   background-position: center center;
   background-size: cover;
-  z-index: 0;
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
-  -webkit-transform: translateZ(0);
-  transform: translateZ(0);
 }
-.sticky-image .bg-image + .bg-gradient {
-  z-index: 1;
-}
-
-//  Lower the z-index on active items so that scrolling will occur properly.
-.sticky-image.active .bg-image {
-  z-index: -2;
-}
-.sticky-image.active .bg-image + .bg-gradient {
-  z-index: -1;
-}
-
 
 .sticky-image .content {
   position: relative;
-  z-index: 10;
   padding-top: 10vh;
   padding-bottom: 10vh;
 }
@@ -2394,15 +2379,12 @@ article .part.box_text p {
   height: 100vh;
   background-position: center center;
   background-size: cover;
-  z-index: 0;
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
-  -webkit-transform: translateZ(0);
-  transform: translateZ(0);
 }
 .st-video .video-container video {
   min-width: 100%;
@@ -2415,7 +2397,6 @@ article .part.box_text p {
 }
 .st-video .content {
   position: relative;
-  z-index: 10;
   padding-top: 10vh;
   padding-bottom: 10vh;
 }
@@ -2435,13 +2416,11 @@ article .part.box_text p {
   height: 100vh;
   background-position: center center;
   background-size: cover;
-  z-index: 0;
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   backface-visibility: hidden;
-  transform: translateZ(0);
 }
 
 .st-content-video .video-container video {
@@ -2462,7 +2441,6 @@ article .part.box_text p {
   padding-left: 6vw;
   padding-right: 6vw;
   padding-bottom: 15vh;
-  z-index: 10;
   padding-top: 80vh;
   font-size: 1.4em;
 }
@@ -2503,7 +2481,6 @@ article .part.box_text p {
 .no-effects .content {
   padding-top: 10vh;
   padding-bottom: 10vh;
-  z-index: 2;
   position: relative;
 }
 
@@ -2511,7 +2488,6 @@ article .part.box_text p {
   background: none;
   font-size: 1.4em;
   line-height: 1.8em;
-  z-index: 2;
 }
 
 .no-effects li {
@@ -2531,10 +2507,7 @@ article .part.box_text p {
   height: 100vh;
   background-position: center center;
   background-size: cover;
-  z-index: 1;
   position: relative;
-  -webkit-transform: translateZ(0);
-  transform: translateZ(0);
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
 }
@@ -2546,7 +2519,6 @@ article .part.box_text p {
   right: 0;
   padding: 1.5rem 2rem 7rem;
   font-size: 1.4em;
-  z-index: 9999;
   background: linear-gradient(180deg, #222, transparent);
 }
 
@@ -2572,7 +2544,6 @@ article .part.box_text p {
   width: 100%;
   position: relative;
   overflow: hidden;
-  z-index: 1;
   font-family: "Roboto Slab", arial, serif;
 }
 
@@ -2679,17 +2650,13 @@ article .part.box_text p {
   height: 100vh;
   background-position: center center;
   background-size: cover;
-  z-index: 1;
   position: relative;
   top: 0;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
-  -webkit-transform: translateZ(0);
-  transform: translateZ(0);
 }
 .parallax .content {
   position: relative;
-  z-index: 3;
   margin-top: -50vh;
   height: 100vh;
 }
