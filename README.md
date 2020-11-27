@@ -22,7 +22,7 @@ Once a Mural story is ready to be published, the user clicks the 'Download' butt
 
 ## Running from git
 
-Install Node.js 10.x (LTS)
+Install Node.js 10 or higher
 
 Clone/download the repo and run:
 
@@ -30,8 +30,8 @@ Clone/download the repo and run:
 
 `npm start`
 
-## Installation and running the app
+## Building your own electron package
 
-**Compiling from source:**
+`npm install`
 
-So far it's as easy as `npm install` but you'll also need to have a global installation of https://github.com/electron/electron and https://github.com/electron-userland/electron-packager to build the app.
+`npm run make`

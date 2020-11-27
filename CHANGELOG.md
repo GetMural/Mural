@@ -7,7 +7,10 @@ Notable changes to Mural will be documented in this file.
 ### Editor Updates
 * Toolbar has been moved into the native app tool bar to enable more screen space for story preview and editing.
 * Keycuts (ex. Cmd+Shift+c) have been enabled for story editing options (copy, delete, download, opening)
+![Mural menu](https://www.getmural.io/img/menu-mural.png)
+![Story menu](https://www.getmural.io/img/menu-story.png)
 * New preview modes - phone/tablet/desktop - including keycuts to navigate between views.
+![Preview menu](https://www.getmural.io/img/menu-preview.png)
 * Storynames are made websafe
 * File import - paths are sanitised and made websafe.
 
