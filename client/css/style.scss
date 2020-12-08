@@ -1883,9 +1883,22 @@ article .part:not(.text_align-center):not(.imageaudio) {
   position: relative;
 }
 
-article .part.active {
-  z-index: -1;
+/*
+grouping all the z-index hacks/fixes together
+*/
+body.frozen {
+  pointer-events: auto
 }
+body {
+  pointer-events: none
+}
+article .part.active {
+  z-index: -1
+}
+section {
+  pointer-events: auto
+}
+// end fix
 
 article .article-wrapper {
   position: relative;
