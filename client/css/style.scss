@@ -1895,7 +1895,10 @@ body {
 article .part.active {
   z-index: -1
 }
-section {
+section,
+.nav,
+.menu_open,
+.mute {
   pointer-events: auto
 }
 // end fix
