@@ -75,9 +75,9 @@ module.exports = {
   },
   plugins: [
     extractSass,
-    // new webpack.optimize.UglifyJsPlugin({
-    //   minimize: true
-    // }),
+    new webpack.optimize.UglifyJsPlugin({
+      minimize: true
+    }),
     new ManifestPlugin(),
     new WebpackMd5Hash()
   ],
