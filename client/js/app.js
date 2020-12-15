@@ -78,8 +78,6 @@ const videoMedia = require("./media/video");
 const imageMedia = require("./media/images");
 const audioMedia = require("./media/audio");
 const youtubeMedia = require("./media/youtube");
-const isMobile = window.isMobile;
-
 
 // Override this function so we can change the arrow keys.
 blueimp.prototype.onkeydown = function (event) {
@@ -143,7 +141,8 @@ const $story = $("#scrollytelling");
 const scrollStory = $story
   .scrollStory({
     contentSelector: ".part",
-    triggerOffset: 0
+    triggerOffset: 0,
+    debug: true
   })
   .data("plugin_scrollStory");
 
@@ -158,18 +157,10 @@ let isSoundEnabled = true;
 
 function getVideoAttrs(item) {
   const muted = !isSoundEnabled;
-  let autoplay;
-
-  // TODO we only have full page videos atm.
-  if (item.el.hasClass("st-content-video")) {
-    autoplay = !isMobile.any;
-  } else {
-    autoplay = true;
-  }
 
   return {
     poster: item.data.poster,
-    autoplay: autoplay,
+    autoplay: true,
     muted: muted,
     loop: item.data.loop,
     autoAdvance: item.data.autoAdvance
@@ -376,11 +367,6 @@ $story.on("itementerviewport", function(ev, item) {
 
 // parallax.
 $("[data-scroll-speed]").moveIt();
-
-// give mobile a special "unmute button" per video.
-if (!isMobile.any) {
-  $(".mobile-mute").remove();
-}
 
 $(".mute").click(function() {
   const $this = $(this);

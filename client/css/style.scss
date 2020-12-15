@@ -1875,13 +1875,22 @@ body {
 iframe {
   max-width: 100% !important;
 }
-article {
-  position: relative;
-}
+
+/*
+grouping all the heights needed together
+*/
+// html,body {
+//   height: 100%;
+// }
+// article {
+//   position: relative;
+//   height: 100%;
+// }
 article .part:not(.text_align-center):not(.imageaudio) {
   min-height: 100vh;
   position: relative;
 }
+// ends heights
 
 /*
 grouping all the z-index hacks/fixes together
@@ -2473,7 +2482,8 @@ article .part.box_text p {
   }
 
   &.play {
-    background: transparent url("img/play.svg") center center no-repeat;
+    background: transparent url("img/play.png") center center no-repeat;
+    display:none;
   }
 }
 
