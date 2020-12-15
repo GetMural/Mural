@@ -1106,6 +1106,7 @@ router.post('/delete/:id', function(req, res) {
             items: items,
             editor: 'editor',
             message: 'Item Deleted',
+            filename: storyboard.filename,
             partials: {
                 editornav: 'editor/fragments/editornav'
             }
