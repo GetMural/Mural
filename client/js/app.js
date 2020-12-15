@@ -141,8 +141,7 @@ const $story = $("#scrollytelling");
 const scrollStory = $story
   .scrollStory({
     contentSelector: ".part",
-    triggerOffset: 0,
-    debug: true
+    triggerOffset: 0
   })
   .data("plugin_scrollStory");
 
