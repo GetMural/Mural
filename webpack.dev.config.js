@@ -1,3 +1,4 @@
+const express = require('express');
 const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
@@ -6,23 +7,23 @@ const WebpackMd5Hash = require('webpack-md5-hash');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const extractSass = new ExtractTextPlugin({
-  filename: "[name].[contenthash].css"
+  filename: '[name].[contenthash].css'
 });
 
 module.exports = {
   entry: {
-    "app": path.resolve(__dirname, 'client', 'js', 'app.js'),
+    app: path.resolve(__dirname, 'client', 'js', 'app.js')
   },
-  devtool: "source-map",
+  devtool: 'source-map',
   output: {
-    filename: "[name].[chunkhash].js",
+    filename: '[name].[chunkhash].js',
     path: path.resolve(__dirname, './public')
   },
   module: {
     rules: [
       {
         test: /\.html$/,
-        loader: "handlebars-loader"
+        loader: 'hogan-loader'
       },
       {
         test: /\.svg$/,
@@ -37,7 +38,7 @@ module.exports = {
       {
         test: /\.js$/,
         // Sticky Bits didn't transpile :/
-        exclude: function(modulePath) {
+        exclude: function (modulePath) {
           return /node_modules/.test(modulePath) &&
             !/node_modules\/stickybits/.test(modulePath);
         },
@@ -62,7 +63,7 @@ module.exports = {
                 minimize: true,
                 sourceMap: false
               }
-            }, 
+            },
             {
               loader: 'sass-loader',
               options: {
@@ -72,7 +73,7 @@ module.exports = {
                   path.resolve(__dirname, 'client', 'css')
                 ]
               }
-            },
+            }
           ]
         })
       }
@@ -82,13 +83,10 @@ module.exports = {
     extractSass,
     new ManifestPlugin(),
     new WebpackMd5Hash(),
-    new webpack.LoaderOptionsPlugin({
-      options: {
-        handlebarsLoader: {}
-      }
-    }),
     new HtmlWebpackPlugin({
-      template: './views/preview.html'
+      filename: 'preview.html',
+      path: path.resolve(__dirname, './views'),
+      output: './public/index.html'
     })
   ],
   externals: {
