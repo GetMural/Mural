@@ -1,6 +1,4 @@
-const express = require('express');
 const path = require('path');
-const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const WebpackMd5Hash = require('webpack-md5-hash');
@@ -23,7 +21,7 @@ module.exports = {
     rules: [
       {
         test: /\.html$/,
-        loader: 'hogan-loader'
+        loader: 'hogan'
       },
       {
         test: /\.svg$/,
@@ -84,9 +82,8 @@ module.exports = {
     new ManifestPlugin(),
     new WebpackMd5Hash(),
     new HtmlWebpackPlugin({
-      filename: 'preview.html',
-      path: path.resolve(__dirname, './views'),
-      output: './public/index.html'
+      filename: './views/preview.html',
+      output: 'TEST.html'
     })
   ],
   externals: {
