@@ -333,6 +333,7 @@ router.post('/page/meta', function (req, res) {
         meta['title'] = newMeta['title'];
         meta['site_name'] = newMeta['site_name'];
         meta['site_img'] = newMeta['site_img'];
+        meta['favicon'] = newMeta['favicon'];
         meta['author'] = newMeta['author'];
         meta['rsspingback'] = newMeta['rsspingback'];
         meta['description'] = newMeta['description'];
