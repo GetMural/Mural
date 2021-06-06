@@ -10,10 +10,11 @@
     "eslint-loader": "^4.0.2",
     "eslint-plugin-prettier": "^3.4.0",
     "eslint-plugin-react": "^7.24.0",
+    "node-sass": "^6.0.0",
     "prettier": "^2.3.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-router": "^5.2.0",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
     "web-vitals": "^1.0.1"
   },
