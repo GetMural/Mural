@@ -1,0 +1,13 @@
+.New {
+  &-ContentBlocks {
+    > div {
+      &:nth-child(odd) {
+        float: left;
+        width: 50%;
+      }
+      &:nth-child(even) {
+        margin-left: 50%;
+      }
+    }
+  }
+}

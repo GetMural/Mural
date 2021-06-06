@@ -1,4 +1,10 @@
 .ContentBlockSelector {
+  background: #efefef;
+  padding: 5px;
+  > div {
+    cursor: pointer;
+    padding: 30px;
+  }
   .BackgroundVideo {
     background-color: red;
   }

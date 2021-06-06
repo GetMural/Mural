@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { ContentBlockSelector } from '../../components/ContentBlockSelector';
+import './New.scss';
 
 export class New extends Component {
   constructor() {
@@ -18,14 +19,16 @@ export class New extends Component {
   }
   render() {
     return (
-      <>
+      <div className="New">
         <h3>Add Content Block</h3>
-        {this.ContentBlocks.map((type, index) => {
-          return(
-            <ContentBlockSelector key={index} type={type} />
-          )
-        })}
-      </>
+        <div className="New-ContentBlocks">
+          {this.ContentBlocks.map((type, index) => {
+            return(
+              <ContentBlockSelector key={index} type={type} />
+            )
+          })}
+        </div>
+      </div>
     );
   }
 }
