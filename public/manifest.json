@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Mural App",
+  "name": "Mural: A Tool for Longform Story Creation",
   "icons": [
     {
       "src": "favicon.ico",
