@@ -1,8 +1,11 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit'
 import logger from 'redux-logger'
+import storyMetadata from './slices/storyMetadata'
 
 export const store = configureStore({
-  reducer: {},
+  reducer: {
+    storyMetadata,
+  },
   middleware: (getDefaultMiddleware) => {
     if (process.env.NODE_ENV !== 'production') {
       return getDefaultMiddleware().concat(logger)
