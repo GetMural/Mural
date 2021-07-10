@@ -1,16 +1,20 @@
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
-import AppBar from '@material-ui/core/AppBar'
-import Toolbar from '@material-ui/core/Toolbar'
-import Typography from '@material-ui/core/Typography'
-import Button from '@material-ui/core/Button'
 import SaveIcon from '@material-ui/icons/SaveSharp'
 import BuildIcon from '@material-ui/icons/Public'
 import NewIcon from '@material-ui/icons/Add'
 import DeleteIcon from '@material-ui/icons/Delete'
 import HelpIcon from '@material-ui/icons/Help'
-import { useAppDispatch } from 'store/hooks'
-import { reset, saveForm, StoryState } from 'store/slices/story'
 import { useFormContext } from 'react-hook-form'
+import {
+  AppBar,
+  Toolbar,
+  Button as MuiButton,
+  Typography,
+  Tooltip,
+  ButtonProps,
+} from '@material-ui/core'
+import { reset, saveForm, StoryState } from 'store/slices/story'
+import { useAppDispatch } from 'store/hooks'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -36,14 +40,9 @@ export default function MuralAppBar() {
   const classes = useStyles()
   const dispatch = useAppDispatch()
   const {
-    formState: { isDirty, isValid },
+    handleSubmit,
+    formState: { isDirty },
   } = useFormContext<StoryState>()
-
-  const { handleSubmit } = useFormContext()
-
-  function onSubmit(data: StoryState) {
-    dispatch(saveForm(data))
-  }
 
   return (
     <div className={classes.root}>
@@ -52,31 +51,21 @@ export default function MuralAppBar() {
           <div className={classes.actions}>
             <Button
               startIcon={<SaveIcon />}
-              color="inherit"
-              onClick={handleSubmit(onSubmit)}
-              disabled={!isDirty || !isValid}
+              onClick={handleSubmit((data) => dispatch(saveForm(data)))}
+              disabled={!isDirty}
             >
               Save
             </Button>
-            <Button disabled startIcon={<BuildIcon />} color="inherit">
+            <ComingSoonButton startIcon={<BuildIcon />}>
               Export
-            </Button>
-            <Button
-              disabled
-              startIcon={<NewIcon />}
-              color="inherit"
-              onClick={() => {
-                dispatch(reset())
-              }}
-            >
+            </ComingSoonButton>
+            <Button startIcon={<NewIcon />} onClick={() => dispatch(reset())}>
               New
             </Button>
-            <Button disabled startIcon={<DeleteIcon />} color="inherit">
+            <ComingSoonButton startIcon={<DeleteIcon />}>
               Delete
-            </Button>
-            <Button disabled startIcon={<HelpIcon />} color="inherit">
-              Help
-            </Button>
+            </ComingSoonButton>
+            <ComingSoonButton startIcon={<HelpIcon />}>Help</ComingSoonButton>
           </div>
           <Typography variant="h6" className={classes.title}>
             Mural
@@ -84,5 +73,19 @@ export default function MuralAppBar() {
         </Toolbar>
       </AppBar>
     </div>
+  )
+}
+
+function Button(props: ButtonProps) {
+  return <MuiButton color="inherit" {...props} />
+}
+
+function ComingSoonButton(props: ButtonProps) {
+  return (
+    <Tooltip title="Coming soon" arrow>
+      <span>
+        <Button disabled {...props} />
+      </span>
+    </Tooltip>
   )
 }

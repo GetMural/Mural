@@ -18,7 +18,8 @@ export default function useForm() {
   })
 
   React.useEffect(() => {
-    reset(story)
+    /** Every time the story change in the store, we reset the form */
+    reset({ ...story })
   }, [story, reset])
 
   return { reset, ...other }

@@ -56,7 +56,7 @@ export const story = createSlice({
       ]
     },
     reset: () => {
-      return initialState
+      return { ...initialState }
     },
   },
 })
