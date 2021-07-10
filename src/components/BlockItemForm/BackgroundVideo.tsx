@@ -10,6 +10,12 @@ export default function BackgroundVideo() {
     <form>
       <Box my={4}>
         <Input
+          type="hidden"
+          key={`items.${itemIndex}.type`}
+          name={`items.${itemIndex}.type` as const}
+          label="123"
+        />
+        <Input
           key={`items.${itemIndex}.title`}
           name={`items.${itemIndex}.title` as const}
           label="Title"

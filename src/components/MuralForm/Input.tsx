@@ -28,9 +28,20 @@ export default function Input({
     fieldState,
   } = useController({ control, ...props })
 
+  if (type === 'hidden') {
+    return (
+      <input
+        type="hidden"
+        ref={ref}
+        {...otherFields}
+        value={otherFields.value as string}
+      />
+    )
+  }
   return (
     <TextField
       {...otherFields}
+      value={otherFields.value || ''}
       inputRef={ref}
       label={label}
       type={type}
