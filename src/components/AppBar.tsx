@@ -52,6 +52,8 @@ export default function MuralAppBar() {
             <Button
               startIcon={<SaveIcon />}
               onClick={handleSubmit((data) => dispatch(saveForm(data)))}
+              variant="contained"
+              color="secondary"
               disabled={!isDirty}
             >
               Save

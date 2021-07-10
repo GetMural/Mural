@@ -1,14 +1,16 @@
 import { TextField } from '@material-ui/core'
 import { ReactNode } from 'react'
 import {
+  ControllerFieldState,
   useController,
   UseControllerProps,
+  UseControllerReturn,
   useFormContext,
 } from 'react-hook-form'
 import { StoryState } from 'store/slices/story'
 
 interface Props extends UseControllerProps<StoryState> {
-  label: string
+  label?: string
   placeholder?: string
   helperText?: string | ReactNode
   type?: React.InputHTMLAttributes<unknown>['type']
@@ -38,6 +40,7 @@ export default function Input({
       />
     )
   }
+
   return (
     <TextField
       {...otherFields}
@@ -50,7 +53,36 @@ export default function Input({
       variant="outlined"
       required={!!props.rules?.required}
       error={!!fieldState.error}
-      helperText={helperText}
+      helperText={
+        getErrorMessage(props.rules, otherFields.value, fieldState) ||
+        helperText ||
+        undefined
+      }
     />
   )
+}
+
+function getErrorMessage(
+  rules: UseControllerProps['rules'],
+  value: UseControllerReturn['field']['value'],
+  fieldState: ControllerFieldState
+) {
+  let error = fieldState.error
+  if (error) {
+    if (error.message) {
+      return error.message
+    } else if (
+      rules &&
+      typeof value === 'string' &&
+      error?.type === 'minLength'
+    ) {
+      return `Should have ${rules.minLength} caracters minimum. Currently it's ${value.length}`
+    } else if (
+      rules &&
+      typeof value === 'string' &&
+      error?.type === 'maxLength'
+    ) {
+      return `Should have ${rules.maxLength} caracters maximum. Currently it's ${value.length}`
+    }
+  }
 }
