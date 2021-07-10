@@ -1,39 +1,116 @@
-import MuralForm from 'components/MuralForm'
-import React from 'react'
-import { useForm } from 'react-hook-form'
-import { useAppDispatch, useAppSelector } from 'store/hooks'
-import { saveForm, StoryMetdataState } from 'store/slices/storyMetadata'
-import fields from './fields'
+import { Box, Typography } from '@material-ui/core'
+import Input from 'components/MuralForm/Input'
+import Checkbox from 'components/MuralForm/Checkbox'
+import Image from 'components/MuralForm/Image'
 
 export default function StoryMetadataForm() {
-  const { handleSubmit, control, getValues, formState, setValue } =
-    useForm<StoryMetdataState>()
-  const onSubmit = handleSubmit((data) => dispatch(saveForm(data)))
-  const formValue = useAppSelector((state) => state.storyMetadata)
-  const dispatch = useAppDispatch()
-
-  React.useEffect(() => {
-    let key: keyof StoryMetdataState
-    for (key in formValue) {
-      if (Object.prototype.hasOwnProperty.call(formValue, key)) {
-        if (getValues(key) !== formValue[key]) {
-          setValue(key, formValue[key])
-        }
-      }
-    }
-  }, [formValue, setValue, getValues])
-
   return (
     <>
-      <MuralForm
-        onSubmit={onSubmit}
-        fields={fields}
-        values={formValue}
-        control={control}
-        getValues={getValues}
-        formState={formState}
-      ></MuralForm>
-      <textarea rows={5} value={JSON.stringify(formValue, null, 2)} readOnly />
+      <Typography variant="h2">Story Metadata</Typography>
+      <form>
+        <Box my={4}>
+          <Input
+            name="metadata.title"
+            label="Title"
+            helperText={
+              <>
+                The title metadata field is also responsible for the og (Open
+                Graph) og:title property which is used by social media platforms
+                such as Facebook and Twitter.
+              </>
+            }
+            rules={{ required: true }}
+          />
+        </Box>
+        <Box my={4}>
+          <Input
+            name="metadata.description"
+            label="Description"
+            helperText={
+              <>
+                The description metadata field is where you should describe your
+                Mural story in between 120 to 158 characters. This length may
+                seem arbitrary (and in some ways it is) - but this is ideal
+                length of a string of text when displayed by search engines
+                likesuch as Google or Duck Duck Go and Social media platforms
+                such as Facebook, Twitter, or Mastodon.
+                <br />
+                The description metadata field is also responsible for the
+                og:description output in your final Mural story.
+              </>
+            }
+            rules={{ maxLength: 158, minLength: 120 }}
+          />
+        </Box>
+        <Box my={4}>
+          <Input
+            name="metadata.author"
+            label="Author"
+            placeholder="Your name"
+            helperText={
+              <>
+                The author field is where the author of the Mural story's name
+                is entered.
+              </>
+            }
+          />
+        </Box>
+        <Box my={4}>
+          <Input
+            name="metadata.canonicalUrl"
+            label="Canonical URL"
+            placeholder="https://your-website.com"
+            helperText={
+              <>
+                If you know the final website address of your Mural story then
+                this is where to enter that information.
+              </>
+            }
+          />
+        </Box>
+        <Box my={4}>
+          <Input
+            name="metadata.siteName"
+            label="Site Name"
+            helperText={
+              <>
+                What is the name of your Mural story? Although they are often
+                the same this does not have to be identical to the title
+                metadata information.
+              </>
+            }
+          />
+        </Box>
+        <Box my={4}>
+          <Image
+            name="metadata.siteImage"
+            label="Site Image"
+            helperText={
+              <>
+                This is where you should upload an image to represent your Mural
+                story when it is displayed on social media platforms such as
+                Facebook, Twitter, or Mastodon.
+              </>
+            }
+          />
+        </Box>
+        <Box my={4}>
+          <Checkbox
+            name="metadata.monetizeStory"
+            label="Monetize Story"
+            helperText={<>set up a digital wallet and monetize your content.</>}
+          />
+        </Box>
+        <Box my={4}>
+          <Input
+            name="metadata.googleAnalyticsId"
+            label="Google Analytics ID"
+          />
+        </Box>
+        <Box my={4}>
+          <Input name="metadata.rssPingbkack" label="RSS pingbkack" />
+        </Box>
+      </form>
     </>
   )
 }

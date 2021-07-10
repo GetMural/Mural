@@ -1,17 +1,22 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit'
 import logger from 'redux-logger'
-import storyMetadata from './slices/storyMetadata'
+// import { save, load } from 'redux-localstorage-simple'
+import story from './slices/story'
+import navigation from './slices/navigation'
 
 export const store = configureStore({
+  // preloadedState: load(),
   reducer: {
-    storyMetadata,
+    story,
+    navigation,
   },
   middleware: (getDefaultMiddleware) => {
+    const middleware = getDefaultMiddleware()
     if (process.env.NODE_ENV !== 'production') {
-      return getDefaultMiddleware().concat(logger)
-    } else {
-      return getDefaultMiddleware()
+      middleware.push(logger)
     }
+    // middleware.push(save())
+    return middleware
   },
 })
 

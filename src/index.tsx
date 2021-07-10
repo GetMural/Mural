@@ -5,6 +5,7 @@ import App from 'components/App'
 import reportWebVitals from './reportWebVitals'
 import { store } from 'store/store'
 import { Provider } from 'react-redux'
+import 'typeface-roboto'
 
 ReactDOM.render(
   <React.StrictMode>
