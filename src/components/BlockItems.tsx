@@ -1,13 +1,13 @@
 import { List, ListItem, ListItemText } from '@material-ui/core'
-import { useAppDispatch, useAppSelector } from 'store/hooks'
-import { setView } from 'store/slices/navigation'
+import useRouter from 'hooks/useRouter'
+import { useAppSelector } from 'store/hooks'
 
 export default function BlockItems() {
   const items = useAppSelector((state) => state.story.items)
   const selecteditemIndex = useAppSelector(
     (state) => state.navigation.view?.args?.index
   )
-  const dispatch = useAppDispatch()
+  const { goTo } = useRouter()
   return (
     <div>
       <List>
@@ -20,7 +20,7 @@ export default function BlockItems() {
                 Number.isInteger(selecteditemIndex) && selecteditemIndex === i
               }
               onClick={() =>
-                dispatch(setView({ name: 'item', args: { item, index: i } }))
+                goTo({ view: { name: 'item', args: { item, index: i } } })
               }
             >
               <ListItemText primary={item.type} secondary={item.title} />

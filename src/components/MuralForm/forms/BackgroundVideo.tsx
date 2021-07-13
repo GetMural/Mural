@@ -1,11 +1,11 @@
 import { Box } from '@material-ui/core'
 import Input from 'components/MuralForm/Input'
-import { useAppSelector } from 'store/hooks'
 
-export default function BackgroundVideo() {
-  const itemIndex = useAppSelector(
-    (state) => state.navigation.view?.args?.index
-  )
+interface Props {
+  itemIndex: number
+}
+
+export default function BackgroundVideo({ itemIndex }: Props) {
   return (
     <Box my={4}>
       <Input

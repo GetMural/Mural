@@ -5,9 +5,9 @@ import {
   useController,
   UseControllerProps,
   UseControllerReturn,
-  useFormContext,
 } from 'react-hook-form'
 import { StoryState } from 'store/slices/story'
+import useFormContext from './hooks/useFormContext'
 
 interface Props extends UseControllerProps<StoryState> {
   label?: string
@@ -23,7 +23,7 @@ export default function Input({
   helperText,
   ...props
 }: Props) {
-  const { control } = useFormContext<StoryState>()
+  const { control } = useFormContext()
 
   const {
     field: { ref, ...otherFields },

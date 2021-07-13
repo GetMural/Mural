@@ -4,7 +4,6 @@ import BuildIcon from '@material-ui/icons/Public'
 import NewIcon from '@material-ui/icons/Add'
 import DeleteIcon from '@material-ui/icons/Delete'
 import HelpIcon from '@material-ui/icons/Help'
-import { useFormContext } from 'react-hook-form'
 import {
   AppBar,
   Toolbar,
@@ -13,8 +12,9 @@ import {
   Tooltip,
   ButtonProps,
 } from '@material-ui/core'
-import { reset, saveForm, StoryState } from 'store/slices/story'
+import { reset } from 'store/slices/story'
 import { useAppDispatch } from 'store/hooks'
+import useFormContext from 'components/MuralForm/hooks/useFormContext'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -40,9 +40,9 @@ export default function MuralAppBar() {
   const classes = useStyles()
   const dispatch = useAppDispatch()
   const {
-    handleSubmit,
+    save,
     formState: { isDirty },
-  } = useFormContext<StoryState>()
+  } = useFormContext()
 
   return (
     <div className={classes.root}>
@@ -51,7 +51,7 @@ export default function MuralAppBar() {
           <div className={classes.actions}>
             <Button
               startIcon={<SaveIcon />}
-              onClick={handleSubmit((data) => dispatch(saveForm(data)))}
+              onClick={save}
               variant="contained"
               color="secondary"
               disabled={!isDirty}

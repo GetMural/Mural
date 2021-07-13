@@ -1,4 +1,3 @@
-import React from 'react'
 import { useAppSelector } from 'store/hooks'
 import { StoryState } from 'store/slices/story'
 import { useForm as useReactForm } from 'react-hook-form'
@@ -6,21 +5,16 @@ import { useForm as useReactForm } from 'react-hook-form'
 export default function useForm() {
   /**
    * Instanciate a react form form instance that will be put in the FormContext
-   * You should not need to use this hook somewhere else.
+   * You should not need to use this hook somewhere else but useFormContext
    *
    * It resets the form whenever the form is submitted
    */
 
   const story = useAppSelector((state) => state.story)
-  const { reset, ...other } = useReactForm<StoryState>({
+  const forms = useReactForm<StoryState>({
     defaultValues: story,
     mode: 'onChange',
   })
 
-  React.useEffect(() => {
-    /** Every time the story change in the store, we reset the form */
-    reset({ ...story })
-  }, [story, reset])
-
-  return { reset, ...other }
+  return { ...forms }
 }

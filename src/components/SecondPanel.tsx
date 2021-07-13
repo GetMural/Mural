@@ -1,25 +1,25 @@
 import { Button, Box, Typography } from '@material-ui/core'
-import StoryMetadataForm from 'components/StoryMetadataForm'
-import { useAppDispatch, useAppSelector } from 'store/hooks'
-import { setView } from 'store/slices/navigation'
-import BlockItemForm from 'components/BlockItemForm'
+import StoryMetadata from 'components/MuralForm/forms/StoryMetadata'
+import { useAppSelector } from 'store/hooks'
+import BackgroundVideo from 'components/MuralForm/forms/BackgroundVideo'
+import useRouter from 'hooks/useRouter'
 
 export default function SecondPanel() {
-  const currentView = useAppSelector((state) => state.navigation.view?.name)
-  const dispatch = useAppDispatch()
-  const ComponentView = currentView
-    ? {
-        metadata: StoryMetadataForm,
-        item: BlockItemForm,
-      }[currentView]
-    : EmptyView
+  const currentView = useAppSelector((state) => state.navigation.view)
+  const { goTo } = useRouter()
 
   return (
     <div>
       {currentView && (
-        <Button onClick={() => dispatch(setView(null))}>Back</Button>
+        <Button onClick={() => goTo({ view: null })}>Back</Button>
       )}
-      <ComponentView />
+      {currentView?.name === 'metadata' && <StoryMetadata />}
+      {currentView?.name === 'item' &&
+        currentView.args?.item.type === 'backgroundVideo' && (
+          <BackgroundVideo itemIndex={currentView.args.index} />
+        )}
+      {/* empty view */}
+      {!currentView && <EmptyView />}
     </div>
   )
 }

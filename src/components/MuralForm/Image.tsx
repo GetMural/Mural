@@ -5,12 +5,9 @@ import {
   FormHelperText,
 } from '@material-ui/core'
 import { ReactNode } from 'react'
-import {
-  useController,
-  UseControllerProps,
-  useFormContext,
-} from 'react-hook-form'
+import { useController, UseControllerProps } from 'react-hook-form'
 import { StoryState } from 'store/slices/story'
+import useFormContext from './hooks/useFormContext'
 
 interface Props extends UseControllerProps<StoryState> {
   label: string
@@ -18,7 +15,7 @@ interface Props extends UseControllerProps<StoryState> {
 }
 
 export default function Image({ label, helperText, ...props }: Props) {
-  const { control } = useFormContext<StoryState>()
+  const { control } = useFormContext()
 
   const { field } = useController({ control, ...props })
 

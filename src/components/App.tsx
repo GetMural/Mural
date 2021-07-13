@@ -3,9 +3,9 @@ import SecondPanel from 'components/SecondPanel'
 import MuralAppBar from 'components/AppBar'
 import MainPanel from 'components/MainPanel'
 import { FormProvider } from 'react-hook-form'
-import useForm from 'components/MuralForm/useForm'
+import useForm from 'components/MuralForm/hooks/useForm'
 import { DevTool } from '@hookform/devtools'
-
+import Dialog from 'components/Dialog'
 const APPBAR_HEIGHT = 64
 
 function App() {
@@ -36,6 +36,7 @@ function App() {
             </Box>
           </Box>
         </Box>
+        <Dialog />
       </FormProvider>
       {/* for debugging purpose */}
       <DevTool control={form.control} placement="bottom-left" />
