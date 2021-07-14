@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { AppThunk } from 'store/store'
 
 type View = {
   name: 'metadata' | 'item'
@@ -9,8 +10,8 @@ type View = {
 export interface NavigationState {
   view: View
   dialog: {
-    name: 'UnsavedChangesBeforeViewChange'
-    props: { view: View }
+    name: 'UnsavedChangesBeforeViewChange' | 'UnsavedChanges' | 'FormIsNotValid'
+    props?: any
   } | null
 }
 
@@ -19,6 +20,12 @@ const initialState: NavigationState = {
   view: null,
   dialog: null,
 }
+
+// NOTE: it's a hack that makes our reducer unpure.
+// this should be done in a middleware
+const dialogPromises: {
+  [key: string]: any
+} = {}
 
 export const story = createSlice({
   name: 'navigation',
@@ -30,14 +37,37 @@ export const story = createSlice({
     openDialog: (state, action: PayloadAction<NavigationState['dialog']>) => {
       state.dialog = action.payload
     },
-    closeDialog: (state, action: PayloadAction<void>) => {
-      state.dialog = null
+    closeDialog: (state, action: PayloadAction<'reject' | undefined>) => {
+      // inform caller the dialog has been closed
+      if (state.dialog?.name) {
+        let promise = dialogPromises[state.dialog.name]
+        if (promise) {
+          if (action.payload === 'reject') {
+            promise.reject()
+          } else {
+            promise.resolve()
+          }
+        }
+      }
+      // reset dialog state (close)
+      state.dialog = { ...initialState }.dialog
     },
     reset: () => {
       return initialState
     },
   },
 })
+
+export const openDialogAndWait =
+  (dialog: NavigationState['dialog']): AppThunk<Promise<void>> =>
+  (dispatch) => {
+    dispatch(openDialog(dialog))
+    return new Promise((resolve, reject) => {
+      if (dialog?.name) {
+        dialogPromises[dialog.name] = { resolve, reject }
+      }
+    })
+  }
 
 // Extract and export each action creator by name
 export const { goToView, openDialog, closeDialog, reset } = story.actions

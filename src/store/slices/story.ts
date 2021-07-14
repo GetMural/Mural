@@ -1,7 +1,20 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { AppThunk } from 'store/store'
+import { goToView } from './navigation'
 
+export type ItemTypes =
+  | 'backgroundVideo'
+  | 'imageAudio'
+  | 'backgroundImage'
+  | 'backgroundVideo'
+  | 'embedVideo'
+  | 'fullpageVideo'
+  | 'horizontalSlideshow'
+  | 'verticalSlideshow'
+  | 'parallaxImage'
+  | 'text'
 interface Item {
-  type: 'backgroundVideo'
+  type: ItemTypes
 }
 export interface BackgroundVideoItem extends Item {
   title?: string
@@ -47,7 +60,10 @@ export const story = createSlice({
     saveForm: (state, action: PayloadAction<StoryState>) => {
       return action.payload
     },
-    addItem: (state, action) => {
+    removeItem: (state, action: PayloadAction<number>) => {
+      state.items?.splice(action.payload, 1)
+    },
+    addItem: (state, action: PayloadAction<ItemTypes>) => {
       state.items = [
         ...(state.items || []),
         {
@@ -61,6 +77,17 @@ export const story = createSlice({
   },
 })
 
-export const { saveForm, addItem, reset } = story.actions
+export const { saveForm, removeItem, addItem, reset } = story.actions
 
+export const addItemAndGoToView =
+  (itemType: ItemTypes): AppThunk =>
+  (dispatch, getState) => {
+    dispatch(addItem(itemType))
+    const items = getState().story.items
+    if (items) {
+      const index = (items.length || 1) - 1
+      const item = items[index]
+      dispatch(goToView({ name: 'item', args: { item, index } }))
+    }
+  }
 export default story.reducer

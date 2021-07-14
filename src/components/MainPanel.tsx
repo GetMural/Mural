@@ -1,11 +1,9 @@
 import { Box, Button } from '@material-ui/core'
-import { useAppDispatch } from 'store/hooks'
-import { addItem } from 'store/slices/story'
 import BlockItems from 'components/BlockItems'
 import useRouter from 'hooks/useRouter'
+import BlockItemsSelector from './BlockItemsSelector'
 
 export default function MainPanel() {
-  const dispatch = useAppDispatch()
   const { goTo } = useRouter()
 
   return (
@@ -18,12 +16,9 @@ export default function MainPanel() {
           Metadata
         </Button>
       </Box>
-      <Button
-        variant="contained"
-        onClick={() => dispatch(addItem('backgroundVideo'))}
-      >
-        Background Video
-      </Button>
+      <Box py={4}>
+        <BlockItemsSelector />
+      </Box>
       <BlockItems />
     </Box>
   )

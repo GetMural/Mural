@@ -2,7 +2,6 @@ import React from 'react'
 import { useAppDispatch, useAppSelector } from 'store/hooks'
 import { saveForm, StoryState } from 'store/slices/story'
 import { useFormContext as useReactFormContext } from 'react-hook-form'
-import { store } from 'store/store'
 
 export default function useFormContext() {
   const { handleSubmit, formState, control, reset } =
@@ -17,9 +16,8 @@ export default function useFormContext() {
   const save = React.useCallback(async () => {
     await handleSubmit((data) => {
       dispatch(saveForm(data))
-      reset({ ...store.getState().story })
     })()
-  }, [dispatch, handleSubmit, reset])
+  }, [dispatch, handleSubmit])
 
   return { save, formState, control, resetFormWithCurrentState }
 }

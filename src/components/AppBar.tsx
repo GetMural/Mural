@@ -15,6 +15,7 @@ import {
 import { reset } from 'store/slices/story'
 import { useAppDispatch } from 'store/hooks'
 import useFormContext from 'components/MuralForm/hooks/useFormContext'
+import { goToView } from 'store/slices/navigation'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -61,7 +62,13 @@ export default function MuralAppBar() {
             <ComingSoonButton startIcon={<BuildIcon />}>
               Export
             </ComingSoonButton>
-            <Button startIcon={<NewIcon />} onClick={() => dispatch(reset())}>
+            <Button
+              startIcon={<NewIcon />}
+              onClick={() => {
+                dispatch(reset())
+                dispatch(goToView(null))
+              }}
+            >
               New
             </Button>
             <ComingSoonButton startIcon={<DeleteIcon />}>
