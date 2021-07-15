@@ -17,15 +17,18 @@ interface Props {
 export default function UnsavedChanges({ open }: Props) {
   const dispatch = useAppDispatch()
   const { save, resetFormWithCurrentState } = useFormContext()
-  function close(shouldReject?: 'reject') {
-    dispatch(closeDialog(shouldReject))
+  function submit() {
+    dispatch(closeDialog(true))
+  }
+  function dissmiss() {
+    dispatch(closeDialog())
   }
 
   return (
     <MuiDialog
       open={open}
       keepMounted={false}
-      onClose={() => close('reject')}
+      onClose={dissmiss}
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
@@ -39,16 +42,16 @@ export default function UnsavedChanges({ open }: Props) {
         <Button
           onClick={() => {
             resetFormWithCurrentState()
-            close()
+            submit()
           }}
         >
           Ignore changes and proceed
         </Button>
-        <Button onClick={() => close('reject')}>Cancel</Button>
+        <Button onClick={dissmiss}>Cancel</Button>
         <Button
           onClick={async () => {
             await save()
-            close()
+            submit()
           }}
           color="primary"
           autoFocus

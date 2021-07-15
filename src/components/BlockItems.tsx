@@ -15,8 +15,10 @@ import { goToView } from 'store/slices/navigation'
 export default function BlockItems() {
   const items = useAppSelector((state) => state.story.items)
   const dispatch = useAppDispatch()
-  const selecteditemIndex = useAppSelector(
-    (state) => state.navigation.view?.args?.index
+  const selectedItem = useAppSelector(
+    (state) =>
+      state.navigation.view?.name === 'item' &&
+      state.navigation.view?.args?.item
   )
   const askToSaveChanges = useAskToSaveChanges()
 
@@ -26,16 +28,12 @@ export default function BlockItems() {
     <div>
       <List>
         {items &&
-          items.map((item, i) => (
+          items.map((item) => (
             <ListItem
               button
-              key={i}
-              selected={
-                Number.isInteger(selecteditemIndex) && selecteditemIndex === i
-              }
-              onClick={() =>
-                goTo({ view: { name: 'item', args: { item, index: i } } })
-              }
+              key={item.uid}
+              selected={selectedItem && selectedItem.uid === item.uid}
+              onClick={() => goTo({ view: { name: 'item', args: { item } } })}
             >
               <ListItemText primary={item.type} secondary={item.title} />
               <ListItemSecondaryAction>
@@ -44,15 +42,15 @@ export default function BlockItems() {
                   aria-label="delete"
                   onClick={() => {
                     // if current item, we don't need to check unsaved changes or not valid form
-                    if (selecteditemIndex === i) {
-                      dispatch(removeItem(i))
+                    if (selectedItem && selectedItem.uid === item.uid) {
+                      dispatch(removeItem(item.uid))
                       dispatch(goToView(null))
                     } else {
-                      askToSaveChanges()
-                        .then(() => dispatch(removeItem(i)))
-                        .catch(() => {
-                          console.log('wut ?')
-                        })
+                      askToSaveChanges().then((res) => {
+                        if (res) {
+                          dispatch(removeItem(item.uid))
+                        }
+                      })
                     }
                   }}
                 >

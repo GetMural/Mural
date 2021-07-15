@@ -1,5 +1,10 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { AppThunk } from 'store/store'
+import {
+  createSelector,
+  createSlice,
+  nanoid,
+  PayloadAction,
+} from '@reduxjs/toolkit'
+import { AppThunk, RootState } from 'store/store'
 import { goToView } from './navigation'
 
 export type ItemTypes =
@@ -14,13 +19,14 @@ export type ItemTypes =
   | 'parallaxImage'
   | 'text'
 interface Item {
+  uid: string
   type: ItemTypes
 }
 export interface BackgroundVideoItem extends Item {
   title?: string
 }
 
-type Items = BackgroundVideoItem
+export type Items = BackgroundVideoItem
 
 export interface StoryState {
   metadata: {
@@ -60,16 +66,24 @@ export const story = createSlice({
     saveForm: (state, action: PayloadAction<StoryState>) => {
       return action.payload
     },
-    removeItem: (state, action: PayloadAction<number>) => {
-      state.items?.splice(action.payload, 1)
+    removeItem: (state, action: PayloadAction<string>) => {
+      state.items?.splice(
+        state.items.findIndex((o) => o.uid === action.payload),
+        1
+      )
     },
-    addItem: (state, action: PayloadAction<ItemTypes>) => {
-      state.items = [
-        ...(state.items || []),
-        {
-          type: action.payload,
-        },
-      ]
+    addItem: {
+      reducer: (state, action: PayloadAction<Item>) => {
+        state.items = [...(state.items || []), action.payload]
+      },
+      prepare: (itemType: ItemTypes) => {
+        return {
+          payload: {
+            uid: nanoid(),
+            type: itemType,
+          },
+        }
+      },
     },
     reset: () => {
       return { ...initialState }
@@ -87,7 +101,23 @@ export const addItemAndGoToView =
     if (items) {
       const index = (items.length || 1) - 1
       const item = items[index]
-      dispatch(goToView({ name: 'item', args: { item, index } }))
+      dispatch(goToView({ name: 'item', args: { item } }))
     }
   }
+
+const allItemsSelector = (state: RootState) => state.story.items
+
+const selectedItemSelector = (state: RootState) =>
+  state.navigation.view?.name === 'item' && state.navigation.view?.args.item
+
+export const selectedItemIndexSelector = createSelector(
+  allItemsSelector,
+  selectedItemSelector,
+  (allItems, selectedItem) => {
+    if (selectedItem && allItems) {
+      return allItems.findIndex((o) => o.uid === selectedItem.uid)
+    }
+  }
+)
+
 export default story.reducer

@@ -21,8 +21,10 @@ export default function useRouter() {
       if (force) {
         return dispatch(goToView(view))
       }
-      askToSaveChanges().then(() => {
-        dispatch(goToView(view))
+      askToSaveChanges().then((res) => {
+        if (res) {
+          dispatch(goToView(view))
+        }
       })
     },
     [dispatch, askToSaveChanges]

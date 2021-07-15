@@ -15,15 +15,16 @@ interface Props {
 
 export default function UnsavedChanges({ open }: Props) {
   const dispatch = useAppDispatch()
-  function close(shouldReject?: 'reject') {
-    dispatch(closeDialog(shouldReject))
+
+  function dissmiss() {
+    dispatch(closeDialog())
   }
 
   return (
     <MuiDialog
       open={open}
       keepMounted={false}
-      onClose={() => close('reject')}
+      onClose={dissmiss}
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
@@ -32,11 +33,11 @@ export default function UnsavedChanges({ open }: Props) {
       </DialogTitle>
       <DialogContent>
         <DialogContentText id="alert-dialog-description">
-          Please fix the errors in the form
+          Please fix them
         </DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button onClick={() => close()}>Ok</Button>
+        <Button onClick={dissmiss}>Ok</Button>
       </DialogActions>
     </MuiDialog>
   )

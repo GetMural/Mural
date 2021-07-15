@@ -1,10 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { AppThunk } from 'store/store'
+import { Items } from './story'
 
-type View = {
-  name: 'metadata' | 'item'
-  args?: any
-} | null
+type View =
+  | {
+      name: 'metadata'
+    }
+  | { name: 'item'; args: { item: Items } }
+  | null
 
 // Define a type for the slice state
 export interface NavigationState {
@@ -37,20 +40,24 @@ export const story = createSlice({
     openDialog: (state, action: PayloadAction<NavigationState['dialog']>) => {
       state.dialog = action.payload
     },
-    closeDialog: (state, action: PayloadAction<'reject' | undefined>) => {
-      // inform caller the dialog has been closed
-      if (state.dialog?.name) {
-        let promise = dialogPromises[state.dialog.name]
-        if (promise) {
-          if (action.payload === 'reject') {
-            promise.reject()
-          } else {
-            promise.resolve()
+    closeDialog: {
+      reducer: (state, action: PayloadAction<any>) => {
+        // NOTE: side effect. Not good
+        // inform caller the dialog has been closed. undefined means dissmissed.
+        if (state.dialog?.name) {
+          let promise = dialogPromises[state.dialog.name]
+          if (promise) {
+            promise.resolve(action.payload)
           }
         }
-      }
-      // reset dialog state (close)
-      state.dialog = { ...initialState }.dialog
+        // reset dialog state (close)
+        state.dialog = { ...initialState }.dialog
+      },
+      prepare: (returnValue?: any) => {
+        return {
+          payload: returnValue,
+        }
+      },
     },
     reset: () => {
       return initialState
@@ -59,7 +66,7 @@ export const story = createSlice({
 })
 
 export const openDialogAndWait =
-  (dialog: NavigationState['dialog']): AppThunk<Promise<void>> =>
+  (dialog: NavigationState['dialog']): AppThunk<Promise<any>> =>
   (dispatch) => {
     dispatch(openDialog(dialog))
     return new Promise((resolve, reject) => {

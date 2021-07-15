@@ -10,10 +10,10 @@ export default function useAskToSaveChanges() {
   } = useFormContext()
 
   const askToSaveChanges = React.useCallback(() => {
-    return new Promise<void>((resolve, reject) => {
+    return new Promise<any>((resolve) => {
       // TODO: remember why?
       if (!isValid) {
-        return reject(
+        resolve(
           dispatch(
             openDialogAndWait({
               name: 'FormIsNotValid',
@@ -29,7 +29,7 @@ export default function useAskToSaveChanges() {
           )
         )
       } else {
-        resolve()
+        resolve(true)
       }
     })
   }, [isDirty, isValid, dispatch])

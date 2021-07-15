@@ -106,11 +106,11 @@ export default function BlockItemsSelector() {
             <CardActionArea
               disabled={disabled}
               onClick={() => {
-                askToSaveChanges()
-                  .then(() => {
+                askToSaveChanges().then((res) => {
+                  if (res) {
                     dispatch(addItemAndGoToView(name))
-                  })
-                  .catch(() => {})
+                  }
+                })
               }}
             >
               <CardMedia image={icon} title={name} className={classes.media} />

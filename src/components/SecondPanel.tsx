@@ -3,11 +3,12 @@ import StoryMetadata from 'components/MuralForm/forms/StoryMetadata'
 import { useAppSelector } from 'store/hooks'
 import BackgroundVideo from 'components/MuralForm/forms/BackgroundVideo'
 import useRouter from 'hooks/useRouter'
+import { selectedItemIndexSelector } from 'store/slices/story'
 
 export default function SecondPanel() {
   const currentView = useAppSelector((state) => state.navigation.view)
   const { goTo } = useRouter()
-
+  const selectedItemIndex = useAppSelector(selectedItemIndexSelector)
   return (
     <div>
       {currentView && (
@@ -33,7 +34,9 @@ export default function SecondPanel() {
         unmountOnExit
       >
         <div>
-          <BackgroundVideo itemIndex={currentView?.args?.index} />
+          {selectedItemIndex !== undefined && (
+            <BackgroundVideo itemIndex={selectedItemIndex} />
+          )}
         </div>
       </Slide>
       {/* empty view */}
