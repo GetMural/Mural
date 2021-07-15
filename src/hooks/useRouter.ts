@@ -1,7 +1,7 @@
-import useFormContext from 'components/MuralForm/hooks/useFormContext'
 import React from 'react'
 import { useAppDispatch, useAppSelector } from 'store/hooks'
-import { goToView, NavigationState, openDialog } from 'store/slices/navigation'
+import { goToView, NavigationState } from 'store/slices/navigation'
+import useAskToSaveChanges from './useAskToSaveChanges'
 
 interface GoToProps {
   view: NavigationState['view']
@@ -11,7 +11,7 @@ interface GoToProps {
 export default function useRouter() {
   const dispatch = useAppDispatch()
   const currentView = useAppSelector((state) => state.navigation.view)
-  const { formState } = useFormContext()
+  const askToSaveChanges = useAskToSaveChanges()
   const goTo = React.useCallback(
     ({
       view,
@@ -21,18 +21,11 @@ export default function useRouter() {
       if (force) {
         return dispatch(goToView(view))
       }
-      if (formState.isDirty) {
-        dispatch(
-          openDialog({
-            name: 'UnsavedChangesBeforeViewChange',
-            props: { view },
-          })
-        )
-      } else {
+      askToSaveChanges().then(() => {
         dispatch(goToView(view))
-      }
+      })
     },
-    [dispatch, formState]
+    [dispatch, askToSaveChanges]
   )
 
   return {

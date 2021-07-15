@@ -10,7 +10,7 @@ type View = {
 export interface NavigationState {
   view: View
   dialog: {
-    name: 'UnsavedChangesBeforeViewChange' | 'UnsavedChanges' | 'FormIsNotValid'
+    name: 'UnsavedChanges' | 'FormIsNotValid'
     props?: any
   } | null
 }

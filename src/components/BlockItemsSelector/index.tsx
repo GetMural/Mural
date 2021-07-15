@@ -19,24 +19,27 @@ import H_slide_mural from './icons/H_slide_mural.png'
 import parallax_image_mural from './icons/parallax_image_mural.png'
 import text_mural from './icons/text_mural.png'
 import V_slide_mural from './icons/V_slide_mural.png'
-import useAskToSaveChanges from 'components/MuralForm/hooks/useAskToSaveChanges'
+import useAskToSaveChanges from 'hooks/useAskToSaveChanges'
 
 const icons: {
   label: string
   name: ItemTypes
   description?: string
   icon: string
+  disabled?: boolean
 }[] = [
   {
     label: 'Image Audio',
     name: 'imageAudio',
     description: 'Image with Audio',
     icon: audio_image_mural,
+    disabled: true,
   },
   {
     label: 'Background Image',
     name: 'backgroundImage',
     icon: bg_image_mural,
+    disabled: true,
   },
   {
     label: 'Background Video',
@@ -47,31 +50,37 @@ const icons: {
     label: 'Embed Video',
     name: 'embedVideo',
     icon: embed_video_mural,
+    disabled: true,
   },
   {
     label: 'Fullpage video',
     name: 'fullpageVideo',
     icon: fp_video_mural,
+    disabled: true,
   },
   {
     label: 'Horizontal Slideshow',
     name: 'horizontalSlideshow',
     icon: H_slide_mural,
+    disabled: true,
   },
   {
     label: 'Vertical Slideshow',
     name: 'verticalSlideshow',
     icon: V_slide_mural,
+    disabled: true,
   },
   {
     label: 'Parallax Image',
     name: 'parallaxImage',
     icon: parallax_image_mural,
+    disabled: true,
   },
   {
     label: 'Text',
     name: 'text',
     icon: text_mural,
+    disabled: true,
   },
 ]
 
@@ -91,19 +100,19 @@ export default function BlockItemsSelector() {
   const askToSaveChanges = useAskToSaveChanges()
   return (
     <Grid container spacing={4}>
-      {icons.map(({ name, label, description, icon }) => (
+      {icons.map(({ name, label, description, icon, disabled }) => (
         <Grid item xs={6} md={4} key={name}>
-          <Card
-            className={classes.card}
-            onClick={() => {
-              askToSaveChanges()
-                .then(() => {
-                  dispatch(addItemAndGoToView(name))
-                })
-                .catch(() => {})
-            }}
-          >
-            <CardActionArea>
+          <Card className={classes.card}>
+            <CardActionArea
+              disabled={disabled}
+              onClick={() => {
+                askToSaveChanges()
+                  .then(() => {
+                    dispatch(addItemAndGoToView(name))
+                  })
+                  .catch(() => {})
+              }}
+            >
               <CardMedia image={icon} title={name} className={classes.media} />
               <CardContent>
                 <Typography gutterBottom variant="h5" component="h2">

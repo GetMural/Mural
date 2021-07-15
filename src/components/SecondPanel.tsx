@@ -1,4 +1,4 @@
-import { Button, Box, Typography } from '@material-ui/core'
+import { Button, Box, Typography, Slide } from '@material-ui/core'
 import StoryMetadata from 'components/MuralForm/forms/StoryMetadata'
 import { useAppSelector } from 'store/hooks'
 import BackgroundVideo from 'components/MuralForm/forms/BackgroundVideo'
@@ -13,11 +13,29 @@ export default function SecondPanel() {
       {currentView && (
         <Button onClick={() => goTo({ view: null })}>Back</Button>
       )}
-      {currentView?.name === 'metadata' && <StoryMetadata />}
-      {currentView?.name === 'item' &&
-        currentView.args?.item.type === 'backgroundVideo' && (
-          <BackgroundVideo itemIndex={currentView.args.index} />
-        )}
+      <Slide
+        direction="left"
+        in={currentView?.name === 'metadata'}
+        mountOnEnter
+        unmountOnExit
+      >
+        <div>
+          <StoryMetadata />
+        </div>
+      </Slide>
+      <Slide
+        direction="left"
+        in={
+          currentView?.name === 'item' &&
+          currentView.args?.item.type === 'backgroundVideo'
+        }
+        mountOnEnter
+        unmountOnExit
+      >
+        <div>
+          <BackgroundVideo itemIndex={currentView?.args?.index} />
+        </div>
+      </Slide>
       {/* empty view */}
       {!currentView && <EmptyView />}
     </div>

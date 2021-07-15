@@ -7,7 +7,7 @@ import {
 import { ReactNode } from 'react'
 import { useController, UseControllerProps } from 'react-hook-form'
 import { StoryState } from 'store/slices/story'
-import useFormContext from './hooks/useFormContext'
+import useFormContext from 'hooks/useFormContext'
 
 interface Props extends UseControllerProps<StoryState> {
   label: string

@@ -6,7 +6,7 @@ import {
   DialogActions,
   Button,
 } from '@material-ui/core'
-import useFormContext from 'components/MuralForm/hooks/useFormContext'
+import useFormContext from 'hooks/useFormContext'
 import { useAppDispatch } from 'store/hooks'
 import { closeDialog } from 'store/slices/navigation'
 

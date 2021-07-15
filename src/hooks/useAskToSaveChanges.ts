@@ -1,7 +1,7 @@
 import React from 'react'
 import { useAppDispatch } from 'store/hooks'
 import { openDialogAndWait } from 'store/slices/navigation'
-import useFormContext from './useFormContext'
+import useFormContext from 'hooks/useFormContext'
 
 export default function useAskToSaveChanges() {
   const dispatch = useAppDispatch()
@@ -11,6 +11,7 @@ export default function useAskToSaveChanges() {
 
   const askToSaveChanges = React.useCallback(() => {
     return new Promise<void>((resolve, reject) => {
+      // TODO: remember why?
       if (!isValid) {
         return reject(
           dispatch(

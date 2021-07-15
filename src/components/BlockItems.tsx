@@ -9,7 +9,7 @@ import useRouter from 'hooks/useRouter'
 import { useAppDispatch, useAppSelector } from 'store/hooks'
 import DeleteIcon from '@material-ui/icons/Delete'
 import { removeItem } from 'store/slices/story'
-import useAskToSaveChanges from './MuralForm/hooks/useAskToSaveChanges'
+import useAskToSaveChanges from 'hooks/useAskToSaveChanges'
 import { goToView } from 'store/slices/navigation'
 
 export default function BlockItems() {
@@ -21,6 +21,7 @@ export default function BlockItems() {
   const askToSaveChanges = useAskToSaveChanges()
 
   const { goTo } = useRouter()
+
   return (
     <div>
       <List>

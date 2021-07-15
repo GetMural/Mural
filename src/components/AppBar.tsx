@@ -14,7 +14,7 @@ import {
 } from '@material-ui/core'
 import { reset } from 'store/slices/story'
 import { useAppDispatch } from 'store/hooks'
-import useFormContext from 'components/MuralForm/hooks/useFormContext'
+import useFormContext from 'hooks/useFormContext'
 import { goToView } from 'store/slices/navigation'
 
 const useStyles = makeStyles((theme: Theme) =>
