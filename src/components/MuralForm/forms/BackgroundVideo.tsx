@@ -18,6 +18,7 @@ export default function BackgroundVideo({ itemIndex }: Props) {
         name={`items.${itemIndex}.title` as const}
         label="Title"
         rules={{ required: true }}
+        autoFocus
       />
     </Box>
   )

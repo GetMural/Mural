@@ -7,12 +7,14 @@ export default function useAskToSaveChanges() {
   const dispatch = useAppDispatch()
   const {
     formState: { isDirty, isValid },
+    trigger,
   } = useFormContext()
 
   const askToSaveChanges = React.useCallback(() => {
     return new Promise<any>((resolve) => {
       // TODO: remember why?
       if (!isValid) {
+        trigger()
         resolve(
           dispatch(
             openDialogAndWait({
@@ -32,7 +34,7 @@ export default function useAskToSaveChanges() {
         resolve(true)
       }
     })
-  }, [isDirty, isValid, dispatch])
+  }, [isDirty, isValid, dispatch, trigger])
 
   return askToSaveChanges
 }

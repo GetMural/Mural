@@ -12,6 +12,7 @@ export default function StoryMetadataForm() {
           <Input
             name="metadata.title"
             label="Title"
+            autoFocus
             helperText={
               <>
                 The title metadata field is also responsible for the og (Open
