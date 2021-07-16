@@ -3,10 +3,13 @@ import Input from 'components/MuralForm/Input'
 import Checkbox from 'components/MuralForm/Checkbox'
 import Image from 'components/MuralForm/Image'
 import { openDialogAndWait } from 'store/slices/navigation'
-import { useAppDispatch } from 'store/hooks'
+import { useAppDispatch, useAppSelector } from 'store/hooks'
 
 export default function StoryMetadataForm() {
   const dispatch = useAppDispatch()
+  const dontAskConfirmationForMonetisation = useAppSelector(
+    (state) => state.navigation.dontAskConfirmationForMonetisation
+  )
   return (
     <>
       <Typography variant="h2">Story Metadata</Typography>
@@ -103,17 +106,21 @@ export default function StoryMetadataForm() {
             name="metadata.monetizeStory"
             label="Monetize Story"
             onChange={(e, onChange) => {
-              dispatch(
-                openDialogAndWait({
-                  name: e.target.checked
-                    ? 'MonetizingStory'
-                    : 'UnmonetizingStory',
+              let checked = e.target.checked
+              if (dontAskConfirmationForMonetisation) {
+                onChange(checked)
+              } else {
+                dispatch(
+                  openDialogAndWait({
+                    name: checked ? 'MonetizingStory' : 'UnmonetizingStory',
+                  })
+                ).then((res) => {
+                  if (res) {
+                    // why it's now the new value
+                    onChange(checked)
+                  }
                 })
-              ).then((res) => {
-                if (res) {
-                  onChange(!e.target.checked)
-                }
-              })
+              }
             }}
             helperText={<>set up a digital wallet and monetize your content.</>}
           />

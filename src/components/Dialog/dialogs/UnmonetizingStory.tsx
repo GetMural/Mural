@@ -5,7 +5,13 @@ import {
   DialogContentText,
   DialogActions,
   Button,
+  Checkbox,
+  FormControl,
+  FormControlLabel,
 } from '@material-ui/core'
+import React from 'react'
+import { useAppDispatch } from 'store/hooks'
+import { setDontAskConfirmationForMonetisation } from 'store/slices/navigation'
 import { DialogProps } from '../index'
 
 export default function UnmonetizingStory({
@@ -13,6 +19,9 @@ export default function UnmonetizingStory({
   onSubmit,
   onDissmiss,
 }: DialogProps) {
+  const [doNotShowAgain, setDoNotShowAgain] = React.useState(false)
+  const dispatch = useAppDispatch()
+
   return (
     <MuiDialog
       open={open}
@@ -28,10 +37,31 @@ export default function UnmonetizingStory({
         <DialogContentText id="alert-dialog-description">
           If you want to monetize your Story, click "Cancel".
         </DialogContentText>
+        <FormControl>
+          <FormControlLabel
+            control={
+              <Checkbox
+                onChange={(e) => setDoNotShowAgain(e.target.checked)}
+                checked={doNotShowAgain}
+              />
+            }
+            label={'Do not show this message again'}
+          />
+        </FormControl>
       </DialogContent>
       <DialogActions>
         <Button onClick={onDissmiss}>Cancel</Button>
-        <Button onClick={onSubmit}>Ok</Button>
+        <Button
+          onClick={() => {
+            // save "do not show again" value
+            if (doNotShowAgain) {
+              dispatch(setDontAskConfirmationForMonetisation(true))
+            }
+            onSubmit()
+          }}
+        >
+          Ok
+        </Button>
       </DialogActions>
     </MuiDialog>
   )

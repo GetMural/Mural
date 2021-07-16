@@ -16,12 +16,14 @@ export interface NavigationState {
     name: DialogNames
     props?: any
   } | null
+  dontAskConfirmationForMonetisation: boolean
 }
 
 // Define the initial state using that type
 const initialState: NavigationState = {
   view: null,
   dialog: null,
+  dontAskConfirmationForMonetisation: false,
 }
 
 // NOTE: it's a hack that makes our reducer unpure.
@@ -59,6 +61,12 @@ export const story = createSlice({
         }
       },
     },
+    setDontAskConfirmationForMonetisation: (
+      state,
+      action: PayloadAction<boolean>
+    ) => {
+      state.dontAskConfirmationForMonetisation = action.payload
+    },
     reset: () => {
       return initialState
     },
@@ -77,6 +85,12 @@ export const openDialogAndWait =
   }
 
 // Extract and export each action creator by name
-export const { goToView, openDialog, closeDialog, reset } = story.actions
+export const {
+  goToView,
+  openDialog,
+  closeDialog,
+  setDontAskConfirmationForMonetisation,
+  reset,
+} = story.actions
 
 export default story.reducer
