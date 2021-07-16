@@ -4,6 +4,7 @@ import { useAppSelector } from 'store/hooks'
 import BackgroundVideo from 'components/MuralForm/forms/BackgroundVideo'
 import useRouter from 'hooks/useRouter'
 import { selectedItemIndexSelector } from 'store/slices/story'
+import BackIcon from '@material-ui/icons/ArrowBack'
 
 export default function SecondPanel() {
   const currentView = useAppSelector((state) => state.navigation.view)
@@ -12,7 +13,9 @@ export default function SecondPanel() {
   return (
     <div>
       {currentView && (
-        <Button onClick={() => goTo({ view: null })}>Back</Button>
+        <Button onClick={() => goTo({ view: null })} startIcon={<BackIcon />}>
+          Back
+        </Button>
       )}
       <Slide
         direction="left"

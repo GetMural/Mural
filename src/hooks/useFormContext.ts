@@ -4,7 +4,7 @@ import { saveForm, StoryState } from 'store/slices/story'
 import { useFormContext as useReactFormContext } from 'react-hook-form'
 
 export default function useFormContext() {
-  const { handleSubmit, formState, control, reset, trigger } =
+  const { handleSubmit, formState, control, reset, trigger, watch } =
     useReactFormContext<StoryState>()
   const dispatch = useAppDispatch()
   const story = useAppSelector((state) => state.story)
@@ -19,5 +19,5 @@ export default function useFormContext() {
     })()
   }, [dispatch, handleSubmit])
 
-  return { save, formState, control, resetFormWithCurrentState, trigger }
+  return { save, formState, control, resetFormWithCurrentState, trigger, watch }
 }

@@ -2,8 +2,11 @@ import { Box, Typography } from '@material-ui/core'
 import Input from 'components/MuralForm/Input'
 import Checkbox from 'components/MuralForm/Checkbox'
 import Image from 'components/MuralForm/Image'
+import { openDialogAndWait } from 'store/slices/navigation'
+import { useAppDispatch } from 'store/hooks'
 
 export default function StoryMetadataForm() {
+  const dispatch = useAppDispatch()
   return (
     <>
       <Typography variant="h2">Story Metadata</Typography>
@@ -99,6 +102,19 @@ export default function StoryMetadataForm() {
           <Checkbox
             name="metadata.monetizeStory"
             label="Monetize Story"
+            onChange={(e, onChange) => {
+              dispatch(
+                openDialogAndWait({
+                  name: e.target.checked
+                    ? 'MonetizingStory'
+                    : 'UnmonetizingStory',
+                })
+              ).then((res) => {
+                if (res) {
+                  onChange(!e.target.checked)
+                }
+              })
+            }}
             helperText={<>set up a digital wallet and monetize your content.</>}
           />
         </Box>

@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { DialogNames } from 'components/Dialog'
 import { AppThunk } from 'store/store'
 import { Items } from './story'
 
@@ -9,11 +10,10 @@ type View =
   | { name: 'item'; args: { item: Items } }
   | null
 
-// Define a type for the slice state
 export interface NavigationState {
   view: View
   dialog: {
-    name: 'UnsavedChanges' | 'FormIsNotValid'
+    name: DialogNames
     props?: any
   } | null
 }

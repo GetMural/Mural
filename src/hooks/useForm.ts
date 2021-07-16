@@ -14,7 +14,7 @@ export default function useForm() {
   const story = useAppSelector((state) => state.story)
   const forms = useReactForm<StoryState>({
     defaultValues: story,
-    mode: 'onChange',
+    // mode: 'onChange',
   })
   const previousStoryRef = React.useRef<StoryState>()
 
