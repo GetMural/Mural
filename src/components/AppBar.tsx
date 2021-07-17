@@ -43,6 +43,7 @@ export default function MuralAppBar() {
   const {
     save,
     formState: { isDirty },
+    resetFormWithCurrentState,
   } = useFormContext()
 
   return (
@@ -65,8 +66,12 @@ export default function MuralAppBar() {
             <Button
               startIcon={<NewIcon />}
               onClick={() => {
-                dispatch(reset())
                 dispatch(goToView(null))
+                // has to happen when the form is closed
+                setTimeout(() => {
+                  dispatch(reset())
+                  resetFormWithCurrentState()
+                }, 1000)
               }}
             >
               New
