@@ -1,14 +1,6 @@
-import {
-  Grid,
-  Card,
-  CardActionArea,
-  CardContent,
-  CardMedia,
-  Typography,
-} from '@material-ui/core'
+import { Grid, Button } from '@material-ui/core'
 import { useAppDispatch } from 'store/hooks'
 import { addItemAndGoToView, ItemTypes } from 'store/slices/story'
-import { makeStyles } from '@material-ui/core/styles'
 
 import audio_image_mural from './icons/audio_image_mural.png'
 import bg_image_mural from './icons/bg_image_mural.png'
@@ -24,14 +16,12 @@ import useAskToSaveChanges from 'hooks/useAskToSaveChanges'
 const icons: {
   label: string
   name: ItemTypes
-  description?: string
   icon: string
   disabled?: boolean
 }[] = [
   {
     label: 'Image Audio',
     name: 'imageAudio',
-    description: 'Image with Audio',
     icon: audio_image_mural,
     disabled: true,
   },
@@ -84,52 +74,29 @@ const icons: {
   },
 ]
 
-const useStyles = makeStyles((theme) => ({
-  card: {},
-  media: {
-    height: 80,
-    margin: theme.spacing(2),
-    backgroundSize: 'contain',
-    backgroundPosition: 'top',
-  },
-}))
-
 export default function BlockItemsSelector() {
-  const classes = useStyles()
   const dispatch = useAppDispatch()
   const askToSaveChanges = useAskToSaveChanges()
+
   return (
     <Grid container spacing={4}>
-      {icons.map(({ name, label, description, icon, disabled }) => (
+      {icons.map(({ name, label, icon, disabled }) => (
         <Grid item xs={6} md={4} key={name}>
-          <Card className={classes.card}>
-            <CardActionArea
-              disabled={disabled}
-              onClick={() => {
-                askToSaveChanges().then((res) => {
-                  if (res) {
-                    dispatch(addItemAndGoToView(name))
-                  }
-                })
-              }}
-            >
-              <CardMedia image={icon} title={name} className={classes.media} />
-              <CardContent>
-                <Typography gutterBottom variant="h5" component="h2">
-                  {label}
-                </Typography>
-                {description && (
-                  <Typography
-                    variant="body2"
-                    color="textSecondary"
-                    component="p"
-                  >
-                    {description}
-                  </Typography>
-                )}
-              </CardContent>
-            </CardActionArea>
-          </Card>
+          <Button
+            style={{ display: 'block' }}
+            variant="outlined"
+            disabled={disabled}
+            onClick={() => {
+              askToSaveChanges().then((res) => {
+                if (res) {
+                  dispatch(addItemAndGoToView(name))
+                }
+              })
+            }}
+          >
+            <img src={icon} style={{ width: '100%' }} alt={label} />
+            <div>{label}</div>
+          </Button>
         </Grid>
       ))}
     </Grid>
