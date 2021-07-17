@@ -19,5 +19,12 @@ export default function useFormContext() {
     })()
   }, [dispatch, handleSubmit])
 
-  return { save, formState, control, resetFormWithCurrentState, trigger, watch }
+  return {
+    save,
+    formState,
+    control,
+    resetFormWithCurrentState,
+    trigger,
+    watch,
+  }
 }
