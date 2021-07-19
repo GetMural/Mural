@@ -12,6 +12,7 @@ import parallax_image_mural from './icons/parallax_image_mural.png'
 import text_mural from './icons/text_mural.png'
 import V_slide_mural from './icons/V_slide_mural.png'
 import useAskToSaveChanges from 'hooks/useAskToSaveChanges'
+import TYPES_LABELS from 'constantes/blockTypes'
 
 const icons: {
   label: string
@@ -20,55 +21,55 @@ const icons: {
   disabled?: boolean
 }[] = [
   {
-    label: 'Image Audio',
     name: 'imageAudio',
+    label: TYPES_LABELS['imageAudio'],
     icon: audio_image_mural,
     disabled: true,
   },
   {
-    label: 'Background Image',
     name: 'backgroundImage',
+    label: TYPES_LABELS['backgroundImage'],
     icon: bg_image_mural,
     disabled: true,
   },
   {
-    label: 'Background Video',
     name: 'backgroundVideo',
+    label: TYPES_LABELS['backgroundVideo'],
     icon: bg_video_mural,
   },
   {
-    label: 'Embed Video',
     name: 'embedVideo',
+    label: TYPES_LABELS['embedVideo'],
     icon: embed_video_mural,
     disabled: true,
   },
   {
-    label: 'Fullpage video',
     name: 'fullpageVideo',
+    label: TYPES_LABELS['fullpageVideo'],
     icon: fp_video_mural,
     disabled: true,
   },
   {
-    label: 'Horizontal Slideshow',
     name: 'horizontalSlideshow',
+    label: TYPES_LABELS['horizontalSlideshow'],
     icon: H_slide_mural,
     disabled: true,
   },
   {
-    label: 'Vertical Slideshow',
     name: 'verticalSlideshow',
+    label: TYPES_LABELS['verticalSlideshow'],
     icon: V_slide_mural,
     disabled: true,
   },
   {
-    label: 'Parallax Image',
     name: 'parallaxImage',
+    label: TYPES_LABELS['parallaxImage'],
     icon: parallax_image_mural,
     disabled: true,
   },
   {
-    label: 'Text',
     name: 'text',
+    label: TYPES_LABELS['text'],
     icon: text_mural,
     disabled: true,
   },

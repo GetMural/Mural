@@ -16,7 +16,7 @@ export default function MainPanel() {
           Metadata
         </Button>
       </Box>
-      <Box py={4}>
+      <Box py={6}>
         <BlockItemsSelector />
       </Box>
       <BlockItems />

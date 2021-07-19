@@ -1,9 +1,11 @@
 import {
+  Divider,
   IconButton,
   List,
   ListItem,
   ListItemSecondaryAction,
   ListItemText,
+  Typography,
 } from '@material-ui/core'
 import DeleteIcon from '@material-ui/icons/Delete'
 import useRouter from 'hooks/useRouter'
@@ -14,6 +16,7 @@ import useAskToSaveChanges from 'hooks/useAskToSaveChanges'
 import { goToView } from 'store/slices/navigation'
 import React from 'react'
 import { isEqual } from 'lodash'
+import TYPES_LABELS from 'constantes/blockTypes'
 
 export default function BlockItems() {
   const items = useAppSelector((state) => state.story.items)
@@ -29,6 +32,8 @@ export default function BlockItems() {
 
   return (
     <div>
+      <Typography variant="h5">Story Order</Typography>
+      <Divider />
       <List>
         {items && (
           <ReactSortable
@@ -60,7 +65,10 @@ export default function BlockItems() {
                 selected={selectedItem && selectedItem.id === item.id}
                 onClick={() => goTo({ view: { name: 'item', args: { item } } })}
               >
-                <ListItemText primary={item.type} secondary={item.title} />
+                <ListItemText
+                  primary={item.title}
+                  secondary={TYPES_LABELS[item.type]}
+                />
                 <ListItemSecondaryAction>
                   <IconButton
                     edge="end"
