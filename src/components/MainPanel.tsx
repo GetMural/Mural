@@ -7,7 +7,7 @@ export default function MainPanel() {
   const { goTo } = useRouter()
 
   return (
-    <Box>
+    <Box p={6}>
       <Box textAlign="right">
         <Button
           variant="contained"

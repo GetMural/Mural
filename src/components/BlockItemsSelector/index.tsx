@@ -83,7 +83,7 @@ export default function BlockItemsSelector() {
       {icons.map(({ name, label, icon, disabled }) => (
         <Grid item xs={6} md={4} key={name}>
           <Button
-            style={{ display: 'block' }}
+            style={{ display: 'block', width: '100%' }}
             variant="outlined"
             disabled={disabled}
             onClick={() => {

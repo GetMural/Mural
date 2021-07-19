@@ -19,7 +19,7 @@ export type ItemTypes =
   | 'parallaxImage'
   | 'text'
 interface Item {
-  uid: string
+  id: string
   type: ItemTypes
 }
 export interface BackgroundVideoItem extends Item {
@@ -68,7 +68,7 @@ export const story = createSlice({
     },
     removeItem: (state, action: PayloadAction<string>) => {
       state.items?.splice(
-        state.items.findIndex((o) => o.uid === action.payload),
+        state.items.findIndex((o) => o.id === action.payload),
         1
       )
     },
@@ -79,11 +79,15 @@ export const story = createSlice({
       prepare: (itemType: ItemTypes) => {
         return {
           payload: {
-            uid: nanoid(),
+            id: nanoid(),
             type: itemType,
           },
         }
       },
+    },
+    // for reordering
+    setItems: (state, action: PayloadAction<Item[]>) => {
+      state.items = action.payload
     },
     reset: () => {
       return { ...initialState }
@@ -91,7 +95,7 @@ export const story = createSlice({
   },
 })
 
-export const { saveForm, removeItem, addItem, reset } = story.actions
+export const { saveForm, removeItem, addItem, setItems, reset } = story.actions
 
 export const addItemAndGoToView =
   (itemType: ItemTypes): AppThunk =>
@@ -115,7 +119,7 @@ export const selectedItemIndexSelector = createSelector(
   selectedItemSelector,
   (allItems, selectedItem) => {
     if (selectedItem && allItems) {
-      return allItems.findIndex((o) => o.uid === selectedItem.uid)
+      return allItems.findIndex((o) => o.id === selectedItem.id)
     }
   }
 )

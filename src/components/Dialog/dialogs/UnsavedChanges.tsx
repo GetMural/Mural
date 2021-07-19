@@ -17,8 +17,8 @@ interface Props {
 export default function UnsavedChanges({ open }: Props) {
   const dispatch = useAppDispatch()
   const { save, resetFormWithCurrentState } = useFormContext()
-  function submit() {
-    dispatch(closeDialog(true))
+  function submit(payload?: any) {
+    dispatch(closeDialog(payload || true))
   }
   function dissmiss() {
     dispatch(closeDialog())
@@ -51,7 +51,7 @@ export default function UnsavedChanges({ open }: Props) {
         <Button
           onClick={async () => {
             await save()
-            submit()
+            submit('saved')
           }}
           color="primary"
           autoFocus
