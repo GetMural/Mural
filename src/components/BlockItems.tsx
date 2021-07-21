@@ -30,6 +30,10 @@ export default function BlockItems() {
 
   const { goTo } = useRouter()
 
+  if (!items) {
+    return null
+  }
+
   return (
     <div>
       <Typography variant="h5">Story Order</Typography>

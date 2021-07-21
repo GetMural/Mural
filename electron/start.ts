@@ -1,20 +1,23 @@
-const electron = require('electron')
+import electron from 'electron'
+import path from 'path'
+import isDev from 'electron-is-dev'
+import fs from 'fs'
+
 const app = electron.app
 const BrowserWindow = electron.BrowserWindow
 
-const path = require('path')
-const isDev = require('electron-is-dev')
+let mainWindow: Electron.BrowserWindow | null | undefined
 
-let mainWindow
 function createWindow() {
   mainWindow = new BrowserWindow({
-    width: 900,
-    height: 680,
+    width: 1400,
+    height: 1000,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       // nodeIntegration: true,
       // contextIsolation: false,
       // enableRemoteModule: true,
+      webSecurity: false,
     },
   })
   mainWindow.loadURL(
@@ -43,3 +46,19 @@ app.on('activate', () => {
     createWindow()
   }
 })
+
+app.whenReady().then(() => {
+  /**
+   * Creates user folder if doesn't exist and store its path in `userData`
+   */
+  const root = path.join(app.getPath('documents'), 'Mural')
+  const folders = [root, path.join(root, 'thumbnails')]
+  folders.forEach((dir) => {
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir)
+    }
+  })
+  app.setPath('userData', root)
+})
+
+electron.ipcMain.handle('store-file', require('./ipc/store-file').default)

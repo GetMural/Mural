@@ -35,7 +35,10 @@ export interface StoryState {
     author: string
     canonicalUrl: string
     siteName: string
-    siteImage?: string
+    siteImage?: {
+      path: string
+      thumbnail: string
+    }
     monetizeStory: boolean
     googleAnalyticsId: string
     rssPingbkack: string

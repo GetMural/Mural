@@ -1,6 +1,6 @@
 {
   "name": "mural",
-  "main": "electron/start.ts",
+  "main": "build/electron/start.js",
   "author": {
     "name": "Mural",
     "email": "support@getmural.io"
@@ -17,10 +17,10 @@
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
     "@types/jest": "^26.0.15",
-    "@types/node": "^12.0.0",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "@types/redux-logger": "^3.0.8",
+    "@types/sharp": "^0.28.4",
     "electron-is-dev": "^2.0.0",
     "husky": "^7.0.1",
     "lint-staged": "^11.0.0",
@@ -34,20 +34,21 @@
     "react-sortablejs": "^6.0.0",
     "redux-localstorage-simple": "^2.4.1",
     "redux-logger": "^3.0.6",
+    "sharp": "^0.28.3",
     "sortablejs": "^1.14.0",
     "typeface-roboto": "^1.1.13",
     "typescript": "^4.1.2",
-    "web-vitals": "^1.0.1"
+    "web-vitals": "^1.0.1",
+    "@types/node": "^14.17.5"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "electron-dev": "concurrently \"BROWSER=none yarn start\" \"wait-on http://localhost:3000 && electron .\"",
     "postinstall": "electron-builder install-app-deps",
-    "preelectron-pack": "yarn build",
-    "electron-pack": "electron-builder"
+    "electron:dev": "concurrently \"BROWSER=none yarn start\" \"wait-on http://localhost:3000 && tsc -p electron -w\" \"wait-on http://localhost:3000 && tsc -p electron && electron .\"",
+    "electron:build": "build && tsc -p electron && electron-builder -w"
   },
   "build": {
     "appId": "com.my-website.my-app",
@@ -71,7 +72,7 @@
       "electron/**/*"
     ],
     "extraMetadata": {
-      "main": "electron/start.ts"
+      "main": "electron/start.js"
     }
   },
   "eslintConfig": {
@@ -106,6 +107,7 @@
     "concurrently": "^6.2.0",
     "electron": "^13.1.7",
     "electron-builder": "^22.11.7",
+    "electron-reloader": "^1.2.1",
     "wait-on": "^6.0.0"
   }
 }

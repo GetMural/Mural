@@ -2,7 +2,7 @@ export {}
 declare global {
   interface Window {
     electron: {
-      doThing: () => void
+      storeFile: (arg: any) => Promise<any>
     }
   }
 }

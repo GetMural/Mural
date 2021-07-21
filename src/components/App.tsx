@@ -19,6 +19,7 @@ function App() {
           <Box
             flexBasis="0"
             flexGrow="1"
+            bgcolor="white"
             minHeight={`calc(100vh - ${APPBAR_HEIGHT}px)`}
           >
             <Box p={4}>

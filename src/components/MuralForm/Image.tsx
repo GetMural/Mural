@@ -8,6 +8,7 @@ import { ReactNode } from 'react'
 import { useController, UseControllerProps } from 'react-hook-form'
 import { StoryState } from 'store/slices/story'
 import useFormContext from 'hooks/useFormContext'
+import handleFileInput from 'utils/handleFileInput.electron'
 
 interface Props extends UseControllerProps<StoryState> {
   label: string
@@ -38,10 +39,8 @@ export default function Image({ label, helperText, ...props }: Props) {
               value={undefined}
               onChange={async (e) => {
                 if (e?.target?.files && e.target.files.length > 0) {
-                  const b64 = await toBase64(e.target.files[0])
-                  if (b64) {
-                    field.onChange(b64)
-                  }
+                  let res = await handleFileInput(e.target.files[0])
+                  field.onChange(res)
                 }
               }}
             />
@@ -53,7 +52,9 @@ export default function Image({ label, helperText, ...props }: Props) {
       {field.value && (
         <div>
           <img
-            src={field.value as string}
+            src={`file://${
+              (field.value as { path: string; thumbnail: string }).thumbnail
+            }`}
             alt={label}
             style={{
               maxWidth: '100%',
@@ -66,11 +67,3 @@ export default function Image({ label, helperText, ...props }: Props) {
     </FormControl>
   )
 }
-
-const toBase64 = (file: File) =>
-  new Promise<string | ArrayBuffer | null>((resolve, reject) => {
-    const reader = new FileReader()
-    reader.readAsDataURL(file)
-    reader.onload = () => resolve(reader.result)
-    reader.onerror = (error) => reject(error)
-  })

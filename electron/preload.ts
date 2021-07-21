@@ -1,5 +1,5 @@
 const { contextBridge, ipcRenderer } = require('electron')
 
 contextBridge.exposeInMainWorld('electron', {
-  doThing: () => ipcRenderer.send('do-a-thing'),
+  storeFile: (arg: any) => ipcRenderer.invoke('store-file', arg),
 })
