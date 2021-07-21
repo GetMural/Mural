@@ -8,7 +8,7 @@ const BrowserWindow = electron.BrowserWindow
 
 let mainWindow: Electron.BrowserWindow | null | undefined
 
-function createWindow() {
+async function createWindow() {
   mainWindow = new BrowserWindow({
     width: 1400,
     height: 1000,
@@ -20,14 +20,21 @@ function createWindow() {
       webSecurity: false,
     },
   })
-  mainWindow.loadURL(
+  await mainWindow.loadURL(
     isDev
       ? 'http://localhost:3000'
       : `file://${path.join(__dirname, '../build/index.html')}`
   )
+  // Devtools
   if (isDev) {
+    const {
+      default: installExtension,
+      REACT_DEVELOPER_TOOLS,
+      REDUX_DEVTOOLS,
+    } = require('electron-devtools-installer')
+    installExtension(REACT_DEVELOPER_TOOLS)
+    installExtension(REDUX_DEVTOOLS)
     // Open the DevTools.
-    //BrowserWindow.addDevToolsExtension('<location to your react chrome extension>');
     mainWindow.webContents.openDevTools()
   }
   mainWindow.on('closed', () => (mainWindow = null))
@@ -61,19 +68,6 @@ app.whenReady().then(() => {
   })
   app.setPath('userData', root)
 })
-
-// Developer Tools
-if (isDev) {
-  app.whenReady().then(() => {
-    const {
-      default: installExtension,
-      REACT_DEVELOPER_TOOLS,
-      REDUX_DEVTOOLS,
-    } = require('electron-devtools-installer')
-    installExtension(REACT_DEVELOPER_TOOLS)
-    installExtension(REDUX_DEVTOOLS)
-  })
-}
 
 // ipc
 electron.ipcMain.handle('store-file', require('./ipc/storeFile').default)
