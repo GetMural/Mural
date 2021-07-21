@@ -33,7 +33,7 @@ function createWindow() {
   mainWindow.on('closed', () => (mainWindow = null))
 }
 
-app.on('ready', createWindow)
+// app.on('ready', createWindow)
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
@@ -48,6 +48,7 @@ app.on('activate', () => {
 })
 
 app.whenReady().then(() => {
+  createWindow()
   /**
    * Creates user folder if doesn't exist and store its path in `userData`
    */
@@ -61,4 +62,18 @@ app.whenReady().then(() => {
   app.setPath('userData', root)
 })
 
-electron.ipcMain.handle('store-file', require('./ipc/store-file').default)
+// Developer Tools
+if (isDev) {
+  app.whenReady().then(() => {
+    const {
+      default: installExtension,
+      REACT_DEVELOPER_TOOLS,
+      REDUX_DEVTOOLS,
+    } = require('electron-devtools-installer')
+    installExtension(REACT_DEVELOPER_TOOLS)
+    installExtension(REDUX_DEVTOOLS)
+  })
+}
+
+// ipc
+electron.ipcMain.handle('store-file', require('./ipc/storeFile').default)
