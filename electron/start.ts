@@ -2,6 +2,7 @@ import electron from 'electron'
 import path from 'path'
 import isDev from 'electron-is-dev'
 import fs from 'fs'
+import storeFile from './ipc/storeFile'
 
 const app = electron.app
 const BrowserWindow = electron.BrowserWindow
@@ -12,6 +13,7 @@ async function createWindow() {
   mainWindow = new BrowserWindow({
     width: 1400,
     height: 1000,
+    autoHideMenuBar: true,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       // nodeIntegration: true,
@@ -23,7 +25,7 @@ async function createWindow() {
   await mainWindow.loadURL(
     isDev
       ? 'http://localhost:3000'
-      : `file://${path.join(__dirname, '../build/index.html')}`
+      : `file://${path.join(__dirname, '../../build/index.html')}`
   )
   // Devtools
   if (isDev) {
@@ -70,4 +72,4 @@ app.whenReady().then(() => {
 })
 
 // ipc
-electron.ipcMain.handle('store-file', require('./ipc/storeFile').default)
+electron.ipcMain.handle('store-file', storeFile)

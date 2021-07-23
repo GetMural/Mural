@@ -16,13 +16,19 @@
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
+    "@types/draft-js": "^0.11.4",
+    "@types/draftjs-to-html": "^0.8.1",
     "@types/jest": "^26.0.15",
     "@types/node": "^14.17.5",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
+    "@types/react-draft-wysiwyg": "^1.13.3",
     "@types/redux-logger": "^3.0.8",
     "@types/sharp": "^0.28.4",
+    "draft-js": "^0.11.7",
+    "draftjs-to-html": "^0.9.1",
     "electron-is-dev": "^2.0.0",
+    "false": "^0.0.4",
     "husky": "^7.0.1",
     "is-electron": "^2.2.0",
     "lint-staged": "^11.0.0",
@@ -30,6 +36,7 @@
     "prettier": "^2.3.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-draft-wysiwyg": "^1.14.7",
     "react-hook-form": "^7.10.1",
     "react-redux": "^7.2.0",
     "react-scripts": "4.0.3",
@@ -49,7 +56,7 @@
     "eject": "react-scripts eject",
     "postinstall": "electron-builder install-app-deps",
     "electron:dev": "concurrently \"BROWSER=none yarn start\" \"wait-on http://localhost:3000 && tsc -p electron -w\" \"wait-on http://localhost:3000 && tsc -p electron && electron .\"",
-    "electron:build": "build && tsc -p electron && electron-builder -w"
+    "electron:build": "yarn build && tsc -p electron && electron-builder"
   },
   "build": {
     "appId": "com.my-website.my-app",
@@ -57,8 +64,6 @@
     "copyright": "Copyright © 2021 ${author}",
     "linux": {
       "target": [
-        "deb",
-        "snap",
         "AppImage"
       ]
     },
@@ -73,7 +78,7 @@
       "electron/**/*"
     ],
     "extraMetadata": {
-      "main": "electron/start.js"
+      "main": "build/electron/start.js"
     }
   },
   "eslintConfig": {

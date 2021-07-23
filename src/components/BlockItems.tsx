@@ -17,6 +17,7 @@ import { goToView } from 'store/slices/navigation'
 import React from 'react'
 import { isEqual } from 'lodash'
 import TYPES_LABELS from 'constantes/blockTypes'
+import convertToPlainText from 'utils/convertToPlainText'
 
 export default function BlockItems() {
   const items = useAppSelector((state) => state.story.items)
@@ -30,7 +31,7 @@ export default function BlockItems() {
 
   const { goTo } = useRouter()
 
-  if (!items) {
+  if (!items || items.length < 1) {
     return null
   }
 
@@ -70,7 +71,13 @@ export default function BlockItems() {
                 onClick={() => goTo({ view: { name: 'item', args: { item } } })}
               >
                 <ListItemText
-                  primary={item.title}
+                  primary={
+                    'title' in item
+                      ? item.title?.contentState
+                        ? convertToPlainText(item.title)
+                        : item.title
+                      : undefined
+                  }
                   secondary={TYPES_LABELS[item.type]}
                 />
                 <ListItemSecondaryAction>

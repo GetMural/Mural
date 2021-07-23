@@ -5,6 +5,8 @@ import {
   PayloadAction,
 } from '@reduxjs/toolkit'
 import { AppThunk, RootState } from 'store/store'
+import convertToPlainText from 'utils/convertToPlainText'
+
 import { goToView } from './navigation'
 
 export type ItemTypes =
@@ -18,15 +20,36 @@ export type ItemTypes =
   | 'verticalSlideshow'
   | 'parallaxImage'
   | 'text'
-interface Item {
+
+interface EmptyItem {
   id: string
   type: ItemTypes
 }
-export interface BackgroundVideoItem extends Item {
-  title?: string
+
+interface Image {
+  path: string
+  thumbnail: string
 }
 
-export type Items = BackgroundVideoItem
+interface Video {
+  url: string
+}
+
+export interface RichText {
+  contentState: string
+}
+
+export interface BackgroundVideoItem extends EmptyItem {
+  type: 'backgroundVideo'
+  video?: Video
+  navigationTitle?: string
+  title?: RichText
+  subtitle?: string
+  text?: string
+  posterImage?: Image
+}
+
+export type Items = EmptyItem | BackgroundVideoItem
 
 export interface StoryState {
   metadata: {
@@ -35,10 +58,7 @@ export interface StoryState {
     author: string
     canonicalUrl: string
     siteName: string
-    siteImage?: {
-      path: string
-      thumbnail: string
-    }
+    siteImage?: Image
     monetizeStory: boolean
     googleAnalyticsId: string
     rssPingbkack: string
@@ -76,7 +96,7 @@ export const story = createSlice({
       )
     },
     addItem: {
-      reducer: (state, action: PayloadAction<Item>) => {
+      reducer: (state, action: PayloadAction<EmptyItem>) => {
         state.items = [...(state.items || []), action.payload]
       },
       prepare: (itemType: ItemTypes) => {
@@ -89,7 +109,7 @@ export const story = createSlice({
       },
     },
     // for reordering
-    setItems: (state, action: PayloadAction<Item[]>) => {
+    setItems: (state, action: PayloadAction<Items[]>) => {
       state.items = action.payload
     },
     reset: () => {
@@ -112,6 +132,7 @@ export const addItemAndGoToView =
     }
   }
 
+const storySelector = (state: RootState) => state.story
 const allItemsSelector = (state: RootState) => state.story.items
 
 const selectedItemSelector = (state: RootState) =>
@@ -126,5 +147,27 @@ export const selectedItemIndexSelector = createSelector(
     }
   }
 )
+
+export const enrichedStorySelector = createSelector(storySelector, (story) => {
+  return {
+    ...story,
+    items: story.items?.map((item) => {
+      let enrichedItem = {}
+      Object.keys(item).forEach((key) => {
+        // @ts-ignore
+        let value: any = item[key]
+        // @ts-ignore
+        enrichedItem[key] = value
+        if ('contentState' in value) {
+          // @ts-ignore
+          enrichedItem[key].plainText = convertToPlainText(value)
+        }
+        // @ts-ignore
+        enrichedItem[key] = value
+      })
+      return enrichedItem
+    }),
+  }
+})
 
 export default story.reducer

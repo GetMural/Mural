@@ -6,3 +6,5 @@ declare global {
     }
   }
 }
+
+declare module 'react-mui-draft-wysiwyg'
