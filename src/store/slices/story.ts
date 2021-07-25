@@ -39,7 +39,7 @@ export interface RichText {
   contentState: string
 }
 
-export interface BackgroundVideoItem extends EmptyItem {
+interface BackgroundVideoItem extends EmptyItem {
   type: 'backgroundVideo'
   video?: Video
   navigationTitle?: string
@@ -49,7 +49,15 @@ export interface BackgroundVideoItem extends EmptyItem {
   posterImage?: Image
 }
 
-export type Items = EmptyItem | BackgroundVideoItem
+export interface TextItem extends EmptyItem {
+  type: 'text'
+  navigationTitle?: string
+  title?: RichText
+  subtitle?: string
+  introduction?: string
+}
+
+export type Items = EmptyItem | BackgroundVideoItem | TextItem
 
 export interface StoryState {
   metadata: {

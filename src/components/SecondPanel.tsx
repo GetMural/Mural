@@ -1,15 +1,29 @@
-import { Button, Box, Typography, Slide } from '@material-ui/core'
+import { Button, Box, Typography, Slide, Input } from '@material-ui/core'
 import StoryMetadata from 'components/MuralForm/forms/StoryMetadata'
 import { useAppSelector } from 'store/hooks'
 import BackgroundVideo from 'components/MuralForm/forms/BackgroundVideo'
+import Text from 'components/MuralForm/forms/Text'
 import useRouter from 'hooks/useRouter'
-import { selectedItemIndexSelector } from 'store/slices/story'
+import { ItemTypes, selectedItemIndexSelector } from 'store/slices/story'
 import BackIcon from '@material-ui/icons/ArrowBack'
+import React from 'react'
+
+const ItemFormComponents: {
+  name: ItemTypes
+  component: React.FunctionComponent<{ itemIndex: number }>
+}[] = [
+  { name: 'backgroundVideo', component: BackgroundVideo },
+  { name: 'text', component: Text },
+]
 
 export default function SecondPanel() {
   const currentView = useAppSelector((state) => state.navigation.view)
   const { goTo } = useRouter()
   const selectedItemIndex = useAppSelector(selectedItemIndexSelector)
+  const SelectedItemComponent =
+    currentView?.name === 'item' &&
+    ItemFormComponents.find((o) => o.name === currentView.args.item.type)
+      ?.component
   return (
     <div>
       {currentView && (
@@ -29,16 +43,20 @@ export default function SecondPanel() {
       </Slide>
       <Slide
         direction="left"
-        in={
-          currentView?.name === 'item' &&
-          currentView.args?.item.type === 'backgroundVideo'
-        }
+        in={currentView?.name === 'item'}
         mountOnEnter
         unmountOnExit
       >
         <div>
-          {selectedItemIndex !== undefined && (
-            <BackgroundVideo itemIndex={selectedItemIndex} />
+          {selectedItemIndex !== undefined && SelectedItemComponent && (
+            <>
+              <Input
+                type="hidden"
+                key={`items.${selectedItemIndex}.type`}
+                name={`items.${selectedItemIndex}.type` as const}
+              />
+              <SelectedItemComponent itemIndex={selectedItemIndex} />
+            </>
           )}
         </div>
       </Slide>

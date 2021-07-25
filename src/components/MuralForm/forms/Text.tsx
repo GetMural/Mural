@@ -6,7 +6,7 @@ interface Props {
   itemIndex: number
 }
 
-export default function BackgroundVideo({ itemIndex }: Props) {
+export default function Text({ itemIndex }: Props) {
   return (
     <>
       <Box my={4}>
@@ -31,6 +31,14 @@ export default function BackgroundVideo({ itemIndex }: Props) {
           key={`items.${itemIndex}.subtitle`}
           name={`items.${itemIndex}.subtitle` as const}
           label="Subtitle"
+          placeholder="Your text here"
+        />
+      </Box>
+      <Box my={4}>
+        <Wysiwyg
+          key={`items.${itemIndex}.introduction`}
+          name={`items.${itemIndex}.introduction` as const}
+          label="Introduction"
           placeholder="Your text here"
         />
       </Box>
