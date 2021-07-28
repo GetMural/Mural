@@ -81,7 +81,7 @@ export default function BlockItemsSelector() {
   return (
     <Grid container spacing={4}>
       {icons
-        .filter((o) => !o.disabled)
+        // .filter((o) => !o.disabled)
         .map(({ name, label, icon, disabled }) => (
           <Grid item xs={6} md={4} key={name}>
             <Button
