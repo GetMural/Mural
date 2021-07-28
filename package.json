@@ -59,12 +59,12 @@
     "electron:build": "yarn build && electron-builder"
   },
   "build": {
-    "appId": "com.my-website.my-app",
+    "appId": "com.mural",
     "productName": "Mural",
     "copyright": "Copyright © 2021 ${author}",
     "linux": {
       "target": [
-        "AppImage"
+        "deb"
       ]
     },
     "mac": {

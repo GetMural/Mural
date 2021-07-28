@@ -31,8 +31,8 @@ interface Image {
   thumbnail: string
 }
 
-interface Video {
-  url: string
+export interface Video {
+  path: string
 }
 
 export interface RichText {
@@ -42,6 +42,7 @@ export interface RichText {
 interface BackgroundVideoItem extends EmptyItem {
   type: 'backgroundVideo'
   video?: Video
+  fullPage?: boolean
   navigationTitle?: string
   title?: RichText
   subtitle?: string

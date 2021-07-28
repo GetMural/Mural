@@ -1,5 +1,6 @@
 const { contextBridge, ipcRenderer } = require('electron')
 
 contextBridge.exposeInMainWorld('electron', {
-  storeFile: (arg: any) => ipcRenderer.invoke('store-file', arg),
+  storeImage: (arg: any) => ipcRenderer.invoke('store-image', arg),
+  storeVideo: (arg: any) => ipcRenderer.invoke('store-video', arg),
 })

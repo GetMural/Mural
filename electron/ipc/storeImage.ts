@@ -11,10 +11,10 @@ const sharp = require('sharp')
 
 const app = electron.app
 
-export default async function storeFile(
+export default async function storeImage(
   event: electron.IpcMainInvokeEvent,
   args: {
-    name: string
+    // name: string
     filename: string
   }
 ) {
@@ -32,7 +32,6 @@ export default async function storeFile(
     nanoid() + path.basename(args.filename) + '.jpg'
   )
   await sharp(buffer).resize(200).jpeg({ mozjpeg: true }).toFile(thumbnailPath)
-  // .toBuffer()
 
   return {
     thumbnail: thumbnailPath,

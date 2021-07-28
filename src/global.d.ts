@@ -2,7 +2,8 @@ export {}
 declare global {
   interface Window {
     electron: {
-      storeFile: (arg: any) => Promise<any>
+      storeImage: (arg: any) => Promise<any>
+      storeVideo: (arg: any) => Promise<any>
     }
   }
 }

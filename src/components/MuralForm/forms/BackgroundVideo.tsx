@@ -1,5 +1,7 @@
 import { Box } from '@material-ui/core'
 import Input from 'components/MuralForm/Input'
+import Checkbox from '../Checkbox'
+import Video from '../Video'
 import Wysiwyg from '../Wysiwyg'
 
 interface Props {
@@ -9,6 +11,20 @@ interface Props {
 export default function BackgroundVideo({ itemIndex }: Props) {
   return (
     <>
+      <Box my={4}>
+        <Video
+          key={`items.${itemIndex}.video`}
+          name={`items.${itemIndex}.video` as const}
+          label="Video"
+        />
+      </Box>
+      <Box my={4}>
+        <Checkbox
+          key={`items.${itemIndex}.fullPage`}
+          name={`items.${itemIndex}.fullPage` as const}
+          label="Full Page"
+        />
+      </Box>
       <Box my={4}>
         <Input
           key={`items.${itemIndex}.navigationTitle`}

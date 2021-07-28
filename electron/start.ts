@@ -2,7 +2,8 @@ import electron from 'electron'
 import path from 'path'
 import isDev from 'electron-is-dev'
 import fs from 'fs'
-import storeFile from './ipc/storeFile'
+import storeImage from './ipc/storeImage'
+import storeVideo from './ipc/storeVideo'
 
 const app = electron.app
 const BrowserWindow = electron.BrowserWindow
@@ -72,4 +73,5 @@ app.whenReady().then(() => {
 })
 
 // ipc
-electron.ipcMain.handle('store-file', storeFile)
+electron.ipcMain.handle('store-image', storeImage)
+electron.ipcMain.handle('store-video', storeVideo)

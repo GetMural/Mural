@@ -6,16 +6,16 @@ import {
 } from '@material-ui/core'
 import { ReactNode } from 'react'
 import { useController, UseControllerProps } from 'react-hook-form'
-import { StoryState } from 'store/slices/story'
+import { StoryState, Video as VideoType } from 'store/slices/story'
 import useFormContext from 'hooks/useFormContext'
-import handleImageInput from 'utils/handleImageInput'
+import handleVideoInput from 'utils/handleVideoInput'
 
 interface Props extends UseControllerProps<StoryState> {
   label: string
   helperText?: string | ReactNode
 }
 
-export default function Image({ label, helperText, ...props }: Props) {
+export default function Video({ label, helperText, ...props }: Props) {
   const { control } = useFormContext()
 
   const { field } = useController({ control, ...props })
@@ -29,17 +29,17 @@ export default function Image({ label, helperText, ...props }: Props) {
             component="label"
             style={{ marginLeft: 12, marginRight: 12 }}
           >
-            {field.value ? 'Change image' : 'Upload Image'}
+            {field.value ? 'Change Video' : 'Choose Video'}
             <input
               type="file"
-              accept="image/png, image/gif, image/jpeg"
+              accept="video/mp4, video/webm, video/ogg"
               hidden
               {...field}
               ref={undefined}
               value={undefined}
               onChange={async (e) => {
                 if (e?.target?.files && e.target.files.length > 0) {
-                  let res = await handleImageInput(e.target.files[0])
+                  let res = await handleVideoInput(e.target.files[0])
                   field.onChange(res)
                 }
               }}
@@ -51,17 +51,13 @@ export default function Image({ label, helperText, ...props }: Props) {
       {helperText && <FormHelperText>{helperText}</FormHelperText>}
       {field.value && (
         <div>
-          <img
-            src={`file://${
-              (field.value as { path: string; thumbnail: string }).thumbnail
-            }`}
-            alt={label}
-            style={{
-              maxWidth: '100%',
-              maxHeight: 300,
-              objectFit: 'cover',
-            }}
-          />
+          <video width="320" height="240" controls>
+            <source
+              src={`file://${(field.value as VideoType).path}`}
+              type={'video/mp4'}
+            />
+            Your browser does not support the video tag.
+          </video>
         </div>
       )}
     </FormControl>

@@ -1,8 +1,8 @@
 import isElectron from 'is-electron'
 
 const configure = isElectron()
-  ? require('./handleFileInput.electron')
+  ? require('./handleVideoInput.electron')
   : // FIXME: doesn't exist yet
-    require('./handleFileInput')
+    require('./handleVideoInput')
 
 export default configure.default
