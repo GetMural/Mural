@@ -50,6 +50,11 @@ interface BackgroundVideoItem extends EmptyItem {
   posterImage?: Image
 }
 
+interface EmbedVideo extends EmptyItem {
+  link?: string
+  showControls?: boolean
+}
+
 export interface TextItem extends EmptyItem {
   type: 'text'
   navigationTitle?: string
@@ -58,7 +63,7 @@ export interface TextItem extends EmptyItem {
   introduction?: string
 }
 
-export type Items = EmptyItem | BackgroundVideoItem | TextItem
+export type Items = EmptyItem | BackgroundVideoItem | TextItem | EmbedVideo
 
 export interface StoryState {
   metadata: {

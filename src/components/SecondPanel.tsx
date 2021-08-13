@@ -2,6 +2,7 @@ import { Button, Box, Typography, Slide, Input } from '@material-ui/core'
 import StoryMetadata from 'components/MuralForm/forms/StoryMetadata'
 import { useAppSelector } from 'store/hooks'
 import BackgroundVideo from 'components/MuralForm/forms/BackgroundVideo'
+import EmbedVideo from 'components/MuralForm/forms/EmbedVideo'
 import Text from 'components/MuralForm/forms/Text'
 import useRouter from 'hooks/useRouter'
 import { ItemTypes, selectedItemIndexSelector } from 'store/slices/story'
@@ -14,6 +15,7 @@ const ItemFormComponents: {
 }[] = [
   { name: 'backgroundVideo', component: BackgroundVideo },
   { name: 'text', component: Text },
+  { name: 'embedVideo', component: EmbedVideo },
 ]
 
 export default function SecondPanel() {
