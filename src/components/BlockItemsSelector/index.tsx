@@ -24,7 +24,6 @@ const icons: {
     name: 'imageAudio',
     label: TYPES_LABELS['imageAudio'],
     icon: audio_image_mural,
-    disabled: true,
   },
   {
     name: 'backgroundImage',

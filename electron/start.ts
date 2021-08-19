@@ -4,6 +4,7 @@ import isDev from 'electron-is-dev'
 import fs from 'fs'
 import storeImage from './ipc/storeImage'
 import storeVideo from './ipc/storeVideo'
+import storeAudio from './ipc/storeAudio'
 
 const app = electron.app
 const BrowserWindow = electron.BrowserWindow
@@ -75,3 +76,4 @@ app.whenReady().then(() => {
 // ipc
 electron.ipcMain.handle('store-image', storeImage)
 electron.ipcMain.handle('store-video', storeVideo)
+electron.ipcMain.handle('store-audio', storeAudio)

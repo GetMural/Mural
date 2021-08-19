@@ -35,6 +35,10 @@ export interface Video {
   path: string
 }
 
+export interface Audio {
+  path: string
+}
+
 export interface RichText {
   contentState: string
 }
@@ -51,6 +55,7 @@ interface BackgroundVideoItem extends EmptyItem {
 }
 
 interface EmbedVideo extends EmptyItem {
+  type: 'embedVideo'
   link?: string
   showControls?: boolean
 }
@@ -63,7 +68,23 @@ export interface TextItem extends EmptyItem {
   introduction?: string
 }
 
-export type Items = EmptyItem | BackgroundVideoItem | TextItem | EmbedVideo
+export interface ImageAudio extends EmptyItem {
+  type: 'imageAudio'
+  image?: string
+  fullPage?: boolean
+  altText?: string
+  audio?: string
+  navigationTitle?: string
+  title?: RichText
+  subtitle?: string
+}
+
+export type Items =
+  | EmptyItem
+  | BackgroundVideoItem
+  | TextItem
+  | EmbedVideo
+  | ImageAudio
 
 export interface StoryState {
   metadata: {

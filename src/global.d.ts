@@ -4,6 +4,7 @@ declare global {
     electron: {
       storeImage: (arg: any) => Promise<any>
       storeVideo: (arg: any) => Promise<any>
+      storeAudio: (arg: any) => Promise<any>
     }
   }
 }
