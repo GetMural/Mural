@@ -14,6 +14,7 @@ interface Props extends UseControllerProps<StoryState> {
   placeholder?: string
   helperText?: string | ReactNode
   autoFocus?: boolean
+  multiline?: boolean
   type?: React.InputHTMLAttributes<unknown>['type']
 }
 
@@ -23,6 +24,7 @@ export default function Input({
   placeholder,
   helperText,
   autoFocus,
+  multiline,
   ...props
 }: Props) {
   const { control } = useFormContext()
@@ -50,6 +52,7 @@ export default function Input({
       inputRef={ref}
       label={label}
       type={type}
+      multiline={multiline}
       placeholder={placeholder}
       autoFocus={autoFocus}
       fullWidth

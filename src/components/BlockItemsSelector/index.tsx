@@ -62,7 +62,6 @@ const icons: {
     name: 'parallaxImage',
     label: TYPES_LABELS['parallaxImage'],
     icon: parallax_image_mural,
-    disabled: true,
   },
   {
     name: 'text',

@@ -5,6 +5,7 @@ import BackgroundVideo from 'components/MuralForm/forms/BackgroundVideo'
 import EmbedVideo from 'components/MuralForm/forms/EmbedVideo'
 import ImageAudio from 'components/MuralForm/forms/ImageAudio'
 import BackgroundImage from 'components/MuralForm/forms/BackgroundImage'
+import ParallaxImage from 'components/MuralForm/forms/ParallaxImage'
 import Text from 'components/MuralForm/forms/Text'
 import useRouter from 'hooks/useRouter'
 import { ItemTypes, selectedItemIndexSelector } from 'store/slices/story'
@@ -20,6 +21,7 @@ const ItemFormComponents: {
   { name: 'embedVideo', component: EmbedVideo },
   { name: 'imageAudio', component: ImageAudio },
   { name: 'backgroundImage', component: BackgroundImage },
+  { name: 'parallaxImage', component: ParallaxImage },
 ]
 
 export default function SecondPanel() {
