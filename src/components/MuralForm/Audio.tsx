@@ -3,6 +3,7 @@ import {
   FormControl,
   FormControlLabel,
   FormHelperText,
+  Box,
 } from '@material-ui/core'
 import { ReactNode } from 'react'
 import { useController, UseControllerProps } from 'react-hook-form'
@@ -50,7 +51,7 @@ export default function Audio({ label, helperText, ...props }: Props) {
       />
       {helperText && <FormHelperText>{helperText}</FormHelperText>}
       {field.value && (
-        <div>
+        <Box my={2}>
           <audio controls>
             <source
               src={`file://${(field.value as AudioType).path}`}
@@ -58,7 +59,7 @@ export default function Audio({ label, helperText, ...props }: Props) {
             />
             Your browser does not support the audio tag.
           </audio>
-        </div>
+        </Box>
       )}
     </FormControl>
   )
