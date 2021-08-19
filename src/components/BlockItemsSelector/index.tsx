@@ -29,7 +29,6 @@ const icons: {
     name: 'backgroundImage',
     label: TYPES_LABELS['backgroundImage'],
     icon: bg_image_mural,
-    disabled: true,
   },
   {
     name: 'backgroundVideo',
