@@ -17,7 +17,6 @@ export default function ImageAudio({ itemIndex }: Props) {
           key={`items.${itemIndex}.image`}
           name={`items.${itemIndex}.image`}
           label="Image"
-          rules={{ required: true }}
         />
       </Box>
       <Box my={4}>
@@ -48,8 +47,6 @@ export default function ImageAudio({ itemIndex }: Props) {
           key={`items.${itemIndex}.navigationTitle`}
           name={`items.${itemIndex}.navigationTitle` as const}
           label="Navigation Title"
-          rules={{ required: true }}
-          autoFocus
         />
       </Box>
       <Box my={4}>

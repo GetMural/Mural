@@ -91,7 +91,6 @@ export default function Slideshow({ itemIndex }: Props) {
                 <Image
                   name={`items.${itemIndex}.slides.${index}.image`}
                   label="Image"
-                  rules={{ required: true }}
                 />
               </Box>
               <Box my={4}>

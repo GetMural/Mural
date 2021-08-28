@@ -39,7 +39,6 @@ export default function BackgroundImage({ itemIndex }: Props) {
           key={`items.${itemIndex}.navigationTitle`}
           name={`items.${itemIndex}.navigationTitle` as const}
           label="Navigation Title"
-          autoFocus
         />
       </Box>
       <Box my={4}>

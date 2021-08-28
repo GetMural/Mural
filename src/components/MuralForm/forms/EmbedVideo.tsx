@@ -14,7 +14,6 @@ export default function EmbedVideo({ itemIndex }: Props) {
           key={`items.${itemIndex}.link`}
           name={`items.${itemIndex}.link` as const}
           label="Embed Link"
-          rules={{ required: true }}
           helperText="YouTube, Vimeo, DailyMotion link"
         />
       </Box>

@@ -14,7 +14,6 @@ export default function Text({ itemIndex }: Props) {
           key={`items.${itemIndex}.navigationTitle`}
           name={`items.${itemIndex}.navigationTitle` as const}
           label="Navigation Title"
-          rules={{ required: true }}
           autoFocus
         />
       </Box>
