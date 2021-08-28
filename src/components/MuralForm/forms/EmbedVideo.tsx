@@ -24,6 +24,13 @@ export default function EmbedVideo({ itemIndex }: Props) {
           label="Show controls"
         />
       </Box>
+      <Box my={4}>
+        <Input
+          key={`items.${itemIndex}.navigationTitle`}
+          name={`items.${itemIndex}.navigationTitle` as const}
+          label="Navigation Title"
+        />
+      </Box>
     </>
   )
 }
