@@ -7,6 +7,7 @@ import ImageAudio from 'components/MuralForm/forms/ImageAudio'
 import BackgroundImage from 'components/MuralForm/forms/BackgroundImage'
 import ParallaxImage from 'components/MuralForm/forms/ParallaxImage'
 import Slideshow from 'components/MuralForm/forms/Slideshow'
+import FullpageVideo from 'components/MuralForm/forms/FullpageVideo'
 import Text from 'components/MuralForm/forms/Text'
 import useRouter from 'hooks/useRouter'
 import { ItemTypes, selectedItemIndexSelector } from 'store/slices/story'
@@ -26,6 +27,7 @@ const ItemFormComponents: {
   { name: 'parallaxImage', component: ParallaxImage },
   { name: 'horizontalSlideshow', component: Slideshow },
   { name: 'verticalSlideshow', component: Slideshow },
+  { name: 'fullpageVideo', component: FullpageVideo },
 ]
 
 export default function SecondPanel() {

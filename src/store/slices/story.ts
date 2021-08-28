@@ -93,6 +93,13 @@ export interface ImageAudio extends EmptyItem {
   subtitle?: string
 }
 
+interface FullpageVideo extends EmptyItem {
+  type: 'fullpageVideo'
+  representativeImage?: Image
+  imageAltText?: string
+  loopVideo?: boolean
+}
+
 export type Items =
   | EmptyItem
   | BackgroundVideoItem
@@ -100,6 +107,7 @@ export type Items =
   | EmbedVideo
   | ImageAudio
   | HorizontalSlideshow
+  | FullpageVideo
 
 export interface StoryState {
   metadata: {
