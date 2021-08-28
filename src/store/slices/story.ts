@@ -60,6 +60,20 @@ interface EmbedVideo extends EmptyItem {
   showControls?: boolean
 }
 
+interface Slide {
+  slideTitle: string
+  image: Image
+  slideImageAltText: string
+  slideCredits: string
+}
+
+interface HorizontalSlideshow extends EmptyItem {
+  type: 'horizontalSlideshow'
+  navigationTitle?: string
+  slideShowTitle?: RichText
+  slides?: Slide[]
+}
+
 export interface TextItem extends EmptyItem {
   type: 'text'
   navigationTitle?: string
@@ -85,6 +99,7 @@ export type Items =
   | TextItem
   | EmbedVideo
   | ImageAudio
+  | HorizontalSlideshow
 
 export interface StoryState {
   metadata: {

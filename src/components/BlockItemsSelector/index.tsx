@@ -50,13 +50,11 @@ const icons: {
     name: 'horizontalSlideshow',
     label: TYPES_LABELS['horizontalSlideshow'],
     icon: H_slide_mural,
-    disabled: true,
   },
   {
     name: 'verticalSlideshow',
     label: TYPES_LABELS['verticalSlideshow'],
     icon: V_slide_mural,
-    disabled: true,
   },
   {
     name: 'parallaxImage',

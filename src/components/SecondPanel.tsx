@@ -6,11 +6,13 @@ import EmbedVideo from 'components/MuralForm/forms/EmbedVideo'
 import ImageAudio from 'components/MuralForm/forms/ImageAudio'
 import BackgroundImage from 'components/MuralForm/forms/BackgroundImage'
 import ParallaxImage from 'components/MuralForm/forms/ParallaxImage'
+import Slideshow from 'components/MuralForm/forms/Slideshow'
 import Text from 'components/MuralForm/forms/Text'
 import useRouter from 'hooks/useRouter'
 import { ItemTypes, selectedItemIndexSelector } from 'store/slices/story'
 import BackIcon from '@material-ui/icons/ArrowBack'
 import React from 'react'
+import TYPES_LABELS from 'constantes/blockTypes'
 
 const ItemFormComponents: {
   name: ItemTypes
@@ -22,6 +24,8 @@ const ItemFormComponents: {
   { name: 'imageAudio', component: ImageAudio },
   { name: 'backgroundImage', component: BackgroundImage },
   { name: 'parallaxImage', component: ParallaxImage },
+  { name: 'horizontalSlideshow', component: Slideshow },
+  { name: 'verticalSlideshow', component: Slideshow },
 ]
 
 export default function SecondPanel() {
@@ -56,6 +60,11 @@ export default function SecondPanel() {
         unmountOnExit
       >
         <div>
+          {currentView?.name === 'item' && (
+            <Typography variant="h3">
+              {TYPES_LABELS[currentView.args.item.type]}
+            </Typography>
+          )}
           {selectedItemIndex !== undefined && SelectedItemComponent && (
             <>
               <Input

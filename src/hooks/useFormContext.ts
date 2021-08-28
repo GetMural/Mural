@@ -2,6 +2,7 @@ import React from 'react'
 import { useAppDispatch, useAppSelector } from 'store/hooks'
 import { saveForm, StoryState } from 'store/slices/story'
 import { useFormContext as useReactFormContext } from 'react-hook-form'
+import { cloneDeep } from 'lodash'
 
 export default function useFormContext() {
   const { handleSubmit, formState, control, reset, trigger, watch } =
@@ -10,7 +11,7 @@ export default function useFormContext() {
   const story = useAppSelector((state) => state.story)
 
   const resetFormWithCurrentState = React.useCallback(() => {
-    reset({ ...story })
+    reset(cloneDeep(story))
   }, [reset, story])
 
   const save = React.useCallback(async () => {

@@ -3,6 +3,8 @@ import { useAppSelector } from 'store/hooks'
 import { StoryState } from 'store/slices/story'
 import { useForm as useReactForm } from 'react-hook-form'
 import isEqual from 'lodash/isEqual'
+import cloneDeep from 'lodash/cloneDeep'
+
 export default function useForm() {
   /**
    * Instanciate a react form form instance that will be put in the FormContext
@@ -14,7 +16,7 @@ export default function useForm() {
   const story = useAppSelector((state) => state.story)
 
   const forms = useReactForm<StoryState>({
-    defaultValues: story,
+    defaultValues: cloneDeep(story),
     // mode: 'onChange',
   })
 
@@ -22,7 +24,7 @@ export default function useForm() {
 
   React.useEffect(() => {
     if (!isEqual(story, previousStoryRef.current)) {
-      forms.reset({ ...story })
+      forms.reset(cloneDeep(story))
       previousStoryRef.current = story
     }
   }, [story, forms])
