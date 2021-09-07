@@ -17,6 +17,8 @@ import { useForm, SubmitHandler, useFieldArray } from 'react-hook-form'
 import { useAppSelector } from 'store/hooks'
 import { setPaymentSettings, SettingsState } from 'store/slices/settings'
 import { DevTool } from '@hookform/devtools'
+import React from 'react'
+import { sum } from 'lodash'
 
 export default function PaymentSettingsDialogContent({
   onSubmit,
@@ -28,12 +30,24 @@ export default function PaymentSettingsDialogContent({
     register,
     control,
     handleSubmit,
-    formState: { errors },
+    setValue,
+    getValues,
+    formState: { errors, isDirty },
   } = useForm<SettingsState['payment']>({ defaultValues: paymentSettings })
   const { fields, append, remove } = useFieldArray({
     control,
     name: 'pointers',
   })
+
+  React.useEffect(() => {
+    fields.forEach((field, index) => {
+      const newShare = 100 / fields.length
+      // if different and if form is dirty (skip initial state)
+      if (field.share !== newShare && isDirty) {
+        setValue(`pointers.${index}.share`, newShare)
+      }
+    })
+  }, [setValue, fields, isDirty])
 
   const onSubmitForm: SubmitHandler<SettingsState['payment']> = (data) => {
     dispatch(setPaymentSettings(data))
@@ -66,15 +80,25 @@ export default function PaymentSettingsDialogContent({
         <Box my={4}>
           {fields.map((field, index) => {
             const name = register(`pointers.${index}.name`, {
-              required: index > 0 ? 'Required' : undefined,
+              required: fields.length > 1 ? 'Required' : undefined,
             })
             const pointer = register(`pointers.${index}.pointer`, {
-              required: index > 0 ? 'Required' : undefined,
+              required: fields.length > 1 ? 'Required' : undefined,
             })
             const share = register(`pointers.${index}.share`, {
-              required: index > 0 ? 'Required' : undefined,
+              required: fields.length > 1 ? 'Required' : undefined,
               max: 100,
               min: 0,
+              valueAsNumber: true,
+              validate: () => {
+                return (
+                  sum(
+                    fields.map((field, index) =>
+                      Number(getValues(`pointers.${index}.share`))
+                    )
+                  ) === 100
+                )
+              },
             })
             return (
               <Box key={field.id} display="flex" mb={4}>
@@ -87,7 +111,7 @@ export default function PaymentSettingsDialogContent({
                   onBlur={name.onBlur}
                   name={name.name}
                   style={{ marginRight: 10 }}
-                  required={index > 0}
+                  required={fields.length > 1}
                   error={errors.pointers && !!errors.pointers[index]?.name}
                   helperText={
                     errors?.pointers && errors.pointers[index]?.name?.message
@@ -102,7 +126,7 @@ export default function PaymentSettingsDialogContent({
                   onBlur={pointer.onBlur}
                   name={pointer.name}
                   style={{ marginRight: 10, flexGrow: 1 }}
-                  required={index > 0}
+                  required={fields.length > 1}
                   error={errors.pointers && !!errors.pointers[index]?.pointer}
                   helperText={
                     errors?.pointers && errors.pointers[index]?.pointer?.message
@@ -125,7 +149,7 @@ export default function PaymentSettingsDialogContent({
                   onChange={share.onChange}
                   onBlur={share.onBlur}
                   name={share.name}
-                  required={index > 0}
+                  required={fields.length > 1}
                   error={errors.pointers && !!errors.pointers[index]?.share}
                   helperText={
                     errors?.pointers && errors.pointers[index]?.share?.message
