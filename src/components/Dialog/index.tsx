@@ -2,6 +2,7 @@ import UnsavedChanges from './dialogs/UnsavedChanges'
 import FormIsNotValid from './dialogs/FormIsNotValid'
 import UnmonetizingStory from './dialogs/UnmonetizingStory'
 import MonetizingStory from './dialogs/MonetizingStory'
+import PaymentSettings from './dialogs/PaymentSettings'
 import useDialog from './useDialog'
 
 export interface DialogProps {
@@ -15,6 +16,7 @@ export type DialogNames =
   | 'FormIsNotValid'
   | 'UnmonetizingStory'
   | 'MonetizingStory'
+  | 'PaymentSettings'
 
 const DIALOGS: {
   name: DialogNames
@@ -24,6 +26,7 @@ const DIALOGS: {
   { name: 'FormIsNotValid', component: FormIsNotValid },
   { name: 'UnmonetizingStory', component: UnmonetizingStory },
   { name: 'MonetizingStory', component: MonetizingStory },
+  { name: 'PaymentSettings', component: PaymentSettings },
 ]
 
 export default function AlertDialog() {

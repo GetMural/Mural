@@ -1,15 +1,8 @@
 import { Box, Typography } from '@material-ui/core'
 import Input from 'components/MuralForm/Input'
-import Checkbox from 'components/MuralForm/Checkbox'
 import Image from 'components/MuralForm/Image'
-import { openDialogAndWait } from 'store/slices/navigation'
-import { useAppDispatch, useAppSelector } from 'store/hooks'
 
 export default function StoryMetadataForm() {
-  const dispatch = useAppDispatch()
-  const dontAskConfirmationForMonetisation = useAppSelector(
-    (state) => state.navigation.dontAskConfirmationForMonetisation
-  )
   return (
     <>
       <Typography variant="h2">Story Metadata</Typography>
@@ -99,30 +92,6 @@ export default function StoryMetadataForm() {
                 Facebook, Twitter, or Mastodon.
               </>
             }
-          />
-        </Box>
-        <Box my={4}>
-          <Checkbox
-            name="metadata.monetizeStory"
-            label="Monetize Story"
-            onChange={(e, onChange) => {
-              let checked = e.target.checked
-              if (dontAskConfirmationForMonetisation) {
-                onChange(checked)
-              } else {
-                dispatch(
-                  openDialogAndWait({
-                    name: checked ? 'MonetizingStory' : 'UnmonetizingStory',
-                  })
-                ).then((res) => {
-                  if (res) {
-                    // why it's now the new value
-                    onChange(checked)
-                  }
-                })
-              }
-            }}
-            helperText={<>set up a digital wallet and monetize your content.</>}
           />
         </Box>
         <Box my={4}>

@@ -16,6 +16,7 @@ interface Props extends UseControllerProps<StoryState> {
   autoFocus?: boolean
   multiline?: boolean
   type?: React.InputHTMLAttributes<unknown>['type']
+  style?: React.CSSProperties
 }
 
 export default function Input({
@@ -24,6 +25,7 @@ export default function Input({
   placeholder,
   helperText,
   autoFocus,
+  style,
   multiline,
   ...props
 }: Props) {
@@ -56,6 +58,7 @@ export default function Input({
       placeholder={placeholder}
       autoFocus={autoFocus}
       fullWidth
+      style={style}
       variant="outlined"
       required={!!props.rules?.required}
       error={!!fieldState.error}

@@ -4,6 +4,7 @@ import BuildIcon from '@material-ui/icons/Public'
 import NewIcon from '@material-ui/icons/Add'
 import DeleteIcon from '@material-ui/icons/Delete'
 import HelpIcon from '@material-ui/icons/Help'
+import PaymentIcon from '@material-ui/icons/MonetizationOn'
 import {
   AppBar,
   Toolbar,
@@ -15,7 +16,7 @@ import {
 import { reset } from 'store/slices/story'
 import { useAppDispatch } from 'store/hooks'
 import useFormContext from 'hooks/useFormContext'
-import { goToView } from 'store/slices/navigation'
+import { goToView, openDialog } from 'store/slices/navigation'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -79,6 +80,14 @@ export default function MuralAppBar() {
             <ComingSoonButton startIcon={<DeleteIcon />}>
               Delete
             </ComingSoonButton>
+            <Button
+              startIcon={<PaymentIcon />}
+              onClick={() => {
+                dispatch(openDialog({ name: 'PaymentSettings' }))
+              }}
+            >
+              Payment
+            </Button>
             <ComingSoonButton startIcon={<HelpIcon />}>Help</ComingSoonButton>
           </div>
           <Typography variant="h6" className={classes.title}>

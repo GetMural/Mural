@@ -16,7 +16,7 @@ export default function useFormContext() {
 
   const save = React.useCallback(async () => {
     await handleSubmit((data) => {
-      dispatch(saveForm(data))
+      dispatch(saveForm(cloneDeep(data)))
     })()
   }, [dispatch, handleSubmit])
 
