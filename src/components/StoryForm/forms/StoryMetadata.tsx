@@ -1,6 +1,6 @@
 import { Box, Typography } from '@material-ui/core'
-import Input from 'components/MuralForm/Input'
-import Image from 'components/MuralForm/Image'
+import Input from 'components/StoryForm/Input'
+import Image from 'components/StoryForm/Image'
 
 export default function StoryMetadataForm() {
   return (

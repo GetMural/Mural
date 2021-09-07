@@ -1,6 +1,6 @@
 import { Box } from '@material-ui/core'
-import Input from 'components/MuralForm/Input'
-import Checkbox from 'components/MuralForm/Checkbox'
+import Input from 'components/StoryForm/Input'
+import Checkbox from 'components/StoryForm/Checkbox'
 
 interface Props {
   itemIndex: number

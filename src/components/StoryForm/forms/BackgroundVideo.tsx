@@ -1,47 +1,30 @@
-import { Box, Divider } from '@material-ui/core'
-import Input from 'components/MuralForm/Input'
-import Checkbox from 'components/MuralForm/Checkbox'
-import Audio from 'components/MuralForm/Audio'
-import Image from 'components/MuralForm/Image'
-import Wysiwyg from 'components/MuralForm/Wysiwyg'
+import { Box } from '@material-ui/core'
+import Input from 'components/StoryForm/Input'
+import Checkbox from '../Checkbox'
+import Video from '../Video'
+import Wysiwyg from '../Wysiwyg'
 
 interface Props {
   itemIndex: number
 }
 
-export default function ImageAudio({ itemIndex }: Props) {
+export default function BackgroundVideo({ itemIndex }: Props) {
   return (
     <>
       <Box my={4}>
-        <Image
-          key={`items.${itemIndex}.image`}
-          name={`items.${itemIndex}.image`}
-          label="Image"
+        <Video
+          key={`items.${itemIndex}.video`}
+          name={`items.${itemIndex}.video` as const}
+          label="Video"
         />
       </Box>
       <Box my={4}>
         <Checkbox
           key={`items.${itemIndex}.fullPage`}
           name={`items.${itemIndex}.fullPage` as const}
-          label="Show full page"
+          label="Full Page"
         />
       </Box>
-      <Box my={4}>
-        <Input
-          key={`items.${itemIndex}.altText`}
-          name={`items.${itemIndex}.altText` as const}
-          label="Image Alt Text"
-        />
-      </Box>
-      <Divider light />
-      <Box my={4}>
-        <Audio
-          key={`items.${itemIndex}.audio`}
-          name={`items.${itemIndex}.audio` as const}
-          label="Audio"
-        />
-      </Box>
-      <Divider light />
       <Box my={4}>
         <Input
           key={`items.${itemIndex}.navigationTitle`}

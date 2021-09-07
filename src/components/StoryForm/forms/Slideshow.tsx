@@ -9,9 +9,9 @@ import {
   Typography,
 } from '@material-ui/core'
 import { Theme, createStyles, makeStyles } from '@material-ui/core/styles'
-import Input from 'components/MuralForm/Input'
-import Wysiwyg from 'components/MuralForm/Wysiwyg'
-import Image from 'components/MuralForm/Image'
+import Input from 'components/StoryForm/Input'
+import Wysiwyg from 'components/StoryForm/Wysiwyg'
+import Image from 'components/StoryForm/Image'
 import { useFieldArray } from 'react-hook-form'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import DeleteIcon from '@material-ui/icons/Delete'

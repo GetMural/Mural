@@ -1,29 +1,36 @@
 import { Box, Divider } from '@material-ui/core'
-import Input from 'components/MuralForm/Input'
+import Input from 'components/StoryForm/Input'
 import Checkbox from '../Checkbox'
 import Image from '../Image'
-import Video from '../Video'
 import Wysiwyg from '../Wysiwyg'
 
 interface Props {
   itemIndex: number
 }
 
-export default function FullpageVideo({ itemIndex }: Props) {
+export default function BackgroundImage({ itemIndex }: Props) {
   return (
     <>
       <Box my={4}>
-        <Video
-          key={`items.${itemIndex}.video`}
-          name={`items.${itemIndex}.video` as const}
-          label="Video"
+        <Image
+          key={`items.${itemIndex}.image`}
+          name={`items.${itemIndex}.image` as const}
+          label="Image"
         />
       </Box>
       <Box my={4}>
         <Checkbox
-          key={`items.${itemIndex}.loopVideo`}
-          name={`items.${itemIndex}.loopVideo` as const}
-          label="Loop Video"
+          key={`items.${itemIndex}.fullPage`}
+          name={`items.${itemIndex}.fullPage` as const}
+          label="Full Page"
+        />
+      </Box>
+      <Box my={4}>
+        <Input
+          key={`items.${itemIndex}.altText`}
+          name={`items.${itemIndex}.altText` as const}
+          label="Image Alt Text"
+          placeholder="Your text here"
         />
       </Box>
       <Divider light />
@@ -44,24 +51,18 @@ export default function FullpageVideo({ itemIndex }: Props) {
       </Box>
       <Box my={4}>
         <Wysiwyg
-          key={`items.${itemIndex}.text`}
-          name={`items.${itemIndex}.text` as const}
-          label="Text"
+          key={`items.${itemIndex}.subtitle`}
+          name={`items.${itemIndex}.subtitle` as const}
+          label="Subtitle"
           placeholder="Your text here"
         />
       </Box>
       <Box my={4}>
-        <Image
-          key={`items.${itemIndex}.representativeImage`}
-          name={`items.${itemIndex}.representativeImage` as const}
-          label="Representative Image"
-        />
-      </Box>
-      <Box my={4}>
-        <Input
-          key={`items.${itemIndex}.imageAltText`}
-          name={`items.${itemIndex}.imageAltText` as const}
-          label="Image Alt Text"
+        <Wysiwyg
+          key={`items.${itemIndex}.text`}
+          name={`items.${itemIndex}.text` as const}
+          label="Text"
+          placeholder="Your text here"
         />
       </Box>
     </>

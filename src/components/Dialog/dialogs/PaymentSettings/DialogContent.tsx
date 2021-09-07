@@ -9,11 +9,19 @@ import {
   IconButton,
   InputAdornment,
   TextField,
+  InputProps,
 } from '@material-ui/core'
 import { useAppDispatch } from 'store/hooks'
 import { DialogProps } from 'components/Dialog'
 import RemoveIcon from '@material-ui/icons/Delete'
-import { useForm, SubmitHandler, useFieldArray } from 'react-hook-form'
+import {
+  useForm,
+  SubmitHandler,
+  useFieldArray,
+  UseFormRegister,
+  Path,
+  RegisterOptions,
+} from 'react-hook-form'
 import { useAppSelector } from 'store/hooks'
 import { setPaymentSettings, SettingsState } from 'store/slices/settings'
 import { DevTool } from '@hookform/devtools'
@@ -59,8 +67,6 @@ export default function PaymentSettingsDialogContent({
     handleSubmit(onSubmitForm)()
   }
 
-  const accessCode = register('accessCode')
-
   return (
     <>
       <DialogTitle id="alert-dialog-title">Payment Settings</DialogTitle>
@@ -78,92 +84,80 @@ export default function PaymentSettingsDialogContent({
           Please note that Mural received 10% of all payments.
         </Typography>
         <Box my={4}>
-          {fields.map((field, index) => {
-            const name = register(`pointers.${index}.name`, {
-              required: fields.length > 1 ? 'Required' : undefined,
-            })
-            const pointer = register(`pointers.${index}.pointer`, {
-              required: fields.length > 1 ? 'Required' : undefined,
-            })
-            const share = register(`pointers.${index}.share`, {
-              required: fields.length > 1 ? 'Required' : undefined,
-              max: 100,
-              min: 0,
-              valueAsNumber: true,
-              validate: () => {
-                return (
-                  sum(
-                    fields.map((field, index) =>
-                      Number(getValues(`pointers.${index}.share`))
+          {fields.map((field, index) => (
+            <Box key={field.id} display="flex" mb={4}>
+              <Input
+                register={register}
+                name={`pointers.${index}.name`}
+                options={{
+                  required: fields.length > 1 ? 'Required' : undefined,
+                }}
+                label="Name"
+                placeholder="Editorial Team"
+                style={{ marginRight: 10 }}
+                error={errors.pointers && !!errors.pointers[index]?.name}
+                helperText={
+                  errors?.pointers && errors.pointers[index]?.name?.message
+                }
+              />
+              <Input
+                register={register}
+                name={`pointers.${index}.pointer`}
+                options={{
+                  required: fields.length > 1 ? 'Required' : undefined,
+                }}
+                label="Pointer"
+                placeholder="$ilp.gatehub.net/XXXXXXXX"
+                key={`pointers.${index}.pointer`}
+                style={{ marginRight: 10, flexGrow: 1 }}
+                error={errors.pointers && !!errors.pointers[index]?.pointer}
+                helperText={
+                  errors?.pointers && errors.pointers[index]?.pointer?.message
+                }
+              />
+              <Input
+                register={register}
+                name={`pointers.${index}.share`}
+                label="Share"
+                placeholder="100"
+                type="number"
+                inputProps={{
+                  min: 0,
+                  max: 100,
+                }}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">%</InputAdornment>
+                  ),
+                }}
+                error={errors.pointers && !!errors.pointers[index]?.share}
+                helperText={
+                  errors?.pointers && errors.pointers[index]?.share?.message
+                }
+                style={{ maxWidth: 120 }}
+                options={{
+                  required: fields.length > 1 ? 'Required' : undefined,
+                  max: 100,
+                  min: 0,
+                  valueAsNumber: true,
+                  validate: () => {
+                    return (
+                      sum(
+                        fields.map((field, index) =>
+                          Number(getValues(`pointers.${index}.share`))
+                        )
+                      ) === 100
                     )
-                  ) === 100
-                )
-              },
-            })
-            return (
-              <Box key={field.id} display="flex" mb={4}>
-                <TextField
-                  label="Name"
-                  placeholder="Editorial Team"
-                  key={`pointers.${index}.name`}
-                  inputRef={name.ref}
-                  onChange={name.onChange}
-                  onBlur={name.onBlur}
-                  name={name.name}
-                  style={{ marginRight: 10 }}
-                  required={fields.length > 1}
-                  error={errors.pointers && !!errors.pointers[index]?.name}
-                  helperText={
-                    errors?.pointers && errors.pointers[index]?.name?.message
-                  }
-                />
-                <TextField
-                  label="Pointer"
-                  placeholder="$ilp.gatehub.net/XXXXXXXX"
-                  key={`pointers.${index}.pointer`}
-                  inputRef={pointer.ref}
-                  onChange={pointer.onChange}
-                  onBlur={pointer.onBlur}
-                  name={pointer.name}
-                  style={{ marginRight: 10, flexGrow: 1 }}
-                  required={fields.length > 1}
-                  error={errors.pointers && !!errors.pointers[index]?.pointer}
-                  helperText={
-                    errors?.pointers && errors.pointers[index]?.pointer?.message
-                  }
-                />
-                <TextField
-                  label="Share"
-                  placeholder="100"
-                  type="number"
-                  inputProps={{
-                    min: 0,
-                    max: 100,
-                  }}
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">%</InputAdornment>
-                    ),
-                  }}
-                  inputRef={share.ref}
-                  onChange={share.onChange}
-                  onBlur={share.onBlur}
-                  name={share.name}
-                  required={fields.length > 1}
-                  error={errors.pointers && !!errors.pointers[index]?.share}
-                  helperText={
-                    errors?.pointers && errors.pointers[index]?.share?.message
-                  }
-                  style={{ maxWidth: 120 }}
-                />
-                {fields.length > 1 && (
-                  <IconButton onClick={() => remove(index)}>
-                    <RemoveIcon />
-                  </IconButton>
-                )}
-              </Box>
-            )
-          })}
+                  },
+                }}
+              />
+              {fields.length > 1 && (
+                <IconButton onClick={() => remove(index)}>
+                  <RemoveIcon />
+                </IconButton>
+              )}
+            </Box>
+          ))}
         </Box>
         <Box my={4}>
           <Button onClick={() => append({})} variant="contained">
@@ -203,13 +197,11 @@ export default function PaymentSettingsDialogContent({
           </Typography>
         </Box>
         <Box my={4}>
-          <TextField
+          <Input
             label="Your access code"
             placeholder="yzYCMJWlFfHgzQ"
-            inputRef={accessCode.ref}
-            onChange={accessCode.onChange}
-            onBlur={accessCode.onBlur}
-            name={accessCode.name}
+            name={'accessCode'}
+            register={register}
             error={!!errors?.accessCode}
             helperText={errors?.accessCode && errors?.accessCode.message}
           />
@@ -220,5 +212,59 @@ export default function PaymentSettingsDialogContent({
         <Button onClick={onSaveClick}>Ok</Button>
       </DialogActions>
     </>
+  )
+}
+
+interface CustomInputProps<InputType> {
+  label: string
+  placeholder?: string
+  name: Path<InputType>
+  register: UseFormRegister<InputType>
+  options?: RegisterOptions
+  error?: boolean
+  helperText?: string
+  type?: React.InputHTMLAttributes<unknown>['type']
+  autoFocus?: boolean
+  multiline?: boolean
+  inputProps?: InputProps['inputProps']
+  InputProps?: Partial<InputProps>
+  style?: React.CSSProperties
+}
+
+function Input<InputType>({
+  label,
+  placeholder,
+  name,
+  register,
+  options,
+  error,
+  type,
+  helperText,
+  autoFocus,
+  multiline,
+  inputProps,
+  InputProps,
+  style,
+}: CustomInputProps<InputType>) {
+  const field = register(name, options)
+  return (
+    <TextField
+      label={label}
+      type={type}
+      placeholder={placeholder}
+      inputRef={field.ref}
+      onChange={field.onChange}
+      onBlur={field.onBlur}
+      name={field.name}
+      style={style}
+      variant="outlined"
+      error={error}
+      helperText={helperText}
+      autoFocus={autoFocus}
+      multiline={multiline}
+      inputProps={inputProps}
+      InputProps={InputProps}
+      required={!!options?.required}
+    />
   )
 }
