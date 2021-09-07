@@ -7,6 +7,7 @@ export interface SettingsState {
       pointer: string
       share: number
     }[]
+    accessCode?: string
   }
 }
 
@@ -20,6 +21,7 @@ const initialState: SettingsState = {
         share: 100,
       },
     ],
+    accessCode: '',
   },
 }
 
