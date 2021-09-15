@@ -63,49 +63,63 @@ export default function BlockItems() {
             animation={200}
             delayOnTouchStart={true}
           >
-            {items.map((item) => (
-              <ListItem
-                button
-                key={item.id}
-                selected={selectedItem && selectedItem.id === item.id}
-                onClick={() => goTo({ view: { name: 'item', args: { item } } })}
-              >
-                <ListItemText
-                  primary={
-                    'title' in item
-                      ? item.title?.contentState
-                        ? convertToPlainText(item.title)
-                        : item.title
-                      : undefined
+            {items.map((item) =>
+              item.type === 'paywallSeparator' ? (
+                <PaywallSeparator key={item.id} />
+              ) : (
+                <ListItem
+                  button
+                  key={item.id}
+                  selected={selectedItem && selectedItem.id === item.id}
+                  onClick={() =>
+                    goTo({ view: { name: 'item', args: { item } } })
                   }
-                  secondary={TYPES_LABELS[item.type]}
-                />
-                <ListItemSecondaryAction>
-                  <IconButton
-                    edge="end"
-                    aria-label="delete"
-                    onClick={() => {
-                      // if current item, we don't need to check unsaved changes or not valid form
-                      if (selectedItem && selectedItem.id === item.id) {
-                        dispatch(removeItem(item.id))
-                        dispatch(goToView(null))
-                      } else {
-                        askToSaveChanges().then((res) => {
-                          if (res) {
-                            dispatch(removeItem(item.id))
-                          }
-                        })
-                      }
-                    }}
-                  >
-                    <DeleteIcon />
-                  </IconButton>
-                </ListItemSecondaryAction>
-              </ListItem>
-            ))}
+                >
+                  <ListItemText
+                    primary={
+                      'title' in item
+                        ? item.title?.contentState
+                          ? convertToPlainText(item.title)
+                          : item.title
+                        : undefined
+                    }
+                    secondary={TYPES_LABELS[item.type]}
+                  />
+                  <ListItemSecondaryAction>
+                    <IconButton
+                      edge="end"
+                      aria-label="delete"
+                      onClick={() => {
+                        // if current item, we don't need to check unsaved changes or not valid form
+                        if (selectedItem && selectedItem.id === item.id) {
+                          dispatch(removeItem(item.id))
+                          dispatch(goToView(null))
+                        } else {
+                          askToSaveChanges().then((res) => {
+                            if (res) {
+                              dispatch(removeItem(item.id))
+                            }
+                          })
+                        }
+                      }}
+                    >
+                      <DeleteIcon />
+                    </IconButton>
+                  </ListItemSecondaryAction>
+                </ListItem>
+              )
+            )}
           </ReactSortable>
         )}
       </List>
     </div>
+  )
+}
+
+function PaywallSeparator() {
+  return (
+    <ListItem style={{ cursor: 'move' }}>
+      <ListItemText primary={TYPES_LABELS['paywallSeparator']} />
+    </ListItem>
   )
 }

@@ -10,6 +10,7 @@ import convertToPlainText from 'utils/convertToPlainText'
 import { goToView } from './navigation'
 
 export type ItemTypes =
+  | 'paywallSeparator'
   | 'backgroundVideo'
   | 'imageAudio'
   | 'backgroundImage'
@@ -100,6 +101,10 @@ interface FullpageVideo extends EmptyItem {
   loopVideo?: boolean
 }
 
+interface PaywallSeparator extends EmptyItem {
+  type: 'paywallSeparator'
+}
+
 export type Items =
   | EmptyItem
   | BackgroundVideoItem
@@ -108,6 +113,7 @@ export type Items =
   | ImageAudio
   | HorizontalSlideshow
   | FullpageVideo
+  | PaywallSeparator
 
 export interface StoryState {
   metadata: {
@@ -117,7 +123,6 @@ export interface StoryState {
     canonicalUrl: string
     siteName: string
     siteImage?: Image
-    monetizeStory: boolean
     googleAnalyticsId: string
     rssPingbkack: string
   }
@@ -133,7 +138,6 @@ const initialState: StoryState = {
     canonicalUrl: '',
     siteName: '',
     siteImage: undefined,
-    monetizeStory: false,
     googleAnalyticsId: '',
     rssPingbkack: '',
   },
@@ -170,13 +174,33 @@ export const story = createSlice({
     setItems: (state, action: PayloadAction<Items[]>) => {
       state.items = action.payload
     },
-    reset: () => {
-      return { ...initialState }
+    unshiftPaywallSeparator: (state) => {
+      state.items?.unshift({
+        type: 'paywallSeparator',
+        id: nanoid(),
+      })
     },
+    removePaywallSeparator: (state) => {
+      let paywallSeparatorIndex = state.items?.findIndex(
+        (i) => i.type === 'paywallSeparator'
+      )
+      if (paywallSeparatorIndex !== undefined && paywallSeparatorIndex > -1) {
+        state.items?.splice(paywallSeparatorIndex, 1)
+      }
+    },
+    reset: () => ({ ...initialState }),
   },
 })
 
-export const { saveForm, removeItem, addItem, setItems, reset } = story.actions
+export const {
+  saveForm,
+  removeItem,
+  addItem,
+  setItems,
+  reset,
+  unshiftPaywallSeparator,
+  removePaywallSeparator,
+} = story.actions
 
 export const addItemAndGoToView =
   (itemType: ItemTypes): AppThunk =>

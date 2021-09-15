@@ -5,12 +5,13 @@ import MainPanel from 'components/MainPanel'
 import { FormProvider } from 'react-hook-form'
 import useForm from 'hooks/useForm'
 import Dialog from 'components/Dialog'
+import usePaymentSeparatorListener from 'hooks/usePaymentSeparatorListener'
 
 const APPBAR_HEIGHT = 64
 
 function App() {
   const form = useForm()
-
+  usePaymentSeparatorListener()
   return (
     <div>
       <FormProvider {...form}>

@@ -12,6 +12,7 @@ const TYPES_LABELS: {
   verticalSlideshow: 'Vertical Slideshow',
   parallaxImage: 'Parallax Image',
   text: 'Text',
+  paywallSeparator: 'Paywall Separator',
 }
 
 export default TYPES_LABELS
