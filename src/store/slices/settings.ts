@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 export interface SettingsState {
   payment: {
+    enabled: boolean
     pointers: {
       name: string
       pointer: string
@@ -14,6 +15,7 @@ export interface SettingsState {
 // Define the initial state using that type
 const initialState: SettingsState = {
   payment: {
+    enabled: false,
     pointers: [
       {
         name: 'Me',

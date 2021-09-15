@@ -10,6 +10,8 @@ import {
   InputAdornment,
   TextField,
   StandardTextFieldProps,
+  FormControlLabel,
+  Switch as MuiSwitch,
 } from '@material-ui/core'
 import { useAppDispatch } from 'store/hooks'
 import { DialogProps } from 'components/Dialog'
@@ -20,7 +22,8 @@ import {
   useFieldArray,
   Path,
   RegisterOptions,
-  UseFormRegister,
+  useController,
+  Control,
 } from 'react-hook-form'
 import { useAppSelector } from 'store/hooks'
 import { setPaymentSettings, SettingsState } from 'store/slices/settings'
@@ -30,7 +33,7 @@ import { cloneDeep } from 'lodash'
 
 interface CustomInputProps<InputType> extends StandardTextFieldProps {
   name: Path<InputType>
-  register: UseFormRegister<InputType>
+  control: Control<InputType>
   options?: RegisterOptions
 }
 
@@ -41,9 +44,9 @@ export default function PaymentSettingsDialogContent({
   const dispatch = useAppDispatch()
   const paymentSettings = useAppSelector((state) => state.settings.payment)
   const {
-    register,
     control,
     handleSubmit,
+    watch,
     setValue,
     formState: { isDirty, errors },
   } = useForm<SettingsState['payment']>({
@@ -75,12 +78,22 @@ export default function PaymentSettingsDialogContent({
     handleSubmit(onSubmitForm)()
   }
 
+  const featureEnabled = watch('enabled')
+
   return (
     <>
       <DevTool control={control} placement="bottom-left" />
       <DialogTitle id="alert-dialog-title">Payment Settings</DialogTitle>
 
       <DialogContent>
+        <Box mb={4}>
+          <Switch
+            name={`enabled`}
+            key={`enabled`}
+            label={'Enable payment features'}
+            control={control}
+          />
+        </Box>
         <Typography variant="h3" color="textSecondary" gutterBottom>
           Live Payment
         </Typography>
@@ -95,9 +108,10 @@ export default function PaymentSettingsDialogContent({
           {fields.map((field, index) => (
             <Box key={field.id} display="flex" mb={4}>
               <Input
-                register={register}
+                control={control}
                 key={`pointers.${index}.name`}
                 name={`pointers.${index}.name`}
+                disabled={!featureEnabled}
                 options={{
                   required: fields.length > 1 ? 'Required' : undefined,
                 }}
@@ -110,9 +124,10 @@ export default function PaymentSettingsDialogContent({
                 }
               />
               <Input
-                register={register}
+                control={control}
                 key={`pointers.${index}.pointer`}
                 name={`pointers.${index}.pointer`}
+                disabled={!featureEnabled}
                 options={{
                   required: fields.length > 1 ? 'Required' : undefined,
                 }}
@@ -125,9 +140,10 @@ export default function PaymentSettingsDialogContent({
                 }
               />
               <Input
-                register={register}
+                control={control}
                 key={`pointers.${index}.share`}
                 name={`pointers.${index}.share`}
+                disabled={!featureEnabled}
                 label="Share"
                 placeholder="100"
                 type="number"
@@ -153,7 +169,10 @@ export default function PaymentSettingsDialogContent({
                 }}
               />
               {fields.length > 1 && (
-                <IconButton onClick={() => remove(index)}>
+                <IconButton
+                  disabled={!featureEnabled}
+                  onClick={() => remove(index)}
+                >
                   <RemoveIcon />
                 </IconButton>
               )}
@@ -164,6 +183,7 @@ export default function PaymentSettingsDialogContent({
           <Button
             onClick={() => append({ name: '', pointer: '', share: 0 })}
             variant="contained"
+            disabled={!featureEnabled}
           >
             Add a pointer
           </Button>
@@ -202,9 +222,10 @@ export default function PaymentSettingsDialogContent({
         </Box>
         <Box my={4}>
           <Input
-            register={register}
+            control={control}
             label="Your access code"
             placeholder="yzYCMJWlFfHgzQ"
+            disabled={!featureEnabled}
             key={'accessCode'}
             name={'accessCode'}
             error={!!errors?.accessCode}
@@ -222,20 +243,39 @@ export default function PaymentSettingsDialogContent({
 
 function Input({
   name,
-  register,
+  control,
   options,
   ...textFieldProps
 }: CustomInputProps<SettingsState['payment']>) {
-  const field = register(name, options)
+  const { field } = useController({ name, control })
   return (
     <TextField
       inputRef={field.ref}
       name={field.name}
-      onChange={field.onChange}
+      onChange={(e) => field.onChange(e.target.value)}
+      value={field.value}
       onBlur={field.onBlur}
       variant="outlined"
       required={!!options?.required}
       {...textFieldProps}
+    />
+  )
+}
+
+function Switch({ name, control, register, options, ...props }: any) {
+  const { field } = useController({ name, control })
+
+  return (
+    <FormControlLabel
+      control={
+        <MuiSwitch
+          {...field}
+          onChange={(e) => field.onChange(e.target.checked)}
+          checked={field.value}
+          inputRef={field.ref}
+        />
+      }
+      label={props.label}
     />
   )
 }
