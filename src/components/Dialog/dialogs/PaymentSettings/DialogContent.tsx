@@ -9,7 +9,7 @@ import {
   IconButton,
   InputAdornment,
   TextField,
-  InputProps,
+  StandardTextFieldProps,
 } from '@material-ui/core'
 import { useAppDispatch } from 'store/hooks'
 import { DialogProps } from 'components/Dialog'
@@ -18,15 +18,21 @@ import {
   useForm,
   SubmitHandler,
   useFieldArray,
-  UseFormRegister,
   Path,
   RegisterOptions,
+  UseFormRegister,
 } from 'react-hook-form'
 import { useAppSelector } from 'store/hooks'
 import { setPaymentSettings, SettingsState } from 'store/slices/settings'
-import { DevTool } from '@hookform/devtools'
 import React from 'react'
-import { sum } from 'lodash'
+import { DevTool } from '@hookform/devtools'
+import { cloneDeep } from 'lodash'
+
+interface CustomInputProps<InputType> extends StandardTextFieldProps {
+  name: Path<InputType>
+  register: UseFormRegister<InputType>
+  options?: RegisterOptions
+}
 
 export default function PaymentSettingsDialogContent({
   onSubmit,
@@ -39,9 +45,11 @@ export default function PaymentSettingsDialogContent({
     control,
     handleSubmit,
     setValue,
-    getValues,
-    formState: { errors, isDirty },
-  } = useForm<SettingsState['payment']>({ defaultValues: paymentSettings })
+    formState: { isDirty, errors },
+  } = useForm<SettingsState['payment']>({
+    defaultValues: paymentSettings,
+    reValidateMode: 'onChange',
+  })
   const { fields, append, remove } = useFieldArray({
     control,
     name: 'pointers',
@@ -58,7 +66,7 @@ export default function PaymentSettingsDialogContent({
   }, [setValue, fields, isDirty])
 
   const onSubmitForm: SubmitHandler<SettingsState['payment']> = (data) => {
-    dispatch(setPaymentSettings(data))
+    dispatch(cloneDeep(setPaymentSettings(data)))
     // close modal
     onSubmit()
   }
@@ -69,10 +77,10 @@ export default function PaymentSettingsDialogContent({
 
   return (
     <>
+      <DevTool control={control} placement="bottom-left" />
       <DialogTitle id="alert-dialog-title">Payment Settings</DialogTitle>
 
       <DialogContent>
-        <DevTool control={control} placement="bottom-left" />
         <Typography variant="h3" color="textSecondary" gutterBottom>
           Live Payment
         </Typography>
@@ -88,6 +96,7 @@ export default function PaymentSettingsDialogContent({
             <Box key={field.id} display="flex" mb={4}>
               <Input
                 register={register}
+                key={`pointers.${index}.name`}
                 name={`pointers.${index}.name`}
                 options={{
                   required: fields.length > 1 ? 'Required' : undefined,
@@ -102,13 +111,13 @@ export default function PaymentSettingsDialogContent({
               />
               <Input
                 register={register}
+                key={`pointers.${index}.pointer`}
                 name={`pointers.${index}.pointer`}
                 options={{
                   required: fields.length > 1 ? 'Required' : undefined,
                 }}
                 label="Pointer"
                 placeholder="$ilp.gatehub.net/XXXXXXXX"
-                key={`pointers.${index}.pointer`}
                 style={{ marginRight: 10, flexGrow: 1 }}
                 error={errors.pointers && !!errors.pointers[index]?.pointer}
                 helperText={
@@ -117,6 +126,7 @@ export default function PaymentSettingsDialogContent({
               />
               <Input
                 register={register}
+                key={`pointers.${index}.share`}
                 name={`pointers.${index}.share`}
                 label="Share"
                 placeholder="100"
@@ -140,15 +150,6 @@ export default function PaymentSettingsDialogContent({
                   max: 100,
                   min: 0,
                   valueAsNumber: true,
-                  validate: () => {
-                    return (
-                      sum(
-                        fields.map((field, index) =>
-                          Number(getValues(`pointers.${index}.share`))
-                        )
-                      ) === 100
-                    )
-                  },
                 }}
               />
               {fields.length > 1 && (
@@ -160,7 +161,10 @@ export default function PaymentSettingsDialogContent({
           ))}
         </Box>
         <Box my={4}>
-          <Button onClick={() => append({})} variant="contained">
+          <Button
+            onClick={() => append({ name: '', pointer: '', share: 0 })}
+            variant="contained"
+          >
             Add a pointer
           </Button>
         </Box>
@@ -198,10 +202,11 @@ export default function PaymentSettingsDialogContent({
         </Box>
         <Box my={4}>
           <Input
+            register={register}
             label="Your access code"
             placeholder="yzYCMJWlFfHgzQ"
+            key={'accessCode'}
             name={'accessCode'}
-            register={register}
             error={!!errors?.accessCode}
             helperText={errors?.accessCode && errors?.accessCode.message}
           />
@@ -215,56 +220,22 @@ export default function PaymentSettingsDialogContent({
   )
 }
 
-interface CustomInputProps<InputType> {
-  label: string
-  placeholder?: string
-  name: Path<InputType>
-  register: UseFormRegister<InputType>
-  options?: RegisterOptions
-  error?: boolean
-  helperText?: string
-  type?: React.InputHTMLAttributes<unknown>['type']
-  autoFocus?: boolean
-  multiline?: boolean
-  inputProps?: InputProps['inputProps']
-  InputProps?: Partial<InputProps>
-  style?: React.CSSProperties
-}
-
-function Input<InputType>({
-  label,
-  placeholder,
+function Input({
   name,
   register,
   options,
-  error,
-  type,
-  helperText,
-  autoFocus,
-  multiline,
-  inputProps,
-  InputProps,
-  style,
-}: CustomInputProps<InputType>) {
+  ...textFieldProps
+}: CustomInputProps<SettingsState['payment']>) {
   const field = register(name, options)
   return (
     <TextField
-      label={label}
-      type={type}
-      placeholder={placeholder}
       inputRef={field.ref}
+      name={field.name}
       onChange={field.onChange}
       onBlur={field.onBlur}
-      name={field.name}
-      style={style}
       variant="outlined"
-      error={error}
-      helperText={helperText}
-      autoFocus={autoFocus}
-      multiline={multiline}
-      inputProps={inputProps}
-      InputProps={InputProps}
       required={!!options?.required}
+      {...textFieldProps}
     />
   )
 }
