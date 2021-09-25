@@ -1,10 +1,8 @@
 import electron from 'electron'
 import path from 'path'
 import isDev from 'electron-is-dev'
-import fs from 'fs'
-import storeImage from './ipc/storeImage'
-import storeVideo from './ipc/storeVideo'
-import storeAudio from './ipc/storeAudio'
+import fs from 'fs-extra'
+import exportStory, { Storyboard } from './exportFrontend'
 
 const app = electron.app
 const BrowserWindow = electron.BrowserWindow
@@ -30,13 +28,15 @@ async function createWindow() {
       : `file://${path.join(__dirname, '../../build/index.html')}`
   )
   // open external link in browser
-  mainWindow.webContents.setWindowOpenHandler(({ url }) => {
-    electron.shell.openExternal(url)
-    return { action: 'deny' }
-  })
-  mainWindow.webContents.on('new-window', function (e, url) {
-    e.preventDefault()
-    require('electron').shell.openExternal(url)
+  mainWindow.webContents.setWindowOpenHandler(({ url, referrer }) => {
+    if (
+      (isDev && url.indexOf(referrer.url) === -1) ||
+      (!isDev && !url.startsWith('file:///'))
+    ) {
+      electron.shell.openExternal(url)
+      return { action: 'deny' }
+    }
+    return { action: 'allow' }
   })
   // Devtools
   if (isDev) {
@@ -52,8 +52,6 @@ async function createWindow() {
   }
   mainWindow.on('closed', () => (mainWindow = null))
 }
-
-// app.on('ready', createWindow)
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
@@ -73,16 +71,32 @@ app.whenReady().then(() => {
    * Creates user folder if doesn't exist and store its path in `userData`
    */
   const root = path.join(app.getPath('documents'), 'Mural')
-  const folders = [root, path.join(root, 'thumbnails')]
+  const folders = [
+    root,
+    path.join(root, 'thumbnails'),
+    path.join(root, 'preview'),
+  ]
   folders.forEach((dir) => {
     if (!fs.existsSync(dir)) {
       fs.mkdirSync(dir)
     }
   })
+  fs.copySync(
+    path.join(app.getAppPath(), 'frontend-assets'),
+    path.join(root, 'preview'),
+    { overwrite: true }
+  )
+  fs.copySync(
+    path.join(app.getAppPath(), 'frontend-assets-build'),
+    path.join(root, 'preview'),
+    { overwrite: true }
+  )
   app.setPath('userData', root)
 })
 
-// ipc
-electron.ipcMain.handle('store-image', storeImage)
-electron.ipcMain.handle('store-video', storeVideo)
-electron.ipcMain.handle('store-audio', storeAudio)
+require('./preview')
+
+// others ipc
+electron.ipcMain.handle('store-image', require('./ipc/storeImage').default)
+electron.ipcMain.handle('store-video', require('./ipc/storeVideo').default)
+electron.ipcMain.handle('store-audio', require('./ipc/storeAudio').default)

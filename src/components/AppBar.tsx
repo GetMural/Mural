@@ -12,6 +12,7 @@ import {
   Typography,
   Tooltip,
   ButtonProps,
+  Box,
 } from '@material-ui/core'
 import { reset } from 'store/slices/story'
 import { useAppDispatch } from 'store/hooks'
@@ -32,7 +33,7 @@ const useStyles = makeStyles((theme: Theme) =>
       },
     },
     title: {
-      textAlign: 'right',
+      textAlign: 'center',
       flexGrow: 1,
     },
   })
@@ -93,6 +94,15 @@ export default function MuralAppBar() {
           <Typography variant="h6" className={classes.title}>
             Mural
           </Typography>
+          <Box>
+            <Button
+              onClick={() => {
+                window.electron.openPreview()
+              }}
+            >
+              Preview
+            </Button>
+          </Box>
         </Toolbar>
       </AppBar>
     </div>

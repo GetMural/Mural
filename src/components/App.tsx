@@ -4,6 +4,7 @@ import MuralAppBar from 'components/AppBar'
 import MainPanel from 'components/MainPanel'
 import { FormProvider } from 'react-hook-form'
 import useForm from 'hooks/useForm'
+import usePreview from 'hooks/usePreview'
 import Dialog from 'components/Dialog'
 import usePaymentSeparatorListener from 'hooks/usePaymentSeparatorListener'
 
@@ -12,6 +13,7 @@ const APPBAR_HEIGHT = 64
 function App() {
   const form = useForm()
   usePaymentSeparatorListener()
+  usePreview()
   return (
     <div>
       <FormProvider {...form}>

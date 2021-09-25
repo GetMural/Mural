@@ -10,36 +10,29 @@
   "homepage": "./",
   "dependencies": {
     "@hookform/devtools": "^4.0.0",
-    "@material-ui/core": "^4.12.0",
+    "@material-ui/core": "^4.12.3",
     "@material-ui/icons": "^4.11.2",
     "@reduxjs/toolkit": "^1.5.1",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^12.0.0",
     "@testing-library/user-event": "^13.2.1",
-    "@types/draft-js": "^0.11.4",
-    "@types/draftjs-to-html": "^0.8.1",
-    "@types/jest": "^27.0.1",
-    "@types/node": "^16.7.10",
-    "@types/react": "^17.0.0",
-    "@types/react-dom": "^17.0.0",
-    "@types/react-draft-wysiwyg": "^1.13.3",
-    "@types/redux-logger": "^3.0.8",
-    "@types/sharp": "^0.28.4",
     "draft-js": "^0.11.7",
     "draftjs-to-html": "^0.9.1",
     "electron-is-dev": "^2.0.0",
     "false": "^0.0.4",
+    "fs-extra": "^10.0.0",
     "husky": "^7.0.1",
     "is-electron": "^2.2.0",
     "lint-staged": "^11.0.0",
     "lodash": "^4.17.21",
+    "mustache": "^4.2.0",
     "prettier": "^2.3.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-draft-wysiwyg": "^1.14.7",
     "react-hook-form": "^7.10.1",
     "react-redux": "^7.2.0",
-    "react-scripts": "4.0.3",
+    "react-scripts": "^4.0.3",
     "react-sortablejs": "^6.0.0",
     "redux-localstorage-simple": "^2.4.1",
     "redux-logger": "^3.0.6",
@@ -51,10 +44,14 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build && tsc -p electron",
+    "build": "react-scripts build && tsc -p electron && yarn build-frontend && yarn copy-files",
+    "build-frontend": "yarn webpack build -c frontend-webpack.config --mode production",
+    "electron-start": "tsc -p electron && yarn copy-files && electron .",
+    "electron-dev": "yarn clean && concurrently \"BROWSER=none yarn start\" \"wait-on http://localhost:3000 && tsc -p electron -w\" \"wait-on http://localhost:3000 && yarn electron-start \"",
+    "electron-build": "yarn build && electron-builder",
     "postinstall": "electron-builder install-app-deps",
-    "electron:dev": "concurrently \"BROWSER=none yarn start\" \"wait-on http://localhost:3000 && tsc -p electron -w\" \"wait-on http://localhost:3000 && tsc -p electron && electron .\"",
-    "electron:build": "yarn build && electron-builder"
+    "clean": "rimraf build/",
+    "copy-files": "copyfiles -u 1 electron/**/*.html electron/**/*.css build/electron"
   },
   "build": {
     "appId": "com.mural",
@@ -73,7 +70,8 @@
     },
     "files": [
       "build/**/*",
-      "electron/**/*"
+      "frontend-assets/**/*",
+      "frontend-assets-build/**/*"
     ],
     "extraMetadata": {
       "main": "build/electron/start.js"
@@ -83,7 +81,10 @@
     "extends": [
       "react-app",
       "react-app/jest"
-    ]
+    ],
+    "rules": {
+      "import/no-webpack-loader-syntax": "off"
+    }
   },
   "browserslist": {
     "production": [
@@ -108,11 +109,37 @@
     ]
   },
   "devDependencies": {
+    "@types/draft-js": "^0.11.4",
+    "@types/draftjs-to-html": "^0.8.1",
+    "@types/jest": "^27.0.1",
+    "@types/mustache": "^4.1.2",
+    "@types/react": "^17.0.0",
+    "@types/react-dom": "^17.0.0",
+    "@types/react-draft-wysiwyg": "^1.13.3",
+    "@types/redux-logger": "^3.0.8",
+    "@types/sharp": "^0.28.4",
+    "blueimp-gallery": "^3.3.0",
     "concurrently": "^6.2.0",
+    "copyfiles": "^2.4.1",
+    "css-loader": "^3",
     "electron": "^13.1.7",
     "electron-builder": "^22.11.7",
     "electron-devtools-installer": "^3.2.0",
     "electron-reloader": "^1.2.1",
-    "wait-on": "^6.0.0"
+    "expose-loader": "^1.0.0",
+    "extract-text-webpack-plugin": "^3.0.2",
+    "img-loader": "^4.0.0",
+    "jquery": "^3.6.0",
+    "rimraf": "^3.0.2",
+    "sass": "^1.42.1",
+    "sass-loader": "^10",
+    "scrollstory": "^1.1.0",
+    "stickybits": "^3.7.9",
+    "style-loader": "^2.0.0",
+    "svg-loader": "^0.0.2",
+    "wait-on": "^6.0.0",
+    "webpack-cli": "^4.8.0",
+    "webpack-manifest-plugin": "^4.0.2",
+    "webpack-md5-hash": "^0.0.6"
   }
 }
