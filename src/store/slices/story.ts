@@ -9,24 +9,6 @@ import convertToPlainText from 'utils/convertToPlainText'
 
 import { goToView } from './navigation'
 
-export type ItemTypes =
-  | 'paywallSeparator'
-  | 'backgroundVideo'
-  | 'imageAudio'
-  | 'backgroundImage'
-  | 'backgroundVideo'
-  | 'embedVideo'
-  | 'fullpageVideo'
-  | 'horizontalSlideshow'
-  | 'verticalSlideshow'
-  | 'parallaxImage'
-  | 'text'
-
-interface EmptyItem {
-  id: string
-  type: ItemTypes
-}
-
 interface Image {
   path: string
   thumbnail: string
@@ -44,7 +26,25 @@ export interface RichText {
   contentState: string
 }
 
-interface BackgroundVideoItem extends EmptyItem {
+interface BackgroundImage {
+  id: string
+  type: 'backgroundImage'
+  fullPage?: boolean
+  altText?: string
+  image?: Image
+  navigationTitle?: string
+  title?: RichText
+  subtitle?: RichText
+  text?: RichText
+}
+
+interface ParallaxImage {
+  id: string
+  type: 'parallaxImage'
+}
+
+interface BackgroundVideoItem {
+  id: string
   type: 'backgroundVideo'
   video?: Video
   fullPage?: boolean
@@ -55,7 +55,8 @@ interface BackgroundVideoItem extends EmptyItem {
   posterImage?: Image
 }
 
-interface EmbedVideo extends EmptyItem {
+interface EmbedVideo {
+  id: string
   type: 'embedVideo'
   link?: string
   showControls?: boolean
@@ -68,14 +69,24 @@ interface Slide {
   slideCredits: string
 }
 
-interface HorizontalSlideshow extends EmptyItem {
+interface HorizontalSlideshow {
+  id: string
   type: 'horizontalSlideshow'
   navigationTitle?: string
   slideShowTitle?: RichText
   slides?: Slide[]
 }
 
-export interface TextItem extends EmptyItem {
+interface VerticalSlideshow {
+  id: string
+  type: 'verticalSlideshow'
+  navigationTitle?: string
+  slideShowTitle?: RichText
+  slides?: Slide[]
+}
+
+export interface TextItem {
+  id: string
   type: 'text'
   navigationTitle?: string
   title?: RichText
@@ -83,7 +94,8 @@ export interface TextItem extends EmptyItem {
   introduction?: string
 }
 
-export interface ImageAudio extends EmptyItem {
+export interface ImageAudio {
+  id: string
   type: 'imageAudio'
   image?: string
   fullPage?: boolean
@@ -94,26 +106,34 @@ export interface ImageAudio extends EmptyItem {
   subtitle?: string
 }
 
-interface FullpageVideo extends EmptyItem {
+interface FullpageVideo {
+  id: string
   type: 'fullpageVideo'
+  text?: RichText
+  video: Video
   representativeImage?: Image
   imageAltText?: string
   loopVideo?: boolean
 }
 
-interface PaywallSeparator extends EmptyItem {
+interface PaywallSeparator {
+  id: string
   type: 'paywallSeparator'
 }
 
 export type Items =
-  | EmptyItem
-  | BackgroundVideoItem
+  | BackgroundImage
   | TextItem
   | EmbedVideo
   | ImageAudio
   | HorizontalSlideshow
+  | VerticalSlideshow
   | FullpageVideo
   | PaywallSeparator
+  | ParallaxImage
+  | BackgroundVideoItem
+
+export type ItemTypes = Items['type']
 
 export interface StoryState {
   metadata: {
@@ -126,7 +146,7 @@ export interface StoryState {
     googleAnalyticsId: string
     rssPingbkack: string
   }
-  items?: Items[]
+  items: Items[]
 }
 
 // Define the initial state using that type
@@ -158,8 +178,14 @@ export const story = createSlice({
       )
     },
     addItem: {
-      reducer: (state, action: PayloadAction<EmptyItem>) => {
-        state.items = [...(state.items || []), action.payload]
+      reducer: (state, action: PayloadAction<{ type: any; id: string }>) => {
+        state.items = [
+          ...(state.items || []),
+          {
+            type: action.payload.type,
+            id: action.payload.id,
+          },
+        ]
       },
       prepare: (itemType: ItemTypes) => {
         return {

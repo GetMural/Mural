@@ -48,18 +48,18 @@ export interface Storyboard {
     | {
         imagebackground: {
           id: string
-          format: {
+          format?: {
             fullpage: boolean
           }
           title: string
           subtitle: string
           text: string
-          image: {
+          image?: {
             srcmain: string
-            srcphone: string
-            srcmedium: string
+            srcphone?: string
+            srcmedium?: string
           }
-          audio: {
+          audio?: {
             mp3: string
             ogg: string
           }
@@ -68,7 +68,7 @@ export interface Storyboard {
     | {
         videobackground: {
           id: string
-          format: {
+          format?: {
             fullpage: boolean
           }
           title: string
@@ -110,15 +110,15 @@ export interface Storyboard {
     | {
         videofullpage: {
           id: string
-          format: {
+          format?: {
             fullpage: boolean
           }
-          title: string
-          text: string
+          title?: string
+          text?: string
           loop: boolean
-          autoAdvance: boolean
+          autoAdvance?: boolean
           video: Video
-          image: {
+          image?: {
             loading: string
           }
         }
