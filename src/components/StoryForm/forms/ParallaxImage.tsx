@@ -1,5 +1,6 @@
 import { Box, Divider } from '@material-ui/core'
 import Input from 'components/StoryForm/Input'
+import Checkbox from 'components/StoryForm/Checkbox'
 import Image from '../Image'
 import Wysiwyg from '../Wysiwyg'
 
@@ -25,6 +26,13 @@ export default function ParallaxImage({ itemIndex }: Props) {
           placeholder="Your text here"
         />
       </Box>
+      <Box my={4}>
+        <Checkbox
+          key={`items.${itemIndex}.fullPage`}
+          name={`items.${itemIndex}.fullPage` as const}
+          label="Full Page"
+        />
+      </Box>
       <Divider light />
       <Box my={4}>
         <Input
@@ -34,7 +42,7 @@ export default function ParallaxImage({ itemIndex }: Props) {
         />
       </Box>
       <Box my={4}>
-        <Wysiwyg
+        <Input
           key={`items.${itemIndex}.title`}
           name={`items.${itemIndex}.title` as const}
           label="Title"

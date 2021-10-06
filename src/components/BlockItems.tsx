@@ -17,7 +17,6 @@ import { goToView } from 'store/slices/navigation'
 import React from 'react'
 import { isEqual } from 'lodash'
 import TYPES_LABELS from 'constantes/blockTypes'
-import convertToPlainText from 'utils/convertToPlainText'
 
 export default function BlockItems() {
   const items = useAppSelector((state) => state.story.items)
@@ -77,10 +76,8 @@ export default function BlockItems() {
                 >
                   <ListItemText
                     primary={
-                      'title' in item
-                        ? item.title?.contentState
-                          ? convertToPlainText(item.title)
-                          : item.title
+                      'navigationTitle' in item
+                        ? item.navigationTitle
                         : undefined
                     }
                     secondary={TYPES_LABELS[item.type]}

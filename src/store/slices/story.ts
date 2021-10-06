@@ -49,6 +49,11 @@ interface BackgroundImage {
 interface ParallaxImage {
   id: string
   type: 'parallaxImage'
+  fullPage?: boolean
+  navigationTitle?: string
+  title?: string
+  subtitle?: RichText
+  image?: Image
 }
 
 interface BackgroundVideoItem {
@@ -57,9 +62,9 @@ interface BackgroundVideoItem {
   video?: Video
   fullPage?: boolean
   navigationTitle?: string
-  title?: RichText
+  title?: string
   subtitle?: string
-  text?: string
+  text?: RichText
   posterImage?: Image
 }
 
@@ -97,18 +102,18 @@ export interface TextItem {
   id: string
   type: 'text'
   navigationTitle?: string
-  title?: RichText
-  subtitle?: string
-  introduction?: string
+  title?: string
+  subtitle?: RichText
+  introduction?: RichText
 }
 
 export interface ImageAudio {
   id: string
   type: 'imageAudio'
-  image?: string
+  image?: Image
   fullPage?: boolean
   altText?: string
-  audio?: string
+  audio?: Audio
   navigationTitle?: string
   title?: RichText
   subtitle?: string

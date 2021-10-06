@@ -13,20 +13,20 @@ export default function exportStory(story: Storyboard) {
 
 interface Video {
   mp4: string
-  webm: string
+  webm?: string
 }
 
 interface Slideshow {
   id: string
-  title: string
-  images: {
+  title?: string
+  images?: {
     title: string
     credits: string
     srcphone: string
     srcmedium: string
     srcmain: string
   }[]
-  files: string[]
+  files?: string[]
 }
 
 export interface Storyboard {
@@ -45,6 +45,26 @@ export interface Storyboard {
     twitter: boolean
   }
   items: (
+    | {
+        imageaudio: {
+          id: string
+          light: boolean
+          audio?: {
+            loop: boolean
+            mp3: string
+            ogg?: string
+            audio_credits?: string
+          }
+          image?: {
+            srcmain: string
+            srcmedium: string
+            srcphone: string
+            alt?: string
+            image_caption?: string
+            image_credits?: string
+          }
+        }
+      }
     | {
         imagebackground: {
           id: string
@@ -71,11 +91,11 @@ export interface Storyboard {
           format?: {
             fullpage: boolean
           }
-          title: string
-          subtitle: string
-          text: string
-          video: Video
-          image: {
+          title?: string
+          subtitle?: string
+          text?: string
+          video?: Video
+          image?: {
             loading: string
           }
           backgroundprops?: {
@@ -98,9 +118,9 @@ export interface Storyboard {
           format: {
             fullpage: boolean
           }
-          title: string
-          subtitle: string
-          image: {
+          title?: string
+          subtitle?: string
+          image?: {
             srcmain: string
             srcmedium: string
             srcphone: string
@@ -132,18 +152,18 @@ export interface Storyboard {
     | {
         textcentred: {
           id: string
-          title: string
-          subtitle: string
-          light: 'on' | 'off' | null | undefined
-          intro: string
-          snippets: {
-            align: string
-            title: string
-            src: string
-            credits: string
-            text: string
+          title?: string
+          subtitle?: string
+          light?: 'on' | 'off' | null | undefined
+          intro?: string
+          snippets?: {
+            align?: string
+            title?: string
+            src?: string
+            credits?: string
+            text?: string
           }[]
-          files: string[]
+          files?: string[]
         }
       }
   )[]

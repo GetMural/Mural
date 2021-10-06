@@ -33,7 +33,7 @@ export default function BackgroundVideo({ itemIndex }: Props) {
         />
       </Box>
       <Box my={4}>
-        <Wysiwyg
+        <Input
           key={`items.${itemIndex}.title`}
           name={`items.${itemIndex}.title` as const}
           label="Title"
@@ -41,10 +41,18 @@ export default function BackgroundVideo({ itemIndex }: Props) {
         />
       </Box>
       <Box my={4}>
-        <Wysiwyg
+        <Input
           key={`items.${itemIndex}.subtitle`}
           name={`items.${itemIndex}.subtitle` as const}
           label="Subtitle"
+          placeholder="Your text here"
+        />
+      </Box>
+      <Box my={4}>
+        <Wysiwyg
+          key={`items.${itemIndex}.text`}
+          name={`items.${itemIndex}.text` as const}
+          label="Text"
           placeholder="Your text here"
         />
       </Box>

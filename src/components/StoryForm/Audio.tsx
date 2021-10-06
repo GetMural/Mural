@@ -33,7 +33,7 @@ export default function Audio({ label, helperText, ...props }: Props) {
             {field.value ? 'Change Audio' : 'Choose Audio'}
             <input
               type="file"
-              accept="audio/mpeg, audio/ogg, audio/wav"
+              accept="audio/mpeg"
               hidden
               {...field}
               ref={undefined}
