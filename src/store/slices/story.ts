@@ -9,9 +9,17 @@ import convertToPlainText from 'utils/convertToPlainText'
 
 import { goToView } from './navigation'
 
-interface Image {
+type ImageRendition = {
+  size: {
+    width: number
+    height: number
+  }
   path: string
-  thumbnail: string
+}
+export interface Image {
+  small: ImageRendition
+  medium: ImageRendition
+  big: ImageRendition
 }
 
 export interface Video {

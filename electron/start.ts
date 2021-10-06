@@ -2,8 +2,7 @@ import electron from 'electron'
 import path from 'path'
 import isDev from 'electron-is-dev'
 import fs from 'fs-extra'
-import exportStory, { Storyboard } from './exportFrontend'
-
+import { root, previewDir, media, image } from './directories'
 const app = electron.app
 const BrowserWindow = electron.BrowserWindow
 
@@ -70,13 +69,8 @@ app.whenReady().then(() => {
   /**
    * Creates user folder if doesn't exist and store its path in `userData`
    */
-  const root = path.join(app.getPath('documents'), 'Mural')
-  const folders = [
-    root,
-    path.join(root, 'thumbnails'),
-    path.join(root, 'preview'),
-  ]
-  folders.forEach((dir) => {
+  // order matters. Parents first
+  ;[root, previewDir, media, image].forEach((dir) => {
     if (!fs.existsSync(dir)) {
       fs.mkdirSync(dir)
     }
@@ -100,3 +94,11 @@ require('./preview')
 electron.ipcMain.handle('store-image', require('./ipc/storeImage').default)
 electron.ipcMain.handle('store-video', require('./ipc/storeVideo').default)
 electron.ipcMain.handle('store-audio', require('./ipc/storeAudio').default)
+electron.ipcMain.on('directories', (event, arg) => {
+  event.returnValue = {
+    root,
+    previewDir,
+    media,
+    image,
+  }
+})

@@ -6,10 +6,10 @@ import {
 } from '@material-ui/core'
 import { ReactNode } from 'react'
 import { useController, UseControllerProps } from 'react-hook-form'
-import { StoryState } from 'store/slices/story'
+import { Image as ImageType, StoryState } from 'store/slices/story'
 import useFormContext from 'hooks/useFormContext'
 import handleImageInput from 'utils/handleImageInput'
-
+import media from 'utils/getMediaPath'
 interface Props extends UseControllerProps<StoryState> {
   label: string
   helperText?: string | ReactNode
@@ -19,7 +19,6 @@ export default function Image({ label, helperText, ...props }: Props) {
   const { control } = useFormContext()
 
   const { field } = useController({ control, ...props })
-
   return (
     <FormControl>
       <FormControlLabel
@@ -52,9 +51,7 @@ export default function Image({ label, helperText, ...props }: Props) {
       {field.value && (
         <div>
           <img
-            src={`file://${
-              (field.value as { path: string; thumbnail: string }).thumbnail
-            }`}
+            src={`file://${media((field.value as ImageType).small.path)}`}
             alt={label}
             style={{
               maxWidth: '100%',

@@ -36,7 +36,7 @@
     "react-sortablejs": "^6.0.0",
     "redux-localstorage-simple": "^2.4.1",
     "redux-logger": "^3.0.6",
-    "sharp": "^0.29.0",
+    "slugify": "^1.6.1",
     "sortablejs": "^1.14.0",
     "typeface-roboto": "^1.1.13",
     "typescript": "^4.1.2",
@@ -59,7 +59,8 @@
     "copyright": "Copyright © 2021 ${author}",
     "linux": {
       "target": [
-        "deb"
+        "deb",
+        "dir"
       ]
     },
     "mac": {
@@ -117,7 +118,6 @@
     "@types/react-dom": "^17.0.0",
     "@types/react-draft-wysiwyg": "^1.13.3",
     "@types/redux-logger": "^3.0.8",
-    "@types/sharp": "^0.28.4",
     "blueimp-gallery": "^3.3.0",
     "concurrently": "^6.2.0",
     "copyfiles": "^2.4.1",

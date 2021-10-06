@@ -31,7 +31,6 @@ electron.app.whenReady().then(() => {
     ) {
       // generates html content
       const indexHtmlContent = exportStory(storyboard)
-      console.log('rendering template', { PREVIEW_INDEX_PATH, storyboard })
       // writes index.html file
       fs.writeFileSync(PREVIEW_INDEX_PATH, indexHtmlContent)
       // if preview window is open, reload it

@@ -3,6 +3,10 @@ import { useAppSelector } from 'store/hooks'
 import { RootState } from 'store/store'
 import convertToHtml from 'utils/convertToHtml'
 
+const media = (relativePath: string) => {
+  return '../media/' + relativePath
+}
+
 const render = (state: RootState) => {
   window.electron.renderPreview({
     meta: {
@@ -39,7 +43,7 @@ const render = (state: RootState) => {
               },
               image: item.representativeImage
                 ? {
-                    loading: item.representativeImage?.path,
+                    loading: item.representativeImage?.big.path,
                   }
                 : undefined,
             },
@@ -55,9 +59,9 @@ const render = (state: RootState) => {
               subtitle: (item.subtitle && convertToHtml(item.subtitle)) || '',
               text: (item.text && convertToHtml(item.text)) || '',
               image: item.image && {
-                srcmain: item.image.path,
-                // srcphone: null,
-                // srcmedium: null,
+                srcmain: media(item.image.big.path),
+                srcphone: media(item.image.small.path),
+                srcmedium: media(item.image.medium.path),
               },
               // audio: {
               //   mp3: ,
