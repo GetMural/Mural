@@ -32,17 +32,14 @@ interface Slideshow {
 export interface Storyboard {
   meta: {
     title: string
-    site_name: string
-    site_img: string
-    subtitle: string
-    author: string
-    keywords: string
-    rsspingback: string
-    description: string
-    src: string
-    share: boolean
-    facebook: boolean
-    twitter: boolean
+    site_name?: string
+    site_img?: string
+    subtitle?: string
+    author?: string
+    rsspingback?: string
+    description?: string
+    src?: string
+    analytics?: string
   }
   items: (
     | {
@@ -71,9 +68,9 @@ export interface Storyboard {
           format?: {
             fullpage: boolean
           }
-          title: string
-          subtitle: string
-          text: string
+          title?: string
+          subtitle?: string
+          text?: string
           image?: {
             srcmain: string
             srcphone?: string
@@ -168,7 +165,7 @@ export interface Storyboard {
       }
   )[]
   nav: {
-    id: number
+    id: string
     title: string
   }[]
 }

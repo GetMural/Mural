@@ -15,12 +15,18 @@ electron.app.whenReady().then(() => {
   electron.ipcMain.handle(
     'open-preview',
     function preview(event: electron.IpcMainInvokeEvent) {
+      if (previewWindow) {
+        return previewWindow.focus()
+      }
       previewWindow = new BrowserWindow({
         width: 800,
         height: 600,
         autoHideMenuBar: true,
       })
       previewWindow.loadFile(PREVIEW_INDEX_PATH)
+      previewWindow.on('closed', () => {
+        previewWindow = null
+      })
     }
   )
   electron.ipcMain.handle(

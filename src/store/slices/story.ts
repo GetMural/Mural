@@ -70,6 +70,7 @@ interface BackgroundVideoItem {
 
 interface EmbedVideo {
   id: string
+  navigationTitle?: string
   type: 'embedVideo'
   link?: string
   showControls?: boolean
@@ -119,7 +120,7 @@ export interface ImageAudio {
   subtitle?: string
 }
 
-interface FullpageVideo {
+export interface FullpageVideo {
   id: string
   type: 'fullpageVideo'
   text?: RichText
@@ -129,7 +130,7 @@ interface FullpageVideo {
   loopVideo?: boolean
 }
 
-interface PaywallSeparator {
+export interface PaywallSeparator {
   id: string
   type: 'paywallSeparator'
 }

@@ -11,19 +11,22 @@ const render = (state: RootState) => {
   window.electron.renderPreview({
     meta: {
       title: state.story.metadata.title,
-      site_name: 'string',
-      site_img: 'string',
-      subtitle: 'string',
-      author: 'string',
-      keywords: 'string',
-      rsspingback: 'string',
-      description: 'string',
-      src: 'string',
-      share: true,
-      facebook: true,
-      twitter: true,
+      site_name: state.story.metadata.siteName,
+      site_img: state.story.metadata.siteImage
+        ? media(state.story.metadata.siteImage.medium.path)
+        : undefined,
+      author: state.story.metadata.author,
+      rsspingback: state.story.metadata.rssPingbkack,
+      description: state.story.metadata.description,
+      src: state.story.metadata.canonicalUrl,
+      analytics: state.story.metadata.googleAnalyticsId,
     },
-    nav: [],
+    nav: state.story.items.flatMap((item) => {
+      if ('navigationTitle' in item && item.navigationTitle) {
+        return [{ title: item.navigationTitle, id: item.id }]
+      }
+      return []
+    }),
     items: state.story.items?.map((item) => {
       switch (item.type) {
         case 'imageAudio':
@@ -59,7 +62,7 @@ const render = (state: RootState) => {
                 fullpage: true,
               },
               // title:
-              text: (item.text && convertToHtml(item.text)) || '',
+              text: convertToHtml(item.text),
               loop: Boolean(item.loopVideo),
               // autoAdvance: boolean
               video: {
@@ -79,9 +82,9 @@ const render = (state: RootState) => {
               // format: {
               //   fullpage: item.
               // }
-              title: (item.title && convertToHtml(item.title)) || '',
-              subtitle: (item.subtitle && convertToHtml(item.subtitle)) || '',
-              text: (item.text && convertToHtml(item.text)) || '',
+              title: convertToHtml(item.title),
+              subtitle: convertToHtml(item.subtitle),
+              text: convertToHtml(item.text),
               image: item.image && {
                 srcmain: media(item.image.big.path),
                 srcphone: media(item.image.small.path),
@@ -103,7 +106,7 @@ const render = (state: RootState) => {
                 : undefined,
               title: item.title,
               subtitle: item.subtitle,
-              text: (item.text && convertToHtml(item.text)) || '',
+              text: convertToHtml(item.text),
               image: item.posterImage
                 ? {
                     loading: item.posterImage.big.path,
@@ -119,7 +122,7 @@ const render = (state: RootState) => {
                 fullpage: !!item.fullPage,
               },
               title: item.title,
-              subtitle: (item.subtitle && convertToHtml(item.subtitle)) || '',
+              subtitle: convertToHtml(item.subtitle),
               image: item.image && {
                 srcmain: media(item.image.big.path),
                 srcphone: media(item.image.small.path),
@@ -131,9 +134,7 @@ const render = (state: RootState) => {
           return {
             slideshowvertical: {
               id: item.id,
-              title:
-                (item.slideShowTitle && convertToHtml(item.slideShowTitle)) ||
-                '',
+              title: convertToHtml(item.slideShowTitle),
               images: item.slides
                 ? item.slides.map((slide) => ({
                     title: slide.slideTitle,
@@ -149,9 +150,7 @@ const render = (state: RootState) => {
           return {
             slideshowhorizontal: {
               id: item.id,
-              title:
-                (item.slideShowTitle && convertToHtml(item.slideShowTitle)) ||
-                '',
+              title: convertToHtml(item.slideShowTitle),
               images: item.slides
                 ? item.slides.map((slide) => ({
                     title: slide.slideTitle,
@@ -168,10 +167,9 @@ const render = (state: RootState) => {
             textcentred: {
               id: item.id,
               title: item.title,
-              subtitle: (item.subtitle && convertToHtml(item.subtitle)) || '',
+              subtitle: convertToHtml(item.subtitle),
               // light:
-              intro:
-                (item.introduction && convertToHtml(item.introduction)) || '',
+              intro: convertToHtml(item.introduction),
               // snippets: {}
             },
           }
