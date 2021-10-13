@@ -10,6 +10,7 @@ declare global {
       openPreview: () => Promise<any>
       renderPreview: (state: Storyboard) => Promise<any>
       resetStory: () => Promise<any>
+      exportAsZip: () => Promise<any>
       directories: {
         root: string
         previewDir: string

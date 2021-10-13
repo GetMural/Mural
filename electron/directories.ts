@@ -8,7 +8,7 @@ export const root = isDev
   ? path.join(app.getAppPath(), 'userFolder')
   : path.join(app.getPath('documents'), 'Mural')
 export const previewDir = path.join(root, 'preview')
-export const media = path.join(root, 'media')
+export const media = path.join(previewDir, 'media')
 export const image = path.join(media, 'images')
 export const audio = path.join(media, 'audio')
 export const video = path.join(media, 'video')
@@ -37,5 +37,4 @@ export function createsFolders() {
 
 export function removesWorkDirFolders() {
   fs.rmSync(previewDir, { force: true, recursive: true })
-  fs.rmSync(media, { force: true, recursive: true })
 }

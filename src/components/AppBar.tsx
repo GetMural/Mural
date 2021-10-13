@@ -62,9 +62,14 @@ export default function MuralAppBar() {
             >
               Save
             </Button>
-            <ComingSoonButton startIcon={<BuildIcon />}>
+            <Button
+              startIcon={<BuildIcon />}
+              onClick={() => {
+                window.electron.exportAsZip()
+              }}
+            >
               Export
-            </ComingSoonButton>
+            </Button>
             <Button
               startIcon={<NewIcon />}
               onClick={() => {

@@ -48,7 +48,7 @@ export interface Storyboard {
           light: boolean
           audio?: {
             loop: boolean
-            mp3: string
+            mp3?: string
             ogg?: string
             audio_credits?: string
           }
