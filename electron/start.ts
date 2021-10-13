@@ -1,8 +1,15 @@
 import electron from 'electron'
 import path from 'path'
 import isDev from 'electron-is-dev'
-import fs from 'fs-extra'
-import { root, previewDir, media, image } from './directories'
+import {
+  root,
+  previewDir,
+  media,
+  image,
+  video,
+  audio,
+  createsFolders,
+} from './directories'
 const app = electron.app
 const BrowserWindow = electron.BrowserWindow
 
@@ -66,26 +73,7 @@ app.on('activate', () => {
 
 app.whenReady().then(() => {
   createWindow()
-  /**
-   * Creates user folder if doesn't exist and store its path in `userData`
-   */
-  // order matters. Parents first
-  ;[root, previewDir, media, image].forEach((dir) => {
-    if (!fs.existsSync(dir)) {
-      fs.mkdirSync(dir)
-    }
-  })
-  fs.copySync(
-    path.join(app.getAppPath(), 'frontend-assets'),
-    path.join(root, 'preview'),
-    { overwrite: true }
-  )
-  fs.copySync(
-    path.join(app.getAppPath(), 'frontend-assets-build'),
-    path.join(root, 'preview'),
-    { overwrite: true }
-  )
-  app.setPath('userData', root)
+  createsFolders()
 })
 
 require('./preview')
@@ -94,11 +82,14 @@ require('./preview')
 electron.ipcMain.handle('store-image', require('./ipc/storeImage').default)
 electron.ipcMain.handle('store-video', require('./ipc/storeVideo').default)
 electron.ipcMain.handle('store-audio', require('./ipc/storeAudio').default)
+electron.ipcMain.handle('reset-story', require('./ipc/resetStory').default)
 electron.ipcMain.on('directories', (event, arg) => {
   event.returnValue = {
     root,
     previewDir,
     media,
     image,
+    video,
+    audio,
   }
 })

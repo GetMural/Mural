@@ -9,6 +9,7 @@ declare global {
       storeAudio: (arg: any) => Promise<any>
       openPreview: () => Promise<any>
       renderPreview: (state: Storyboard) => Promise<any>
+      resetStory: () => Promise<any>
       directories: {
         root: string
         previewDir: string

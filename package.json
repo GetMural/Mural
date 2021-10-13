@@ -43,7 +43,7 @@
     "web-vitals": "^2.1.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "BROWSER=none react-scripts start",
     "build": "react-scripts build && tsc -p electron && yarn build-frontend && yarn copy-files",
     "build-frontend": "yarn webpack build -c frontend-webpack.config --mode production",
     "electron-start": "tsc -p electron && yarn copy-files && electron .",

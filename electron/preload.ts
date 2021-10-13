@@ -6,5 +6,6 @@ contextBridge.exposeInMainWorld('electron', {
   storeAudio: (arg: any) => ipcRenderer.invoke('store-audio', arg),
   openPreview: (arg: any) => ipcRenderer.invoke('open-preview', arg),
   renderPreview: (arg: any) => ipcRenderer.invoke('render-preview', arg),
+  resetStory: () => ipcRenderer.invoke('reset-story'),
   directories: ipcRenderer.sendSync('directories'),
 })

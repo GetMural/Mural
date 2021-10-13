@@ -10,6 +10,7 @@ import { useController, UseControllerProps } from 'react-hook-form'
 import { StoryState, Audio as AudioType } from 'store/slices/story'
 import useFormContext from 'hooks/useFormContext'
 import handleAudioInput from 'utils/handleAudioInput'
+import media from 'utils/getMediaPath'
 
 interface Props extends UseControllerProps<StoryState> {
   label: string
@@ -54,8 +55,8 @@ export default function Audio({ label, helperText, ...props }: Props) {
         <Box my={2}>
           <audio controls>
             <source
-              src={`file://${(field.value as AudioType).path}`}
-              type={'audio/mpeg'}
+              src={`file://${media((field.value as AudioType).path)}`}
+              type={'audio/mp3'}
             />
             Your browser does not support the audio tag.
           </audio>

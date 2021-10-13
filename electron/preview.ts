@@ -2,13 +2,10 @@ import electron, { BrowserWindow } from 'electron'
 import exportStory, { Storyboard } from './exportFrontend'
 import fs from 'fs'
 import path from 'path'
+import { previewDir } from './directories'
 
 electron.app.whenReady().then(() => {
-  const PREVIEW_INDEX_PATH = path.join(
-    electron.app.getPath('userData'),
-    'preview',
-    'index.html'
-  )
+  const PREVIEW_INDEX_PATH = path.join(previewDir, 'index.html')
 
   let previewWindow: BrowserWindow | null = null
 

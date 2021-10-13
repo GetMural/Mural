@@ -3,7 +3,7 @@ import { useAppSelector } from 'store/hooks'
 import { RootState } from 'store/store'
 import convertToHtml from 'utils/convertToHtml'
 
-const media = (relativePath: string) => {
+const media = (relativePath?: string) => {
   return '../media/' + relativePath
 }
 
@@ -12,9 +12,7 @@ const render = (state: RootState) => {
     meta: {
       title: state.story.metadata.title,
       site_name: state.story.metadata.siteName,
-      site_img: state.story.metadata.siteImage
-        ? media(state.story.metadata.siteImage.medium.path)
-        : undefined,
+      site_img: media(state.story.metadata.siteImage?.medium.path),
       author: state.story.metadata.author,
       rsspingback: state.story.metadata.rssPingbkack,
       description: state.story.metadata.description,
@@ -37,7 +35,7 @@ const render = (state: RootState) => {
               audio: item.audio
                 ? {
                     loop: true,
-                    mp3: item.audio.path,
+                    mp3: media(item.audio.path),
                     // ogg: string
                     // audio_credits: string
                   }
@@ -66,11 +64,11 @@ const render = (state: RootState) => {
               loop: Boolean(item.loopVideo),
               // autoAdvance: boolean
               video: {
-                mp4: item.video.path,
+                mp4: media(item.video.path),
               },
               image: item.representativeImage
                 ? {
-                    loading: item.representativeImage.big.path,
+                    loading: media(item.representativeImage.big.path),
                   }
                 : undefined,
             },
@@ -101,7 +99,7 @@ const render = (state: RootState) => {
               },
               video: item.video
                 ? {
-                    mp4: item.video.path,
+                    mp4: media(item.video.path),
                   }
                 : undefined,
               title: item.title,
@@ -109,7 +107,7 @@ const render = (state: RootState) => {
               text: convertToHtml(item.text),
               image: item.posterImage
                 ? {
-                    loading: item.posterImage.big.path,
+                    loading: media(item.posterImage.big.path),
                   }
                 : undefined,
             },
@@ -173,6 +171,8 @@ const render = (state: RootState) => {
               // snippets: {}
             },
           }
+        // case 'embedVideo':
+
         default:
           throw Error(`Type ${item.type} no implemented`)
       }

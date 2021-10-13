@@ -18,6 +18,7 @@ const icons: {
   label: string
   name: ItemTypes
   icon: string
+  disabled?: boolean
 }[] = [
   {
     name: 'imageAudio',
@@ -38,6 +39,7 @@ const icons: {
     name: 'embedVideo',
     label: TYPES_LABELS['embedVideo'],
     icon: embed_video_mural,
+    disabled: true,
   },
   {
     name: 'fullpageVideo',
@@ -72,11 +74,12 @@ export default function BlockItemsSelector() {
 
   return (
     <Grid container spacing={4}>
-      {icons.map(({ name, label, icon }) => (
+      {icons.map(({ name, label, icon, disabled }) => (
         <Grid item xs={6} md={4} key={name}>
           <Button
             style={{ display: 'block', width: '100%' }}
             variant="outlined"
+            disabled={disabled}
             onClick={() => {
               askToSaveChanges().then((res) => {
                 if (res) {

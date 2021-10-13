@@ -2,8 +2,8 @@ import fs from 'fs'
 import { nanoid } from '@reduxjs/toolkit'
 import electron from 'electron'
 import path from 'path'
-
-const app = electron.app
+import slugify from 'slugify'
+import { media } from '../directories'
 
 export default async function storeAudio(
   event: electron.IpcMainInvokeEvent,
@@ -12,14 +12,18 @@ export default async function storeAudio(
   }
 ) {
   let buffer = fs.readFileSync(args.filename)
-  //   write file to app user folder
-  let newPath = path.join(
-    app.getPath('userData'),
-    nanoid() + path.basename(args.filename)
+  const fileBasename = slugify(
+    path.basename(args.filename, path.extname(args.filename))
   )
-  fs.writeFileSync(newPath, buffer)
+  let relativePath = path.join(
+    'audio',
+    fileBasename + '_' + nanoid() + path.extname(args.filename)
+  )
+  let absolutePath = path.join(media, relativePath)
+  // write file to app user folder
+  fs.writeFileSync(absolutePath, buffer)
 
   return {
-    path: newPath,
+    path: relativePath,
   }
 }

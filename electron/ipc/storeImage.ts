@@ -5,6 +5,7 @@ import path from 'path'
 import { nativeImage } from 'electron'
 import slugify from 'slugify'
 import keyBy from 'lodash/keyBy'
+import { media } from '../directories'
 
 const SIZES: { name: string; width?: number; height?: number }[] = [
   { name: 'square', width: 200, height: 200 },
@@ -13,7 +14,6 @@ const SIZES: { name: string; width?: number; height?: number }[] = [
   { name: 'big', width: 1200 },
 ]
 
-const app = electron.app
 export default async function storeImage(
   event: electron.IpcMainInvokeEvent,
   args: {
@@ -27,8 +27,7 @@ export default async function storeImage(
   let buffer = fs.readFileSync(args.filename)
   //   write file to app user folder
   let newPath = path.join(
-    app.getPath('userData'),
-    'media',
+    media,
     'images',
     fileBasename + '_' + nanoid() + path.extname(args.filename)
   )
@@ -44,7 +43,7 @@ export default async function storeImage(
         nanoid() +
         '.jpg'
     )
-    let absolutePath = path.join(app.getPath('userData'), 'media', relativePath)
+    let absolutePath = path.join(media, relativePath)
     const newImage = nativeImage.createFromBuffer(buffer).resize(size)
 
     fs.writeFileSync(absolutePath, newImage.toJPEG(90))

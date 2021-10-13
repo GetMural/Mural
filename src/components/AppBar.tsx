@@ -73,6 +73,7 @@ export default function MuralAppBar() {
                 setTimeout(() => {
                   dispatch(reset())
                   resetFormWithCurrentState()
+                  window.electron.resetStory()
                 }, 1000)
               }}
             >
