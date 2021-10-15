@@ -20,11 +20,11 @@ interface Slideshow {
   id: string
   title?: string
   images?: {
-    title: string
-    credits: string
-    srcphone: string
-    srcmedium: string
-    srcmain: string
+    title?: string
+    credits?: string
+    srcphone?: string
+    srcmedium?: string
+    srcmain?: string
   }[]
   files?: string[]
 }
