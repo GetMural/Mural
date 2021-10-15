@@ -163,6 +163,11 @@ export interface Storyboard {
           files?: string[]
         }
       }
+    | {
+        paywallSeparator: {
+          id: string
+        }
+      }
   )[]
   nav: {
     id: string

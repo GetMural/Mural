@@ -187,9 +187,14 @@ export default function useStoryStateMapping() {
               },
             }
           // case 'embedVideo':
-
+          case 'paywallSeparator':
+            return {
+              paywallSeparator: {
+                id: item.id,
+              },
+            }
           default:
-            throw Error(`Type ${item.type} no implemented`)
+            throw Error(`Type ${item.type} is not implemented`)
         }
       }),
     }
