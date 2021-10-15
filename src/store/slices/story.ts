@@ -77,10 +77,10 @@ interface EmbedVideo {
 }
 
 interface Slide {
-  slideTitle: string
-  image: Image
-  slideImageAltText: string
-  slideCredits: string
+  slideTitle?: string
+  image?: Image
+  slideImageAltText?: string
+  slideCredits?: string
 }
 
 interface HorizontalSlideshow {

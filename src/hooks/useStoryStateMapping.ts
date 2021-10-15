@@ -140,9 +140,15 @@ export default function useStoryStateMapping() {
                   ? item.slides.map((slide) => ({
                       title: slide.slideTitle,
                       credits: slide.slideCredits,
-                      srcphone: media(slide.image.small.path),
-                      srcmedium: media(slide.image.medium.path),
-                      srcmain: media(slide.image.big.path),
+                      srcphone: slide.image
+                        ? media(slide.image.small.path)
+                        : undefined,
+                      srcmedium: slide.image
+                        ? media(slide.image.medium.path)
+                        : undefined,
+                      srcmain: slide.image
+                        ? media(slide.image.big.path)
+                        : undefined,
                     }))
                   : undefined,
               },
@@ -156,9 +162,15 @@ export default function useStoryStateMapping() {
                   ? item.slides.map((slide) => ({
                       title: slide.slideTitle,
                       credits: slide.slideCredits,
-                      srcphone: media(slide.image.small.path),
-                      srcmedium: media(slide.image.medium.path),
-                      srcmain: media(slide.image.big.path),
+                      srcphone: slide.image
+                        ? media(slide.image.small.path)
+                        : undefined,
+                      srcmedium: slide.image
+                        ? media(slide.image.medium.path)
+                        : undefined,
+                      srcmain: slide.image
+                        ? media(slide.image.big.path)
+                        : undefined,
                     }))
                   : undefined,
               },
