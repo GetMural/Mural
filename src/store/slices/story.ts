@@ -124,7 +124,7 @@ export interface FullpageVideo {
   id: string
   type: 'fullpageVideo'
   text?: RichText
-  video: Video
+  video?: Video
   representativeImage?: Image
   imageAltText?: string
   loopVideo?: boolean

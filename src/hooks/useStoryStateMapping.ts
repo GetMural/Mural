@@ -66,9 +66,11 @@ export default function useStoryStateMapping() {
                 text: convertToHtml(item.text),
                 loop: Boolean(item.loopVideo),
                 // autoAdvance: boolean
-                video: {
-                  mp4: media(item.video.path),
-                },
+                video: item.video
+                  ? {
+                      mp4: media(item.video.path),
+                    }
+                  : undefined,
                 image: item.representativeImage
                   ? {
                       loading: media(item.representativeImage.big.path),

@@ -134,7 +134,7 @@ export interface Storyboard {
           text?: string
           loop: boolean
           autoAdvance?: boolean
-          video: Video
+          video?: Video
           image?: {
             loading: string
           }
