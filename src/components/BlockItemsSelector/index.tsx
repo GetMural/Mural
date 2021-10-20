@@ -39,7 +39,6 @@ const icons: {
     name: 'embedVideo',
     label: TYPES_LABELS['embedVideo'],
     icon: embed_video_mural,
-    disabled: true,
   },
   {
     name: 'fullpageVideo',

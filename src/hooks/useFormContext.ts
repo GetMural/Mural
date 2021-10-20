@@ -5,7 +5,7 @@ import { useFormContext as useReactFormContext } from 'react-hook-form'
 import { cloneDeep } from 'lodash'
 
 export default function useFormContext() {
-  const { handleSubmit, formState, control, reset, trigger, watch } =
+  const { handleSubmit, formState, control, reset, trigger, watch, setValue } =
     useReactFormContext<StoryState>()
   const dispatch = useAppDispatch()
   const story = useAppSelector((state) => state.story)
@@ -27,5 +27,6 @@ export default function useFormContext() {
     resetFormWithCurrentState,
     trigger,
     watch,
+    setValue,
   }
 }

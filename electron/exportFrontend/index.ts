@@ -164,6 +164,19 @@ export interface Storyboard {
         }
       }
     | {
+        embedVideo: {
+          id: string
+          showControls?: boolean
+          autoAdvance?: boolean
+          embed?: {
+            id: string
+            url: string
+            source: 'youtube' | 'vimeo' | 'dailymotion'
+            embed: string
+          }
+        }
+      }
+    | {
         paywallSeparator: {
           id: string
         }

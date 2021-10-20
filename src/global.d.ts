@@ -1,5 +1,4 @@
 import { Storyboard } from '../electron/exportFrontend'
-export {}
 declare global {
   interface Window {
     MEDIA_PATH: string
@@ -20,5 +19,3 @@ declare global {
     }
   }
 }
-
-declare module 'react-mui-draft-wysiwyg'

@@ -34,6 +34,13 @@ export interface RichText {
   contentState: string
 }
 
+export interface Embed {
+  id: string
+  url: string
+  source: 'youtube' | 'vimeo' | 'dailymotion'
+  embed: string
+}
+
 interface BackgroundImage {
   id: string
   type: 'backgroundImage'
@@ -74,6 +81,8 @@ interface EmbedVideo {
   type: 'embedVideo'
   link?: string
   showControls?: boolean
+  autoAdvance?: boolean
+  embed?: Embed
 }
 
 interface Slide {

@@ -188,7 +188,15 @@ export default function useStoryStateMapping() {
                 // snippets: {}
               },
             }
-          // case 'embedVideo':
+          case 'embedVideo':
+            return {
+              embedVideo: {
+                id: item.id,
+                showControls: item.showControls,
+                autoAdvance: item.autoAdvance,
+                embed: item.embed,
+              },
+            }
           case 'paywallSeparator':
             return {
               paywallSeparator: {
@@ -196,7 +204,7 @@ export default function useStoryStateMapping() {
               },
             }
           default:
-            throw Error(`Type ${item.type} is not implemented`)
+            throw Error(`Should never happen`)
         }
       }),
     }
