@@ -125,7 +125,7 @@ export interface ImageAudio {
   altText?: string
   audio?: Audio
   navigationTitle?: string
-  title?: RichText
+  title?: string
   subtitle?: string
 }
 

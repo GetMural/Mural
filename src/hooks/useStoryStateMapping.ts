@@ -49,8 +49,8 @@ export default function useStoryStateMapping() {
                       srcmedium: media(item.image?.medium.path),
                       srcphone: media(item.image?.small.path),
                       alt: item.altText,
-                      // image_caption: string
-                      // image_credits: string
+                      image_caption: item.title,
+                      image_credits: item.subtitle,
                     }
                   : undefined,
               },

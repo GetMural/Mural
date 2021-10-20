@@ -3,7 +3,6 @@ import Input from 'components/StoryForm/Input'
 import Checkbox from 'components/StoryForm/Checkbox'
 import Audio from 'components/StoryForm/Audio'
 import Image from 'components/StoryForm/Image'
-import Wysiwyg from 'components/StoryForm/Wysiwyg'
 
 interface Props {
   itemIndex: number
@@ -50,7 +49,7 @@ export default function ImageAudio({ itemIndex }: Props) {
         />
       </Box>
       <Box my={4}>
-        <Wysiwyg
+        <Input
           key={`items.${itemIndex}.title`}
           name={`items.${itemIndex}.title` as const}
           label="Title"
@@ -58,7 +57,7 @@ export default function ImageAudio({ itemIndex }: Props) {
         />
       </Box>
       <Box my={4}>
-        <Wysiwyg
+        <Input
           key={`items.${itemIndex}.subtitle`}
           name={`items.${itemIndex}.subtitle` as const}
           label="Subtitle"
