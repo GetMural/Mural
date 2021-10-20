@@ -1,4 +1,4 @@
-import { Box, Typography } from '@material-ui/core'
+import { Box, Typography } from '@mui/material'
 import Input from 'components/StoryForm/Input'
 import Image from 'components/StoryForm/Image'
 

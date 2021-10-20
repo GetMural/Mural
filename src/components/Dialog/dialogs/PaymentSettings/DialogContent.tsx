@@ -12,10 +12,10 @@ import {
   StandardTextFieldProps,
   FormControlLabel,
   Switch as MuiSwitch,
-} from '@material-ui/core'
+} from '@mui/material'
 import { useAppDispatch } from 'store/hooks'
 import { DialogProps } from 'components/Dialog'
-import RemoveIcon from '@material-ui/icons/Delete'
+import RemoveIcon from '@mui/icons-material/Delete'
 import {
   useForm,
   SubmitHandler,
@@ -172,6 +172,7 @@ export default function PaymentSettingsDialogContent({
                 <IconButton
                   disabled={!featureEnabled}
                   onClick={() => remove(index)}
+                  size="large"
                 >
                   <RemoveIcon />
                 </IconButton>

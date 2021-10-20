@@ -1,4 +1,5 @@
-import { makeStyles, Typography } from '@material-ui/core'
+import { Typography } from '@mui/material'
+import makeStyles from '@mui/styles/makeStyles'
 import { ReactNode } from 'react'
 import { useController, UseControllerProps } from 'react-hook-form'
 import { RichText, StoryState } from 'store/slices/story'

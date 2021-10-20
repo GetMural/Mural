@@ -6,8 +6,8 @@ import {
   ListItemSecondaryAction,
   ListItemText,
   Typography,
-} from '@material-ui/core'
-import DeleteIcon from '@material-ui/icons/Delete'
+} from '@mui/material'
+import DeleteIcon from '@mui/icons-material/Delete'
 import useRouter from 'hooks/useRouter'
 import { ReactSortable } from 'react-sortablejs'
 import { useAppDispatch, useAppSelector } from 'store/hooks'
@@ -99,6 +99,7 @@ export default function BlockItems() {
                           })
                         }
                       }}
+                      size="large"
                     >
                       <DeleteIcon />
                     </IconButton>

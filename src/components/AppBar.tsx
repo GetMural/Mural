@@ -1,10 +1,12 @@
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
-import SaveIcon from '@material-ui/icons/SaveSharp'
-import BuildIcon from '@material-ui/icons/Public'
-import NewIcon from '@material-ui/icons/Add'
-import DeleteIcon from '@material-ui/icons/Delete'
-import HelpIcon from '@material-ui/icons/Help'
-import PaymentIcon from '@material-ui/icons/MonetizationOn'
+import { Theme } from '@mui/material/styles'
+import createStyles from '@mui/styles/createStyles'
+import makeStyles from '@mui/styles/makeStyles'
+import SaveIcon from '@mui/icons-material/SaveSharp'
+import BuildIcon from '@mui/icons-material/Public'
+import NewIcon from '@mui/icons-material/Add'
+import DeleteIcon from '@mui/icons-material/Delete'
+import HelpIcon from '@mui/icons-material/Help'
+import PaymentIcon from '@mui/icons-material/MonetizationOn'
 import {
   AppBar,
   Toolbar,
@@ -13,7 +15,7 @@ import {
   Tooltip,
   ButtonProps,
   Box,
-} from '@material-ui/core'
+} from '@mui/material'
 import { reset } from 'store/slices/story'
 import { useAppDispatch } from 'store/hooks'
 import useFormContext from 'hooks/useFormContext'

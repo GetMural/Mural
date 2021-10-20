@@ -8,7 +8,7 @@ import {
   Checkbox,
   FormControl,
   FormControlLabel,
-} from '@material-ui/core'
+} from '@mui/material'
 import React from 'react'
 import { useAppDispatch } from 'store/hooks'
 import { setDontAskConfirmationForMonetisation } from 'store/slices/navigation'

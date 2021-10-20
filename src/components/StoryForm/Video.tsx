@@ -3,7 +3,7 @@ import {
   FormControl,
   FormControlLabel,
   FormHelperText,
-} from '@material-ui/core'
+} from '@mui/material'
 import { ReactNode } from 'react'
 import { useController, UseControllerProps } from 'react-hook-form'
 import { StoryState, Video as VideoType } from 'store/slices/story'

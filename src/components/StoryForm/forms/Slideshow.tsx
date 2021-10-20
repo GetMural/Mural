@@ -7,14 +7,16 @@ import {
   Divider,
   IconButton,
   Typography,
-} from '@material-ui/core'
-import { Theme, createStyles, makeStyles } from '@material-ui/core/styles'
+} from '@mui/material'
+import { Theme } from '@mui/material/styles'
+import createStyles from '@mui/styles/createStyles'
+import makeStyles from '@mui/styles/makeStyles'
 import Input from 'components/StoryForm/Input'
 import Wysiwyg from 'components/StoryForm/Wysiwyg'
 import Image from 'components/StoryForm/Image'
 import { useFieldArray } from 'react-hook-form'
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
-import DeleteIcon from '@material-ui/icons/Delete'
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
+import DeleteIcon from '@mui/icons-material/Delete'
 
 interface Props {
   itemIndex: number
@@ -76,6 +78,7 @@ export default function Slideshow({ itemIndex }: Props) {
                   remove(index)
                 }}
                 onFocus={(event) => event.stopPropagation()}
+                size="large"
               >
                 <DeleteIcon />
               </IconButton>

@@ -5,7 +5,7 @@ import {
   DialogContentText,
   DialogActions,
   Button,
-} from '@material-ui/core'
+} from '@mui/material'
 import { useAppDispatch } from 'store/hooks'
 import { closeDialog } from 'store/slices/navigation'
 

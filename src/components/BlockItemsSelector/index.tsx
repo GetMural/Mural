@@ -1,4 +1,4 @@
-import { Grid, Button } from '@material-ui/core'
+import { Grid, Button } from '@mui/material'
 import { useAppDispatch } from 'store/hooks'
 import { addItemAndGoToView, ItemTypes } from 'store/slices/story'
 

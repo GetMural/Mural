@@ -1,4 +1,4 @@
-import { Box } from '@material-ui/core'
+import { Box } from '@mui/material'
 import Input from 'components/StoryForm/Input'
 import Checkbox from '../Checkbox'
 import Video from '../Video'

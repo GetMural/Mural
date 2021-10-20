@@ -1,4 +1,4 @@
-import { Dialog as MuiDialog } from '@material-ui/core'
+import { Dialog as MuiDialog } from '@mui/material'
 import { DialogProps } from 'components/Dialog'
 import DialogContent from './DialogContent'
 

@@ -1,4 +1,4 @@
-import { Box, Divider } from '@material-ui/core'
+import { Box, Divider } from '@mui/material'
 import Input from 'components/StoryForm/Input'
 import Checkbox from 'components/StoryForm/Checkbox'
 import Image from '../Image'

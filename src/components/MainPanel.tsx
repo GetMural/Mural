@@ -1,4 +1,4 @@
-import { Box, Button } from '@material-ui/core'
+import { Box, Button } from '@mui/material'
 import BlockItems from 'components/BlockItems'
 import useRouter from 'hooks/useRouter'
 import BlockItemsSelector from './BlockItemsSelector'

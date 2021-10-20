@@ -4,7 +4,7 @@ import {
   FormControlLabel,
   FormHelperText,
   Box,
-} from '@material-ui/core'
+} from '@mui/material'
 import { ReactNode } from 'react'
 import { useController, UseControllerProps } from 'react-hook-form'
 import { StoryState, Audio as AudioType } from 'store/slices/story'

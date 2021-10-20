@@ -1,4 +1,4 @@
-import { Box } from '@material-ui/core'
+import { Box } from '@mui/material'
 import SecondPanel from 'components/SecondPanel'
 import MuralAppBar from 'components/AppBar'
 import MainPanel from 'components/MainPanel'
@@ -21,7 +21,7 @@ function App() {
         <Box display="flex">
           <Box
             flexBasis="0"
-            flexGrow="1"
+            flexGrow={1}
             bgcolor="white"
             minHeight={`calc(100vh - ${APPBAR_HEIGHT}px)`}
           >
@@ -32,7 +32,7 @@ function App() {
           <Box
             flexBasis="0"
             bgcolor="#fafafa"
-            flexGrow="1"
+            flexGrow={1}
             minHeight={`calc(100vh - ${APPBAR_HEIGHT}px)`}
           >
             <Box p={4}>

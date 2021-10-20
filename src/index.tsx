@@ -6,15 +6,21 @@ import reportWebVitals from './reportWebVitals'
 import { store } from 'store/store'
 import { Provider } from 'react-redux'
 import 'typeface-roboto'
-import { ThemeProvider } from '@material-ui/core'
+import { ThemeProvider, Theme, StyledEngineProvider } from '@mui/material'
 import theme from 'theme'
+
+declare module '@mui/styles/defaultTheme' {
+  interface DefaultTheme extends Theme {}
+}
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <ThemeProvider theme={theme}>
-        <App />
-      </ThemeProvider>
+      <StyledEngineProvider injectFirst>
+        <ThemeProvider theme={theme}>
+          <App />
+        </ThemeProvider>
+      </StyledEngineProvider>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')
