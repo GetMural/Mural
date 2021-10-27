@@ -3,6 +3,7 @@ import Input from 'components/StoryForm/Input'
 import Checkbox from '../Checkbox'
 import Video from '../Video'
 import Wysiwyg from '../Wysiwyg'
+import Color from '../Color'
 
 interface Props {
   itemIndex: number
@@ -54,6 +55,13 @@ export default function BackgroundVideo({ itemIndex }: Props) {
           name={`items.${itemIndex}.text` as const}
           label="Text"
           placeholder="Your text here"
+        />
+      </Box>
+      <Box my={4}>
+        <Color
+          key={`items.${itemIndex}.backgroundTextColor`}
+          name={`items.${itemIndex}.backgroundTextColor` as const}
+          label="Background Text Color"
         />
       </Box>
     </>

@@ -96,9 +96,10 @@ export interface Storyboard {
             loading: string
           }
           backgroundprops?: {
-            active?: string
-            value?: string
-            opacity?: string
+            active?: {
+              value?: string
+              opacity?: string
+            }
           }
           offset?: {
             left: boolean

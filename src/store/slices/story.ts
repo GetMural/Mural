@@ -4,6 +4,7 @@ import {
   nanoid,
   PayloadAction,
 } from '@reduxjs/toolkit'
+import { RGBColor } from 'react-color'
 import { AppThunk, RootState } from 'store/store'
 import convertToPlainText from 'utils/convertToPlainText'
 
@@ -73,6 +74,7 @@ interface BackgroundVideoItem {
   subtitle?: string
   text?: RichText
   posterImage?: Image
+  backgroundTextColor?: RGBColor
 }
 
 interface EmbedVideo {
