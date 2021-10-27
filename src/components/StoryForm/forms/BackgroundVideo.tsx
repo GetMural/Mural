@@ -2,6 +2,7 @@ import { Box } from '@mui/material'
 import Input from 'components/StoryForm/Input'
 import Checkbox from '../Checkbox'
 import Video from '../Video'
+import Image from '../Image'
 import Wysiwyg from '../Wysiwyg'
 import Color from '../Color'
 
@@ -55,6 +56,13 @@ export default function BackgroundVideo({ itemIndex }: Props) {
           name={`items.${itemIndex}.text` as const}
           label="Text"
           placeholder="Your text here"
+        />
+      </Box>
+      <Box my={4}>
+        <Image
+          key={`items.${itemIndex}.posterImage`}
+          name={`items.${itemIndex}.posterImage` as const}
+          label="Poster Image"
         />
       </Box>
       <Box my={4}>
