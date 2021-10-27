@@ -98,6 +98,7 @@ interface HorizontalSlideshow {
   type: 'horizontalSlideshow'
   navigationTitle?: string
   slideShowTitle?: RichText
+  light?: boolean
   slides?: Slide[]
 }
 
@@ -106,6 +107,7 @@ interface VerticalSlideshow {
   type: 'verticalSlideshow'
   navigationTitle?: string
   slideShowTitle?: RichText
+  light?: boolean
   slides?: Slide[]
 }
 

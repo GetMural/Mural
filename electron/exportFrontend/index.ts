@@ -19,6 +19,7 @@ interface Video {
 interface Slideshow {
   id: string
   title?: string
+  light?: boolean
   images?: {
     title?: string
     credits?: string

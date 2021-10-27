@@ -17,6 +17,7 @@ import Image from 'components/StoryForm/Image'
 import { useFieldArray } from 'react-hook-form'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import DeleteIcon from '@mui/icons-material/Delete'
+import Checkbox from '../Checkbox'
 
 interface Props {
   itemIndex: number
@@ -47,13 +48,19 @@ export default function Slideshow({ itemIndex }: Props) {
           autoFocus
         />
       </Box>
-
       <Box my={4}>
         <Wysiwyg
           key={`items.${itemIndex}.slideShowTitle`}
           name={`items.${itemIndex}.slideShowTitle` as const}
           label="Slideshow Title"
           placeholder="Your text here"
+        />
+      </Box>
+      <Box my={4}>
+        <Checkbox
+          key={`items.${itemIndex}.light`}
+          name={`items.${itemIndex}.light` as const}
+          label="Light"
         />
       </Box>
       <Divider light />

@@ -148,6 +148,7 @@ export default function usePreview() {
               slideshowvertical: {
                 id: item.id,
                 title: convertToHtml(item.slideShowTitle),
+                light: !!item.light,
                 images: item.slides
                   ? item.slides.map((slide) => ({
                       title: slide.slideTitle,
@@ -170,6 +171,7 @@ export default function usePreview() {
               slideshowhorizontal: {
                 id: item.id,
                 title: convertToHtml(item.slideShowTitle),
+                light: !!item.light,
                 images: item.slides
                   ? item.slides.map((slide) => ({
                       title: slide.slideTitle,
