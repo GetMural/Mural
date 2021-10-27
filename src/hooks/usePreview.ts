@@ -26,6 +26,10 @@ export default function usePreview() {
         description: state.story.metadata.description,
         src: state.story.metadata.canonicalUrl,
         analytics: state.story.metadata.googleAnalyticsId,
+        font_base_link: state.story.metadata.extraHeader,
+        font_base_rules: state.story.metadata.mainFont,
+        font_headers_rules: state.story.metadata.headerFont,
+        custom_css: state.story.metadata.extraCss,
       },
       nav: state.story.items.flatMap((item) => {
         if ('navigationTitle' in item && item.navigationTitle) {
@@ -225,7 +229,11 @@ export default function usePreview() {
       state.story.metadata.author,
       state.story.metadata.canonicalUrl,
       state.story.metadata.description,
+      state.story.metadata.extraCss,
+      state.story.metadata.extraHeader,
       state.story.metadata.googleAnalyticsId,
+      state.story.metadata.headerFont,
+      state.story.metadata.mainFont,
       state.story.metadata.rssPingbkack,
       state.story.metadata.siteImage,
       state.story.metadata.siteName,

@@ -164,14 +164,18 @@ export type ItemTypes = Items['type']
 
 export interface StoryState {
   metadata: {
-    title: string
-    description: string
-    author: string
-    canonicalUrl: string
-    siteName: string
+    title?: string
+    description?: string
+    author?: string
+    canonicalUrl?: string
+    siteName?: string
     siteImage?: Image
-    googleAnalyticsId: string
-    rssPingbkack: string
+    googleAnalyticsId?: string
+    rssPingbkack?: string
+    extraHeader?: string
+    mainFont?: string
+    headerFont?: string
+    extraCss?: string
   }
   items: Items[]
 }

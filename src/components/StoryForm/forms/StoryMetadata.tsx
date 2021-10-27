@@ -96,6 +96,69 @@ export default function StoryMetadataForm() {
         </Box>
         <Box my={4}>
           <Input
+            name="metadata.extraHeader"
+            label="Extra Headers"
+            multiline
+            helperText={
+              <>
+                To embed other fonts, copy a code like
+                <br />
+                <code>
+                  {`<link
+                    href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&display=swap"
+                    rel="stylesheet"
+                  />`}
+                </code>
+              </>
+            }
+          />
+        </Box>
+        <Box my={4}>
+          <Input
+            name="metadata.mainFont"
+            label="Main font (all body/intro text) CSS rules"
+            multiline
+            helperText={
+              <>
+                CSS rules to specify families
+                <br />
+                <code>font-family: 'Roboto Slab', serif;</code>
+              </>
+            }
+          />
+        </Box>
+        <Box my={4}>
+          <Input
+            name="metadata.headerFont"
+            label="Headers font (titles/subtitles) embed"
+            multiline
+            helperText={
+              <>
+                CSS rules to specify families
+                <br />
+                <code>font-family: 'Roboto Slab', serif;</code>
+              </>
+            }
+          />
+        </Box>
+        <Box my={4}>
+          <Input
+            name="metadata.extraCss"
+            label="Extra CSS"
+            multiline
+            helperText={
+              <>
+                Add some custom CSS to your story. CSS will be thrown into a{' '}
+                {`<style>`} tag in the document {`<head>`}
+                Example:
+                <br />
+                <code>{`.my-class { text-align: left; }`}</code>
+              </>
+            }
+          />
+        </Box>
+        <Box my={4}>
+          <Input
             name="metadata.googleAnalyticsId"
             label="Google Analytics ID"
           />

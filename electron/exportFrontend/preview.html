@@ -57,9 +57,9 @@
   </script>
   {{/analytics}}
   {{/meta}}
+
   <link rel="shortcut icon" href="./img/favicon.ico">
   <link rel="apple-touch-icon" href="./img/touch-icon.png">
-
 
   {{#meta}}
   {{#font_base_link}}
@@ -75,96 +75,6 @@
   {{#font_headers_link}}
   {{{font_headers_link}}}
   {{/font_headers_link}}
-  {{/meta}}
-
-  {{#manifest}}
-  <link rel="stylesheet" type="text/css" href="{{css}}">
-  {{/manifest}}
-
-  <style>
-    {
-        {
-        #meta
-      }
-    }
-
-      {
-        {
-        #font_base_rules
-      }
-    }
-
-    /* Set a font for the main article - focus on readability. */
-    body,
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6,
-    .slideshow,
-    .slideshow-horizontal {
-        {
-          {
-            {
-            font_base_rules
-          }
-        }
-      }
-    }
-
-      {
-        {
-        /font_base_rules
-      }
-    }
-
-      {
-        {
-        #font_headers_rules
-      }
-    }
-
-    /* Set a special font just for item headers. */
-    .header h1,
-    .header h2,
-    .header-fullpage h1,
-    .header-fullpage h2,
-    header {
-        {
-          {
-            {
-            font_headers_rules
-          }
-        }
-      }
-    }
-
-      {
-        {
-        /font_headers_rules
-      }
-    }
-
-      {
-        {
-        /meta
-      }
-    }
-  </style>
-
-  {{#meta}}
-  {{#custom_css}}
-  <style>
-    {
-        {
-          {
-          custom_css
-        }
-      }
-    }
-  </style>
-  {{/custom_css}}
   {{/meta}}
 </head>
 
@@ -820,6 +730,48 @@
   <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
   <!-- <script>Hls = {}; // remove me if you use the script above.</script> -->
   <script type="text/javascript" src="./bundle.js"></script>
+  <style>
+    {{#meta}}
+    {{#font_base_rules}}
+    /* Set a font for the main article - focus on readability. */
+    body,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    .slideshow,
+    .slideshow-horizontal {
+          {{{font_base_rules}}}
+    }
+
+      {{/font_base_rules}}
+
+      {{#font_headers_rules}}
+
+    /* Set a special font just for item headers. */
+    .header h1,
+    .header h2,
+    .header-fullpage h1,
+    .header-fullpage h2,
+    header {
+          {{{font_headers_rules}}}
+    }
+
+      {{/font_headers_rules}}
+
+     {{/meta}}
+  </style>
+
+  {{#meta}}
+  {{#custom_css}}
+  <style>
+    {{{custom_css}}}
+  </style>
+  {{/custom_css}}
+  {{/meta}}
+
 </body>
 
 </html>

@@ -32,7 +32,7 @@ interface Slideshow {
 
 export interface Storyboard {
   meta: {
-    title: string
+    title?: string
     site_name?: string
     site_img?: string
     subtitle?: string
@@ -41,6 +41,10 @@ export interface Storyboard {
     description?: string
     src?: string
     analytics?: string
+    font_base_link?: string
+    font_base_rules?: string
+    font_headers_rules?: string
+    custom_css?: string
   }
   items: (
     | {
