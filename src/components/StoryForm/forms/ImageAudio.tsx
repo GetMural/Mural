@@ -20,9 +20,9 @@ export default function ImageAudio({ itemIndex }: Props) {
       </Box>
       <Box my={4}>
         <Checkbox
-          key={`items.${itemIndex}.fullPage`}
-          name={`items.${itemIndex}.fullPage` as const}
-          label="Show full page"
+          key={`items.${itemIndex}.light`}
+          name={`items.${itemIndex}.light` as const}
+          label="Light"
         />
       </Box>
       <Box my={4}>

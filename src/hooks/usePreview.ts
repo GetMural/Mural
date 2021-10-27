@@ -39,7 +39,7 @@ export default function usePreview() {
             return {
               imageaudio: {
                 id: item.id,
-                light: false,
+                light: !!item.light,
                 audio: item.audio
                   ? {
                       loop: true,
@@ -87,9 +87,9 @@ export default function usePreview() {
             return {
               imagebackground: {
                 id: item.id,
-                // format: {
-                //   fullpage: item.
-                // }
+                format: {
+                  fullpage: !!item.fullPage,
+                },
                 title: convertToHtml(item.title),
                 subtitle: convertToHtml(item.subtitle),
                 text: convertToHtml(item.text),
@@ -134,9 +134,6 @@ export default function usePreview() {
             return {
               imageparallax: {
                 id: item.id,
-                format: {
-                  fullpage: !!item.fullPage,
-                },
                 title: item.title,
                 subtitle: convertToHtml(item.subtitle),
                 image: item.image && {

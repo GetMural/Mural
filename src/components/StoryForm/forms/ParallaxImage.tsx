@@ -1,6 +1,5 @@
 import { Box, Divider } from '@mui/material'
 import Input from 'components/StoryForm/Input'
-import Checkbox from 'components/StoryForm/Checkbox'
 import Image from '../Image'
 import Wysiwyg from '../Wysiwyg'
 
@@ -24,13 +23,6 @@ export default function ParallaxImage({ itemIndex }: Props) {
           name={`items.${itemIndex}.altText` as const}
           label="Image Alt Text"
           placeholder="Your text here"
-        />
-      </Box>
-      <Box my={4}>
-        <Checkbox
-          key={`items.${itemIndex}.fullPage`}
-          name={`items.${itemIndex}.fullPage` as const}
-          label="Full Page"
         />
       </Box>
       <Divider light />

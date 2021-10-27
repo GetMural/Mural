@@ -57,7 +57,6 @@ interface BackgroundImage {
 interface ParallaxImage {
   id: string
   type: 'parallaxImage'
-  fullPage?: boolean
   navigationTitle?: string
   title?: string
   subtitle?: RichText
@@ -122,6 +121,7 @@ export interface TextItem {
 export interface ImageAudio {
   id: string
   type: 'imageAudio'
+  light?: boolean
   image?: Image
   fullPage?: boolean
   altText?: string

@@ -113,9 +113,6 @@ export interface Storyboard {
     | {
         imageparallax: {
           id: string
-          format: {
-            fullpage: boolean
-          }
           title?: string
           subtitle?: string
           image?: {
