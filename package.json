@@ -1,6 +1,6 @@
 {
   "name": "mural",
-  "main": "build/electron/start.js",
+  "main": "build/electron/main.js",
   "author": {
     "name": "Mural",
     "email": "support@getmural.io"
@@ -44,6 +44,7 @@
     "sortablejs": "^1.14.0",
     "typeface-roboto": "^1.1.13",
     "typescript": "^4.1.2",
+    "unzipper": "^0.10.11",
     "web-vitals": "^2.1.0"
   },
   "scripts": {
@@ -79,7 +80,7 @@
       "frontend-assets-build/**/*"
     ],
     "extraMetadata": {
-      "main": "build/electron/start.js"
+      "main": "build/electron/main.js"
     }
   },
   "eslintConfig": {
@@ -124,6 +125,7 @@
     "@types/react-dom": "^17.0.0",
     "@types/react-draft-wysiwyg": "^1.13.3",
     "@types/redux-logger": "^3.0.8",
+    "@types/unzipper": "^0.10.4",
     "blueimp-gallery": "^3.3.0",
     "concurrently": "^6.2.0",
     "copyfiles": "^2.4.1",

@@ -23,14 +23,12 @@ export function createsFolders() {
       fs.mkdirSync(dir)
     }
   })
-  fs.copySync(
-    path.join(app.getAppPath(), 'frontend-assets'),
-    path.join(root, 'preview'),
-    { overwrite: true }
-  )
+  fs.copySync(path.join(app.getAppPath(), 'frontend-assets'), previewDir, {
+    overwrite: true,
+  })
   fs.copySync(
     path.join(app.getAppPath(), 'frontend-assets-build'),
-    path.join(root, 'preview'),
+    previewDir,
     { overwrite: true }
   )
 }

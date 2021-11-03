@@ -54,7 +54,6 @@ electron.app.whenReady().then(() => {
       if (!outputPath) {
         return false
       }
-      // const outputPath = path.join(ouputPath, 'mural.zip')
       const output = fs.createWriteStream(outputPath)
       const archive = archiver('zip', {
         zlib: { level: 9 },

@@ -10,6 +10,8 @@ import {
   audio,
   createsFolders,
 } from './directories'
+import createMenu from './menu'
+
 const app = electron.app
 const BrowserWindow = electron.BrowserWindow
 
@@ -19,7 +21,7 @@ async function createWindow() {
   mainWindow = new BrowserWindow({
     width: 1400,
     height: 1000,
-    autoHideMenuBar: true,
+    autoHideMenuBar: false,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       // nodeIntegration: true,
@@ -57,6 +59,8 @@ async function createWindow() {
     mainWindow.webContents.openDevTools()
   }
   mainWindow.on('closed', () => (mainWindow = null))
+  // menu
+  createMenu(app, mainWindow)
 }
 
 app.on('window-all-closed', () => {
@@ -77,6 +81,7 @@ app.whenReady().then(() => {
 })
 
 require('./preview')
+require('./saveAndOpenFiles')
 
 // others ipc
 electron.ipcMain.handle('store-image', require('./ipc/storeImage').default)

@@ -10,6 +10,9 @@ declare global {
       renderPreview: (state: Storyboard) => Promise<any>
       resetStory: () => Promise<any>
       exportAsZip: () => Promise<any>
+      onOpenFile: (reduxState: any) => any
+      saveAs: (reduxState: any) => Promise<any>
+      onSaveAsMenuClick: any
       directories: {
         root: string
         previewDir: string
