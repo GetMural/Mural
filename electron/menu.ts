@@ -78,6 +78,7 @@ export default function createMenu(app: App, windo: BrowserWindow) {
       label: 'File',
       submenu: fileMenu,
     },
+    { role: 'editMenu' },
     { role: 'viewMenu' },
     {
       role: 'help',
@@ -94,4 +95,19 @@ export default function createMenu(app: App, windo: BrowserWindow) {
   ]
   const menu = Menu.buildFromTemplate(template)
   Menu.setApplicationMenu(menu)
+
+  // contextual menu
+  const ctxMenu = new Menu()
+  ctxMenu.append(
+    new MenuItem({
+      role: 'editMenu',
+    })
+  )
+  windo.webContents.on('context-menu', (e, params) => {
+    ctxMenu.popup({
+      window: windo,
+      x: params.x,
+      y: params.y,
+    })
+  })
 }
