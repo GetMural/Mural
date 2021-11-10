@@ -9,6 +9,8 @@ import React from 'react'
 import clsx from 'clsx'
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
 import { convertFromRaw, convertToRaw, EditorState } from 'draft-js'
+import handleImageInput from 'utils/handleImageInput'
+import media from 'utils/getMediaPath'
 
 const useStyles = makeStyles((theme) => ({
   wysiwygToolbar: {
@@ -68,6 +70,15 @@ export default function Wysiwyg({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  async function uploadImageCallBack(file: File) {
+    const location = await handleImageInput(file)
+    return {
+      data: {
+        link: 'file:///' + media(location.big.path),
+      },
+    }
+  }
+
   return (
     <div>
       <Typography gutterBottom>{label}</Typography>
@@ -109,6 +120,12 @@ export default function Wysiwyg({
             'remove',
             'history',
           ],
+          image: {
+            uploadEnabled: true,
+            previewImage: true,
+            uploadCallback: uploadImageCallBack,
+            alt: { present: true, mandatory: false },
+          },
           inline: {
             inDropdown: false,
             options: [

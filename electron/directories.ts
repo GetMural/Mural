@@ -1,7 +1,9 @@
 import isDev from 'electron-is-dev'
 import path from 'path'
 import electron from 'electron'
-import fs from 'fs-extra'
+import fs from 'fs'
+import fse from 'fs-extra'
+
 const app = electron.app
 
 export const root = isDev
@@ -19,14 +21,13 @@ export const video = path.join(media, 'video')
 export function createsFolders() {
   // order matters. Parents first
   ;[root, previewDir, media, image, audio, video].forEach((dir) => {
-    if (!fs.existsSync(dir)) {
-      fs.mkdirSync(dir)
+    if (!fse.existsSync(dir)) {
+      fse.mkdirSync(dir)
     }
   })
-  fs.copySync(path.join(app.getAppPath(), 'frontend-assets'), previewDir, {
-    overwrite: true,
-  })
-  fs.copySync(
+  // NOTE: fse doesn't work well with subfolders and ASAR (EACCES: permission denied)
+  copyFolder(path.join(app.getAppPath(), 'frontend-assets'), previewDir)
+  fse.copySync(
     path.join(app.getAppPath(), 'frontend-assets-build'),
     previewDir,
     { overwrite: true }
@@ -34,5 +35,20 @@ export function createsFolders() {
 }
 
 export function removesWorkDirFolders() {
-  fs.rmSync(previewDir, { force: true, recursive: true })
+  fse.rmSync(previewDir, { force: true, recursive: true })
+}
+
+function copyFolder(parent: string, target: string) {
+  fs.readdirSync(parent).forEach((fileOrFolder) => {
+    const child = path.join(parent, fileOrFolder)
+    const targetChild = path.join(target, fileOrFolder)
+    fs.rmSync(targetChild, { recursive: true, force: true })
+    if (fs.lstatSync(child).isDirectory()) {
+      fs.mkdirSync(targetChild)
+      copyFolder(child, targetChild)
+    }
+    if (fs.lstatSync(child).isFile()) {
+      fs.copyFileSync(child, targetChild)
+    }
+  })
 }

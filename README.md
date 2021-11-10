@@ -24,11 +24,11 @@ Once a Mural story is ready to be published, the user clicks the 'Download' butt
 
 In the project directory, you can run:
 
-### `yarn electron:dev`
+### `yarn electron-dev`
 
 It starts the electron app in developement mode
 
-### `yarn electron:build`
+### `yarn electron-build`
 
 It builds the electron package for the current architecture
 

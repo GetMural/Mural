@@ -130,7 +130,7 @@
     "concurrently": "^6.2.0",
     "copyfiles": "^2.4.1",
     "css-loader": "^3",
-    "electron": "^13.1.7",
+    "electron": "^15.3.1",
     "electron-builder": "^22.11.7",
     "electron-devtools-installer": "^3.2.0",
     "electron-reloader": "^1.2.1",
