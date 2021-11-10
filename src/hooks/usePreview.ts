@@ -71,7 +71,7 @@ export default function usePreview() {
                 format: {
                   fullpage: true,
                 },
-                // title:
+                title: convertToHtml(item.title),
                 text: convertToHtml(item.text),
                 loop: Boolean(item.loopVideo),
                 // autoAdvance: boolean

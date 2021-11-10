@@ -136,6 +136,7 @@ export interface ImageAudio {
 export interface FullpageVideo {
   id: string
   type: 'fullpageVideo'
+  title?: RichText
   text?: RichText
   video?: Video
   representativeImage?: Image
