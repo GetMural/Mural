@@ -223,8 +223,10 @@ export default function usePreview() {
             throw Error(`Should never happen`)
         }
       }),
+      payment: state.settings.payment,
     }),
     [
+      state.settings.payment,
       state.story.items,
       state.story.metadata.author,
       state.story.metadata.canonicalUrl,

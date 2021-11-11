@@ -31,6 +31,15 @@ interface Slideshow {
 }
 
 export interface Storyboard {
+  payment: {
+    enabled: boolean
+    pointers: {
+      name: string
+      pointer: string
+      share: number
+    }[]
+    accessCode?: string
+  }
   meta: {
     title?: string
     site_name?: string
