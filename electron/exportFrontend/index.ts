@@ -193,6 +193,11 @@ export interface Storyboard {
           id: string
         }
       }
+    | {
+        paywallSeparatorEnd: {
+          id: string
+        }
+      }
   )[]
   nav: {
     id: string

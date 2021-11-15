@@ -43,6 +43,7 @@
   <meta property="og:image" content="{{site_img}}">
   {{/site_img}}
   <meta property="og:type" content="article" />
+  <meta property="generator" content="Mural 1.0.0" />
   <meta content="yes" name="apple-mobile-web-app-capable">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -76,6 +77,47 @@
   {{{font_headers_link}}}
   {{/font_headers_link}}
   {{/meta}}
+
+  {{! to do:
+  read and store all pointers and weights in an array as an object
+  add a pointer and 10% weight for mural
+  randomly choose from that array and fill the monetization meta content
+  }}
+
+  {{#payment.enabled}}
+  <script>
+    const pointers = [];
+  </script>
+    {{#payment}}
+      {{#pointers}}
+  <script>
+    for (let i = 0; i < {{ share }}; i += 1) {
+      pointers.push(`${{{pointer}}}`);
+    }
+  </script>
+      {{/pointers}}
+  <script>
+    for (let i = 0; i < 10; i += 1) {
+      pointers.push('$ilp.uphold.com/e9EyJQYXGNHE');
+    }
+    // pull a value from the pointer array
+    const pointer = pointers[Math.floor(Math.random() * pointers.length)];
+    // create a meta monetization content object
+    const metaNode = document.createElement('meta');
+    metaNode.name = 'monetization';
+    metaNode.content = pointer;
+    const head = document.getElementsByTagName('head')[0];
+    head.append(metaNode);
+  </script>
+  <script>
+  if (document.monetization) {
+    document.monetization.addEventListener('monetizationstart', () => {
+      document.getElementsById('paywall').classList.remove('exclusive');
+    });
+  }
+  </script>
+    {{/payment}}
+  {{/payment.enabled}}
 </head>
 
 <body class="longform frozen" name="top">
@@ -110,7 +152,13 @@
   </div>
 
   <article id="scrollytelling">
+    
     {{#items}}
+
+    {{#paywallSeparator}}
+    <div class="exclusive" id="paywall">
+    {{/paywallSeparator}}
+
     {{#imagebackground}}
     <section class="part sticky-image" name="story{{id}}" {{#audio}} data-audio=true {{#mp3}} data-mp3="{{mp3}}"
       {{/mp3}} {{#ogg}} data-ogg="{{ogg}}" {{/ogg}} {{#loop}} data-loop="true" {{/loop}} {{/audio}} {{#image}}
@@ -124,314 +172,314 @@
       <div class="bg-gradient"></div>
       <style>
         @keyframes gradient {
-            {
+          {
             id
           }
         }
 
+        {
           {
             {
-              {
-              #animation
-            }
-          }
-
-            {
-              {
-              #top
-            }
-          }
-
-          0% {
-            background-position: 50% 0%
-          }
-
-          50% {
-            background-position: 50% 100%
-          }
-
-          100% {
-            background-position: 50% 0%
-          }
-
-            {
-              {
-              /top
-            }
-          }
-
-            {
-              {
-              #topright
-            }
-          }
-
-          0% {
-            background-position: 0% 100%
-          }
-
-          50% {
-            background-position: 100% 0%
-          }
-
-          100% {
-            background-position: 0% 100%
-          }
-
-            {
-              {
-              /topright
-            }
-          }
-
-            {
-              {
-              #right
-            }
-          }
-
-          0% {
-            background-position: 0% 50%
-          }
-
-          50% {
-            background-position: 100% 50%
-          }
-
-          100% {
-            background-position: 0% 50%
-          }
-
-            {
-              {
-              /right
-            }
-          }
-
-            {
-              {
-              #bottomright
-            }
-          }
-
-          0% {
-            background-position: 0% 0%
-          }
-
-          50% {
-            background-position: 100% 100%
-          }
-
-          100% {
-            background-position: 0% 0%
-          }
-
-            {
-              {
-              /bottomright
-            }
-          }
-
-            {
-              {
-              #bottom
-            }
-          }
-
-          0% {
-            background-position: 50% 0%
-          }
-
-          50% {
-            background-position: 50% 100%
-          }
-
-          100% {
-            background-position: 50% 0%
-          }
-
-            {
-              {
-              /bottom
-            }
-          }
-
-            {
-              {
-              #bottomleft
-            }
-          }
-
-          0% {
-            background-position: 0% 100%
-          }
-
-          50% {
-            background-position: 100% 0%
-          }
-
-          100% {
-            background-position: 0% 100%
-          }
-
-            {
-              {
-              /bottomleft
-            }
-          }
-
-            {
-              {
-              #left
-            }
-          }
-
-          0% {
-            background-position: 0% 50%
-          }
-
-          50% {
-            background-position: 100% 50%
-          }
-
-          100% {
-            background-position: 0% 50%
-          }
-
-            {
-              {
-              /left
-            }
-          }
-
-            {
-              {
-              #topleft
-            }
-          }
-
-          0% {
-            background-position: 0% 0%
-          }
-
-          50% {
-            background-position: 100% 100%
-          }
-
-          100% {
-            background-position: 0% 0%
-          }
-
-            {
-              {
-              /topleft
-            }
-          }
-
-            {
-              {
-              /animation
-            }
+            #animation
           }
         }
 
+        {
+          {
+            #top
+          }
+        }
+
+        0% {
+          background-position: 50% 0%
+        }
+
+        50% {
+          background-position: 50% 100%
+        }
+
+        100% {
+          background-position: 50% 0%
+        }
+
+        {
+          {
+          /top
+        }
+      }
+
+      {
+        {
+          #topright
+        }
+      }
+
+      0% {
+        background-position: 0% 100%
+      }
+
+      50% {
+        background-position: 100% 0%
+      }
+
+      100% {
+        background-position: 0% 100%
+      }
+
+      {
+        {
+          /topright
+        }
+      }
+
+      {
+        {
+          #right
+        }
+      }
+
+      0% {
+        background-position: 0% 50%
+      }
+
+      50% {
+        background-position: 100% 50%
+      }
+
+      100% {
+        background-position: 0% 50%
+      }
+
+      {
+        {
+          /right
+        }
+      }
+
+      {
+        {
+          #bottomright
+        }
+      }
+
+      0% {
+        background-position: 0% 0%
+      }
+
+      50% {
+        background-position: 100% 100%
+      }
+
+      100% {
+        background-position: 0% 0%
+      }
+
+      {
+        {
+          /bottomright
+        }
+      }
+
+      {
+        {
+          #bottom
+        }
+      }
+
+      0% {
+        background-position: 50% 0%
+      }
+
+      50% {
+        background-position: 50% 100%
+      }
+
+      100% {
+        background-position: 50% 0%
+      }
+
+      {
+        {
+          /bottom
+        }
+      }
+
+      {
+        {
+          #bottomleft
+        }
+      }
+
+      0% {
+        background-position: 0% 100%
+      }
+
+      50% {
+        background-position: 100% 0%
+      }
+
+      100% {
+        background-position: 0% 100%
+      }
+
+      {
+        {
+          /bottomleft
+        }
+      }
+
+      {
+        {
+          #left
+        }
+      }
+
+      0% {
+        background-position: 0% 50%
+      }
+
+      50% {
+        background-position: 100% 50%
+      }
+
+      100% {
+        background-position: 0% 50%
+      }
+
+      {
+        {
+          /left
+        }
+      }
+
+      {
+        {
+          #topleft
+        }
+      }
+
+      0% {
+        background-position: 0% 0%
+      }
+
+      50% {
+        background-position: 100% 100%
+      }
+
+      100% {
+        background-position: 0% 0%
+      }
+
+      {
+        {
+          /topleft
+        }
+      }
+
+      {
+        {
+          /animation
+        }
+      }
+    }
+
         section[name="story{{id}}"] .bg-gradient {
           animation: gradient {
-              {
+            {
               id
             }
           }
 
+          {
             {
-              {
               #speed
             }
           }
 
+          {
             {
-              {
               speed
             }
           }
 
+          {
             {
-              {
               /speed
             }
           }
 
+          {
             {
-              {
               ^speed
             }
           }
 
-          0 {
-              {
+        0 {
+            {
               /speed
             }
           }
 
           s ease infinite;
 
+          {
             {
-              {
               #animate
             }
           }
 
           background-size: calc( {
-                {
+              {
                 stops.length
               }
             }
 
             * 200%) calc( {
-                {
+              {
                 stops.length
               }
             }
 
             * 200%);
 
+          {
             {
-              {
               /animate
             }
           }
 
           background-image: linear-gradient( {
-                {
+              {
                 #direction
               }
             }
 
+            {
               {
-                {
                 direction
               }
             }
 
-            deg {
-                {
+        deg {
+              {
                 /direction
               }
             }
 
+            {
               {
-                {
                 #stops
               }
             }
 
-            , {
-                {
+          , {
+              {
                 .
               }
             }
 
+            {
               {
-                {
                 /stops
               }
             }
@@ -721,7 +769,13 @@
     </section>
     {{/youtube}}
 
+    {{#paywallSeparatorEnd}}
+    <!-- end paywall -->
+    </div>
+    {{/paywallSeparatorEnd}}
+
     {{/items}}
+
   </article>
   <script
     src="https://code.jquery.com/jquery-3.6.0.slim.min.js"
@@ -743,12 +797,12 @@
     h6,
     .slideshow,
     .slideshow-horizontal {
-          {{{font_base_rules}}}
+      {{{font_base_rules}}}
     }
 
-      {{/font_base_rules}}
+    {{/font_base_rules}}
 
-      {{#font_headers_rules}}
+    {{#font_headers_rules}}
 
     /* Set a special font just for item headers. */
     .header h1,
@@ -756,12 +810,12 @@
     .header-fullpage h1,
     .header-fullpage h2,
     header {
-          {{{font_headers_rules}}}
+      {{{font_headers_rules}}}
     }
 
-      {{/font_headers_rules}}
+    {{/font_headers_rules}}
 
-     {{/meta}}
+    {{/meta}}
   </style>
 
   {{#meta}}

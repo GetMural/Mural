@@ -219,6 +219,12 @@ export default function usePreview() {
                 id: item.id,
               },
             }
+          case 'paywallSeparatorEnd':
+            return {
+              paywallSeparatorEnd: {
+                id: item.id,
+              },
+            }
           default:
             throw Error(`Should never happen`)
         }
@@ -243,6 +249,7 @@ export default function usePreview() {
     ]
   )
   React.useEffect(() => {
+    console.log(mappedState)
     render(mappedState)
   }, [mappedState])
 }

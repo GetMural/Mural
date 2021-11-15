@@ -13,6 +13,7 @@ const TYPES_LABELS: {
   parallaxImage: 'Parallax Image',
   text: 'Text',
   paywallSeparator: 'Paywall Separator',
+  paywallSeparatorEnd: 'Paywall Separator End',
 }
 
 export default TYPES_LABELS
