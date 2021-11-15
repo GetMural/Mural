@@ -2851,7 +2851,26 @@ article .part.box_text p {
   -webkit-animation-name: bounce;
   animation-name: bounce;
 }
+
 // paywall
 .exclusive {
   display: none;
+}
+
+#paywallInfo {
+  background: red;
+  display: none;
+  text-align: center;
+}
+
+#paywallInfo.paywallInfo {
+  display: block;
+  height: 100vh;
+  width: 100vw;
+  form {
+    input {
+      color: #000;
+      cursor: default;
+    }
+  }
 }

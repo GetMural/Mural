@@ -85,6 +85,7 @@
   }}
 
   {{#payment.enabled}}
+  <script src="https://cdn.coil.com/coil-support-button.js"></script>
   <script>
     const pointers = [];
   </script>
@@ -112,6 +113,7 @@
   <script>
   if (document.monetization) {
     document.monetization.addEventListener('monetizationstart', () => {
+      document.getElementsById('paywallInfo').classList.remove('paywallInfo');
       document.getElementsById('paywall').classList.remove('exclusive');
     });
   }
@@ -156,6 +158,19 @@
     {{#items}}
 
     {{#paywallSeparator}}
+    <div id="paywallInfo" class="paywallInfo">
+      <span>
+        <img src="https://www.getmural.io/img/logo.svg" />
+      </span>
+      <h2>The rest of this story is exclusively for supportive users.</h2>
+      <p>Do you have a Coil account?</p>
+      <div class="coil-support-button" data-size="large" data-theme="light"></div>
+      <p>If you have an access code, please type it in here.</p>
+      <form>
+        <input type="password" placeholder="Your code" />
+      </form>
+      <p>Sign up for a Coil account to support this creator and get other great web monitised content.</p>
+    </div>
     <div class="exclusive" id="paywall">
     {{/paywallSeparator}}
 
