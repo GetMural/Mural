@@ -3,8 +3,6 @@ import { useAppSelector, useAppDispatch } from 'store/hooks'
 import {
   unshiftPaywallSeparator,
   removePaywallSeparator,
-  removePaywallSeparatorEnd,
-  addPaywallSeperatorEnd,
 } from 'store/slices/story'
 
 /** Listen to payment settings and story to add or remove
@@ -24,12 +22,10 @@ export default function usePaymentSeparatorListener() {
     if (paymentIsEnabled) {
       if (paywallSeparatorIndex === -1) {
         dispatch(unshiftPaywallSeparator())
-        dispatch(addPaywallSeperatorEnd())
       }
     } else {
       if (paywallSeparatorIndex !== undefined && paywallSeparatorIndex > -1) {
         dispatch(removePaywallSeparator())
-        dispatch(removePaywallSeparatorEnd())
       }
     }
   }, [paymentIsEnabled, dispatch, story])

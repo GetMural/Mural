@@ -149,11 +149,6 @@ export interface PaywallSeparator {
   type: 'paywallSeparator'
 }
 
-export interface PaywallSeparatorEnd {
-  id: string
-  type: 'paywallSeparatorEnd'
-}
-
 export type Items =
   | BackgroundImage
   | TextItem
@@ -163,7 +158,6 @@ export type Items =
   | VerticalSlideshow
   | FullpageVideo
   | PaywallSeparator
-  | PaywallSeparatorEnd
   | ParallaxImage
   | BackgroundVideoItem
 
@@ -244,29 +238,12 @@ export const story = createSlice({
         id: nanoid(),
       })
     },
-    addPaywallSeperatorEnd: (state) => {
-      state.items?.push({
-        type: 'paywallSeparatorEnd',
-        id: nanoid(),
-      })
-    },
     removePaywallSeparator: (state) => {
       let paywallSeparatorIndex = state.items?.findIndex(
         (i) => i.type === 'paywallSeparator'
       )
       if (paywallSeparatorIndex !== undefined && paywallSeparatorIndex > -1) {
         state.items?.splice(paywallSeparatorIndex, 1)
-      }
-    },
-    removePaywallSeparatorEnd: (state) => {
-      let paywallSeparatorEndIndex = state.items?.findIndex(
-        (i) => i.type === 'paywallSeparatorEnd'
-      )
-      if (
-        paywallSeparatorEndIndex !== undefined &&
-        paywallSeparatorEndIndex > -1
-      ) {
-        state.items?.splice(paywallSeparatorEndIndex, 1)
       }
     },
     reset: () => ({ ...initialState }),
@@ -280,9 +257,7 @@ export const {
   setItems,
   reset,
   unshiftPaywallSeparator,
-  addPaywallSeperatorEnd,
   removePaywallSeparator,
-  removePaywallSeparatorEnd,
 } = story.actions
 
 export const addItemAndGoToView =
