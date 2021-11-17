@@ -129,13 +129,16 @@ export interface ImageAudio {
   id: string
   type: 'imageAudio'
   light?: boolean
+  loop?: boolean
   image?: Image
   fullPage?: boolean
   altText?: string
+  imageCaption?: string
+  imageCredits?: RichText
   audio?: Audio
+  audioCredits?: RichText
   navigationTitle?: string
   title?: string
-  subtitle?: string
 }
 
 export interface FullpageVideo {
