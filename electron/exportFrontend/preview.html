@@ -785,14 +785,14 @@
     </section>
     {{/videofullpage}}
 
-    {{#embedVideo}}
+    {{#youtube}}
     <section class="st-video part" name="story{{id}}" {{#embed}} {{#id}} data-youtube-id="{{id}}" {{/id}} {{/embed}}
       {{#controls}} data-controls=true {{/controls}} {{#autoAdvance}} data-auto-advance=true {{/autoAdvance}}>
       <div class="video-container">
         <div id="ytplayer_{{#embed}}{{id}}{{/embed}}_{{index}}"></div>
       </div>
     </section>
-    {{/embedVideo}}
+    {{/youtube}}
 
     {{#paywallSeparatorEnd}}
     <!-- end paywall -->
