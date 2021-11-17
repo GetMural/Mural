@@ -192,157 +192,69 @@
       <div class="bg-image"></div>
       {{/image}}
       {{#gradient}}
-      {{#enable}}
-      <div class="bg-gradient"></div>
-      <style>
-        @keyframes gradient {{id}}
-
-        {
-          {{#animation}}
-          {{#top}}
-
-        0% {
-          background-position: 50% 0%
-        }
-
-        50% {
-          background-position: 50% 100%
-        }
-
-        100% {
-          background-position: 50% 0%
-        }
-        {{/top}}
-
-        {{#topright}}
-
-      0% {
-        background-position: 0% 100%
-      }
-
-      50% {
-        background-position: 100% 0%
-      }
-
-      100% {
-        background-position: 0% 100%
-      }
-
-      {{/topright}}
-      {{#right}}
-
-      0% {
-        background-position: 0% 50%
-      }
-
-      50% {
-        background-position: 100% 50%
-      }
-
-      100% {
-        background-position: 0% 50%
-      }
-
-      {{/right}}
-      {{#bottomright}}
-
-      0% {
-        background-position: 0% 0%
-      }
-
-      50% {
-        background-position: 100% 100%
-      }
-
-      100% {
-        background-position: 0% 0%
-      }
-
-      {{/bottomright}}
-
-      {{#bottom}}
-
-      0% {
-        background-position: 50% 0%
-      }
-
-      50% {
-        background-position: 50% 100%
-      }
-
-      100% {
-        background-position: 50% 0%
-      }
-
-      {{/bottom}}
-      {{#bottomleft}}
-
-      0% {
-        background-position: 0% 100%
-      }
-
-      50% {
-        background-position: 100% 0%
-      }
-
-      100% {
-        background-position: 0% 100%
-      }
-
-      {{/bottomleft}}
-      {{#left}}
-
-      0% {
-        background-position: 0% 50%
-      }
-
-      50% {
-        background-position: 100% 50%
-      }
-
-      100% {
-        background-position: 0% 50%
-      }
-
-      {{/left}}
-      {{#topleft}}
-
-      0% {
-        background-position: 0% 0%
-      }
-
-      50% {
-        background-position: 100% 100%
-      }
-
-      100% {
-        background-position: 0% 0%
-      }
-
-      {{/topleft}}
-      {{/animation}}
-    }
-
-        section[name="story{{id}}"] .bg-gradient {
-          animation: gradient {{id}}
-
-          {{#speed}}{{speed}}{{/speed}}{{^speed}}0{{/speed}}s ease infinite;
-          {{#animate}}
-
-          background-size: calc({{stops.length}} * 200%) calc({{stops.length}} * 200%);
-
-          {{/animate}}
-
-
-          background-image: linear-gradient(
-            {{#gradient}}
-            {{direction}}deg{{/direction}}
-            {{#stops}}, {{.}} {{/stops}}
-          );
-        }
-      </style>
-      {{/enable}}
-      {{/gradient}}
+              {{#enable}}
+              <div class="bg-gradient"></div>
+              <style>
+                @keyframes gradient{{id}} {
+                  {{#animation}}
+                    {{#top}}
+                      0% {background-position:50% 0%}
+                      50% {background-position:50% 100%}
+                      100% {background-position:50% 0%}
+                    {{/top}}
+                    {{#topright}}
+                      0% {background-position:0% 100%}
+                      50% {background-position:100% 0%}
+                      100% {background-position:0% 100%}
+                    {{/topright}}
+                    {{#right}}
+                      0% {background-position:0% 50%}
+                      50% {background-position:100% 50%}
+                      100% {background-position:0% 50%}
+                    {{/right}}
+                    {{#bottomright}}
+                      0% {background-position:0% 0%}
+                      50% {background-position:100% 100%}
+                      100% {background-position:0% 0%}
+                    {{/bottomright}}
+                    {{#bottom}}
+                      0% {background-position:50% 0%}
+                      50% {background-position:50% 100%}
+                      100% {background-position:50% 0%}
+                    {{/bottom}}
+                    {{#bottomleft}}
+                      0% {background-position:0% 100%}
+                      50% {background-position:100% 0%}
+                      100% {background-position:0% 100%}
+                    {{/bottomleft}}
+                    {{#left}}
+                      0% {background-position:0% 50%}
+                      50% {background-position:100% 50%}
+                      100% {background-position:0% 50%}
+                    {{/left}}
+                    {{#topleft}}
+                      0% {background-position:0% 0%}
+                      50% {background-position:100% 100%}
+                      100% {background-position:0% 0%}
+                    {{/topleft}}
+                  {{/animation}}
+                }
+                section[name="story{{id}}"] .bg-gradient {
+                  animation: gradient{{id}} {{#speed}}{{speed}}{{/speed}}{{^speed}}0{{/speed}}s ease infinite;
+                  {{#animate}}
+                  background-size: calc({{stops.length}} * 200%) calc({{stops.length}} * 200%);
+                  {{/animate}}
+                  background-image: linear-gradient(
+                    {{#direction}}
+                      {{direction}}deg
+                    {{/direction}}
+                    {{#stops}}
+                      ,{{.}}
+                    {{/stops}});
+                }
+              </style>
+              {{/enable}}
+            {{/gradient}}
       <div class="content container-fluid">
         <div class="row">
           <div
