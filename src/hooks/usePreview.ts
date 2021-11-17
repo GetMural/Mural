@@ -276,7 +276,6 @@ export default function usePreview() {
     state.story.metadata.title,
   ])
   React.useEffect(() => {
-    console.log(mappedState)
     render(mappedState)
   }, [mappedState])
 }

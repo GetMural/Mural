@@ -1,22 +1,60 @@
 import {
+  Avatar,
   Divider,
   IconButton,
   List,
   ListItem,
+  ListItemAvatar,
+  ListItemIcon,
   ListItemSecondaryAction,
   ListItemText,
   Typography,
 } from '@mui/material'
 import DeleteIcon from '@mui/icons-material/Delete'
+import PaymentIcon from '@mui/icons-material/MonetizationOn'
 import useRouter from 'hooks/useRouter'
 import { ReactSortable } from 'react-sortablejs'
 import { useAppDispatch, useAppSelector } from 'store/hooks'
-import { removeItem, setItems } from 'store/slices/story'
+import { Items, removeItem, RichText, setItems } from 'store/slices/story'
 import useAskToSaveChanges from 'hooks/useAskToSaveChanges'
 import { goToView } from 'store/slices/navigation'
-import React from 'react'
 import { isEqual } from 'lodash'
 import TYPES_LABELS from 'constantes/blockTypes'
+import convertToPlainText from 'utils/convertToPlainText'
+import getMediaPath from 'utils/getMediaPath'
+
+function getPrimaryName(item: Items) {
+  function richTextOrString(input: string | RichText) {
+    if (typeof input === 'object') {
+      return convertToPlainText(input)
+    }
+    return input
+  }
+  if ('navigationTitle' in item && item.navigationTitle) {
+    return item.navigationTitle
+  }
+  if ('title' in item && item.title) {
+    return richTextOrString(item.title)
+  }
+  if ('subtitle' in item && item.subtitle) {
+    return richTextOrString(item.subtitle)
+  }
+}
+
+function getImagePath(item: Items) {
+  if ('image' in item && item.image?.small.path) {
+    return item.image.small.path
+  }
+  if ('posterImage' in item && item.posterImage?.small.path) {
+    return item.posterImage.small.path
+  }
+  if ('slides' in item && item.slides && item.slides.length > 0) {
+    return item.slides[0].image?.small.path
+  }
+  if ('representativeImage' in item && item.representativeImage) {
+    return item.representativeImage.small.path
+  }
+}
 
 export default function BlockItems() {
   const items = useAppSelector((state) => state.story.items)
@@ -62,8 +100,9 @@ export default function BlockItems() {
             animation={200}
             delayOnTouchStart={true}
           >
-            {items.map((item) =>
-              item.type === 'paywallSeparator' ? (
+            {items.map((item) => {
+              const image = getImagePath(item)
+              return item.type === 'paywallSeparator' ? (
                 <PaywallSeparator key={item.id} />
               ) : (
                 <ListItem
@@ -74,12 +113,14 @@ export default function BlockItems() {
                     goTo({ view: { name: 'item', args: { item } } })
                   }
                 >
+                  {image && (
+                    <ListItemAvatar>
+                      <Avatar src={'file://' + getMediaPath(image)} />
+                    </ListItemAvatar>
+                  )}
                   <ListItemText
-                    primary={
-                      'navigationTitle' in item
-                        ? item.navigationTitle
-                        : undefined
-                    }
+                    inset={!image}
+                    primary={getPrimaryName(item)}
                     secondary={TYPES_LABELS[item.type]}
                   />
                   <ListItemSecondaryAction>
@@ -106,7 +147,7 @@ export default function BlockItems() {
                   </ListItemSecondaryAction>
                 </ListItem>
               )
-            )}
+            })}
           </ReactSortable>
         )}
       </List>
@@ -116,7 +157,16 @@ export default function BlockItems() {
 
 function PaywallSeparator() {
   return (
-    <ListItem style={{ cursor: 'move' }}>
+    <ListItem
+      sx={{
+        color: 'white',
+        backgroundColor: 'primary.main',
+        cursor: 'move',
+      }}
+    >
+      <ListItemIcon style={{ color: 'inherit' }}>
+        <PaymentIcon />
+      </ListItemIcon>
       <ListItemText primary={TYPES_LABELS['paywallSeparator']} />
     </ListItem>
   )
