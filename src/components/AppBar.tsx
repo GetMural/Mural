@@ -16,10 +16,9 @@ import {
   ButtonProps,
   Box,
 } from '@mui/material'
-import { reset } from 'store/slices/story'
 import { useAppDispatch } from 'store/hooks'
 import useFormContext from 'hooks/useFormContext'
-import { goToView, openDialog } from 'store/slices/navigation'
+import { openDialog } from 'store/slices/navigation'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -47,7 +46,6 @@ export default function MuralAppBar() {
   const {
     save,
     formState: { isDirty },
-    resetFormWithCurrentState,
   } = useFormContext()
 
   return (
@@ -75,13 +73,11 @@ export default function MuralAppBar() {
             <Button
               startIcon={<NewIcon />}
               onClick={() => {
-                dispatch(goToView(null))
-                // has to happen when the form is closed
-                setTimeout(() => {
-                  dispatch(reset())
-                  resetFormWithCurrentState()
-                  window.electron.resetStory()
-                }, 1000)
+                dispatch(
+                  openDialog({
+                    name: 'confirmReset',
+                  })
+                )
               }}
             >
               New

@@ -3,6 +3,7 @@ import FormIsNotValid from './dialogs/FormIsNotValid'
 import UnmonetizingStory from './dialogs/UnmonetizingStory'
 import MonetizingStory from './dialogs/MonetizingStory'
 import PaymentSettings from './dialogs/PaymentSettings'
+import ConfirmReset from './dialogs/ConfirmReset'
 import useDialog from './useDialog'
 
 export interface DialogProps {
@@ -11,23 +12,16 @@ export interface DialogProps {
   onDissmiss: () => void
 }
 
-export type DialogNames =
-  | 'UnsavedChanges'
-  | 'FormIsNotValid'
-  | 'UnmonetizingStory'
-  | 'MonetizingStory'
-  | 'PaymentSettings'
-
-const DIALOGS: {
-  name: DialogNames
-  component: React.FunctionComponent<DialogProps>
-}[] = [
+const DIALOGS = [
   { name: 'UnsavedChanges', component: UnsavedChanges },
   { name: 'FormIsNotValid', component: FormIsNotValid },
   { name: 'UnmonetizingStory', component: UnmonetizingStory },
   { name: 'MonetizingStory', component: MonetizingStory },
   { name: 'PaymentSettings', component: PaymentSettings },
-]
+  { name: 'confirmReset', component: ConfirmReset },
+] as const
+
+export type DialogNames = typeof DIALOGS[number]['name']
 
 export default function AlertDialog() {
   const { dialogState, ...others } = useDialog()

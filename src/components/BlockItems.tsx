@@ -167,7 +167,10 @@ function PaywallSeparator() {
       <ListItemIcon style={{ color: 'inherit' }}>
         <PaymentIcon />
       </ListItemIcon>
-      <ListItemText primary={TYPES_LABELS['paywallSeparator']} />
+      <ListItemText
+        primary={TYPES_LABELS['paywallSeparator']}
+        secondary="Enabled in payment settings"
+      />
     </ListItem>
   )
 }
