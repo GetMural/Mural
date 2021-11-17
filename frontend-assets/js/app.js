@@ -1,7 +1,8 @@
+const $ = require('jquery')
+
 require('../css/blueimp-gallery.css')
 require('../css/blueimp-gallery-indicator.css')
 require('../css/style.scss')
-const $ = require('jquery')
 require('scrollstory/jquery.scrollstory.js')
 require('stickybits/src/jquery.stickybits')
 
@@ -429,14 +430,41 @@ const form = $('#bypass');
 let rot = 0;
 let bypass = '';
 
+// original code courtesy of CodeNiro
+// http://codeniro.com/caesars-cipher-algorithm-javascript/
+
+function encrypt(text, shift) {
+  var result = "";
+  for (var i = 0; i < text.length; i++) {
+    var c = text.charCodeAt(i);
+    if (c >= 65 && c <= 90) {
+      result += String.fromCharCode((c - 65 + shift) % 26 + 65);
+    } else if (c >= 97 && c <= 122) {
+      result += String.fromCharCode((c - 97 + shift) % 26 + 97);
+    } else {
+      result += text.charAt(i);
+    }
+  }
+  return result;
+}
+
+const decrypt = function (text, shift) {
+  var result = "";
+  shift = (26 - shift) % 26;
+  result = encrypt(text, shift);
+  return result;
+}
+
 for (let i = 0; i < $('head').find('meta').length; i += 1) {
   if ($('head').find('meta')[i].name === 'bypass') {
-    bypass = $('head').find('meta')[i].content;
+    bypass = $('head').find('meta')[i].content
   }
   if ($('head').find('meta')[i].name === 'rot') {
-    rot = $('head').find('meta')[i].content;
+    rot = $('head').find('meta')[i].content
   }
-  console.log(rot, bypass);
+  if (bypass !== '' && rot !== 0) {
+    console.log('decrypt', bypass, decrypt(bypass, rot))
+  }
 }
 
 form.find('button').click(function (event) {
