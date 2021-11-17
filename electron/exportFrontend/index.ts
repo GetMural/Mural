@@ -30,6 +30,14 @@ interface Slideshow {
   files?: string[]
 }
 
+type OffsetPortraitVideo = {
+  left: boolean
+  centre: boolean
+  right: boolean
+  custom: boolean
+  value: number
+}
+
 export type Items =
   | {
       imageaudio: {
@@ -90,13 +98,7 @@ export type Items =
             opacity?: string
           }
         }
-        offset?: {
-          left: boolean
-          centre: boolean
-          right: boolean
-          custom: boolean
-          value: string
-        }
+        offset?: OffsetPortraitVideo
       }
     }
   | {
@@ -125,6 +127,7 @@ export type Items =
         image?: {
           loading: string
         }
+        offset?: OffsetPortraitVideo
       }
     }
   | {

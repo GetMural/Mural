@@ -5,6 +5,7 @@ import Video from '../Video'
 import Image from '../Image'
 import Wysiwyg from '../Wysiwyg'
 import Color from '../Color'
+import OffsetPortraitVideo from '../OffsetPortraitVideo'
 
 interface Props {
   itemIndex: number
@@ -63,6 +64,13 @@ export default function BackgroundVideo({ itemIndex }: Props) {
           key={`items.${itemIndex}.posterImage`}
           name={`items.${itemIndex}.posterImage` as const}
           label="Poster Image"
+        />
+      </Box>
+      <Box my={4}>
+        <OffsetPortraitVideo
+          key={`items.${itemIndex}.offsetPortraitVideo`}
+          name={`items.${itemIndex}.offsetPortraitVideo` as const}
+          label="Offset Portrait Video"
         />
       </Box>
       <Box my={4}>

@@ -42,6 +42,10 @@ export interface Embed {
   embed: string
 }
 
+interface OffsetPortraitVideo {
+  align: 'left' | 'right' | 'center' | 'custom'
+  customValue: number
+}
 interface BackgroundImage {
   id: string
   type: 'backgroundImage'
@@ -74,6 +78,7 @@ interface BackgroundVideoItem {
   text?: RichText
   posterImage?: Image
   backgroundTextColor?: RGBColor
+  offsetPortraitVideo?: OffsetPortraitVideo
 }
 
 interface EmbedVideo {
@@ -142,6 +147,7 @@ export interface FullpageVideo {
   representativeImage?: Image
   imageAltText?: string
   loopVideo?: boolean
+  offsetPortraitVideo?: OffsetPortraitVideo
 }
 
 export interface PaywallSeparator {

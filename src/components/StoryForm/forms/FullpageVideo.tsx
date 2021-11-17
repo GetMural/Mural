@@ -4,6 +4,7 @@ import Checkbox from '../Checkbox'
 import Image from '../Image'
 import Video from '../Video'
 import Wysiwyg from '../Wysiwyg'
+import OffsetPortraitVideo from '../OffsetPortraitVideo'
 
 interface Props {
   itemIndex: number
@@ -62,6 +63,13 @@ export default function FullpageVideo({ itemIndex }: Props) {
           key={`items.${itemIndex}.imageAltText`}
           name={`items.${itemIndex}.imageAltText` as const}
           label="Image Alt Text"
+        />
+      </Box>
+      <Box my={4}>
+        <OffsetPortraitVideo
+          key={`items.${itemIndex}.offsetPortraitVideo`}
+          name={`items.${itemIndex}.offsetPortraitVideo` as const}
+          label="Offset Portrait Video"
         />
       </Box>
     </>

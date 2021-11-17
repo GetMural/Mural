@@ -69,6 +69,15 @@ export default function usePreview() {
                         loading: media(item.representativeImage.big.path),
                       }
                     : undefined,
+                  offset: item.offsetPortraitVideo
+                    ? {
+                        centre: item.offsetPortraitVideo.align === 'center',
+                        left: item.offsetPortraitVideo.align === 'left',
+                        right: item.offsetPortraitVideo.align === 'right',
+                        custom: item.offsetPortraitVideo.align === 'custom',
+                        value: item.offsetPortraitVideo.customValue,
+                      }
+                    : undefined,
                 },
               },
             ]
@@ -118,6 +127,15 @@ export default function usePreview() {
                           value: `${item.backgroundTextColor.r}, ${item.backgroundTextColor.g}, ${item.backgroundTextColor.b}`,
                           opacity: `${item.backgroundTextColor.a}`,
                         },
+                      }
+                    : undefined,
+                  offset: item.offsetPortraitVideo
+                    ? {
+                        centre: item.offsetPortraitVideo.align === 'center',
+                        left: item.offsetPortraitVideo.align === 'left',
+                        right: item.offsetPortraitVideo.align === 'right',
+                        custom: item.offsetPortraitVideo.align === 'custom',
+                        value: item.offsetPortraitVideo.customValue,
                       }
                     : undefined,
                 },
