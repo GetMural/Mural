@@ -428,10 +428,8 @@ if (active.index + 2 < storyItems.length) {
   }
 }
 
-const form = $('#bypass');
-let rot = 0;
-let bypass = '';
-let decrypted = '';
+const form = $('#bypass')
+
 // original code courtesy of CodeNiro
 // http://codeniro.com/caesars-cipher-algorithm-javascript/
 
@@ -450,34 +448,20 @@ function encrypt(text, shift) {
   return result
 }
 
-const decrypt = function (text, shift) {
-  var result = "";
-  shift = (26 + shift) % 26;
-  result = encrypt(text, shift);
-  return result;
-}
+const bypass = $('meta[name=bypass]').attr('content')
+const rot = Number($('meta[name=rot]').attr('content'))
 
-for (let i = 0; i < $('head').find('meta').length; i += 1) {
-  if ($('head').find('meta')[i].name === 'bypass') {
-    bypass = $('head').find('meta')[i].content
-  }
-  if ($('head').find('meta')[i].name === 'rot') {
-    rot = $('head').find('meta')[i].content
-  }
-  if (bypass !== '' && rot !== 0) {
-    decrypted = decrypt(bypass, rot);
-  }
-}
-
-form.find('button').click(function (event) {
-  event.preventDefault();
-  const value = form.find('input')[0].value;
-  if (value === decrypted) {
-    console.log(`${value} matches ${decrypted}`);
-    $('.exclusive').removeClass('exclusive');
-    $('#paywallInfo').removeClass('paywallInfo');
+form.find('button').on('click', function (event) {
+  event.preventDefault()
+  const value = form.find('input')[0].value
+  if (encrypt(value, rot) === bypass) {
+    console.log(`${value} matches ${bypass}`)
+    $('.exclusive').removeClass('exclusive')
+    $('#paywallInfo').removeClass('paywallInfo')
   } else {
-    console.log(`${value} does not match ${decrypted} with rotational value ${rot}`)
+    console.log(
+      `${value} does not match ${bypass} with rotational value ${rot}`
+    )
   }
 })
 
