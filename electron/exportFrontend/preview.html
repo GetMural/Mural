@@ -78,12 +78,6 @@
   {{/font_headers_link}}
   {{/meta}}
 
-  {{! to do:
-  read and store all pointers and weights in an array as an object
-  add a pointer and 10% weight for mural
-  randomly choose from that array and fill the monetization meta content
-  }}
-
   {{#payment.enabled}}
     {{#payment}}
       {{#accessCode}}
@@ -94,37 +88,48 @@
       {{/rot}}
     {{/payment}}
   <script src="https://cdn.coil.com/coil-support-button.js"></script>
-  <script>
-    const pointers = [];
-  </script>
     {{#payment}}
+  <script>
+    const pointers = {
+      '$ilp.uphold.com/e9EyJQYXGNHE': 10
+    }
+    let pointer = '';
       {{#pointers}}
-  <script>
-    for (let i = 0; i < {{ share }}; i += 1) {
-      pointers.push(`${{{pointer}}}`);
-    }
-  </script>
+    pointer = `{{pointer}}`.replace('&#x2F;', '/');
+    pointers[pointer] = {{share}};
       {{/pointers}}
-  <script>
-    for (let i = 0; i < 10; i += 1) {
-      pointers.push('$ilp.uphold.com/e9EyJQYXGNHE');
+
+    function pickPointer () {
+      const sum = Object.values(pointers).reduce((sum, weight) => sum + weight, 0);
+      let choice = Math.random() * sum;
+
+      for (const pointer in pointers) {
+        const weight = pointers[pointer];
+        if ((choice -= weight) <= 0) {
+          return pointer;
+        }
+      }
     }
-    // pull a value from the pointer array
-    const pointer = pointers[Math.floor(Math.random() * pointers.length)];
-    // create a meta monetization content object
-    const metaNode = document.createElement('meta');
-    metaNode.name = 'monetization';
-    metaNode.content = pointer;
-    const head = document.getElementsByTagName('head')[0];
-    head.append(metaNode);
-  </script>
-  <script>
-  if (document.monetization) {
-    document.monetization.addEventListener('monetizationstart', () => {
-      document.getElementsById('paywallInfo').classList.remove('paywallInfo');
-      document.getElementsById('paywall').classList.remove('exclusive');
+
+    window.addEventListener('load', () => {
+      const pointer = pickPointer();
+      const monetizationTag = document.createElement('meta');
+      monetizationTag.name = 'monetization';
+      monetizationTag.content = pointer;
+      document.head.appendChild(monetizationTag);
+
+      const monetizationRelTag = document.createElement('link');
+      monetizationRelTag.rel = 'monetization';
+      monetizationRelTag.href = `https://${pointer}`.replace('$', '');
+      document.head.appendChild(monetizationRelTag);
+
+      if (document.monetization) {
+        document.monetization.addEventListener('monetizationstart', () => {
+          document.getElementById('paywall').classList.remove('exclusive')
+        })
+      }
+
     });
-  }
   </script>
     {{/payment}}
   {{/payment.enabled}}

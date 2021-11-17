@@ -428,10 +428,10 @@ if (active.index + 2 < storyItems.length) {
   }
 }
 
-const form = $('#bypass')
-let rot = 0
-let bypass = ''
-
+const form = $('#bypass');
+let rot = 0;
+let bypass = '';
+let decrypted = '';
 // original code courtesy of CodeNiro
 // http://codeniro.com/caesars-cipher-algorithm-javascript/
 
@@ -451,10 +451,10 @@ function encrypt(text, shift) {
 }
 
 const decrypt = function (text, shift) {
-  var result = ''
-  shift = (26 - shift) % 26
-  result = encrypt(text, shift)
-  return result
+  var result = "";
+  shift = (26 + shift) % 26;
+  result = encrypt(text, shift);
+  return result;
 }
 
 for (let i = 0; i < $('head').find('meta').length; i += 1) {
@@ -465,14 +465,20 @@ for (let i = 0; i < $('head').find('meta').length; i += 1) {
     rot = $('head').find('meta')[i].content
   }
   if (bypass !== '' && rot !== 0) {
-    console.log('decrypt', bypass, decrypt(bypass, rot))
+    decrypted = decrypt(bypass, rot);
   }
 }
 
 form.find('button').click(function (event) {
-  event.preventDefault()
-  const value = form.find('input')[0].value
-  console.log(value)
+  event.preventDefault();
+  const value = form.find('input')[0].value;
+  if (value === decrypted) {
+    console.log(`${value} matches ${decrypted}`);
+    $('.exclusive').removeClass('exclusive');
+    $('#paywallInfo').removeClass('paywallInfo');
+  } else {
+    console.log(`${value} does not match ${decrypted} with rotational value ${rot}`)
+  }
 })
 
 Promise.all(LOAD_PROMISES)

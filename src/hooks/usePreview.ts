@@ -13,8 +13,24 @@ const media = (relativePath: string) => {
   return './media/' + relativePath
 }
 
+const encrypt = (text: string, shift: number) => {
+  var result = ''
+  for (var i = 0; i < text.length; i++) {
+    var c = text.charCodeAt(i)
+    if (c >= 65 && c <= 90) {
+      result += String.fromCharCode(((c - 65 + shift) % 26) + 65)
+    } else if (c >= 97 && c <= 122) {
+      result += String.fromCharCode(((c - 97 + shift) % 26) + 97)
+    } else {
+      result += text.charAt(i)
+    }
+  }
+  return result
+}
+
 export default function usePreview() {
   const state = useAppSelector((state) => state)
+  const rotationalValue = Math.floor(Math.random() * 26)
   const mappedState = React.useMemo(() => {
     const items: Storyboard['items'] = flatMap(
       state.story.items,
@@ -305,8 +321,11 @@ export default function usePreview() {
       payment: {
         enabled: state.settings.payment.enabled,
         pointers: state.settings.payment.pointers,
-        accessCode: state.settings.payment.accessCode,
-        rot: Math.floor(Math.random() * 26),
+        accessCode: encrypt(
+          state.settings.payment.accessCode || '',
+          rotationalValue
+        ),
+        rot: rotationalValue,
       },
     }
   }, [
@@ -324,6 +343,7 @@ export default function usePreview() {
     state.story.metadata.siteImage,
     state.story.metadata.siteName,
     state.story.metadata.title,
+    rotationalValue,
   ])
   React.useEffect(() => {
     render(mappedState)
