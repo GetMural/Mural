@@ -276,7 +276,9 @@ export default function usePreview() {
       }),
       items,
       payment: {
-        ...state.settings.payment,
+        enabled: state.settings.payment.enabled,
+        pointers: state.settings.payment.pointers,
+        accessCode: state.settings.payment.accessCode,
         rot: Math.floor(Math.random() * 26),
       },
     }
