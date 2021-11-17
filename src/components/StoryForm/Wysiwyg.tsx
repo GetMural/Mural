@@ -1,4 +1,4 @@
-import { Typography } from '@mui/material'
+import { FormLabel, Typography } from '@mui/material'
 import makeStyles from '@mui/styles/makeStyles'
 import { ReactNode } from 'react'
 import { useController, UseControllerProps } from 'react-hook-form'
@@ -11,6 +11,7 @@ import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
 import { convertFromRaw, convertToRaw, EditorState } from 'draft-js'
 import handleImageInput from 'utils/handleImageInput'
 import media from 'utils/getMediaPath'
+import { Box } from '@mui/system'
 
 const useStyles = makeStyles((theme) => ({
   wysiwygToolbar: {
@@ -81,7 +82,9 @@ export default function Wysiwyg({
 
   return (
     <div>
-      <Typography gutterBottom>{label}</Typography>
+      <Box mb={1}>
+        <FormLabel>{label}</FormLabel>
+      </Box>
       <Editor
         editorState={editorState}
         ref={ref}

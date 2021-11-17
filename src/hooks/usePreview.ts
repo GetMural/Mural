@@ -28,10 +28,10 @@ export default function usePreview() {
                   light: !!item.light,
                   audio: item.audio
                     ? {
-                        loop: true,
+                        loop: !!item.loop,
                         mp3: media(item.audio.path),
                         // ogg: string
-                        // audio_credits: string
+                        audio_credits: convertToHtml(item.audioCredits),
                       }
                     : undefined,
                   image: item.image
@@ -41,7 +41,7 @@ export default function usePreview() {
                         srcphone: media(item.image?.small.path),
                         alt: item.altText,
                         image_caption: item.title,
-                        image_credits: item.subtitle,
+                        image_credits: convertToHtml(item.imageCredits),
                       }
                     : undefined,
                 },
