@@ -51,6 +51,7 @@
   "scripts": {
     "start": "concurrently \"yarn start-cra\" \"yarn electron-start\"",
     "start-cra": "BROWSER=none react-scripts start",
+    "serve-preview": "http-server userFolder/preview",
     "electron-start": "tsc -p electron && yarn copy-files && electron .",
     "electron-dev": "yarn clean && concurrently \"BROWSER=none yarn start\" \"wait-on http://localhost:3000 && tsc -p electron -w\" \"wait-on http://localhost:3000 && yarn electron-start \"",
     "electron-build": "yarn build && electron-builder",
@@ -138,6 +139,7 @@
     "electron-reloader": "^1.2.1",
     "expose-loader": "^1.0.0",
     "extract-text-webpack-plugin": "^3.0.2",
+    "http-server": "^14.0.0",
     "img-loader": "^4.0.0",
     "jquery": "^3.6.0",
     "rimraf": "^3.0.2",
