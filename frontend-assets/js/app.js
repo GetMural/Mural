@@ -425,6 +425,26 @@ if (active.index + 2 < storyItems.length) {
   }
 }
 
+const form = $('#bypass');
+let rot = 0;
+let bypass = '';
+
+for (let i = 0; i < $('head').find('meta').length; i += 1) {
+  if ($('head').find('meta')[i].name === 'bypass') {
+    bypass = $('head').find('meta')[i].content;
+  }
+  if ($('head').find('meta')[i].name === 'rot') {
+    rot = $('head').find('meta')[i].content;
+  }
+  console.log(rot, bypass);
+}
+
+form.find('button').click(function (event) {
+  event.preventDefault();
+  const value = form.find('input')[0].value;
+  console.log(value);
+})
+
 Promise.all(LOAD_PROMISES)
   .then(() => {
     let overlay = document.getElementById('loading_overlay')

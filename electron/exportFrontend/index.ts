@@ -182,6 +182,7 @@ export interface Storyboard {
       share: number
     }[]
     accessCode?: string
+    rot: number
   }
   meta: {
     title?: string

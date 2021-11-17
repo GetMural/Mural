@@ -85,6 +85,14 @@
   }}
 
   {{#payment.enabled}}
+    {{#payment}}
+      {{#accessCode}}
+  <meta name="bypass" content="{{accessCode}}" />
+      {{/accessCode}}
+      {{#rot}}
+  <meta name="rot" content="{{rot}}" />
+      {{/rot}}
+    {{/payment}}
   <script src="https://cdn.coil.com/coil-support-button.js"></script>
   <script>
     const pointers = [];
@@ -166,8 +174,9 @@
       <p>Do you have a Coil account?</p>
       <div class="coil-support-button" data-size="large" data-theme="light"></div>
       <p>If you have an access code, please type it in here.</p>
-      <form>
-        <input type="password" placeholder="Your code" />
+      <form id="bypass">
+        <input type="password" id="input" placeholder="Your code" />
+        <button type="submit">Bypass</button>
       </form>
       <p>Sign up for a Coil account to support this creator and get other great web monitised content.</p>
     </div>

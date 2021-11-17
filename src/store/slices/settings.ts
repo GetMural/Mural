@@ -9,6 +9,7 @@ export interface SettingsState {
       share: number
     }[]
     accessCode?: string
+    rot: number
   }
 }
 
@@ -24,6 +25,7 @@ const initialState: SettingsState = {
       },
     ],
     accessCode: '',
+    rot: 0,
   },
 }
 
