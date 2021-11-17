@@ -275,7 +275,10 @@ export default function usePreview() {
         return []
       }),
       items,
-      payment: state.settings.payment,
+      payment: {
+        ...state.settings.payment,
+        rot: Math.floor(Math.random() * 26),
+      },
     }
   }, [
     state.settings.payment,
