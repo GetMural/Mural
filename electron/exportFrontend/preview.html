@@ -785,14 +785,16 @@
     </section>
     {{/videofullpage}}
 
-    {{#youtube}}
-    <section class="st-video part" name="story{{id}}" {{#youtube_id}} data-youtube-id="{{youtube_id}}" {{/youtube_id}}
+    {{#embedVideo}}
+    <section class="st-video part" name="story{{id}}" {{#embed}} {{#id}} data-youtube-id="{{id}}" {{/id}} {{/embed}}
       {{#controls}} data-controls=true {{/controls}} {{#autoAdvance}} data-auto-advance=true {{/autoAdvance}}>
       <div class="video-container">
-        <div id="ytplayer_{{youtube_id}}_{{id}}"></div>
+        {{#embed}}
+        <div id="ytplayer_{{id}}_0"></div>
+        {{/embed}}
       </div>
     </section>
-    {{/youtube}}
+    {{/embedVideo}}
 
     {{#paywallSeparatorEnd}}
     <!-- end paywall -->
