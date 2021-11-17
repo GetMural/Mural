@@ -156,6 +156,7 @@ export type Items =
   | {
       embedVideo: {
         id: string
+        index?: number
         showControls?: boolean
         autoAdvance?: boolean
         embed?: {

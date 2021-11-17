@@ -17,17 +17,11 @@ const YouTubePromise = new Promise(function (resolve, reject) {
   }
 })
 
-// function resizePlayers() {
-//   Object.keys(YOUTUBE).forEach(function (ytid) {
-//     YOUTUBE[ytid].setSize(window.innerWidth, window.innerHeight)
-//   })
-// }
-
-// let resizeTimeout
-// window.addEventListener('resize', function () {
-//   clearTimeout(resizeTimeout)
-//   resizeTimeout = setTimeout(resizePlayers, 200)
-// })
+window.addEventListener('resize', function () {
+  Object.keys(YOUTUBE).forEach(function (ytid) {
+    YOUTUBE[ytid].setSize(window.innerWidth, window.innerHeight)
+  })
+})
 
 function getYoutubeId(item) {
   const videoId = item.data.youtubeId

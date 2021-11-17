@@ -18,7 +18,7 @@ export default function usePreview() {
   const mappedState = React.useMemo(() => {
     const items: Storyboard['items'] = flatMap(
       state.story.items,
-      (item): [Items] | [] => {
+      (item, index): [Items] | [] => {
         switch (item.type) {
           case 'imageAudio':
             return [
@@ -224,6 +224,7 @@ export default function usePreview() {
               {
                 embedVideo: {
                   id: item.id,
+                  index: index,
                   showControls: item.showControls,
                   autoAdvance: item.autoAdvance,
                   embed: item.embed,
@@ -295,5 +296,6 @@ export default function usePreview() {
   ])
   React.useEffect(() => {
     render(mappedState)
+    console.log(mappedState)
   }, [mappedState])
 }
