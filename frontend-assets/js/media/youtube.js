@@ -1,84 +1,79 @@
-const YOUTUBE = {};
-let loaded = false;
+const YOUTUBE = {}
+let loaded = false
 
-function loadYouTube () {
+function loadYouTube() {
   if (!loaded) {
-    const tag = document.createElement('script');
-    tag.src = "https://www.youtube.com/player_api";
-    const firstScriptTag = document.getElementsByTagName('script')[0];
-    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-    loaded = true;
+    const tag = document.createElement('script')
+    tag.src = 'https://www.youtube.com/player_api'
+    const firstScriptTag = document.getElementsByTagName('script')[0]
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag)
+    loaded = true
   }
 }
 
-const YouTubePromise = new Promise(function(resolve, reject) {
+const YouTubePromise = new Promise(function (resolve, reject) {
   window.onYouTubePlayerAPIReady = function () {
-    resolve();
+    resolve()
   }
-});
+})
 
-function resizePlayers() {
-  Object.keys(YOUTUBE).forEach(function (ytid) {
-    YOUTUBE[ytid].setSize(window.innerWidth, window.innerHeight);
-  });  
-}
-
-let resizeTimeout;
 window.addEventListener('resize', function () {
-  clearTimeout(resizeTimeout);
-  resizeTimeout = setTimeout(resizePlayers, 200);
-});
+  Object.keys(YOUTUBE).forEach(function (ytid) {
+    YOUTUBE[ytid].setSize(window.innerWidth, window.innerHeight)
+  })
+})
 
-function getYoutubeId (item) {
-  const videoId = item.data.youtubeId;
-  const id = item.index;
-  return `ytplayer_${videoId}_${id}`;
+function getYoutubeId(item) {
+  const videoId = item.data.youtubeId
+  const id = item.index
+  return `ytplayer_${videoId}_${id}`
 }
 
-function setMuted (muted) {
+function setMuted(muted) {
   Object.keys(YOUTUBE).forEach(function (ytid) {
-    const player = YOUTUBE[ytid];
+    const player = YOUTUBE[ytid]
     if (muted) {
-      player.mute();
+      player.mute()
     } else {
-      player.unMute();
+      player.unMute()
     }
-  });
+  })
 }
 
 function play(item, isSoundEnabled) {
-  const youtube_id = getYoutubeId(item);
+  const youtube_id = getYoutubeId(item)
   const player = YOUTUBE[youtube_id]
 
   if (isSoundEnabled) {
-    player.unMute();
+    player.unMute()
   } else {
-    player.mute();
+    player.mute()
   }
-  player.playVideo();
+  player.playVideo()
 }
 
 function remove(item) {
-  const youtube_id = getYoutubeId(item);
-  const $container = item.el.find('.video-container');
-  $container.css('position', '');
-  YOUTUBE[youtube_id].pauseVideo();
+  const youtube_id = getYoutubeId(item)
+  const $container = item.el.find('.video-container')
+  $container.css('position', '')
+  YOUTUBE[youtube_id].pauseVideo()
 }
 
 function stick(item) {
-  const $container = item.el.find('.video-container');
-  $container.css('position', 'fixed');
+  const $container = item.el.find('.video-container')
+  $container.css('position', 'fixed')
 }
 
 function prepare(scrollStory, item) {
-  loadYouTube();
-  const videoId = item.data.youtubeId;
-  const hasControls = item.data.controls;
-  const autoAdvance = item.data.autoAdvance;
-  const id = item.index;
-  const youtube_id = getYoutubeId(item);
+  console.log('prepare youtube')
+  loadYouTube()
+  const videoId = item.data.youtubeId
+  const hasControls = item.data.controls
+  const autoAdvance = item.data.autoAdvance
+  const id = item.index
+  const youtube_id = getYoutubeId(item)
 
-  const canPlayThrough = new Promise(function(resolve, reject) {
+  const canPlayThrough = new Promise(function (resolve, reject) {
     YouTubePromise.then(function () {
       YOUTUBE[youtube_id] = new YT.Player(youtube_id, {
         width: window.innerWidth,
@@ -95,26 +90,27 @@ function prepare(scrollStory, item) {
         },
         events: {
           onReady: function (event) {
-            resolve();
+            console.log('youtube is ready', event)
+            resolve()
           },
           onStateChange: function (event) {
-            const status = event.data;
+            const status = event.data
 
-            if (autoAdvance && (status === YT.PlayerState.ENDED)) {
-              const count = scrollStory.getItems().length;
-              const next = id + 1;
+            if (autoAdvance && status === YT.PlayerState.ENDED) {
+              const count = scrollStory.getItems().length
+              const next = id + 1
 
               if (next < count) {
-                scrollStory.index(next);
+                scrollStory.index(next)
               }
             }
-          }
-        }
-      });
-    });
-  });
+          },
+        },
+      })
+    })
+  })
 
-  return canPlayThrough;
+  return canPlayThrough
 }
 
 module.exports = {
@@ -123,4 +119,4 @@ module.exports = {
   stick,
   prepare,
   setMuted,
-};
+}

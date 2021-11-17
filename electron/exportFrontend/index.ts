@@ -30,6 +30,19 @@ interface Slideshow {
   files?: string[]
 }
 
+interface EmbedVideo {
+  id: string
+  index?: number
+  showControls?: boolean
+  autoAdvance?: boolean
+  embed?: {
+    id: string
+    url: string
+    source: 'youtube' | 'vimeo' | 'dailymotion'
+    embed: string
+  }
+}
+
 type OffsetPortraitVideo = {
   left: boolean
   centre: boolean
@@ -154,17 +167,13 @@ export type Items =
       }
     }
   | {
-      embedVideo: {
-        id: string
-        showControls?: boolean
-        autoAdvance?: boolean
-        embed?: {
-          id: string
-          url: string
-          source: 'youtube' | 'vimeo' | 'dailymotion'
-          embed: string
-        }
-      }
+      youtube: EmbedVideo
+    }
+  | {
+      dailymotion: EmbedVideo
+    }
+  | {
+      vimeo: EmbedVideo
     }
   | {
       paywallSeparator: {

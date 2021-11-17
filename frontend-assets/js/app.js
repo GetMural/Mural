@@ -166,6 +166,8 @@ function getVideoAttrs(item) {
 }
 
 function loadItem(item) {
+  console.log('display item')
+  console.log(item)
   if (LOADED_STORY_SECTIONS[item.index] !== undefined) {
     return
   } else {
@@ -426,33 +428,33 @@ if (active.index + 2 < storyItems.length) {
   }
 }
 
-const form = $('#bypass');
-let rot = 0;
-let bypass = '';
+const form = $('#bypass')
+let rot = 0
+let bypass = ''
 
 // original code courtesy of CodeNiro
 // http://codeniro.com/caesars-cipher-algorithm-javascript/
 
 function encrypt(text, shift) {
-  var result = "";
+  var result = ''
   for (var i = 0; i < text.length; i++) {
-    var c = text.charCodeAt(i);
+    var c = text.charCodeAt(i)
     if (c >= 65 && c <= 90) {
-      result += String.fromCharCode((c - 65 + shift) % 26 + 65);
+      result += String.fromCharCode(((c - 65 + shift) % 26) + 65)
     } else if (c >= 97 && c <= 122) {
-      result += String.fromCharCode((c - 97 + shift) % 26 + 97);
+      result += String.fromCharCode(((c - 97 + shift) % 26) + 97)
     } else {
-      result += text.charAt(i);
+      result += text.charAt(i)
     }
   }
-  return result;
+  return result
 }
 
 const decrypt = function (text, shift) {
-  var result = "";
-  shift = (26 - shift) % 26;
-  result = encrypt(text, shift);
-  return result;
+  var result = ''
+  shift = (26 - shift) % 26
+  result = encrypt(text, shift)
+  return result
 }
 
 for (let i = 0; i < $('head').find('meta').length; i += 1) {
@@ -468,9 +470,9 @@ for (let i = 0; i < $('head').find('meta').length; i += 1) {
 }
 
 form.find('button').click(function (event) {
-  event.preventDefault();
-  const value = form.find('input')[0].value;
-  console.log(value);
+  event.preventDefault()
+  const value = form.find('input')[0].value
+  console.log(value)
 })
 
 Promise.all(LOAD_PROMISES)
