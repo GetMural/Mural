@@ -2875,3 +2875,10 @@ article .part.box_text p {
     }
   }
 }
+
+.vimeo-container {
+  background: black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}

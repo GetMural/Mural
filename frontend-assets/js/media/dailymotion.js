@@ -11,18 +11,17 @@ function play(item, isSoundEnabled) {
 }
 
 function remove(item) {
-  // const $container = item.el.find('.video-container')
-  // $container.css('position', '')
-  // DAILYMOTION[item.index].pause()
+  const $container = item.el.find('.video-container')
+  $container.css('position', '')
+  DAILYMOTION[item.index].pause()
 }
 
 function stick(item) {
-  // const $container = item.el.find('.video-container')
-  // $container.css('position', 'fixed')
+  const $container = item.el.find('.video-container')
+  $container.css('position', 'fixed')
 }
 
 function prepare(scrollStory, item) {
-  console.log('prepare dailymotion', item)
   DAILYMOTION[item.index] = DM.player(
     document.getElementById('dm_' + item.index),
     {

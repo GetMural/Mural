@@ -25,7 +25,7 @@ function prepare(scrollStory, item) {
   VIMEO[item.index] = new Vimeo.Player('vimeo_' + item.index, {
     id: item.data.vimeoVideoId,
     responsive: true,
-    autoplay: true,
+    autoplay: false,
     controls: false,
   })
 }
