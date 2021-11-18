@@ -19,22 +19,6 @@ export default function ParallaxImage({ itemIndex }: Props) {
       </Box>
       <Box my={4}>
         <Input
-          key={`items.${itemIndex}.altText`}
-          name={`items.${itemIndex}.altText` as const}
-          label="Image Alt Text"
-          placeholder="Your text here"
-        />
-      </Box>
-      <Divider light />
-      <Box my={4}>
-        <Input
-          key={`items.${itemIndex}.navigationTitle`}
-          name={`items.${itemIndex}.navigationTitle` as const}
-          label="Navigation Title"
-        />
-      </Box>
-      <Box my={4}>
-        <Input
           key={`items.${itemIndex}.title`}
           name={`items.${itemIndex}.title` as const}
           label="Title"
@@ -47,6 +31,22 @@ export default function ParallaxImage({ itemIndex }: Props) {
           name={`items.${itemIndex}.subtitle` as const}
           label="Subtitle"
           placeholder="Your text here"
+        />
+      </Box>
+      <Divider light />
+      <Box my={4}>
+        <Input
+          key={`items.${itemIndex}.altText`}
+          name={`items.${itemIndex}.altText` as const}
+          label="Image Alt Text"
+          placeholder="Your text here"
+        />
+      </Box>
+      <Box my={4}>
+        <Input
+          key={`items.${itemIndex}.navigationTitle`}
+          name={`items.${itemIndex}.navigationTitle` as const}
+          label="Navigation Title"
         />
       </Box>
     </>
