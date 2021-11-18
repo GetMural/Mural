@@ -124,8 +124,10 @@
       document.head.appendChild(monetizationRelTag);
 
       if (document.monetization) {
+        console.log('is monetized')
         document.monetization.addEventListener('monetizationstart', () => {
-          document.getElementById('paywall').classList.remove('exclusive')
+          document.getElementById('paywall').classList.remove('exclusive');
+          document.getElementById('paywallInfo').classList.remove('paywallInfo');
         })
       }
 
