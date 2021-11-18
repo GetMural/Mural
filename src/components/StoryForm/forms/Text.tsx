@@ -11,14 +11,6 @@ export default function Text({ itemIndex }: Props) {
     <>
       <Box my={4}>
         <Input
-          key={`items.${itemIndex}.navigationTitle`}
-          name={`items.${itemIndex}.navigationTitle` as const}
-          label="Navigation Title"
-          autoFocus
-        />
-      </Box>
-      <Box my={4}>
-        <Input
           key={`items.${itemIndex}.title`}
           name={`items.${itemIndex}.title` as const}
           label="Title"
@@ -39,6 +31,14 @@ export default function Text({ itemIndex }: Props) {
           name={`items.${itemIndex}.introduction` as const}
           label="Introduction"
           placeholder="Your text here"
+        />
+      </Box>
+      <Box my={4}>
+        <Input
+          key={`items.${itemIndex}.navigationTitle`}
+          name={`items.${itemIndex}.navigationTitle` as const}
+          label="Navigation Title"
+          autoFocus
         />
       </Box>
     </>
