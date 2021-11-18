@@ -25,16 +25,10 @@ export default function BackgroundVideo({ itemIndex }: Props) {
         <Checkbox
           key={`items.${itemIndex}.fullPage`}
           name={`items.${itemIndex}.fullPage` as const}
-          label="Full Page"
+          label="Full Page Layout (Leave blank for smaller title and text in upper left)"
         />
       </Box>
-      <Box my={4}>
-        <Input
-          key={`items.${itemIndex}.navigationTitle`}
-          name={`items.${itemIndex}.navigationTitle` as const}
-          label="Navigation Title"
-        />
-      </Box>
+      <Divider light />
       <Box my={4}>
         <Input
           key={`items.${itemIndex}.title`}
@@ -59,11 +53,19 @@ export default function BackgroundVideo({ itemIndex }: Props) {
           placeholder="Your text here"
         />
       </Box>
+      <Divider light />
+       <Box my={4}>
+        <Input
+          key={`items.${itemIndex}.navigationTitle`}
+          name={`items.${itemIndex}.navigationTitle` as const}
+          label="Navigation Title"
+        />
+      </Box>
       <Box my={4}>
         <Image
           key={`items.${itemIndex}.posterImage`}
           name={`items.${itemIndex}.posterImage` as const}
-          label="Poster Image"
+          label="Backup Image"
         />
       </Box>
       <Box my={4}>
