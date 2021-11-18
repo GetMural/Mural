@@ -1,25 +1,36 @@
+const VIMEO = {}
+
 function setMuted(muted) {
   console.log('set muted vimeo')
+
+  for (const index of Object.keys(VIMEO)) {
+    VIMEO[index].setVolume(muted ? 0 : 1)
+  }
 }
 
 function play(item, isSoundEnabled) {
-  console.log('play vimeo')
+  console.log('play vimeo', VIMEO[item.index])
+  VIMEO[item.index].play()
 }
 
 function remove(item) {
   console.log('remove vimeo')
 }
 
+// function stick(item) {
+//   console.log('stick vimeo')
+// }
 function stick(item) {
-  console.log('stick vimeo')
+  const $container = item.el
+  // $container.css('position', 'fixed')
 }
 
 function prepare(scrollStory, item) {
-  const player = new Vimeo.Player('vimeo_' + item.index, {
+  VIMEO[item.index] = new Vimeo.Player('vimeo_' + item.index, {
     width: window.innerWidth,
     height: window.innerHeight,
   })
-  console.log('vimeo prepare', player)
+  console.log('vimeo prepare', VIMEO)
 }
 
 module.exports = {

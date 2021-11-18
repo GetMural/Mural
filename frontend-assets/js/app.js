@@ -167,8 +167,7 @@ function getVideoAttrs(item) {
 }
 
 function loadItem(item) {
-  console.log('display item')
-  console.log(item)
+  console.log('display item', item)
   if (LOADED_STORY_SECTIONS[item.index] !== undefined) {
     return
   } else {
@@ -335,6 +334,11 @@ $story.on('itemfocus', function (ev, item) {
     youtubeMedia.stick(item)
   }
 
+  if (item.data.vimeoId) {
+    vimeoMedia.play(item, isSoundEnabled)
+    vimeoMedia.stick(item)
+  }
+
   if (item.data.audio) {
     audioMedia.playBackgroundAudio(item, {
       muted: !isSoundEnabled,
@@ -396,6 +400,7 @@ $('.mute').click(function () {
   })
 
   youtubeMedia.setMuted(!isSoundEnabled)
+  vimeoMedia.setMuted(!isSoundEnabled)
 })
 
 $('.sticks_wrapper').click(function () {
