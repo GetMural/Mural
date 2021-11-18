@@ -41,14 +41,6 @@ export default function Slideshow({ itemIndex }: Props) {
   return (
     <>
       <Box my={4}>
-        <Input
-          key={`items.${itemIndex}.navigationTitle`}
-          name={`items.${itemIndex}.navigationTitle` as const}
-          label="Navigation Title"
-          autoFocus
-        />
-      </Box>
-      <Box my={4}>
         <Wysiwyg
           key={`items.${itemIndex}.slideShowTitle`}
           name={`items.${itemIndex}.slideShowTitle` as const}
@@ -57,10 +49,18 @@ export default function Slideshow({ itemIndex }: Props) {
         />
       </Box>
       <Box my={4}>
+        <Input
+          key={`items.${itemIndex}.navigationTitle`}
+          name={`items.${itemIndex}.navigationTitle` as const}
+          label="Navigation Title"
+          autoFocus
+        />
+      </Box>
+      <Box my={4}>
         <Checkbox
           key={`items.${itemIndex}.light`}
           name={`items.${itemIndex}.light` as const}
-          label="Light"
+          label="Black text on white background"
         />
       </Box>
       <Divider light />
