@@ -1,4 +1,4 @@
-import { Box } from '@mui/material'
+import { Box, Divider } from '@mui/material'
 import Input from 'components/StoryForm/Input'
 import Checkbox from '../Checkbox'
 import Video from '../Video'
@@ -54,7 +54,7 @@ export default function BackgroundVideo({ itemIndex }: Props) {
         />
       </Box>
       <Divider light />
-       <Box my={4}>
+      <Box my={4}>
         <Input
           key={`items.${itemIndex}.navigationTitle`}
           name={`items.${itemIndex}.navigationTitle` as const}
