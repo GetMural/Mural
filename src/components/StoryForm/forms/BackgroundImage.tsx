@@ -22,7 +22,7 @@ export default function BackgroundImage({ itemIndex }: Props) {
         <Checkbox
           key={`items.${itemIndex}.fullPage`}
           name={`items.${itemIndex}.fullPage` as const}
-          label="Full Page Layout (Leave blank for smaller title on top)"
+          label="Full Page Layout (Leave blank for smaller title and text in upper left)"
         />
       </Box>
       <Divider light />
