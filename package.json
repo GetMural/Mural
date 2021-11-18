@@ -5,7 +5,7 @@
     "name": "Mural",
     "email": "support@getmural.io"
   },
-  "version": "1.5.4",
+  "version": "1.5.5",
   "private": true,
   "homepage": "./",
   "dependencies": {
