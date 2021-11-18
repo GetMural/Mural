@@ -19,7 +19,7 @@ export default function ImageAudio({ itemIndex }: Props) {
           label="Image"
         />
       </Box>
-       <Box my={4}>
+      <Box my={4}>
         <Audio
           key={`items.${itemIndex}.audio`}
           name={`items.${itemIndex}.audio` as const}
@@ -71,7 +71,6 @@ export default function ImageAudio({ itemIndex }: Props) {
           label="Image Alt Text"
         />
       </Box>
-      
       <Box my={4}>
         <Wysiwyg
           key={`items.${itemIndex}.imageCredits`}
@@ -85,7 +84,7 @@ export default function ImageAudio({ itemIndex }: Props) {
           name={`items.${itemIndex}.audioCredits` as const}
           label="Audio Credits"
         />
-      </Box> 
+      </Box>
     </>
   )
 }
