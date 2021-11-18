@@ -19,36 +19,7 @@ export default function ImageAudio({ itemIndex }: Props) {
           label="Image"
         />
       </Box>
-      <Box my={4}>
-        <Checkbox
-          key={`items.${itemIndex}.light`}
-          name={`items.${itemIndex}.light` as const}
-          label="Light"
-        />
-      </Box>
-      <Box my={4}>
-        <Input
-          key={`items.${itemIndex}.altText`}
-          name={`items.${itemIndex}.altText` as const}
-          label="Image Alt Text"
-        />
-      </Box>
-      <Box my={4}>
-        <Input
-          key={`items.${itemIndex}.imageCaption`}
-          name={`items.${itemIndex}.imageCaption` as const}
-          label="Image Caption"
-        />
-      </Box>
-      <Box my={4}>
-        <Wysiwyg
-          key={`items.${itemIndex}.imageCredits`}
-          name={`items.${itemIndex}.imageCredits` as const}
-          label="Image Credits"
-        />
-      </Box>
-      <Divider light />
-      <Box my={4}>
+       <Box my={4}>
         <Audio
           key={`items.${itemIndex}.audio`}
           name={`items.${itemIndex}.audio` as const}
@@ -56,17 +27,33 @@ export default function ImageAudio({ itemIndex }: Props) {
         />
       </Box>
       <Box my={4}>
-        <Wysiwyg
-          key={`items.${itemIndex}.audioCredits`}
-          name={`items.${itemIndex}.audioCredits` as const}
-          label="Image Credits"
+        <Checkbox
+          key={`items.${itemIndex}.loop`}
+          name={`items.${itemIndex}.loop` as const}
+          label="Loop Audio"
         />
       </Box>
       <Box my={4}>
         <Checkbox
-          key={`items.${itemIndex}.loop`}
-          name={`items.${itemIndex}.loop` as const}
-          label="Loop"
+          key={`items.${itemIndex}.light`}
+          name={`items.${itemIndex}.light` as const}
+          label="Black text on white background"
+        />
+      </Box>
+      <Divider light />
+      <Box my={4}>
+        <Input
+          key={`items.${itemIndex}.title`}
+          name={`items.${itemIndex}.title` as const}
+          label="Title"
+          placeholder="Your text here"
+        />
+      </Box>
+      <Box my={4}>
+        <Input
+          key={`items.${itemIndex}.imageCaption`}
+          name={`items.${itemIndex}.imageCaption` as const}
+          label="Image Caption"
         />
       </Box>
       <Divider light />
@@ -79,12 +66,26 @@ export default function ImageAudio({ itemIndex }: Props) {
       </Box>
       <Box my={4}>
         <Input
-          key={`items.${itemIndex}.title`}
-          name={`items.${itemIndex}.title` as const}
-          label="Title"
-          placeholder="Your text here"
+          key={`items.${itemIndex}.altText`}
+          name={`items.${itemIndex}.altText` as const}
+          label="Image Alt Text"
         />
       </Box>
+      
+      <Box my={4}>
+        <Wysiwyg
+          key={`items.${itemIndex}.imageCredits`}
+          name={`items.${itemIndex}.imageCredits` as const}
+          label="Image Credits"
+        />
+      </Box>
+      <Box my={4}>
+        <Wysiwyg
+          key={`items.${itemIndex}.audioCredits`}
+          name={`items.${itemIndex}.audioCredits` as const}
+          label="Audio Credits"
+        />
+      </Box> 
     </>
   )
 }
