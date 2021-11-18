@@ -29,13 +29,6 @@ export default function FullpageVideo({ itemIndex }: Props) {
       </Box>
       <Divider light />
       <Box my={4}>
-        <Input
-          key={`items.${itemIndex}.navigationTitle`}
-          name={`items.${itemIndex}.navigationTitle` as const}
-          label="Navigation Title"
-        />
-      </Box>
-      <Box my={4}>
         <Wysiwyg
           key={`items.${itemIndex}.title`}
           name={`items.${itemIndex}.title` as const}
@@ -51,11 +44,19 @@ export default function FullpageVideo({ itemIndex }: Props) {
           placeholder="Your text here"
         />
       </Box>
+      <Divider light />
       <Box my={4}>
         <Image
           key={`items.${itemIndex}.representativeImage`}
           name={`items.${itemIndex}.representativeImage` as const}
-          label="Representative Image"
+          label="Backup Image"
+        />
+      </Box>
+      <Box my={4}>
+        <Input
+          key={`items.${itemIndex}.navigationTitle`}
+          name={`items.${itemIndex}.navigationTitle` as const}
+          label="Navigation Title"
         />
       </Box>
       <Box my={4}>
@@ -65,6 +66,7 @@ export default function FullpageVideo({ itemIndex }: Props) {
           label="Image Alt Text"
         />
       </Box>
+      <Divider light />
       <Box my={4}>
         <OffsetPortraitVideo
           key={`items.${itemIndex}.offsetPortraitVideo`}
