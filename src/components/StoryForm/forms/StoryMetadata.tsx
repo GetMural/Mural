@@ -15,7 +15,7 @@ export default function StoryMetadataForm() {
             helperText={
               <>
                 The title metadata field is also responsible for the og (Open
-                Graph) og:title property which is used by social media platforms
+                Graph) og:title property. What you write here will appear as the title when shared on social media platforms
                 such as Facebook and Twitter.
               </>
             }
@@ -32,11 +32,10 @@ export default function StoryMetadataForm() {
                 Mural story in between 120 to 158 characters. This length may
                 seem arbitrary (and in some ways it is) - but this is ideal
                 length of a string of text when displayed by search engines
-                likesuch as Google or Duck Duck Go and Social media platforms
+                likesuch as Google or Duck Duck Go and social media platforms
                 such as Facebook, Twitter, or Mastodon.
                 <br />
-                The description metadata field is also responsible for the
-                og:description output in your final Mural story.
+                The description metadata field is also the og:description text that is displayed on social media when a user shares your story.
               </>
             }
             rules={{ maxLength: 158, minLength: 120 }}
@@ -49,8 +48,7 @@ export default function StoryMetadataForm() {
             placeholder="Your name"
             helperText={
               <>
-                The author field is where the author of the Mural story's name
-                is entered.
+                Use this field for the name of the Mural story's author.
               </>
             }
           />
@@ -62,7 +60,7 @@ export default function StoryMetadataForm() {
             placeholder="https://your-website.com"
             helperText={
               <>
-                If you know the final website address of your Mural story then
+                If you know the final URL of your Mural story, then
                 this is where to enter that information.
               </>
             }
@@ -75,7 +73,7 @@ export default function StoryMetadataForm() {
             helperText={
               <>
                 What is the name of your Mural story? Although they are often
-                the same this does not have to be identical to the title
+                the same, this does not have to be identical to the title
                 metadata information.
               </>
             }
@@ -97,7 +95,7 @@ export default function StoryMetadataForm() {
         <Box my={4}>
           <Input
             name="metadata.extraHeader"
-            label="Extra Headers"
+            label="Extra Headers - Leave Blank For Defaults"
             multiline
             helperText={
               <>
@@ -130,7 +128,7 @@ export default function StoryMetadataForm() {
         <Box my={4}>
           <Input
             name="metadata.headerFont"
-            label="Headers font (titles/subtitles) embed"
+            label="Headers font (titles/subtitles) embed - Leave blank for defaults"
             multiline
             helperText={
               <>
@@ -144,11 +142,11 @@ export default function StoryMetadataForm() {
         <Box my={4}>
           <Input
             name="metadata.extraCss"
-            label="Extra CSS"
+            label="Extra CSS - Leave blank for defaults"
             multiline
             helperText={
               <>
-                Add some custom CSS to your story. CSS will be thrown into a{' '}
+                Add some custom CSS to your story. CSS will be included in a{' '}
                 {`<style>`} tag in the document {`<head>`}
                 Example:
                 <br />
@@ -160,11 +158,11 @@ export default function StoryMetadataForm() {
         <Box my={4}>
           <Input
             name="metadata.googleAnalyticsId"
-            label="Google Analytics ID"
+            label="Paste your Google Analytics ID here"
           />
         </Box>
         <Box my={4}>
-          <Input name="metadata.rssPingbkack" label="RSS pingbkack" />
+          <Input name="metadata.rssPingbkack" label="RSS pingback" />
         </Box>
       </form>
     </>
