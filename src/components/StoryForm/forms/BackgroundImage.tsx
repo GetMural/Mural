@@ -22,25 +22,10 @@ export default function BackgroundImage({ itemIndex }: Props) {
         <Checkbox
           key={`items.${itemIndex}.fullPage`}
           name={`items.${itemIndex}.fullPage` as const}
-          label="Full Page"
-        />
-      </Box>
-      <Box my={4}>
-        <Input
-          key={`items.${itemIndex}.altText`}
-          name={`items.${itemIndex}.altText` as const}
-          label="Image Alt Text"
-          placeholder="Your text here"
+          label="Full Page Layout (Leave blank for smaller title on top)"
         />
       </Box>
       <Divider light />
-      <Box my={4}>
-        <Input
-          key={`items.${itemIndex}.navigationTitle`}
-          name={`items.${itemIndex}.navigationTitle` as const}
-          label="Navigation Title"
-        />
-      </Box>
       <Box my={4}>
         <Wysiwyg
           key={`items.${itemIndex}.title`}
@@ -62,6 +47,22 @@ export default function BackgroundImage({ itemIndex }: Props) {
           key={`items.${itemIndex}.text`}
           name={`items.${itemIndex}.text` as const}
           label="Text"
+          placeholder="Your text here"
+        />
+      </Box>
+      <Divider light />
+      <Box my={4}>
+        <Input
+          key={`items.${itemIndex}.navigationTitle`}
+          name={`items.${itemIndex}.navigationTitle` as const}
+          label="Navigation Title"
+        />
+      </Box>
+      <Box my={4}>
+        <Input
+          key={`items.${itemIndex}.altText`}
+          name={`items.${itemIndex}.altText` as const}
+          label="Image Alt Text"
           placeholder="Your text here"
         />
       </Box>
