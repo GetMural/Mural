@@ -78,6 +78,7 @@ const videoMedia = require('./media/video')
 const imageMedia = require('./media/images')
 const audioMedia = require('./media/audio')
 const youtubeMedia = require('./media/youtube')
+const vimeoMedia = require('./media/vimeo')
 
 // Override this function so we can change the arrow keys.
 blueimp.prototype.onkeydown = function (event) {
@@ -181,6 +182,11 @@ function loadItem(item) {
   if (item.data.youtubeId) {
     const youtubeLoaded = youtubeMedia.prepare(scrollStory, item)
     returnPromises.push(youtubeLoaded)
+  }
+
+  if (item.data.vimeoId) {
+    const vimeoLoaded = vimeoMedia.prepare(scrollStory, item)
+    returnPromises.push(vimeoLoaded)
   }
 
   if (item.data.image) {

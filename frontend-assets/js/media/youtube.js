@@ -65,7 +65,6 @@ function stick(item) {
 }
 
 function prepare(scrollStory, item) {
-  console.log('prepare youtube')
   loadYouTube()
   const videoId = item.data.youtubeId
   const hasControls = item.data.controls
@@ -90,7 +89,6 @@ function prepare(scrollStory, item) {
         },
         events: {
           onReady: function (event) {
-            console.log('youtube is ready', event)
             resolve()
           },
           onStateChange: function (event) {

@@ -516,6 +516,15 @@
     </section>
     {{/youtube}}
 
+    {{#vimeo}}
+    <section 
+      class="st-video part" 
+      id="vimeo_{{index}}" 
+      name="story{{id}}"  
+      {{#embed}} {{#id}} data-vimeo-id="{{id}}" {{/id}} {{/embed}}>
+    </section>
+    {{/vimeo}}
+
     {{#paywallSeparatorEnd}}
     <!-- end paywall -->
     </div>
@@ -524,6 +533,7 @@
     {{/items}}
 
   </article>
+  <script src="https://player.vimeo.com/api/player.js"></script>
   <script
     src="https://code.jquery.com/jquery-3.6.0.slim.min.js"
     integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI="
