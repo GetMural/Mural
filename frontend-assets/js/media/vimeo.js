@@ -15,21 +15,18 @@ function play(item, isSoundEnabled) {
 
 function remove(item) {
   console.log('remove vimeo')
+  const $container = item.el.find('iframe')
+  $container.css('position', '')
+  VIMEO[item.index].pause()
 }
 
-// function stick(item) {
-//   console.log('stick vimeo')
-// }
 function stick(item) {
-  const $container = item.el
-  // $container.css('position', 'fixed')
+  const $container = item.el.find('iframe')
+  $container.css('position', 'fixed')
 }
 
 function prepare(scrollStory, item) {
-  VIMEO[item.index] = new Vimeo.Player('vimeo_' + item.index, {
-    width: window.innerWidth,
-    height: window.innerHeight,
-  })
+  VIMEO[item.index] = new Vimeo.Player('vimeo_' + item.index)
   console.log('vimeo prepare', VIMEO)
 }
 

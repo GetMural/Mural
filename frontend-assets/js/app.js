@@ -351,6 +351,10 @@ $story.on('itemblur', function (ev, item) {
     youtubeMedia.remove(item)
   }
 
+  if (item.data.vimeoId) {
+    vimeoMedia.remove(item)
+  }
+
   if (item.data.video) {
     videoMedia.removeBackgroundVideo(item.el, item.index)
   }
