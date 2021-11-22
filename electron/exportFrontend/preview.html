@@ -508,8 +508,12 @@
     {{/videofullpage}}
 
     {{#youtube}}
-    <section class="st-video part" name="story{{id}}" {{#embed}} {{#id}} data-youtube-id="{{id}}" {{/id}} {{/embed}}
-      {{#controls}} data-controls=true {{/controls}} {{#autoAdvance}} data-auto-advance=true {{/autoAdvance}}>
+    <section
+      class="st-video part" 
+      name="story{{id}}" 
+      {{#embed}} {{#id}} data-youtube-id="{{id}}" {{/id}} {{/embed}}
+      {{#showControls}} data-controls {{/showControls}}
+      {{#autoAdvance}} data-auto-advance=true {{/autoAdvance}}>
       <div class="video-container">
         <div id="ytplayer_{{#embed}}{{id}}{{/embed}}_{{index}}"></div>
       </div>
@@ -520,6 +524,7 @@
     <section 
       class="st-video part" 
       name="story{{id}}"
+      {{#showControls}} data-controls {{/showControls}}
       {{#embed}} {{#id}} data-vimeo-video-id="{{id}}" {{/id}} {{/embed}}>
       <div class="video-container vimeo-container">
         <div id="vimeo_{{index}}"></div>
@@ -531,6 +536,7 @@
     <section 
       class="st-video part" 
       name="story{{id}}"
+      {{#showControls}} data-controls {{/showControls}}
       {{#embed}} {{#id}} data-dailymotion-id="{{id}}" {{/id}} {{/embed}}>
       <div class="video-container">
         <div id="dm_{{index}}"></div>

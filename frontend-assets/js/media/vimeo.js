@@ -26,7 +26,7 @@ function prepare(scrollStory, item) {
     id: item.data.vimeoVideoId,
     responsive: true,
     autoplay: false,
-    controls: false,
+    controls: item.data.hasOwnProperty('controls'),
   })
 }
 

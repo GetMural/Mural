@@ -67,10 +67,10 @@ function stick(item) {
 function prepare(scrollStory, item) {
   loadYouTube()
   const videoId = item.data.youtubeId
-  const hasControls = item.data.controls
   const autoAdvance = item.data.autoAdvance
   const id = item.index
   const youtube_id = getYoutubeId(item)
+  const controls = item.data.hasOwnProperty('controls') ? 1 : 0
 
   const canPlayThrough = new Promise(function (resolve, reject) {
     YouTubePromise.then(function () {
@@ -79,7 +79,7 @@ function prepare(scrollStory, item) {
         height: window.innerHeight,
         videoId: videoId,
         playerVars: {
-          controls: hasControls ? 1 : 0,
+          controls: controls,
           enablejsapi: 1,
           playsinline: 1,
           disablekb: 1,

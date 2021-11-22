@@ -29,7 +29,7 @@ function prepare(scrollStory, item) {
       width: '100%',
       height: '100%',
       params: {
-        controls: false,
+        controls: item.data.hasOwnProperty('controls'),
         autoplay: false,
         mute: false,
       },
