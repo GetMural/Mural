@@ -79,6 +79,7 @@ const imageMedia = require('./media/images')
 const audioMedia = require('./media/audio')
 const youtubeMedia = require('./media/youtube')
 const vimeoMedia = require('./media/vimeo')
+const dailymotionMedia = require('./media/dailymotion')
 
 // Override this function so we can change the arrow keys.
 blueimp.prototype.onkeydown = function (event) {
@@ -167,7 +168,6 @@ function getVideoAttrs(item) {
 }
 
 function loadItem(item) {
-  console.log('display item', item)
   if (LOADED_STORY_SECTIONS[item.index] !== undefined) {
     return
   } else {
@@ -183,9 +183,14 @@ function loadItem(item) {
     returnPromises.push(youtubeLoaded)
   }
 
-  if (item.data.vimeoId) {
+  if (item.data.vimeoVideoId) {
     const vimeoLoaded = vimeoMedia.prepare(scrollStory, item)
     returnPromises.push(vimeoLoaded)
+  }
+
+  if (item.data.dailymotionId) {
+    const dailymotionLoaded = dailymotionMedia.prepare(scrollStory, item)
+    returnPromises.push(dailymotionLoaded)
   }
 
   if (item.data.image) {
@@ -334,9 +339,14 @@ $story.on('itemfocus', function (ev, item) {
     youtubeMedia.stick(item)
   }
 
-  if (item.data.vimeoId) {
+  if (item.data.vimeoVideoId) {
     vimeoMedia.play(item, isSoundEnabled)
     vimeoMedia.stick(item)
+  }
+
+  if (item.data.dailymotionId) {
+    dailymotionMedia.play(item, isSoundEnabled)
+    dailymotionMedia.stick(item)
   }
 
   if (item.data.audio) {
@@ -351,8 +361,12 @@ $story.on('itemblur', function (ev, item) {
     youtubeMedia.remove(item)
   }
 
-  if (item.data.vimeoId) {
+  if (item.data.vimeoVideoId) {
     vimeoMedia.remove(item)
+  }
+
+  if (item.data.dailymotionId) {
+    dailymotionMedia.remove(item)
   }
 
   if (item.data.video) {
@@ -405,6 +419,7 @@ $('.mute').click(function () {
 
   youtubeMedia.setMuted(!isSoundEnabled)
   vimeoMedia.setMuted(!isSoundEnabled)
+  dailymotionMedia.setMuted(!isSoundEnabled)
 })
 
 $('.sticks_wrapper').click(function () {

@@ -1,70 +1,71 @@
-const mediaUtils = require('./media');
+const mediaUtils = require('./media')
 
-const MEDIA = [];
-const DATA = [];
+const MEDIA = []
+const DATA = []
 
 function stopAudio(id) {
-  const audio = MEDIA[id];
-  DATA[id].active = false;
+  const audio = MEDIA[id]
+  DATA[id].active = false
 
   if (audio.paused) {
-    DATA[id].playPromise = null;
-    return;
+    DATA[id].playPromise = null
+    return
   }
 
-  $(audio).stop(true);
+  audio.pause()
 
-  mediaUtils.fadeout(audio, function() {
+  mediaUtils.fadeout(audio, function () {
     // Allow it to restart from the beginning.
     if (!audio.loop) {
-      audio.currentTime = 0;
-    } 
-    return DATA[id].active === false;
-  });
+      audio.currentTime = 0
+    }
+    return DATA[id].active === false
+  })
 }
 
-function prepareAudio (scrollStory, $el, id, srcs, attrs) {
-  const audio = scrollStory.MURAL_AUDIO[id];
-  MEDIA[id] = audio;
-  DATA[id] = {};
-  audio.loop = !!attrs.loop;
-  audio.preload = 'auto';
+function prepareAudio(scrollStory, $el, id, srcs, attrs) {
+  const audio = scrollStory.MURAL_AUDIO[id]
+  MEDIA[id] = audio
+  DATA[id] = {}
+  audio.loop = !!attrs.loop
+  audio.preload = 'auto'
 
-  const sources = srcs.filter(src => src.src !== undefined);
-  const canPlayThrough = mediaUtils.canPlayThroughPromise(audio, sources);
-  audio.load();
+  const sources = srcs.filter((src) => src.src !== undefined)
+  const canPlayThrough = mediaUtils.canPlayThroughPromise(audio, sources)
+  audio.load()
 
-  return canPlayThrough;
+  return canPlayThrough
 }
 
-function removeBackgroundAudio (id) {
-  stopAudio(id);
+function removeBackgroundAudio(id) {
+  stopAudio(id)
 }
 
-function setMuted (id, muted) {
-  const audio = MEDIA[id];
+function setMuted(id, muted) {
+  const audio = MEDIA[id]
   if (audio) {
-    audio.muted = muted;
+    audio.muted = muted
   }
 }
 
-function playBackgroundAudio (item, attrs) {
-  const id = item.index;
-  const audio = MEDIA[id];
-  $(audio).stop(true);
-  DATA[id].active = true;
+function playBackgroundAudio(item, attrs) {
+  const id = item.index
+  const audio = MEDIA[id]
+
+  audio.pause()
+  DATA[id].active = true
 
   if (!audio.paused) {
-    return;
+    return
   }
 
-  audio.muted = attrs.muted;
-  DATA[id].playPromise = mediaUtils.fadein(audio);
+  audio.muted = attrs.muted
+  DATA[id].playPromise = mediaUtils.fadein(audio)
 }
 
 module.exports = {
   playBackgroundAudio,
   prepareAudio,
   removeBackgroundAudio,
-  setMuted
-};
+  setMuted,
+}
