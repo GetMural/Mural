@@ -19,6 +19,7 @@ import {
 import { useAppDispatch } from 'store/hooks'
 import useFormContext from 'hooks/useFormContext'
 import { openDialog } from 'store/slices/navigation'
+import useIPCListeners from 'hooks/useIPCListeners'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -47,6 +48,7 @@ export default function MuralAppBar() {
     save,
     formState: { isDirty },
   } = useFormContext()
+  useIPCListeners()
 
   return (
     <div className={classes.root}>

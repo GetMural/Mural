@@ -7,14 +7,14 @@ import useForm from 'hooks/useForm'
 import usePreview from 'hooks/usePreview'
 import Dialog from 'components/Dialog'
 import usePaymentSeparatorListener from 'hooks/usePaymentSeparatorListener'
-import useIPCListeners from 'hooks/useIPCListeners'
+// import useIPCListeners from 'hooks/useIPCListeners'
 const APPBAR_HEIGHT = 64
 
 function App() {
   const form = useForm()
   usePaymentSeparatorListener()
   usePreview()
-  useIPCListeners()
+  // useIPCListeners()
 
   return (
     <div>

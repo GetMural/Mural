@@ -24,4 +24,10 @@ contextBridge.exposeInMainWorld('electron', {
     })
     ipcRenderer.on('saved-file-path', (event, args) => onSaved(event, args))
   },
+  onSave: (callback: any) => {
+    ipcRenderer.on('save-click', callback)
+  },
+  toggleSave: (isDirty: boolean) => {
+    ipcRenderer.send('toggle-save', isDirty)
+  },
 })

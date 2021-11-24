@@ -12,6 +12,8 @@ declare global {
       exportAsZip: () => Promise<any>
       onOpenFile: (reduxState: any) => any
       saveAs: (reduxState: any) => Promise<any>
+      onSave: (callback: () => void) => void
+      toggleSave: (isDirty: boolean) => void
       onSaveAsMenuClick: any
       directories: {
         root: string

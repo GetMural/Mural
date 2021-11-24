@@ -1,14 +1,19 @@
-import React from 'react'
+import { useEffect } from 'react'
 import { useAppDispatch } from 'store/hooks'
 import { saveForm } from 'store/slices/story'
 import useSaveAs from './useSaveAs'
+import useFormContext from 'hooks/useFormContext'
 
 export default function useIPCListeners() {
   const saveAs = useSaveAs()
   const dispatch = useAppDispatch()
+  const {
+    save,
+    formState: { isDirty },
+  } = useFormContext()
 
   // save as
-  React.useEffect(() => {
+  useEffect(() => {
     window.electron.onSaveAsMenuClick(
       () => {
         saveAs()
@@ -20,9 +25,17 @@ export default function useIPCListeners() {
   }, [saveAs])
 
   // open file
-  React.useEffect(() => {
+  useEffect(() => {
     window.electron.onOpenFile((event: any, state: any) => {
       dispatch(saveForm(state.story))
     })
   }, [dispatch])
+
+  useEffect(() => {
+    window.electron.onSave(save)
+  }, [save])
+
+  useEffect(() => {
+    window.electron.toggleSave(isDirty)
+  }, [isDirty])
 }

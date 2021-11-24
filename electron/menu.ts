@@ -1,4 +1,4 @@
-import { Menu, BrowserWindow, App, dialog, MenuItem } from 'electron'
+import { Menu, BrowserWindow, App, dialog, MenuItem, ipcMain } from 'electron'
 import unzipper from 'unzipper'
 import fs from 'fs'
 import path from 'path'
@@ -57,6 +57,16 @@ export default function createMenu(app: App, windo: BrowserWindow) {
     },
     { type: 'separator' },
     {
+      id: 'save',
+      label: 'Save',
+      enabled: false,
+      accelerator: 'Ctrl+S',
+      click: () => {
+        windo?.webContents.send('save-click', true)
+      },
+    },
+
+    {
       label: 'Save as...',
       click: async () => {
         windo?.webContents.send('save-as-menu-click')
@@ -109,5 +119,21 @@ export default function createMenu(app: App, windo: BrowserWindow) {
       x: params.x,
       y: params.y,
     })
+  })
+
+  ipcMain.on('toggle-save', (event: any, isDirty: any) => {
+    const menu = Menu.getApplicationMenu()
+
+    if (!menu) {
+      return
+    }
+
+    const item = menu.getMenuItemById('save')
+
+    if (!item) {
+      return
+    }
+
+    item.enabled = isDirty
   })
 }
