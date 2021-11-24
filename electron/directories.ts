@@ -8,7 +8,7 @@ const app = electron.app
 
 export const root = isDev
   ? path.join(app.getAppPath(), 'userFolder')
-  : path.join(app.getPath('documents'), 'Mural')
+  : app.getPath('userData')
 export const previewDir = path.join(root, 'preview')
 export const media = path.join(previewDir, 'media')
 export const image = path.join(media, 'images')
