@@ -38,4 +38,8 @@ export default function useIPCListeners() {
   useEffect(() => {
     window.electron.toggleSave(isDirty)
   }, [isDirty])
+
+  useEffect(() => {
+    window.electron.onExport(() => window.electron.exportAsZip())
+  }, [])
 }

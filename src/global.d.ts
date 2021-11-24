@@ -13,6 +13,7 @@ declare global {
       onOpenFile: (reduxState: any) => any
       saveAs: (reduxState: any) => Promise<any>
       onSave: (callback: () => void) => void
+      onExport: (callback: () => void) => void
       toggleSave: (isDirty: boolean) => void
       onSaveAsMenuClick: any
       directories: {

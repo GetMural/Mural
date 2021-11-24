@@ -65,13 +65,22 @@ export default function createMenu(app: App, windo: BrowserWindow) {
         windo?.webContents.send('save-click', true)
       },
     },
-
     {
       label: 'Save as...',
       click: async () => {
         windo?.webContents.send('save-as-menu-click')
       },
     },
+    { type: 'separator' },
+    {
+      id: 'export',
+      label: 'Export',
+      accelerator: 'Ctrl+Shift+E',
+      click: () => {
+        windo?.webContents.send('export-click', true)
+      },
+    },
+
     { type: 'separator' },
     isMac ? { role: 'close' } : { role: 'quit' },
   ]

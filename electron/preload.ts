@@ -30,4 +30,7 @@ contextBridge.exposeInMainWorld('electron', {
   toggleSave: (isDirty: boolean) => {
     ipcRenderer.send('toggle-save', isDirty)
   },
+  onExport: (callback: any) => {
+    ipcRenderer.on('export-click', callback)
+  },
 })
