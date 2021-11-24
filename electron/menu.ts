@@ -52,7 +52,8 @@ export default function createMenu(app: App, windo: BrowserWindow) {
   ]
   const fileMenu: Electron.MenuItemConstructorOptions[] = [
     {
-      label: 'Open file...',
+      label: 'Import',
+      accelerator: isMac ? 'Cmd+O' : 'Ctrl+O',
       click: onOpenFile,
     },
     { type: 'separator' },
@@ -67,6 +68,7 @@ export default function createMenu(app: App, windo: BrowserWindow) {
     },
     {
       label: 'Save as...',
+      accelerator: isMac ? 'Cmd+Shift+S' : 'Ctrl+Shift+S',
       click: async () => {
         windo?.webContents.send('save-as-menu-click')
       },
