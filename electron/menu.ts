@@ -60,7 +60,7 @@ export default function createMenu(app: App, windo: BrowserWindow) {
       id: 'save',
       label: 'Save',
       enabled: false,
-      accelerator: 'Ctrl+S',
+      accelerator: isMac ? 'Cmd+S' : 'Ctrl+S',
       click: () => {
         windo?.webContents.send('save-click', true)
       },
@@ -75,7 +75,7 @@ export default function createMenu(app: App, windo: BrowserWindow) {
     {
       id: 'export',
       label: 'Export',
-      accelerator: 'Ctrl+Shift+E',
+      accelerator: isMac ? 'Cmd+Shift+E' : 'Ctrl+Shift+E',
       click: () => {
         windo?.webContents.send('export-click', true)
       },
