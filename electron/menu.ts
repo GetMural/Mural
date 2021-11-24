@@ -73,11 +73,17 @@ export default function createMenu(app: App, windo: BrowserWindow) {
     },
     { type: 'separator' },
     {
-      id: 'export',
       label: 'Export',
       accelerator: isMac ? 'Cmd+Shift+E' : 'Ctrl+Shift+E',
       click: () => {
         windo?.webContents.send('export-click', true)
+      },
+    },
+    {
+      label: 'Preview',
+      accelerator: isMac ? 'Cmd+Shift+P' : 'Ctrl+Shift+P',
+      click: () => {
+        windo?.webContents.send('preview-click', true)
       },
     },
 

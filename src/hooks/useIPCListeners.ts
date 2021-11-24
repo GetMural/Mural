@@ -42,4 +42,8 @@ export default function useIPCListeners() {
   useEffect(() => {
     window.electron.onExport(() => window.electron.exportAsZip())
   }, [])
+
+  useEffect(() => {
+    window.electron.onPreview(() => window.electron.openPreview())
+  }, [])
 }

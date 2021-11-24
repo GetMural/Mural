@@ -14,6 +14,7 @@ declare global {
       saveAs: (reduxState: any) => Promise<any>
       onSave: (callback: () => void) => void
       onExport: (callback: () => void) => void
+      onPreview: (callback: () => void) => void
       toggleSave: (isDirty: boolean) => void
       onSaveAsMenuClick: any
       directories: {

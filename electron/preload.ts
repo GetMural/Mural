@@ -33,4 +33,7 @@ contextBridge.exposeInMainWorld('electron', {
   onExport: (callback: any) => {
     ipcRenderer.on('export-click', callback)
   },
+  onPreview: (callback: any) => {
+    ipcRenderer.on('preview-click', callback)
+  },
 })
