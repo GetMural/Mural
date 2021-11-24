@@ -20,6 +20,15 @@ Mural is written in NodeJS and uses Electron.
 
 Once a Mural story is ready to be published, the user clicks the 'Download' button and the program sends a .ZIP file which contains all the files needed to publish the story on a standard web server (HTML, CSS, JavaScript and media files, in addition to the JSON file used by Mural internally).
 
+## How to Release
+
+```
+$ npm version patch|minor|major
+$ git push --follow-tags
+```
+
+Edit the new draft release on https://github.com/GetMural/Mural/releases and publish it.
+
 ## Available Scripts
 
 In the project directory, you can run:
