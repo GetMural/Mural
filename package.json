@@ -67,7 +67,8 @@
     "linux": {
       "target": [
         "deb",
-        "dir"
+        "dir",
+        "AppImage"
       ]
     },
     "mac": {
