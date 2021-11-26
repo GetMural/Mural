@@ -48,6 +48,8 @@
     "web-vitals": "^2.1.0"
   },
   "scripts": {
+    "preclean-start": "rm -rf frontend-assets-build 'userFolder/preview/**/*.(js|css|html)'",
+    "clean-start": "yarn build-frontend && yarn start",
     "start": "concurrently \"yarn start-cra\" \"yarn electron-start\"",
     "start-cra": "BROWSER=none react-scripts start",
     "serve-preview": "http-server userFolder/preview",
