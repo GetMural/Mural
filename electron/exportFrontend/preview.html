@@ -288,13 +288,31 @@
     {{/imagebackground}}
 
     {{#imageaudio}}
-    <section class="part imageaudio {{#light}} reverse_colors {{/light}}" name="story{{id}}" {{#audio}} data-audio=true
-      {{#loop}} data-loop="{{loop}}" {{/loop}} {{#mp3}} data-mp3="{{mp3}}" {{/mp3}} {{#ogg}} data-ogg="{{ogg}}" {{/ogg}}
-      {{/audio}} {{#image}} data-image=true {{#srcmain}} data-src="{{srcmain}}" {{/srcmain}} {{#srcmedium}}
-      data-src-medium="{{srcmedium}}" {{/srcmedium}} {{#srcphone}} data-src-phone="{{srcphone}}" {{/srcphone}}
-      {{/image}}>
+    <section
+      class="part imageaudio {{#light}} reverse_colors {{/light}}" 
+      name="story{{id}}" 
+      {{#audio}}
+        data-audio=true
+        {{#loop}} data-loop="{{loop}}" {{/loop}}
+        {{#mp3}} data-mp3="{{mp3}}" {{/mp3}} 
+        {{#ogg}} data-ogg="{{ogg}}" {{/ogg}}
+      {{/audio}}
+    >
       {{#image}}
-      <img class="feature-image" {{#alt}}alt="{{alt}}" {{/alt}}></img>
+      <img 
+        class="image-responsive"
+        srcset="
+          {{srcphone}} 200w,
+          {{srcmedium}} 600w,
+          {{srcmain}} 1200w"
+        sizes="
+          (max-width: 300px) 200px,
+          (min-width: 301px) and (max-width: 700px) 600px,
+          100%"
+        src="{{srcmain}}"
+        alt="{{alt}}"
+      />
+
       {{#image_caption}}<div class="image-caption">{{{image_caption}}}</div>{{/image_caption}}
       {{#image_credits}}<small class="image-credits">{{{image_credits}}}</small>{{/image_credits}}
       {{/image}}

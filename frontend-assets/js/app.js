@@ -271,14 +271,6 @@ function loadItem(item) {
     returnPromises.push(loadPromise)
   }
 
-  if (item.data.dynamicImage) {
-    const imagesInserted = imageMedia.loadImages(item.el).then(() => {
-      scrollStory.updateOffsets()
-    })
-
-    returnPromises.push(imagesInserted)
-  }
-
   if (item.data.video) {
     const videoLoaded = videoMedia.prepareVideo(
       scrollStory,
