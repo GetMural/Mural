@@ -106,14 +106,6 @@ export default function Slideshow({ itemIndex }: Props) {
               <Box my={4}>
                 <Input
                   name={
-                    `items.${itemIndex}.slides.${index}.slideImageAltText` as const
-                  }
-                  label="Image Alt Text"
-                />
-              </Box>
-              <Box my={4}>
-                <Input
-                  name={
                     `items.${itemIndex}.slides.${index}.slideTitle` as const
                   }
                   label="Slide Title"
@@ -125,6 +117,14 @@ export default function Slideshow({ itemIndex }: Props) {
                     `items.${itemIndex}.slides.${index}.slideCredits` as const
                   }
                   label="Slide Credits"
+                />
+              </Box>
+              <Box my={4}>
+                <Input
+                  name={
+                    `items.${itemIndex}.slides.${index}.slideImageAltText` as const
+                  }
+                  label="Image Alt Text"
                 />
               </Box>
             </Box>
