@@ -5,7 +5,9 @@ import Image from 'components/StoryForm/Image'
 export default function StoryMetadataForm() {
   return (
     <>
-      <Typography variant="h2">Story Metadata</Typography>
+      <Box ml={12}>
+        <Typography variant="h2">Story Metadata</Typography>
+      </Box>
       <form>
         <Box my={4}>
           <Input
@@ -15,8 +17,9 @@ export default function StoryMetadataForm() {
             helperText={
               <>
                 The title metadata field is also responsible for the og (Open
-                Graph) og:title property. What you write here will appear as the title when shared on social media platforms
-                such as Facebook and Twitter.
+                Graph) og:title property. What you write here will appear as the
+                title when shared on social media platforms such as Facebook and
+                Twitter.
               </>
             }
             rules={{ required: true }}
@@ -35,7 +38,8 @@ export default function StoryMetadataForm() {
                 likesuch as Google or Duck Duck Go and social media platforms
                 such as Facebook, Twitter, or Mastodon.
                 <br />
-                The description metadata field is also the og:description text that is displayed on social media when a user shares your story.
+                The description metadata field is also the og:description text
+                that is displayed on social media when a user shares your story.
               </>
             }
             rules={{ maxLength: 158, minLength: 120 }}
@@ -47,9 +51,7 @@ export default function StoryMetadataForm() {
             label="Author"
             placeholder="Your name"
             helperText={
-              <>
-                Use this field for the name of the Mural story's author.
-              </>
+              <>Use this field for the name of the Mural story's author.</>
             }
           />
         </Box>
@@ -60,8 +62,8 @@ export default function StoryMetadataForm() {
             placeholder="https://your-website.com"
             helperText={
               <>
-                If you know the final URL of your Mural story, then
-                this is where to enter that information.
+                If you know the final URL of your Mural story, then this is
+                where to enter that information.
               </>
             }
           />

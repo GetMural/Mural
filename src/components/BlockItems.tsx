@@ -8,14 +8,17 @@ import {
   ListItemIcon,
   ListItemSecondaryAction,
   ListItemText,
+  Theme,
   Typography,
 } from '@mui/material'
 import DeleteIcon from '@mui/icons-material/Delete'
 import PaymentIcon from '@mui/icons-material/MonetizationOn'
+import { createStyles, makeStyles } from '@mui/styles'
 import useRouter from 'hooks/useRouter'
 import { ReactSortable } from 'react-sortablejs'
 import { useAppDispatch, useAppSelector } from 'store/hooks'
 import { Items, removeItem, RichText, setItems } from 'store/slices/story'
+import clsx from 'clsx'
 import useAskToSaveChanges from 'hooks/useAskToSaveChanges'
 import { goToView } from 'store/slices/navigation'
 import { isEqual } from 'lodash'
@@ -56,7 +59,16 @@ function getImagePath(item: Items) {
   }
 }
 
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    isAfterPaywall: {
+      boxShadow: `-${theme.spacing(2)} 0px ${theme.palette.primary.main}`,
+    },
+  })
+)
+
 export default function BlockItems() {
+  const classes = useStyles()
   const items = useAppSelector((state) => state.story.items)
   const dispatch = useAppDispatch()
   const selectedItem = useAppSelector(
@@ -71,6 +83,9 @@ export default function BlockItems() {
   if (!items || items.length < 1) {
     return null
   }
+  const paywallPosition = items.findIndex(
+    (item) => item.type === 'paywallSeparator'
+  )
 
   return (
     <div>
@@ -100,9 +115,9 @@ export default function BlockItems() {
             animation={200}
             delayOnTouchStart={true}
           >
-            {items.map((item) => {
+            {items.map((item, idx) => {
               const image = getImagePath(item)
-              return item.type === 'paywallSeparator' ? (
+              return idx === paywallPosition ? (
                 <PaywallSeparator key={item.id} />
               ) : (
                 <ListItem
@@ -112,6 +127,9 @@ export default function BlockItems() {
                   onClick={() =>
                     goTo({ view: { name: 'item', args: { item } } })
                   }
+                  className={clsx({
+                    [classes.isAfterPaywall]: idx > paywallPosition,
+                  })}
                 >
                   {image && (
                     <ListItemAvatar>
@@ -156,6 +174,7 @@ export default function BlockItems() {
 }
 
 function PaywallSeparator() {
+  const classes = useStyles()
   return (
     <ListItem
       sx={{
@@ -163,6 +182,7 @@ function PaywallSeparator() {
         cursor: 'move',
         color: 'white',
       }}
+      className={classes.isAfterPaywall}
     >
       <ListItemIcon style={{ color: 'inherit' }}>
         <PaymentIcon />
@@ -172,7 +192,9 @@ function PaywallSeparator() {
           color: 'white',
         }}
         primary={TYPES_LABELS['paywallSeparator']}
-        secondary="Enabled in payment settings"
+        secondary={
+          <Typography variant="body2">Enabled in payment settings</Typography>
+        }
       />
     </ListItem>
   )

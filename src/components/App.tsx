@@ -7,14 +7,12 @@ import useForm from 'hooks/useForm'
 import usePreview from 'hooks/usePreview'
 import Dialog from 'components/Dialog'
 import usePaymentSeparatorListener from 'hooks/usePaymentSeparatorListener'
-// import useIPCListeners from 'hooks/useIPCListeners'
 const APPBAR_HEIGHT = 64
 
 function App() {
   const form = useForm()
   usePaymentSeparatorListener()
   usePreview()
-  // useIPCListeners()
 
   return (
     <div>
@@ -27,8 +25,15 @@ function App() {
             bgcolor="white"
             minHeight={`calc(100vh - ${APPBAR_HEIGHT}px)`}
           >
-            <Box p={4}>
-              <MainPanel />
+            <Box
+              maxHeight={`calc(100vh - ${APPBAR_HEIGHT}px)`}
+              style={{
+                overflowY: 'auto',
+              }}
+            >
+              <Box p={4}>
+                <MainPanel />
+              </Box>
             </Box>
           </Box>
           <Box
@@ -37,8 +42,15 @@ function App() {
             flexGrow={1}
             minHeight={`calc(100vh - ${APPBAR_HEIGHT}px)`}
           >
-            <Box p={4}>
-              <SecondPanel />
+            <Box
+              maxHeight={`calc(100vh - ${APPBAR_HEIGHT}px)`}
+              style={{
+                overflowY: 'auto',
+              }}
+            >
+              <Box p={4}>
+                <SecondPanel />
+              </Box>
             </Box>
           </Box>
         </Box>

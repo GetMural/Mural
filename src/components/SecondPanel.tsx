@@ -40,20 +40,25 @@ export default function SecondPanel() {
       ?.component
   return (
     <div>
-      {currentView && (
-        <Button onClick={() => goTo({ view: null })} startIcon={<BackIcon />}>
-          Back
-        </Button>
-      )}
       <Slide
         direction="left"
         in={currentView?.name === 'metadata'}
         mountOnEnter
         unmountOnExit
       >
-        <div>
+        <Box position="relative">
+          {currentView && (
+            <Box position="absolute" top={2}>
+              <Button
+                onClick={() => goTo({ view: null })}
+                startIcon={<BackIcon />}
+              >
+                Back
+              </Button>
+            </Box>
+          )}
           <StoryMetadata />
-        </div>
+        </Box>
       </Slide>
       <Slide
         direction="left"

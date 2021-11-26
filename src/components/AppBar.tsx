@@ -4,15 +4,13 @@ import makeStyles from '@mui/styles/makeStyles'
 import SaveIcon from '@mui/icons-material/SaveSharp'
 import BuildIcon from '@mui/icons-material/Public'
 import NewIcon from '@mui/icons-material/Add'
-import DeleteIcon from '@mui/icons-material/Delete'
-import HelpIcon from '@mui/icons-material/Help'
 import PaymentIcon from '@mui/icons-material/MonetizationOn'
+import PreviewIcon from '@mui/icons-material/PreviewSharp'
 import {
   AppBar,
   Toolbar,
   Button as MuiButton,
   Typography,
-  Tooltip,
   ButtonProps,
   Box,
 } from '@mui/material'
@@ -20,6 +18,7 @@ import { useAppDispatch } from 'store/hooks'
 import useFormContext from 'hooks/useFormContext'
 import { openDialog } from 'store/slices/navigation'
 import useIPCListeners from 'hooks/useIPCListeners'
+import logo from 'logo.svg'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -33,10 +32,6 @@ const useStyles = makeStyles((theme: Theme) =>
       '&>*': {
         marginRight: theme.spacing(2),
       },
-    },
-    title: {
-      textAlign: 'center',
-      flexGrow: 1,
     },
   })
 )
@@ -54,16 +49,11 @@ export default function MuralAppBar() {
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar>
+          <Box display="flex" alignItems="center" mr={4}>
+            <img src={logo} width={48} alt="Mural Logo" />
+            <Typography variant="h6">Mural</Typography>
+          </Box>
           <div className={classes.actions}>
-            <Button
-              startIcon={<SaveIcon />}
-              onClick={save}
-              variant="contained"
-              color="secondary"
-              disabled={!isDirty}
-            >
-              Save
-            </Button>
             <Button
               startIcon={<BuildIcon />}
               onClick={() => {
@@ -84,9 +74,6 @@ export default function MuralAppBar() {
             >
               New
             </Button>
-            <ComingSoonButton startIcon={<DeleteIcon />}>
-              Delete
-            </ComingSoonButton>
             <Button
               startIcon={<PaymentIcon />}
               onClick={() => {
@@ -95,18 +82,24 @@ export default function MuralAppBar() {
             >
               Payment
             </Button>
-            <ComingSoonButton startIcon={<HelpIcon />}>Help</ComingSoonButton>
-          </div>
-          <Typography variant="h6" className={classes.title}>
-            Mural
-          </Typography>
-          <Box>
             <Button
+              startIcon={<PreviewIcon />}
               onClick={() => {
                 window.electron.openPreview()
               }}
             >
               Preview
+            </Button>
+          </div>
+          <Box flexGrow={1} textAlign="right">
+            <Button
+              startIcon={<SaveIcon />}
+              onClick={save}
+              variant="contained"
+              color="secondary"
+              disabled={!isDirty}
+            >
+              Save
             </Button>
           </Box>
         </Toolbar>
@@ -117,14 +110,4 @@ export default function MuralAppBar() {
 
 function Button(props: ButtonProps) {
   return <MuiButton color="inherit" {...props} />
-}
-
-function ComingSoonButton(props: ButtonProps) {
-  return (
-    <Tooltip title="Coming soon" arrow>
-      <span>
-        <Button disabled {...props} />
-      </span>
-    </Tooltip>
-  )
 }

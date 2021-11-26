@@ -1,4 +1,4 @@
-import { Grid, Button } from '@mui/material'
+import { Grid, Button, Typography } from '@mui/material'
 import { useAppDispatch } from 'store/hooks'
 import { addItemAndGoToView, ItemTypes } from 'store/slices/story'
 
@@ -70,14 +70,26 @@ const icons: {
 export default function BlockItemsSelector() {
   const dispatch = useAppDispatch()
   const askToSaveChanges = useAskToSaveChanges()
-
   return (
-    <Grid container spacing={4}>
+    <Grid container spacing={0}>
       {icons.map(({ name, label, icon, disabled }) => (
-        <Grid item xs={6} md={4} key={name}>
+        <Grid
+          item
+          xs={6}
+          md={4}
+          justifyContent="center"
+          alignItems="center"
+          key={name}
+        >
           <Button
-            style={{ display: 'block', width: '100%' }}
-            variant="outlined"
+            style={{
+              textAlign: 'left',
+              minHeight: 40,
+              marginBottom: 8,
+              width: '100%',
+              justifyContent: 'start',
+            }}
+            startIcon={<img src={icon} style={{ width: 48 }} alt={label} />}
             disabled={disabled}
             onClick={() => {
               askToSaveChanges().then((res) => {
@@ -87,8 +99,7 @@ export default function BlockItemsSelector() {
               })
             }}
           >
-            <img src={icon} style={{ width: '100%' }} alt={label} />
-            <div>{label}</div>
+            <Typography sx={{ fontSize: 12 }}>{label}</Typography>
           </Button>
         </Grid>
       ))}
