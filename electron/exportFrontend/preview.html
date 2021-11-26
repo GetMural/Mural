@@ -312,13 +312,23 @@
         src="{{srcmain}}"
         alt="{{alt}}"
       />
-
-      {{#image_caption}}<div class="image-caption">{{{image_caption}}}</div>{{/image_caption}}
-      {{#image_credits}}<small class="image-credits">{{{image_credits}}}</small>{{/image_credits}}
       {{/image}}
-      {{#audio}}
-      {{#audio_credits}}<small class="audio-credits">{{{audio_credits}}}</small>{{/audio_credits}}
-      {{/audio}}
+
+      <div class="captions">
+        {{#image}}
+          {{#image_caption}}
+            <div class="image-caption">{{{image_caption}}}</div>
+          {{/image_caption}}
+          {{#image_credits}}
+            <small class="image-credits">{{{image_credits}}}</small>
+          {{/image_credits}}
+        {{/image}}
+        {{#audio}}
+          {{#audio_credits}}
+            <small class="audio-credits">{{{audio_credits}}}</small>
+          {{/audio_credits}}
+        {{/audio}}
+      </div>
     </section>
     {{/imageaudio}}
 

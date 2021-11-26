@@ -2684,6 +2684,7 @@ article .part.box_text p {
 
 .imageaudio {
   font-weight: normal;
+  position: relative;
 
   small {
     display: block;
@@ -2694,6 +2695,13 @@ article .part.box_text p {
     padding: 0;
   }
 
+  .captions {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+  }
   .image-caption {
     padding-top: 1rem;
     padding-bottom: 0.5rem;
