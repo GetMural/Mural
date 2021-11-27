@@ -24,6 +24,9 @@ export default function EmbedVideo({ itemIndex }: Props) {
           query: { controls: showControls ? 1 : 0, autoplay: 0 },
           attr: { allow: 'modestbranding; nobranding' },
         })
+          // we need to define to protocol otherwise it won't work in build where
+          // "//" is "file:///"
+          .replace('src="//', 'src="https://')
         setEmbedCode(embedCode)
         setValue(`items.${itemIndex}.embed`, {
           ...embedVideo.info(embedLink),
