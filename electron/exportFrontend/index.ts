@@ -87,8 +87,9 @@ export type Items =
           srcmedium?: string
         }
         audio?: {
-          mp3: string
-          ogg: string
+          mp3?: string
+          ogg?: string
+          loop?: boolean
         }
       }
     }

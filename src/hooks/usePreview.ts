@@ -113,6 +113,12 @@ export default function usePreview() {
                     srcphone: media(item.image.small.path),
                     srcmedium: media(item.image.medium.path),
                   },
+                  audio: item.audio
+                    ? {
+                        mp3: item.audio.path,
+                        loop: !!item.audioLoop,
+                      }
+                    : undefined,
                 },
               },
             ]

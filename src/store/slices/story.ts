@@ -56,6 +56,8 @@ interface BackgroundImage {
   title?: RichText
   subtitle?: RichText
   text?: RichText
+  audio?: Audio
+  audioLoop?: boolean
 }
 
 interface ParallaxImage {
