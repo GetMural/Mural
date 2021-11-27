@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!-->
+<html lang="en" id="modernizrcom" class="no-js">
+<!--<![endif]-->
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  {{#meta}}
+  <title>{{title}}</title>
+  {{#description}}
+  <meta name="description" content="{{description}}">
+  {{/description}}
+  {{#author}}
+  <meta name="author" content="{{author}}">
+  {{/author}}
+
+  <meta name="twitter:card" content="summary_large_image">
+  {{#twitter_site}}
+  <meta name="twitter:site" content="{{twitter_site}}">
+  {{/twitter_site}}
+  {{#twitter_creator}}
+  <meta name="twitter:creator" content="{{twitter_creator}}">
+  {{/twitter_creator}}
+
+  {{#title}}
+  <meta property="og:title" content="{{title}}">
+  {{/title}}
+  {{#src}}
+  <meta property="og:url" content="{{src}}">
+  {{/src}}
+  {{#site_name}}
+  <meta property="og:site_name" content="{{site_name}}">
+  {{/site_name}}
+  {{#description}}
+  <meta property="og:description" content="{{description}}">
+  {{/description}}
+  {{#site_img}}
+  <meta property="og:image" content="{{site_img}}">
+  {{/site_img}}
+  <meta property="og:type" content="article" />
+  <meta property="generator" content="Mural 1.0.0" />
+  <meta content="yes" name="apple-mobile-web-app-capable">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  {{#analytics}}
+  <script async src="https://www.googletagmanager.com/gtag/js?id={{analytics}}"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', '{{analytics}}');
+  </script>
+  {{/analytics}}
+  {{/meta}}
+
+  <link rel="shortcut icon" href="./img/favicon.ico">
+  <link rel="apple-touch-icon" href="./img/touch-icon.png">
+
+  {{#meta}}
+  {{#font_base_link}}
+  {{{font_base_link}}}
+  {{/font_base_link}}
+  {{^font_base_link}}
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:ital,wght@0,400;0,700;1,300&display=swap"
+    rel="stylesheet">
+  {{/font_base_link}}
+  {{/meta}}
+
+  {{#meta}}
+  {{#font_headers_link}}
+  {{{font_headers_link}}}
+  {{/font_headers_link}}
+  {{/meta}}
+
+  {{#payment.enabled}}
+    {{#payment}}
+      {{#accessCode}}
+  <meta name="bypass" content="{{accessCode}}" />
+      {{/accessCode}}
+      {{#rot}}
+  <meta name="rot" content="{{rot}}" />
+      {{/rot}}
+    {{/payment}}
+  <script src="https://cdn.coil.com/coil-support-button.js"></script>
+    {{#payment}}
+  <script>
+    const pointers = {
+      '$ilp.uphold.com/e9EyJQYXGNHE': 10
+    }
+    let pointer = '';
+      {{#pointers}}
+    pointer = `{{pointer}}`.replace('&#x2F;', '/');
+    pointers[pointer] = {{share}};
+      {{/pointers}}
+
+    function pickPointer () {
+      const sum = Object.values(pointers).reduce((sum, weight) => sum + weight, 0);
+      let choice = Math.random() * sum;
+
+      for (const pointer in pointers) {
+        const weight = pointers[pointer];
+        if ((choice -= weight) <= 0) {
+          return pointer;
+        }
+      }
+    }
+
+    window.addEventListener('load', () => {
+      const pointer = pickPointer();
+      const monetizationTag = document.createElement('meta');
+      monetizationTag.name = 'monetization';
+      monetizationTag.content = pointer;
+      document.head.appendChild(monetizationTag);
+
+      const monetizationRelTag = document.createElement('link');
+      monetizationRelTag.rel = 'monetization';
+      monetizationRelTag.href = `https://${pointer}`.replace('$', '');
+      document.head.appendChild(monetizationRelTag);
+
+      if (document.monetization) {
+        console.log('is monetized')
+        document.monetization.addEventListener('monetizationstart', () => {
+          document.getElementById('paywall').classList.remove('exclusive');
+          document.getElementById('paywallInfo').classList.remove('paywallInfo');
+        })
+      }
+
+    });
+  </script>
+    {{/payment}}
+  {{/payment.enabled}}
+</head>
+
+<body class="longform frozen" name="top">
+  <div id="loading_overlay" class="loading" {{#meta}}{{#site_img}}
+    style="background-image:url('{{site_img}}');background-position:center center;background-size:cover;"
+    {{/site_img}}{{/meta}}>
+    <div class="opacity-pane"></div>
+
+    <img src="./img/logo.svg" alt="Mural is Loading..." class="logo">
+    <h3 class="story-name">{{#meta}}{{title}}{{/meta}}</h3>
+    <img id="play_start" class="play-start animated bounce" src="./img/tuska_play.svg"
+      style="display: none; fill:white">
+  </div>
+
+  <span class="mute">Mute</span>
+  <div class="menu_open">
+    <div class="sticks_wrapper">
+      <div class="stick -first" id="stick1"></div>
+      <div class="stick -second" id="stick2"></div>
+      <div class="stick -third" id="stick3"></div>
+    </div>
+  </div>
+
+  <div class="nav">
+    <nav>
+      <ol>
+        {{#nav}}
+        <li data-id="{{id}}">{{title}}</li>
+        {{/nav}}
+      </ol>
+    </nav>
+  </div>
+
+  <article id="scrollytelling">
+
+    {{#items}}
+
+    {{#paywallSeparator}}
+    <div id="paywallInfo" class="paywallInfo">
+      <span>
+        <img src="https://www.getmural.io/img/logo.svg" />
+      </span>
+      <h2>The rest of this story is exclusively for supportive users.</h2>
+      <p>Do you have a Coil account?</p>
+      <div class="coil-support-button" data-size="large" data-theme="light"></div>
+      <p>If you have an access code, please type it in here.</p>
+      <form id="bypass">
+        <input type="password" id="input" placeholder="Your code" />
+        <button type="submit">Bypass</button>
+      </form>
+      <p>Sign up for a Coil account to support this creator and get other great web monitised content.</p>
+    </div>
+    <div class="exclusive" id="paywall">
+    {{/paywallSeparator}}
+
+    {{#imagebackground}}
+    <section class="part sticky-image" name="story{{id}}" {{#audio}} data-audio=true {{#mp3}} data-mp3="{{mp3}}"
+      {{/mp3}} {{#ogg}} data-ogg="{{ogg}}" {{/ogg}} {{#loop}} data-loop="true" {{/loop}} {{/audio}} {{#image}}
+      data-image=true {{#srcmain}} data-src="{{srcmain}}" {{/srcmain}} {{#srcmedium}} data-src-medium="{{srcmedium}}"
+      {{/srcmedium}} {{#srcphone}} data-src-phone="{{srcphone}}" {{/srcphone}} {{/image}}>
+      {{#image}}
+      <div class="bg-image"></div>
+      {{/image}}
+      {{#gradient}}
+              {{#enable}}
+              <div class="bg-gradient"></div>
+              <style>
+                @keyframes gradient{{id}} {
+                  {{#animation}}
+                    {{#top}}
+                      0% {background-position:50% 0%}
+                      50% {background-position:50% 100%}
+                      100% {background-position:50% 0%}
+                    {{/top}}
+                    {{#topright}}
+                      0% {background-position:0% 100%}
+                      50% {background-position:100% 0%}
+                      100% {background-position:0% 100%}
+                    {{/topright}}
+                    {{#right}}
+                      0% {background-position:0% 50%}
+                      50% {background-position:100% 50%}
+                      100% {background-position:0% 50%}
+                    {{/right}}
+                    {{#bottomright}}
+                      0% {background-position:0% 0%}
+                      50% {background-position:100% 100%}
+                      100% {background-position:0% 0%}
+                    {{/bottomright}}
+                    {{#bottom}}
+                      0% {background-position:50% 0%}
+                      50% {background-position:50% 100%}
+                      100% {background-position:50% 0%}
+                    {{/bottom}}
+                    {{#bottomleft}}
+                      0% {background-position:0% 100%}
+                      50% {background-position:100% 0%}
+                      100% {background-position:0% 100%}
+                    {{/bottomleft}}
+                    {{#left}}
+                      0% {background-position:0% 50%}
+                      50% {background-position:100% 50%}
+                      100% {background-position:0% 50%}
+                    {{/left}}
+                    {{#topleft}}
+                      0% {background-position:0% 0%}
+                      50% {background-position:100% 100%}
+                      100% {background-position:0% 0%}
+                    {{/topleft}}
+                  {{/animation}}
+                }
+                section[name="story{{id}}"] .bg-gradient {
+                  animation: gradient{{id}} {{#speed}}{{speed}}{{/speed}}{{^speed}}0{{/speed}}s ease infinite;
+                  {{#animate}}
+                  background-size: calc({{stops.length}} * 200%) calc({{stops.length}} * 200%);
+                  {{/animate}}
+                  background-image: linear-gradient(
+                    {{#direction}}
+                      {{direction}}deg
+                    {{/direction}}
+                    {{#stops}}
+                      ,{{.}}
+                    {{/stops}});
+                }
+              </style>
+              {{/enable}}
+            {{/gradient}}
+      <div class="content container-fluid">
+        <div class="row">
+          <div
+            class="col-sm-12 {{#format}}{{#fullpage}}header-fullpage{{/fullpage}}{{^fullpage}}header{{/fullpage}}{{/format}}">
+            <div class="middle">
+              {{#title}}
+              <h1>{{{title}}}</h1>
+              {{/title}}
+              {{#subtitle}}
+              <h2>{{{subtitle}}}</h2>
+              {{/subtitle}}
+            </div>
+          </div>
+        </div>
+        {{#text}}
+        <div class="row">
+          <div class="col-xs-12 col-sm-10 col-md-8 col-lg-6 text">
+            {{{text}}}
+          </div>
+        </div>
+        {{/text}}
+      </div>
+    </section>
+    {{/imagebackground}}
+
+    {{#imageaudio}}
+    <section
+      class="part imageaudio {{#light}} reverse_colors {{/light}}" 
+      name="story{{id}}" 
+      {{#audio}}
+        data-audio=true
+        {{#loop}} data-loop="{{loop}}" {{/loop}}
+        {{#mp3}} data-mp3="{{mp3}}" {{/mp3}} 
+        {{#ogg}} data-ogg="{{ogg}}" {{/ogg}}
+      {{/audio}}
+    >
+      {{#image}}
+      <img 
+        class="image-responsive"
+        srcset="
+          {{srcphone}} 200w,
+          {{srcmedium}} 600w,
+          {{srcmain}} 1200w"
+        sizes="
+          (max-width: 300px) 200px,
+          (min-width: 301px) and (max-width: 700px) 600px,
+          100%"
+        src="{{srcmain}}"
+        alt="{{alt}}"
+      />
+      {{/image}}
+
+      <div class="captions">
+        {{#image}}
+          {{#image_caption}}
+            <div class="image-caption">{{{image_caption}}}</div>
+          {{/image_caption}}
+          {{#image_credits}}
+            <small class="image-credits">{{{image_credits}}}</small>
+          {{/image_credits}}
+        {{/image}}
+        {{#audio}}
+          {{#audio_credits}}
+            <small class="audio-credits">{{{audio_credits}}}</small>
+          {{/audio_credits}}
+        {{/audio}}
+      </div>
+    </section>
+    {{/imageaudio}}
+
+    {{#imageparallax}}
+    <section class="part parallax" name="story{{id}}" data-parallax=true {{#image}} {{#srcmain}} data-src="{{srcmain}}"
+      {{/srcmain}} {{#srcmedium}} data-src-medium="{{srcmedium}}" {{/srcmedium}} {{#srcphone}}
+      data-src-phone="{{srcphone}}" {{/srcphone}} {{/image}}>
+
+      {{#image}}
+      <div class="bg-image" data-scroll-speed="-2"></div>
+      {{/image}}
+
+      {{#title}}
+      <div class="content container">
+        <div class="row">
+          <div class="col-sm-12 header-fullpage">
+            <h1>{{{title}}}</h1>
+            {{#subtitle}}
+            <h2>{{{subtitle}}}</h2>
+            {{/subtitle}}
+          </div>
+        </div>
+      </div>
+      {{/title}}
+
+    </section>
+    {{/imageparallax}}
+
+    {{#slideshowhorizontal}}
+    <section class="part slideshow-horizontal snap {{#light}} reverse_colors {{/light}}" name="story{{id}}"
+      data-slideshow=true>
+      <div class="blueimp-gallery blueimp-gallery-carousel blueimp-gallery-controls">
+        <div class="slides"></div>
+        <a class="prev" aria-controls="blueimp-gallery" aria-label="previous slide" aria-keyshortcuts="ArrowUp"></a>
+        <a class="next" aria-controls="blueimp-gallery" aria-label="next slide" aria-keyshortcuts="ArrowDown"></a>
+        <ol class="indicator"></ol>
+      </div>
+      {{#title}}
+      <header>{{{title}}}</header>
+      {{/title}}
+      <div class="slide-info" aria-live="polite">
+        <p class="slide-caption"></p>
+        <span class="credits"></span>
+      </div>
+
+      <div class='slide-container'>
+        {{#images}}
+        <a href='#' {{#srcmain}} data-src='{{srcmain}}' {{/srcmain}} {{#srcmedium}} data-src-medium='{{srcmedium}}'
+          {{/srcmedium}} {{#srcphone}} data-src-phone='{{srcphone}}' {{/srcphone}} title='{{{title}}}' type='{{type}}'
+          data-credits='{{{credits}}}'>{{{title}}}</a>
+        {{/images}}
+      </div>
+    </section>
+    {{/slideshowhorizontal}}
+
+    {{#slideshowvertical}}
+    <section class="part slideshow {{#light}} reverse_colors {{/light}}" name="story{{id}}" data-slides=true>
+      {{#images}}
+      <div class="bg-image" {{#srcmain}} data-src='{{srcmain}}' {{/srcmain}} {{#srcmedium}}
+        data-src-medium='{{srcmedium}}' {{/srcmedium}} {{#srcphone}} data-src-phone='{{srcphone}}' {{/srcphone}}>
+        <div class="caption">
+          {{#slideshowvertical.title}}
+          <span class="v-slide-group">{{{slideshowvertical.title}}}</span>
+          {{/slideshowvertical.title}}
+          {{#title}}
+          <div class="v-slide-title">{{{title}}} {{#credits}}
+            <span class="credits">{{{credits}}}</span>
+            {{/credits}}
+          </div>
+          {{/title}}
+        </div>
+      </div>
+      {{/images}}
+    </section>
+    {{/slideshowvertical}}
+
+    {{#textcentred}}
+    <section class="no-effects part text_align-center {{#light}} reverse_colors {{/light}}" name="story{{id}}"
+      {{#snippets}} data-dynamic-image="true" {{/snippets}}>
+      <div class="content container-fluid">
+        <div class="row">
+          <div class="col-sm-12 header">
+            {{#title}}
+            <h1>{{{title}}}</h1>
+            {{/title}}
+            {{#subtitle}}
+            <h2>{{{subtitle}}}</h2>
+            {{/subtitle}}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12 col-sm-10 col-md-8 col-lg-6 text">
+            {{#intro}}
+            {{{intro}}}
+            {{/intro}}
+            {{#snippets}}
+            {{#src}}
+            <figure class="cms-image {{align}}">
+              <img data-src="{{src}}" rel="resizable" alt="{{alt}}" />
+              <figcaption>{{title}}
+                <span class="photographer">
+                  {{{credits}}}
+                </span>
+              </figcaption>
+            </figure>
+            {{/src}}
+            {{{text}}}
+            {{/snippets}}
+          </div>
+        </div>
+      </div>
+    </section>
+    {{/textcentred}}
+
+    {{#videobackground}}
+    <section class="st-video part" name="story{{id}}" {{#image}} data-poster="{{loading}}" {{/image}} {{#video}}
+      data-video="true" data-loop="true" data-autoplay="true" data-muted="false" {{#mp4}} data-mp4="{{mp4}}" {{/mp4}}
+      {{#webm}} data-webm="{{webm}}" {{/webm}} {{/video}}>
+      {{#offset.custom}}
+      <style>
+        @media (orientation:portrait) {
+          section[name="story{{id}}"] video {
+            position: absolute;
+            top: 50%;
+
+            left: {{offset.value}}%;
+
+            transform: translate(-{{offset.value}}%, -50%);
+          }
+        }
+      </style>
+      {{/offset.custom}}
+      <div
+        class="video-container{{#offset}} offset{{#left}} offset-left{{/left}}{{#centre}} offset-centre{{/centre}}{{#right}} offset-right{{/right}}{{/offset}}">
+      </div>
+      <div class="content container-fluid">
+
+        <div class="row">
+          <div
+            class="col-sm-12 {{#format}}{{#fullpage}}header-fullpage{{/fullpage}}{{^fullpage}}header{{/fullpage}}{{/format}}">
+            <div class="middle">
+              {{#title}}
+              <h1>{{{title}}}</h1>
+              {{/title}}
+              {{#subtitle}}
+              <h2>{{{subtitle}}}</h2>
+              {{/subtitle}}
+            </div>
+          </div>
+        </div>
+
+        {{#text}}
+        <div class="row">
+          <div class="col-xs-12 col-sm-10 col-md-8 col-lg-6 text">
+
+            {{#backgroundprops}}
+            {{#active}}
+            <span class="text-bounding-box" style="background-color: rgba({{value}}, {{opacity}});">
+              {{/active}}
+              {{/backgroundprops}}
+
+              {{{text}}}
+
+              {{#backgroundprops}}
+              {{#active}}
+            </span>
+            {{/active}}
+            {{/backgroundprops}}
+          </div>
+          {{/text}}
+
+        </div>
+    </section>
+    {{/videobackground}}
+
+    {{#videofullpage}}
+    <section class="st-content-video part snap" name="story{{id}}" {{#loop}} data-loop="true" {{/loop}} {{#autoAdvance}}
+      data-auto-advance="true" {{/autoAdvance}} {{#image}} data-poster="{{loading}}" {{/image}} {{#video}}
+      data-video="true" data-autoplay="true" data-muted="false" data-fullpage="true" {{#mp4}} data-mp4="{{mp4}}"
+      {{/mp4}} {{#webm}} data-webm="{{webm}}" {{/webm}} {{/video}}>
+      {{#offset.custom}}
+      <style>
+        @media (orientation:portrait) {
+          section[name="story{{id}}"] video {
+            position: absolute;
+            top: 50%;
+            left: {{offset.value}}%;
+            transform: translate(-{{offset.value}}%, -50%);
+          }
+        }
+      </style>
+      {{/offset.custom}}
+      <div
+        class="video-container{{#offset}} offset{{#left}} offset-left{{/left}}{{#centre}} offset-centre{{/centre}}{{#right}} offset-right{{/right}}{{/offset}}">
+      </div>
+      <div class="caption">
+        <div class="button-container play"></div>
+        <div class="button-container pause"></div>
+        <div class="text">
+          <h3>{{{title}}}</h3>
+          {{{text}}}
+        </div>
+      </div>
+    </section>
+    {{/videofullpage}}
+
+    {{#youtube}}
+    <section
+      class="st-video part" 
+      name="story{{id}}" 
+      {{#embed}} {{#id}} data-youtube-id="{{id}}" {{/id}} {{/embed}}
+      {{#showControls}} data-controls {{/showControls}}
+      {{#autoAdvance}} data-auto-advance=true {{/autoAdvance}}>
+      <div class="video-container">
+        <div id="ytplayer_{{#embed}}{{id}}{{/embed}}_{{index}}"></div>
+      </div>
+    </section>
+    {{/youtube}}
+
+    {{#vimeo}}
+    <section 
+      class="st-video part" 
+      name="story{{id}}"
+      {{#showControls}} data-controls {{/showControls}}
+      {{#embed}} {{#id}} data-vimeo-video-id="{{id}}" {{/id}} {{/embed}}>
+      <div class="video-container vimeo-container">
+        <div id="vimeo_{{index}}"></div>
+      </div>
+    </section>
+    {{/vimeo}}
+
+    {{#dailymotion}}
+    <section 
+      class="st-video part" 
+      name="story{{id}}"
+      {{#showControls}} data-controls {{/showControls}}
+      {{#embed}} {{#id}} data-dailymotion-id="{{id}}" {{/id}} {{/embed}}>
+      <div class="video-container">
+        <div id="dm_{{index}}"></div>
+      </div>
+    </section>
+    {{/dailymotion}}
+
+
+    {{#paywallSeparatorEnd}}
+    <!-- end paywall -->
+    </div>
+    {{/paywallSeparatorEnd}}
+
+    {{/items}}
+
+  </article>
+  <script src="https://player.vimeo.com/api/player.js"></script>
+  <script src="https://api.dmcdn.net/all.js"></script>
+  <script
+    src="https://code.jquery.com/jquery-3.6.0.slim.min.js"
+    integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI="
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+  <!-- <script>Hls = {}; // remove me if you use the script above.</script> -->
+  <script type="text/javascript" src="./bundle.js"></script>
+  <style>
+    {{#meta}}
+    {{#font_base_rules}}
+    /* Set a font for the main article - focus on readability. */
+    body,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    .slideshow,
+    .slideshow-horizontal {
+      {{{font_base_rules}}}
+    }
+
+    {{/font_base_rules}}
+
+    {{#font_headers_rules}}
+
+    /* Set a special font just for item headers. */
+    .header h1,
+    .header h2,
+    .header-fullpage h1,
+    .header-fullpage h2,
+    header {
+      {{{font_headers_rules}}}
+    }
+
+    {{/font_headers_rules}}
+
+    {{/meta}}
+  </style>
+
+  {{#meta}}
+  {{#custom_css}}
+  <style>
+    {{{custom_css}}}
+  </style>
+  {{/custom_css}}
+  {{/meta}}
+
+</body>
+
+</html>
