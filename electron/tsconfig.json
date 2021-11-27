@@ -9,6 +9,7 @@
     "noEmitOnError": true,
     "esModuleInterop": true,
     "strictNullChecks": true,
-    "types": ["node"]
+    "types": ["node"],
+    "resolveJsonModule": true
   }
 }

@@ -9,6 +9,7 @@ import {
   previewDir,
   removesWorkDirFolders,
 } from './directories'
+import packageJson from '../package.json'
 
 export default function createMenu(app: App, windo: BrowserWindow) {
   async function onOpenFile(event: MenuItem) {
@@ -116,6 +117,10 @@ export default function createMenu(app: App, windo: BrowserWindow) {
             const { shell } = require('electron')
             await shell.openExternal('https://www.getmural.io/')
           },
+        },
+        {
+          label: 'v' + packageJson.version,
+          enabled: false,
         },
       ],
     },

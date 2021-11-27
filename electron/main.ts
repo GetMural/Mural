@@ -78,6 +78,13 @@ app.on('activate', () => {
 app.whenReady().then(() => {
   createWindow()
   createsFolders()
+  if (app.isPackaged) {
+    // workaround for missing executable argument)
+    process.argv.unshift('')
+  }
+  // parameters is now an array containing any files/folders that your OS will pass to your application
+  const parameters = process.argv.slice(2)
+  console.table({ parameters })
 })
 
 require('./preview')

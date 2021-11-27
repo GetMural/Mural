@@ -5,6 +5,7 @@
     "name": "Mural",
     "email": "support@getmural.io"
   },
+  "description": "Mural is a tool for visual storytelling.",
   "version": "1.5.9",
   "private": true,
   "homepage": "./",
@@ -55,9 +56,9 @@
     "serve-preview": "http-server userFolder/preview",
     "electron-start": "tsc -p electron && yarn copy-files && electron .",
     "electron-dev": "yarn clean && concurrently \"BROWSER=none yarn start\" \"wait-on http://localhost:3000 && tsc -p electron -w\" \"wait-on http://localhost:3000 && yarn electron-start \"",
-    "electron-build": "yarn build && electron-builder",
     "postinstall": "electron-builder install-app-deps",
-    "build": "react-scripts build && tsc -p electron && yarn build-frontend && yarn copy-files",
+    "prebuild": "react-scripts build && tsc -p electron && yarn build-frontend && yarn copy-files",
+    "build": "electron-builder",
     "build-frontend": "yarn webpack build -c frontend-webpack.config --mode production",
     "clean": "rimraf build/",
     "copy-files": "copyfiles -u 1 electron/**/*.html electron/**/*.css build/electron"
@@ -72,6 +73,11 @@
         "dir",
         "AppImage"
       ]
+    },
+    "fileAssociations": {
+      "ext": "mural",
+      "description": "[description]",
+      "role": "Editor"
     },
     "mac": {
       "category": "public.app-category.utilities"

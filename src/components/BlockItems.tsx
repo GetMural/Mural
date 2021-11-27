@@ -11,6 +11,7 @@ import {
   Theme,
   Typography,
 } from '@mui/material'
+import { darken } from '@mui/material/styles'
 import DeleteIcon from '@mui/icons-material/Delete'
 import PaymentIcon from '@mui/icons-material/MonetizationOn'
 import { createStyles, makeStyles } from '@mui/styles'
@@ -62,7 +63,10 @@ function getImagePath(item: Items) {
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     isAfterPaywall: {
-      boxShadow: `-${theme.spacing(2)} 0px ${theme.palette.primary.main}`,
+      boxShadow: `-${theme.spacing(1)} 0px ${darken(
+        theme.palette.primary.main,
+        0.3
+      )}`,
     },
   })
 )
