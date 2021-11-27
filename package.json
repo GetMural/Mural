@@ -6,7 +6,7 @@
     "email": "support@getmural.io"
   },
   "description": "Mural is a tool for visual storytelling.",
-  "version": "1.5.13",
+  "version": "1.5.14",
   "private": true,
   "homepage": "./",
   "dependencies": {
