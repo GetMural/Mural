@@ -30,8 +30,8 @@ const encrypt = (text: string, shift: number) => {
 
 export default function usePreview() {
   const state = useAppSelector((state) => state)
-  const rotationalValue: number = Math.floor(Math.random() * 26)
   const mappedState = React.useMemo(() => {
+    const rotationalValue: number = Math.floor(Math.random() * 26)
     const items: Storyboard['items'] = flatMap(
       state.story.items,
       (item, index): [Items] | [] => {
@@ -335,7 +335,6 @@ export default function usePreview() {
       },
     }
   }, [
-    rotationalValue,
     state.story.items,
     state.story.metadata.author,
     state.story.metadata.canonicalUrl,

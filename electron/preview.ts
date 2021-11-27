@@ -4,10 +4,13 @@ import fs from 'fs'
 import path from 'path'
 import { previewDir } from './directories'
 import archiver from 'archiver'
+import { Server } from 'node-static'
+import fp from 'find-free-port'
+import http from 'http'
 
 electron.app.whenReady().then(() => {
+  const fileServer = new Server(previewDir, { cache: false })
   const PREVIEW_INDEX_PATH = path.join(previewDir, 'index.html')
-
   let previewWindow: BrowserWindow | null = null
 
   electron.ipcMain.handle(
@@ -21,7 +24,22 @@ electron.app.whenReady().then(() => {
         height: 600,
         autoHideMenuBar: true,
       })
-      previewWindow.loadFile(PREVIEW_INDEX_PATH)
+      fp(4000, 5000, '127.0.0.1', function (err: any, freePort: number) {
+        http
+          .createServer(
+            (request: http.IncomingMessage, response: http.ServerResponse) => {
+              request
+                .addListener('end', function () {
+                  fileServer.serve(request, response)
+                })
+                .resume()
+            }
+          )
+          .listen(freePort)
+        if (previewWindow) {
+          previewWindow.loadURL(`http://localhost:${freePort}`)
+        }
+      })
       previewWindow.on('closed', () => {
         previewWindow = null
       })
