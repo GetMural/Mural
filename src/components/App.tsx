@@ -7,6 +7,8 @@ import useForm from 'hooks/useForm'
 import usePreview from 'hooks/usePreview'
 import Dialog from 'components/Dialog'
 import usePaymentSeparatorListener from 'hooks/usePaymentSeparatorListener'
+import { DevTool } from '@hookform/devtools'
+
 const APPBAR_HEIGHT = 64
 
 function App() {
@@ -18,6 +20,7 @@ function App() {
     <div>
       <FormProvider {...form}>
         <MuralAppBar />
+        <DevTool control={form.control} placement="bottom-left" />
         <Box display="flex">
           <Box
             flexBasis="0"

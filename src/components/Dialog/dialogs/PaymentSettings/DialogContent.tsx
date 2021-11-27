@@ -28,7 +28,6 @@ import {
 import { useAppSelector } from 'store/hooks'
 import { setPaymentSettings, SettingsState } from 'store/slices/settings'
 import React from 'react'
-import { DevTool } from '@hookform/devtools'
 import { cloneDeep } from 'lodash'
 
 interface CustomInputProps<InputType> extends StandardTextFieldProps {
@@ -82,7 +81,6 @@ export default function PaymentSettingsDialogContent({
 
   return (
     <>
-      <DevTool control={control} placement="bottom-left" />
       <DialogTitle id="alert-dialog-title">Payment Settings</DialogTitle>
 
       <DialogContent>

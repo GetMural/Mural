@@ -66,7 +66,7 @@ export default function SecondPanel() {
         mountOnEnter
         unmountOnExit
       >
-        <div>
+        <div key={selectedItemIndex}>
           {currentView?.name === 'item' && (
             <Typography variant="h3">
               {TYPES_LABELS[currentView.args.item.type]}

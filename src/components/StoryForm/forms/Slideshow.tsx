@@ -75,6 +75,14 @@ export default function Slideshow({ itemIndex }: Props) {
           </Button>
         </Box>
       )}
+      {fields.length === 0 && (
+        <Typography
+          variant="body2"
+          style={{ textAlign: 'center', marginTop: 20 }}
+        >
+          There is no item yet.
+        </Typography>
+      )}
       {fields.map((field, index) => (
         <Accordion key={field.id} defaultExpanded={true}>
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>
