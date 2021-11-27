@@ -2,6 +2,7 @@ import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
+  Avatar,
   Box,
   Button,
   Divider,
@@ -18,6 +19,7 @@ import { useFieldArray } from 'react-hook-form'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import DeleteIcon from '@mui/icons-material/Delete'
 import Checkbox from '../Checkbox'
+import getMediaPath from 'utils/getMediaPath'
 
 interface Props {
   itemIndex: number
@@ -101,6 +103,14 @@ export default function Slideshow({ itemIndex }: Props) {
                 {/* @ts-ignore */}
                 {field.slideTitle || `Slide ${index + 1}`}
               </Typography>
+              {/* @ts-ignore */}
+              {field.image && (
+                <Avatar
+                  style={{ marginLeft: 20 }}
+                  // @ts-ignore
+                  src={'file:///' + getMediaPath(field.image.square.path)}
+                />
+              )}
             </Box>
           </AccordionSummary>
           <AccordionDetails>
