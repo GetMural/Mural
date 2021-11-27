@@ -132,7 +132,9 @@ export default function BlockItems() {
                     goTo({ view: { name: 'item', args: { item } } })
                   }
                   className={clsx({
-                    [classes.isAfterPaywall]: idx > paywallPosition,
+                    [classes.isAfterPaywall]:
+                      // a paywall exists and is located upfront
+                      paywallPosition > -1 && idx > paywallPosition,
                   })}
                 >
                   {image && (

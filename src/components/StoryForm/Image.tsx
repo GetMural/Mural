@@ -3,6 +3,7 @@ import {
   FormControl,
   FormControlLabel,
   FormHelperText,
+  Box,
 } from '@mui/material'
 import { ReactNode } from 'react'
 import { useController, UseControllerProps } from 'react-hook-form'
@@ -49,7 +50,7 @@ export default function Image({ label, helperText, ...props }: Props) {
       />
       {helperText && <FormHelperText>{helperText}</FormHelperText>}
       {field.value && (
-        <div>
+        <Box pt={2}>
           <img
             src={`file://${media((field.value as ImageType).small.path)}`}
             alt={label}
@@ -59,7 +60,7 @@ export default function Image({ label, helperText, ...props }: Props) {
               objectFit: 'cover',
             }}
           />
-        </div>
+        </Box>
       )}
     </FormControl>
   )
