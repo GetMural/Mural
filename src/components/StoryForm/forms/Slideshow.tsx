@@ -126,6 +126,9 @@ export default function Slideshow({ itemIndex }: Props) {
                   name={
                     `items.${itemIndex}.slides.${index}.slideTitle` as const
                   }
+                  rules={{
+                    maxLength: 500,
+                  }}
                   label="Slide Title"
                 />
               </Box>
