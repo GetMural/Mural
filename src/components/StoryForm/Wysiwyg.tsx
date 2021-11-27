@@ -60,16 +60,22 @@ export default function Wysiwyg({
 
   let [editorState, setEditorState] = React.useState(EditorState.createEmpty())
 
+  // we store here if we already set the value to the editor
+  // (we only need to set it once, when available)
+  const renderRef = React.useRef(false)
   React.useEffect(() => {
-    if (value && (value as unknown as RichText).contentState) {
+    if (
+      !renderRef.current &&
+      value &&
+      (value as unknown as RichText).contentState
+    ) {
       let temp = convertFromRaw(
         JSON.parse((value as unknown as RichText).contentState)
       )
       setEditorState(EditorState.createWithContent(temp))
+      renderRef.current = true
     }
-    // we only need value for the defaultValue
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [value])
 
   async function uploadImageCallBack(file: File) {
     const location = await handleImageInput(file)
