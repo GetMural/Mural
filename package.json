@@ -6,9 +6,14 @@
     "email": "support@getmural.io"
   },
   "description": "Mural is a tool for visual storytelling.",
-  "version": "1.5.16",
+  "license": "LGPL",
+  "version": "2.0.16",
   "private": true,
-  "homepage": "./",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GetMural/Mural.git"
+  },
+  "homepage": "https://www.getmural.io",
   "dependencies": {
     "@hookform/devtools": "^4.0.0",
     "@mui/icons-material": "^5.0.4",
