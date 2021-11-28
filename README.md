@@ -20,18 +20,23 @@ Mural is written in NodeJS and uses Electron.
 
 Once a Mural story is ready to be published, the user clicks the 'Download' button and the program sends a .ZIP file which contains all the files needed to publish the story on a standard web server (HTML, CSS, JavaScript and media files, in addition to the JSON file used by Mural internally).
 
-## Running from git
+## How to Release
 
-Install Node.js 10 or higher
+```
+$ npm version patch|minor|major
+$ git push --follow-tags
+```
 
-Clone/download the repo and run:
+Edit the new draft release on https://github.com/GetMural/Mural/releases and publish it.
 
-`npm install`
+## Available Scripts
 
-`npm start`
+In the project directory, you can run:
 
-## Building your own electron package
+### `yarn start`
 
-`npm install`
+It starts the electron app and build and serve it's react app in developement mode
 
-`npm run make`
+### `yarn build`
+
+It builds the electron package for the current architecture
