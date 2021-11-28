@@ -30,7 +30,7 @@ export default function BackgroundVideo({ itemIndex }: Props) {
       </Box>
       <Divider light />
       <Box my={4}>
-        <Input
+        <Wysiwyg
           key={`items.${itemIndex}.title`}
           name={`items.${itemIndex}.title` as const}
           label="Title"
@@ -38,7 +38,7 @@ export default function BackgroundVideo({ itemIndex }: Props) {
         />
       </Box>
       <Box my={4}>
-        <Input
+        <Wysiwyg
           key={`items.${itemIndex}.subtitle`}
           name={`items.${itemIndex}.subtitle` as const}
           label="Subtitle"

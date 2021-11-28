@@ -54,8 +54,8 @@
   "scripts": {
     "preclean-start": "rm -rf frontend-assets-build 'userFolder/preview/**/*.(js|css|html)'",
     "clean-start": "yarn build-frontend && yarn start",
-    "start": "concurrently \"yarn start-cra\" \"yarn electron-start\"",
-    "start-cra": "BROWSER=none react-scripts start",
+    "start": "concurrently \"yarn cra-start\" \"yarn electron-start\"",
+    "cra-start": "BROWSER=none react-scripts start",
     "serve-preview": "http-server userFolder/preview",
     "electron-start": "tsc -p electron && yarn copy-files && electron .",
     "electron-dev": "yarn clean && concurrently \"BROWSER=none yarn start\" \"wait-on http://localhost:3000 && tsc -p electron -w\" \"wait-on http://localhost:3000 && yarn electron-start \"",

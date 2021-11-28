@@ -75,8 +75,8 @@ interface BackgroundVideoItem {
   video?: Video
   fullPage?: boolean
   navigationTitle?: string
-  title?: string
-  subtitle?: string
+  title?: RichText
+  subtitle?: RichText
   text?: RichText
   posterImage?: Image
   backgroundTextColor?: RGBColor

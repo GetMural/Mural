@@ -8,7 +8,13 @@ import { Editor } from 'react-draft-wysiwyg'
 import React from 'react'
 import clsx from 'clsx'
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
-import { convertFromRaw, convertToRaw, EditorState } from 'draft-js'
+import {
+  ContentState,
+  convertFromHTML,
+  convertFromRaw,
+  convertToRaw,
+  EditorState,
+} from 'draft-js'
 import handleImageInput from 'utils/handleImageInput'
 import media from 'utils/getMediaPath'
 import { Box } from '@mui/system'
@@ -64,15 +70,28 @@ export default function Wysiwyg({
   // (we only need to set it once, when available)
   const renderRef = React.useRef(false)
   React.useEffect(() => {
-    if (
-      !renderRef.current &&
-      value &&
-      (value as unknown as RichText).contentState
-    ) {
-      let temp = convertFromRaw(
-        JSON.parse((value as unknown as RichText).contentState)
-      )
-      setEditorState(EditorState.createWithContent(temp))
+    let content
+    if (!renderRef.current && value) {
+      if ((value as unknown as RichText).contentState) {
+        content = convertFromRaw(
+          JSON.parse((value as unknown as RichText).contentState)
+        )
+        // support for version <= 1.5.16 where some fields were input[type=text]
+      } else if (typeof value === 'string') {
+        const blocksFromHTML = convertFromHTML(value)
+        content = ContentState.createFromBlockArray(
+          blocksFromHTML.contentBlocks,
+          blocksFromHTML.entityMap
+        )
+      } else {
+        console.error('Unknown type for Wysiwyg', { value }, typeof value)
+        const blocksFromHTML = convertFromHTML(value.toString())
+        content = ContentState.createFromBlockArray(
+          blocksFromHTML.contentBlocks,
+          blocksFromHTML.entityMap
+        )
+      }
+      setEditorState(EditorState.createWithContent(content))
       renderRef.current = true
     }
   }, [value])

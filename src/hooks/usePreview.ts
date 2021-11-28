@@ -135,8 +135,8 @@ export default function usePreview() {
                         mp4: media(item.video.path),
                       }
                     : undefined,
-                  title: item.title,
-                  subtitle: item.subtitle,
+                  title: convertToHtml(item.title),
+                  subtitle: convertToHtml(item.subtitle),
                   text: convertToHtml(item.text),
                   image: item.posterImage
                     ? {
