@@ -5,7 +5,7 @@ import App from 'components/App'
 import reportWebVitals from './reportWebVitals'
 import { store } from 'store/store'
 import { Provider } from 'react-redux'
-import 'typeface-roboto'
+import 'typeface-ubuntu'
 import { ThemeProvider, Theme, StyledEngineProvider } from '@mui/material'
 import theme from 'theme'
 

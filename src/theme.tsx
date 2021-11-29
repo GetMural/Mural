@@ -10,6 +10,7 @@ const theme = createTheme({
     secondary: yellow,
   },
   typography: {
+    fontFamily: 'Ubuntu',
     h1: {
       fontSize: '2.5rem',
     },

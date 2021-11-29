@@ -52,7 +52,7 @@ export default function MuralAppBar() {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static">
+      <AppBar position="static" elevation={0}>
         <Toolbar>
           <Box display="flex" alignItems="center" mr={4}>
             <img src={logo} width={48} alt="Mural Logo" />
