@@ -132,7 +132,7 @@ form.find('button').on('click', function (event) {
     console.log(`${value} matches ${bypass}`)
     $('.exclusive').removeClass('exclusive')
     $('#paywallInfo').removeClass('paywallInfo')
-    story.init()
+    story.loadExclusives()
   } else {
     console.log(
       `${value} does not match ${bypass} with rotational value ${rot}`
@@ -152,6 +152,4 @@ playStart.addEventListener('click', () => {
   playStart = null
 })
 
-if (!document.getElementById('paywallInfo')) {
-  story.init()
-}
+story.init()

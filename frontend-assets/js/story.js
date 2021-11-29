@@ -91,10 +91,6 @@ function init() {
 
   storyItems = scrollStory.getItems()
 
-  // const LOAD_PROMISES = []
-  // const LOADED_STORY_SECTIONS = []
-  // let isSoundEnabled = true
-
   $story.on('itemfocus', function (ev, item) {
     if (item.data.video) {
       videoMedia.playBackgroundVideo(item.index, getVideoAttrs(item))
@@ -250,6 +246,16 @@ function init() {
   })
 }
 
+function loadExclusives() {
+  scrollStory.getItemsInViewport().forEach(function (item) {
+    const loadPromise = loadItem(item)
+
+    if (loadPromise) {
+      LOAD_PROMISES.push(loadPromise)
+    }
+  })
+}
+
 function getVideoAttrs(item) {
   const muted = !isSoundEnabled
 
@@ -263,7 +269,6 @@ function getVideoAttrs(item) {
 }
 
 function loadItem(item) {
-  console.log('load item', item)
   if (LOADED_STORY_SECTIONS[item.index] !== undefined) {
     return
   } else {
@@ -416,4 +421,4 @@ function loadItem(item) {
   return Promise.all(returnPromises)
 }
 
-module.exports = { init: init }
+module.exports = { init: init, loadExclusives: loadExclusives }
