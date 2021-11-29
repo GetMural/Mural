@@ -23,7 +23,7 @@ function stick(item) {
 
 function prepare(scrollStory, item) {
   DAILYMOTION[item.index] = DM.player(
-    document.getElementById('dm_' + item.index),
+    document.getElementById('dm_' + item.data.dailymotionId),
     {
       video: item.data.dailymotionId,
       width: '100%',

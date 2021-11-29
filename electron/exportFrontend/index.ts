@@ -179,11 +179,13 @@ export type Items =
   | {
       paywallSeparator: {
         id: string
+        index?: number
       }
     }
   | {
       paywallSeparatorEnd: {
         id: string
+        index?: number
       }
     }
 export interface Storyboard {
