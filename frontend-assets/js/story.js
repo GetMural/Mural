@@ -226,19 +226,11 @@ function init() {
   }
 
   Promise.all(LOAD_PROMISES).then(() => {
-    // let overlay = document.getElementById('loading_overlay')
-    // let playStart = document.getElementById('play_start')
-    // playStart.style.display = 'block'
-
-    // playStart.addEventListener('click', () => {
     const MURAL_MEDIA = scrollStory.MURAL_AUDIO.concat(scrollStory.MURAL_VIDEO)
     // load a media element within scope of the user gesture to make sure Safari works.
     if (MURAL_MEDIA.length) {
       MURAL_MEDIA[MURAL_MEDIA.length - 1].load()
     }
-
-    // document.body.removeChild(overlay)
-    // document.body.classList.remove('frozen')
 
     if (active.data.video) {
       videoMedia.playBackgroundVideo(active.index, getVideoAttrs(active))
@@ -255,14 +247,7 @@ function init() {
       youtubeMedia.play(active, isSoundEnabled)
       youtubeMedia.stick(active)
     }
-
-    // overlay = null
-    // playStart = null
   })
-  // })
-  // .catch((e) => {
-  //   console.error(e)
-  // })
 }
 
 function getVideoAttrs(item) {

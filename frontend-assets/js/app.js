@@ -75,12 +75,6 @@ MoveItItem.prototype.update = function (scrollTop) {
 
 const blueimp = require('blueimp-gallery/js/blueimp-gallery')
 require('blueimp-gallery/js/blueimp-gallery-indicator')
-// const videoMedia = require('./media/video')
-// const imageMedia = require('./media/images')
-// const audioMedia = require('./media/audio')
-// const youtubeMedia = require('./media/youtube')
-// const vimeoMedia = require('./media/vimeo')
-// const dailymotionMedia = require('./media/dailymotion')
 
 // Override this function so we can change the arrow keys.
 blueimp.prototype.onkeydown = function (event) {
@@ -107,66 +101,6 @@ blueimp.prototype.onkeydown = function (event) {
     }
   }
 }
-
-// function prepMediaElements(scrollStory) {
-//   // need a central media registry for user gesture purposes.
-//   scrollStory.MURAL_AUDIO = []
-//   scrollStory.MURAL_VIDEO = []
-
-//   const items = scrollStory.getItems()
-//   items.forEach(function (item) {
-//     if (item.data.video) {
-//       scrollStory.MURAL_VIDEO[item.index] = document.createElement('video')
-//     }
-
-//     if (item.data.audio) {
-//       scrollStory.MURAL_AUDIO[item.index] = document.createElement('audio')
-//     }
-//   })
-// }
-
-// const WINDOW_WIDTH = $(window).width()
-// let scrKey
-// let attrKey
-
-// if (WINDOW_WIDTH >= 1024) {
-//   scrKey = 'src'
-//   attrKey = 'src'
-// } else if (WINDOW_WIDTH >= 600) {
-//   scrKey = 'srcMedium'
-//   attrKey = 'src-medium'
-// } else {
-//   scrKey = 'srcPhone'
-//   attrKey = 'src-phone'
-// }
-
-// const $story = $('#scrollytelling')
-// const scrollStory = $story
-//   .scrollStory({
-//     contentSelector: '.part',
-//     triggerOffset: 0,
-//   })
-//   .data('plugin_scrollStory')
-
-// prepMediaElements(scrollStory)
-
-// const storyItems = scrollStory.getItems()
-
-// const LOAD_PROMISES = []
-// const LOADED_STORY_SECTIONS = []
-// let isSoundEnabled = true
-
-// function getVideoAttrs(item) {
-//   const muted = !isSoundEnabled
-
-//   return {
-//     poster: item.data.poster,
-//     autoplay: true,
-//     muted: muted,
-//     loop: item.data.loop,
-//     autoAdvance: item.data.autoAdvance,
-//   }
-// }
 
 const form = $('#bypass')
 
@@ -214,10 +148,10 @@ playStart.addEventListener('click', () => {
   document.body.removeChild(overlay)
   document.body.classList.remove('frozen')
 
-  if (!document.getElementById('paywallInfo')) {
-    story.init()
-  }
-
   overlay = null
   playStart = null
 })
+
+if (!document.getElementById('paywallInfo')) {
+  story.init()
+}
