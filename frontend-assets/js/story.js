@@ -161,7 +161,7 @@ function onItemFocus(ev, item) {
   }
 }
 
-function onItemBlur(ev, item) {
+function onItemExitViewport(ev, item) {
   if (item.data.youtubeId) {
     youtubeMedia.remove(item)
   }
@@ -183,6 +183,26 @@ function onItemBlur(ev, item) {
   }
 }
 
+function pauseEverything() {
+  // for (const item of storyItems) {
+  //   if (item.data.youtubeId) {
+  //     youtubeMedia.remove(item)
+  //   }
+  //   if (item.data.vimeoVideoId) {
+  //     vimeoMedia.remove(item)
+  //   }
+  //   if (item.data.dailymotionId) {
+  //     dailymotionMedia.remove(item)
+  //   }
+  //   if (item.data.video) {
+  //     videoMedia.removeBackgroundVideo(item.el, item.index)
+  //   }
+  //   if (item.data.audio) {
+  //     audioMedia.removeBackgroundAudio(item.index)
+  //   }
+  // }
+}
+
 function onItemEnterViewport(ev, item) {
   loadItem(item)
 
@@ -196,24 +216,22 @@ function onItemEnterViewport(ev, item) {
     loadItem(storyItems[item.index + 2])
   }
 
+  pauseEverything()
+
   if (item.data.video) {
     videoMedia.playBackgroundVideo(item.index, getVideoAttrs(item))
-    // videoMedia.fixBackgroundVideo(item.el)
   }
 
   if (item.data.youtubeId) {
     youtubeMedia.play(item, isSoundEnabled)
-    // youtubeMedia.stick(item)
   }
 
   if (item.data.vimeoVideoId) {
     vimeoMedia.play(item, isSoundEnabled)
-    // vimeoMedia.stick(item)
   }
 
   if (item.data.dailymotionId) {
     dailymotionMedia.play(item, isSoundEnabled)
-    // dailymotionMedia.stick(item)
   }
 
   if (item.data.audio) {
@@ -238,7 +256,7 @@ function init() {
   storyItems = scrollStory.getItems()
 
   $story.on('itemfocus', onItemFocus)
-  $story.on('itemblur', onItemBlur)
+  $story.on('itemexitviewport', onItemExitViewport)
   $story.on('itementerviewport', onItemEnterViewport)
 
   // parallax.
