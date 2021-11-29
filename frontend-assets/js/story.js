@@ -183,27 +183,8 @@ function onItemExitViewport(ev, item) {
   }
 }
 
-function pauseEverything() {
-  // for (const item of storyItems) {
-  //   if (item.data.youtubeId) {
-  //     youtubeMedia.remove(item)
-  //   }
-  //   if (item.data.vimeoVideoId) {
-  //     vimeoMedia.remove(item)
-  //   }
-  //   if (item.data.dailymotionId) {
-  //     dailymotionMedia.remove(item)
-  //   }
-  //   if (item.data.video) {
-  //     videoMedia.removeBackgroundVideo(item.el, item.index)
-  //   }
-  //   if (item.data.audio) {
-  //     audioMedia.removeBackgroundAudio(item.index)
-  //   }
-  // }
-}
-
 function onItemEnterViewport(ev, item) {
+  console.log('on enter', ev)
   loadItem(item)
 
   // load another in advance
@@ -216,7 +197,14 @@ function onItemEnterViewport(ev, item) {
     loadItem(storyItems[item.index + 2])
   }
 
-  pauseEverything()
+  // Stop previous & next item
+  if (item.index > 0) {
+    onItemExitViewport(null, storyItems[item.index - 1])
+  }
+
+  if (item.index < storyItems.length) {
+    onItemExitViewport(null, storyItems[item.index + 1])
+  }
 
   if (item.data.video) {
     videoMedia.playBackgroundVideo(item.index, getVideoAttrs(item))
