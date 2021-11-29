@@ -22,7 +22,7 @@ function stick(item) {
 }
 
 function prepare(scrollStory, item) {
-  VIMEO[item.index] = new Vimeo.Player('vimeo_' + item.index, {
+  VIMEO[item.index] = new Vimeo.Player('vimeo_' + item.data.vimeoVideoId, {
     id: item.data.vimeoVideoId,
     responsive: true,
     autoplay: false,

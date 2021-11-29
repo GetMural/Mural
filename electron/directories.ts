@@ -38,15 +38,24 @@ export function removesWorkDirFolders() {
   fse.rmSync(previewDir, { force: true, recursive: true })
 }
 
-function copyFolder(parent: string, target: string) {
+export function copyFolder(parent: string, target: string) {
   fs.readdirSync(parent).forEach((fileOrFolder) => {
     const child = path.join(parent, fileOrFolder)
     const targetChild = path.join(target, fileOrFolder)
+
+    // First we check if the target directory exists
+    if (!fs.existsSync(target)) {
+      // If not, we create it
+      fs.mkdirSync(target)
+    }
+
     fs.rmSync(targetChild, { recursive: true, force: true })
+
     if (fs.lstatSync(child).isDirectory()) {
       fs.mkdirSync(targetChild)
       copyFolder(child, targetChild)
     }
+
     if (fs.lstatSync(child).isFile()) {
       fs.copyFileSync(child, targetChild)
     }

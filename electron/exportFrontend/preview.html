@@ -555,7 +555,7 @@
       {{#showControls}} data-controls {{/showControls}}
       {{#embed}} {{#id}} data-vimeo-video-id="{{id}}" {{/id}} {{/embed}}>
       <div class="video-container vimeo-container">
-        <div id="vimeo_{{index}}"></div>
+        <div id="vimeo_{{#embed}}{{id}}{{/embed}}"></div>
       </div>
     </section>
     {{/vimeo}}
@@ -567,7 +567,7 @@
       {{#showControls}} data-controls {{/showControls}}
       {{#embed}} {{#id}} data-dailymotion-id="{{id}}" {{/id}} {{/embed}}>
       <div class="video-container">
-        <div id="dm_{{index}}"></div>
+        <div id="dm_{{#embed}}{{id}}{{/embed}}"></div>
       </div>
     </section>
     {{/dailymotion}}
