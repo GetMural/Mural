@@ -144,7 +144,7 @@ export default function Wysiwyg({
             'textAlign',
             'colorPicker',
             'link',
-            'embedded',
+            // 'embedded',
             'emoji',
             'image',
             'remove',
