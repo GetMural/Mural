@@ -65,7 +65,7 @@ electron.app.whenReady().then(() => {
 
   electron.ipcMain.handle(
     'export-as-zip',
-    function (event: electron.IpcMainInvokeEvent) {
+    async function (event: electron.IpcMainInvokeEvent) {
       const outputPath = electron.dialog.showSaveDialogSync({
         defaultPath: 'my-mural-website.zip',
         properties: ['createDirectory', 'showOverwriteConfirmation'],
@@ -73,6 +73,7 @@ electron.app.whenReady().then(() => {
       if (!outputPath) {
         return false
       }
+      event.sender.send('on-loading', true)
       const output = fs.createWriteStream(outputPath)
       const archive = archiver('zip', {
         zlib: { level: 9 },
@@ -92,7 +93,8 @@ electron.app.whenReady().then(() => {
       })
       archive.pipe(output)
       archive.directory(previewDir, false)
-      return archive.finalize()
+      await archive.finalize()
+      event.sender.send('on-loading', false)
     }
   )
 })

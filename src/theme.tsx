@@ -1,4 +1,4 @@
-import { indigo } from '@mui/material/colors'
+import { indigo, yellow } from '@mui/material/colors'
 import { createTheme } from '@mui/material/styles'
 
 const theme = createTheme({
@@ -7,6 +7,7 @@ const theme = createTheme({
       ...indigo,
       500: '#343866',
     },
+    secondary: yellow,
   },
   typography: {
     h1: {

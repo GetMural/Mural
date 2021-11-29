@@ -16,6 +16,7 @@ declare global {
       onExport: (callback: () => void) => void
       onPreview: (callback: () => void) => void
       toggleSave: (isDirty: boolean) => void
+      onLoading: (callback: (loading: boolean) => void) => void
       onSaveAsMenuClick: any
       directories: {
         root: string

@@ -25,15 +25,23 @@ contextBridge.exposeInMainWorld('electron', {
     ipcRenderer.on('saved-file-path', (event, args) => onSaved(event, args))
   },
   onSave: (callback: any) => {
+    ipcRenderer.removeAllListeners('save-click')
     ipcRenderer.on('save-click', callback)
   },
   toggleSave: (isDirty: boolean) => {
+    ipcRenderer.removeAllListeners('toggle-save')
     ipcRenderer.send('toggle-save', isDirty)
   },
   onExport: (callback: any) => {
+    ipcRenderer.removeAllListeners('export-click')
     ipcRenderer.on('export-click', callback)
   },
   onPreview: (callback: any) => {
+    ipcRenderer.removeAllListeners('preview-click')
     ipcRenderer.on('preview-click', callback)
+  },
+  onLoading: (callback: (loading: boolean) => void) => {
+    ipcRenderer.removeAllListeners('on-loading')
+    ipcRenderer.on('on-loading', (event, loading) => callback(loading))
   },
 })

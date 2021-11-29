@@ -13,6 +13,11 @@ import {
   Typography,
   ButtonProps,
   Box,
+  LinearProgress,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
 } from '@mui/material'
 import { useAppDispatch } from 'store/hooks'
 import useFormContext from 'hooks/useFormContext'
@@ -43,7 +48,7 @@ export default function MuralAppBar() {
     save,
     formState: { isDirty },
   } = useFormContext()
-  useIPCListeners()
+  const { loading } = useIPCListeners()
 
   return (
     <div className={classes.root}>
@@ -103,6 +108,17 @@ export default function MuralAppBar() {
             </Button>
           </Box>
         </Toolbar>
+        {loading && (
+          <Box position="absolute" bottom={0} left={0} right={0}>
+            <Dialog open={true}>
+              <DialogTitle>Loading...</DialogTitle>
+              <DialogContent>
+                <DialogContentText>Please wait</DialogContentText>
+                <LinearProgress variant="indeterminate" />
+              </DialogContent>
+            </Dialog>
+          </Box>
+        )}
       </AppBar>
     </div>
   )

@@ -14,6 +14,7 @@ electron.app.whenReady().then(() => {
       if (!outputPath) {
         return false
       }
+      event.sender.send('on-loading', true)
       const output = fs.createWriteStream(outputPath)
       const archive = archiver('zip', {
         zlib: { level: 9 },
@@ -24,11 +25,13 @@ electron.app.whenReady().then(() => {
           // log warning
         } else {
           // throw error
+          event.sender.send('on-loading', false)
           throw err
         }
       })
       // good practice to catch this error explicitly
       archive.on('error', function (err) {
+        event.sender.send('on-loading', false)
         throw err
       })
       archive.pipe(output)
@@ -37,6 +40,7 @@ electron.app.whenReady().then(() => {
         name: 'state.json',
       })
       return archive.finalize().then(() => {
+        event.sender.send('on-loading', false)
         event.sender.send('saved-file-path', outputPath)
       })
     }

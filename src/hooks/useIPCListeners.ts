@@ -1,10 +1,11 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useAppDispatch } from 'store/hooks'
 import { saveForm } from 'store/slices/story'
 import useSaveAs from './useSaveAs'
 import useFormContext from 'hooks/useFormContext'
 
 export default function useIPCListeners() {
+  const [loading, setLoading] = useState(false)
   const saveAs = useSaveAs()
   const dispatch = useAppDispatch()
   const {
@@ -46,4 +47,10 @@ export default function useIPCListeners() {
   useEffect(() => {
     window.electron.onPreview(() => window.electron.openPreview())
   }, [])
+
+  useEffect(() => {
+    window.electron.onLoading((loading) => setLoading(loading))
+  }, [])
+
+  return { loading }
 }
