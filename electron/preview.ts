@@ -24,6 +24,7 @@ electron.app.whenReady().then(() => {
         height: 600,
         autoHideMenuBar: true,
       })
+      // find a free port in this range, available on localhost
       fp(4000, 5000, '127.0.0.1', function (err: any, freePort: number) {
         http
           .createServer(
