@@ -41,9 +41,12 @@ function setMuted(muted) {
 }
 
 function play(item, isSoundEnabled) {
-  console.log('play', YOUTUBE)
   const youtube_id = getYoutubeId(item)
   const player = YOUTUBE[youtube_id]
+
+  if (!player) {
+    return
+  }
 
   if (isSoundEnabled) {
     player.unMute()
