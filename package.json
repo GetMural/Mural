@@ -13,7 +13,7 @@
     "type": "git",
     "url": "git+https://github.com/GetMural/Mural.git"
   },
-  "homepage": "https://www.getmural.io",
+  "homepage": "./",
   "dependencies": {
     "@hookform/devtools": "^4.0.0",
     "@mui/icons-material": "^5.0.4",
