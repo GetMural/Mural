@@ -8,6 +8,7 @@ import {
   media,
   previewDir,
   removesWorkDirFolders,
+  copyFolder,
 } from './directories'
 import packageJson from '../package.json'
 
@@ -30,7 +31,7 @@ export default function createMenu(app: App, windo: BrowserWindow) {
       .on('close', () => {
         removesWorkDirFolders()
         fs.mkdirSync(previewDir)
-        fs.renameSync(path.join(tmpPath, 'media'), media)
+        copyFolder(path.join(tmpPath, 'media'), media)
         createsFolders()
         const state = JSON.parse(
           fs.readFileSync(path.join(tmpPath, 'state.json')).toString()
