@@ -25,11 +25,11 @@ window.addEventListener('resize', function () {
 
 function getYoutubeId(item) {
   const videoId = item.data.youtubeId
-  const id = item.index
-  return `ytplayer_${videoId}_${id}`
+  return `ytplayer_${videoId}`
 }
 
 function setMuted(muted) {
+  console.log('set muted', YOUTUBE)
   Object.keys(YOUTUBE).forEach(function (ytid) {
     const player = YOUTUBE[ytid]
     if (muted) {
@@ -41,6 +41,7 @@ function setMuted(muted) {
 }
 
 function play(item, isSoundEnabled) {
+  console.log('play', YOUTUBE)
   const youtube_id = getYoutubeId(item)
   const player = YOUTUBE[youtube_id]
 
@@ -74,6 +75,7 @@ function prepare(scrollStory, item) {
 
   const canPlayThrough = new Promise(function (resolve, reject) {
     YouTubePromise.then(function () {
+      console.log('yt laoding?', youtube_id)
       YOUTUBE[youtube_id] = new YT.Player(youtube_id, {
         width: window.innerWidth,
         height: window.innerHeight,
@@ -89,7 +91,11 @@ function prepare(scrollStory, item) {
         },
         events: {
           onReady: function (event) {
+            console.log('on ready', event)
             resolve()
+          },
+          onError: function (err) {
+            console.log('on error', err)
           },
           onStateChange: function (event) {
             const status = event.data
