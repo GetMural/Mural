@@ -31,6 +31,9 @@ const useStyles = makeStyles((theme) => ({
     borderStyle: 'solid',
     fontFamily: theme.typography.fontFamily,
     color: theme.palette.text.primary,
+    '& .rdw-image-imagewrapper img': {
+      maxWidth: '100%',
+    },
   },
   wysiwygEditorFocused: {
     borderWidth: 2,
