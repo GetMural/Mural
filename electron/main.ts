@@ -85,6 +85,11 @@ app.whenReady().then(() => {
   // parameters is now an array containing any files/folders that your OS will pass to your application
   const parameters = process.argv.slice(2)
   console.table({ parameters })
+  electron.protocol.interceptFileProtocol('media', (request, callback) => {
+    callback({
+      path: path.normalize(`${media}/${request.url.substr('media://'.length)}`),
+    })
+  })
 })
 
 require('./preview')

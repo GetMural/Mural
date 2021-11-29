@@ -3,11 +3,10 @@ import fs from 'fs'
 import path from 'path'
 
 export default function exportStory(story: Storyboard) {
-  const index = fs.readFileSync(path.join(__dirname, 'preview.html'), {
+  const template = fs.readFileSync(path.join(__dirname, 'preview.html'), {
     encoding: 'utf8',
   })
-
-  var output = Mustache.render(index, story)
+  var output = Mustache.render(template, story)
   return output
 }
 

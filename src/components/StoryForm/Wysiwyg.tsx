@@ -16,7 +16,6 @@ import {
   EditorState,
 } from 'draft-js'
 import handleImageInput from 'utils/handleImageInput'
-import media from 'utils/getMediaPath'
 import { Box } from '@mui/system'
 
 const useStyles = makeStyles((theme) => ({
@@ -100,7 +99,7 @@ export default function Wysiwyg({
     const location = await handleImageInput(file)
     return {
       data: {
-        link: 'file:///' + media(location.big.path),
+        link: 'media://' + location.big.path,
       },
     }
   }

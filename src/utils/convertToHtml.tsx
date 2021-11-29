@@ -5,16 +5,13 @@ const customEntityTransform = (
   entity: { type: string; data: any; mutalibity: string },
   text: string
 ) => {
-  // NOTE: dirty hack to convert locale image src (file:///) inlined in rich texts with relative path
-  if (entity.type !== 'IMAGE' || !entity.data.src.startsWith('file:///')) {
+  // NOTE: convert locale image src (media://) inlined in rich texts with relative path
+  if (entity.type !== 'IMAGE' || !entity.data.src.startsWith('media://')) {
     return undefined
   }
-  return `<img src="${entity.data.src.replace(
-    'file:///' + window.electron.directories.media,
-    './media'
-  )}" alt="${entity.data.alt}" style="height: ${entity.data.height};width: ${
-    entity.data.width
-  }"/>`
+  return `<img src="${entity.data.src.replace('media://', './media/')}" alt="${
+    entity.data.alt
+  }" style="height: ${entity.data.height};width: ${entity.data.width}"/>`
 }
 
 export default function convertToHtml(richText: RichText | null | undefined) {
