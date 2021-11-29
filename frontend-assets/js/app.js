@@ -4,36 +4,6 @@ const story = require('./story')
 require('../css/blueimp-gallery.css')
 require('../css/blueimp-gallery-indicator.css')
 require('../css/style.scss')
-require('scrollstory/jquery.scrollstory.js')
-require('stickybits/src/jquery.stickybits')
-const blueimp = require('blueimp-gallery/js/blueimp-gallery')
-require('blueimp-gallery/js/blueimp-gallery-indicator')
-
-// Override this function so we can change the arrow keys.
-blueimp.prototype.onkeydown = function (event) {
-  if (this.options.storyItem.active) {
-    switch (event.which || event.keyCode) {
-      case 13: // Enter
-        if (this.options.toggleControlsOnEnter) {
-          this.preventDefault(event)
-          this.toggleControls()
-        }
-        break
-      case 38: // ArrowUp
-        if (this.options.enableKeyboardNavigation) {
-          this.preventDefault(event)
-          this.prev()
-        }
-        break
-      case 40: // ArrowDown
-        if (this.options.enableKeyboardNavigation) {
-          this.preventDefault(event)
-          this.next()
-        }
-        break
-    }
-  }
-}
 
 const form = $('#bypass')
 

@@ -341,24 +341,6 @@ function init() {
 function loadExclusives() {
   const active = scrollStory.getActiveItem()
 
-  // // push two in advance
-  // if (active.index < storyItems.length) {
-  //   const loadPromise = loadItem(storyItems[active.index])
-
-  //   if (loadPromise) {
-  //     LOAD_PROMISES.push(loadPromise)
-  //   }
-  // }
-
-  // // push two in advance
-  // if (active.index + 1 < storyItems.length) {
-  //   const loadPromise = loadItem(storyItems[active.index + 1])
-
-  //   if (loadPromise) {
-  //     LOAD_PROMISES.push(loadPromise)
-  //   }
-  // }
-
   // Start first item
   loadItem(storyItems[active.index]).then(() => {
     onItemEnterViewport(null, active)
