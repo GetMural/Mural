@@ -143,6 +143,86 @@ if (WINDOW_WIDTH >= 1024) {
   attrKey = 'src-phone'
 }
 
+function onItemFocus(ev, item) {
+  if (item.data.video) {
+    videoMedia.fixBackgroundVideo(item.el)
+  }
+
+  if (item.data.youtubeId) {
+    youtubeMedia.stick(item)
+  }
+
+  if (item.data.vimeoVideoId) {
+    vimeoMedia.stick(item)
+  }
+
+  if (item.data.dailymotionId) {
+    dailymotionMedia.stick(item)
+  }
+}
+
+function onItemBlur(ev, item) {
+  if (item.data.youtubeId) {
+    youtubeMedia.remove(item)
+  }
+
+  if (item.data.vimeoVideoId) {
+    vimeoMedia.remove(item)
+  }
+
+  if (item.data.dailymotionId) {
+    dailymotionMedia.remove(item)
+  }
+
+  if (item.data.video) {
+    videoMedia.removeBackgroundVideo(item.el, item.index)
+  }
+
+  if (item.data.audio) {
+    audioMedia.removeBackgroundAudio(item.index)
+  }
+}
+
+function onItemEnterViewport(ev, item) {
+  loadItem(item)
+
+  // load another in advance
+  if (item.index + 1 < storyItems.length) {
+    loadItem(storyItems[item.index + 1])
+  }
+
+  // load another in advance
+  if (item.index + 2 < storyItems.length) {
+    loadItem(storyItems[item.index + 2])
+  }
+
+  if (item.data.video) {
+    videoMedia.playBackgroundVideo(item.index, getVideoAttrs(item))
+    // videoMedia.fixBackgroundVideo(item.el)
+  }
+
+  if (item.data.youtubeId) {
+    youtubeMedia.play(item, isSoundEnabled)
+    // youtubeMedia.stick(item)
+  }
+
+  if (item.data.vimeoVideoId) {
+    vimeoMedia.play(item, isSoundEnabled)
+    // vimeoMedia.stick(item)
+  }
+
+  if (item.data.dailymotionId) {
+    dailymotionMedia.play(item, isSoundEnabled)
+    // dailymotionMedia.stick(item)
+  }
+
+  if (item.data.audio) {
+    audioMedia.playBackgroundAudio(item, {
+      muted: !isSoundEnabled,
+    })
+  }
+}
+
 function init() {
   WINDOW_WIDTH = $(window).width()
   const $story = $('#scrollytelling')
@@ -157,95 +237,9 @@ function init() {
 
   storyItems = scrollStory.getItems()
 
-  $story.on('itemfocus', function (ev, item) {
-    if (item.data.video) {
-      // videoMedia.playBackgroundVideo(item.index, getVideoAttrs(item))
-      videoMedia.fixBackgroundVideo(item.el)
-    }
-
-    if (item.data.youtubeId) {
-      // youtubeMedia.play(item, isSoundEnabled)
-      youtubeMedia.stick(item)
-    }
-
-    if (item.data.vimeoVideoId) {
-      // vimeoMedia.play(item, isSoundEnabled)
-      vimeoMedia.stick(item)
-    }
-
-    if (item.data.dailymotionId) {
-      // dailymotionMedia.play(item, isSoundEnabled)
-      dailymotionMedia.stick(item)
-    }
-
-    // if (item.data.audio) {
-    //   audioMedia.playBackgroundAudio(item, {
-    //     muted: !isSoundEnabled,
-    //   })
-    // }
-  })
-
-  $story.on('itemblur', function (ev, item) {
-    if (item.data.youtubeId) {
-      youtubeMedia.remove(item)
-    }
-
-    if (item.data.vimeoVideoId) {
-      vimeoMedia.remove(item)
-    }
-
-    if (item.data.dailymotionId) {
-      dailymotionMedia.remove(item)
-    }
-
-    if (item.data.video) {
-      videoMedia.removeBackgroundVideo(item.el, item.index)
-    }
-
-    if (item.data.audio) {
-      audioMedia.removeBackgroundAudio(item.index)
-    }
-  })
-
-  $story.on('itementerviewport', function (ev, item) {
-    loadItem(item)
-
-    // load another in advance
-    if (item.index + 1 < storyItems.length) {
-      loadItem(storyItems[item.index + 1])
-    }
-
-    // load another in advance
-    if (item.index + 2 < storyItems.length) {
-      loadItem(storyItems[item.index + 2])
-    }
-
-    if (item.data.video) {
-      videoMedia.playBackgroundVideo(item.index, getVideoAttrs(item))
-      // videoMedia.fixBackgroundVideo(item.el)
-    }
-
-    if (item.data.youtubeId) {
-      youtubeMedia.play(item, isSoundEnabled)
-      // youtubeMedia.stick(item)
-    }
-
-    if (item.data.vimeoVideoId) {
-      vimeoMedia.play(item, isSoundEnabled)
-      // vimeoMedia.stick(item)
-    }
-
-    if (item.data.dailymotionId) {
-      dailymotionMedia.play(item, isSoundEnabled)
-      // dailymotionMedia.stick(item)
-    }
-
-    if (item.data.audio) {
-      audioMedia.playBackgroundAudio(item, {
-        muted: !isSoundEnabled,
-      })
-    }
-  })
+  $story.on('itemfocus', onItemFocus)
+  $story.on('itemblur', onItemBlur)
+  $story.on('itementerviewport', onItemEnterViewport)
 
   // parallax.
   $('[data-scroll-speed]').moveIt()
@@ -339,13 +333,25 @@ function init() {
 }
 
 function loadExclusives() {
-  scrollStory.getItemsInViewport().forEach(function (item) {
-    const loadPromise = loadItem(item)
+  const active = scrollStory.getActiveItem()
+
+  // push two in advance
+  if (active.index < storyItems.length) {
+    const loadPromise = loadItem(storyItems[active.index])
 
     if (loadPromise) {
       LOAD_PROMISES.push(loadPromise)
     }
-  })
+  }
+
+  // push two in advance
+  if (active.index + 1 < storyItems.length) {
+    const loadPromise = loadItem(storyItems[active.index + 1])
+
+    if (loadPromise) {
+      LOAD_PROMISES.push(loadPromise)
+    }
+  }
 }
 
 function getVideoAttrs(item) {
