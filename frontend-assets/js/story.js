@@ -275,6 +275,7 @@ function init() {
   $story.on('itemexitviewport', onItemExitViewport)
   $story.on('itementerviewport', onItemEnterViewport)
   $story.on('itemblur', onItemBlur)
+
   // parallax.
   $('[data-scroll-speed]').moveIt()
 
@@ -371,7 +372,7 @@ function loadExclusives() {
 
   // Start first item
   loadItem(storyItems[active.index]).then(() => {
-    onItemEnterViewport(null, active)
+    setItemStart(active)
   })
 }
 
