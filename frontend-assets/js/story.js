@@ -4,7 +4,6 @@ require('../css/blueimp-gallery.css')
 require('../css/blueimp-gallery-indicator.css')
 require('../css/style.scss')
 require('scrollstory/jquery.scrollstory.js')
-require('stickybits/src/jquery.stickybits')
 
 const blueimp = require('blueimp-gallery/js/blueimp-gallery')
 const videoMedia = require('./media/video')
@@ -13,6 +12,7 @@ const audioMedia = require('./media/audio')
 const youtubeMedia = require('./media/youtube')
 const vimeoMedia = require('./media/vimeo')
 const dailymotionMedia = require('./media/dailymotion')
+const { default: stickybits } = require('stickybits')
 
 $.fn.moveIt = function () {
   var $window = $(window)
@@ -162,6 +162,7 @@ function onItemFocus(ev, item) {
 }
 
 function onItemExitViewport(ev, item) {
+  console.log('on exist vp', item)
   if (item.data.youtubeId) {
     youtubeMedia.remove(item)
   }
@@ -184,7 +185,7 @@ function onItemExitViewport(ev, item) {
 }
 
 function onItemEnterViewport(ev, item) {
-  console.log('on enter', ev)
+  console.log('on enter vp', ev, item)
   loadItem(item)
 
   // load another in advance
@@ -439,19 +440,19 @@ function loadItem(item) {
   }
 
   if (item.data.slides) {
-    item.el
-      .find('.bg-image')
-      .each(function (i) {
-        const $el = $(this)
-        const src = $el.data(scrKey)
+    item.el.find('.bg-image').each(function (i) {
+      const $el = $(this)
+      const src = $el.data(scrKey)
+      console.log('SRC', src)
 
-        const loadPromise = imageMedia.imageLoadPromise(src).then(() => {
-          $el.css('background-image', `url(${src})`)
-        })
-
-        returnPromises.push(loadPromise)
+      const loadPromise = imageMedia.imageLoadPromise(src).then(() => {
+        $el.css('background-image', `url(${src})`)
       })
-      .stickybits()
+
+      returnPromises.push(loadPromise)
+    })
+
+    stickybits('.bg-image')
   }
 
   if (item.data.parallax) {
