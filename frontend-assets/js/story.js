@@ -164,7 +164,7 @@ function setItemSticky(item) {
 
 function setItemStart(item) {
   const storyItems = scrollStory.getItems()
-  console.log('start', item)
+  // console.log('start', item)
   loadItem(item)
 
   console.log(storyItems)
@@ -219,7 +219,7 @@ function setItemStart(item) {
 }
 
 function setItemStop(item) {
-  console.log('stop', item)
+  // console.log('stop', item)
   if (item.data.youtubeId) {
     youtubeMedia.remove(item)
   }
@@ -242,20 +242,20 @@ function setItemStop(item) {
 }
 
 function onItemFocus(ev, item) {
-  console.log('on item focus', item)
+  // console.log('on item focus', item)
   setItemSticky(item)
 }
 
 function onItemExitViewport(ev, item) {
-  console.log('on exit vp', item.data)
+  // console.log('on exit vp', item.data)
   setItemStop(item)
 }
 function onItemBlur(ev, item) {
-  console.log('on blur', item.data)
+  // console.log('on blur', item.data)
 }
 
 function onItemEnterViewport(ev, item) {
-  console.log('on enter vp', ev, item.data)
+  // console.log('on enter vp', ev, item.data)
   setItemStart(item)
 }
 
@@ -278,6 +278,15 @@ function init() {
   $story.on('itementerviewport', onItemEnterViewport)
   $story.on('itemfocus', onItemFocus)
   $story.on('itemblur', onItemBlur)
+
+  // Re-implement broken itemfocus
+  $(window).scroll(function () {
+    $('section.part').each(function (i, el) {
+      const viewportOffset = el.getBoundingClientRect()
+      if (viewportOffset.width > 0 && viewportOffset.y === 0)
+        console.log('ITEM FOCUS', el, viewportOffset)
+    })
+  })
 
   // parallax.
   $('[data-scroll-speed]').moveIt()
