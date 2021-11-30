@@ -152,6 +152,7 @@ export interface FullpageVideo {
   representativeImage?: Image
   imageAltText?: string
   loopVideo?: boolean
+  autoAdvance?: boolean
   offsetPortraitVideo?: OffsetPortraitVideo
 }
 

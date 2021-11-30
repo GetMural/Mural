@@ -74,7 +74,7 @@ export default function usePreview() {
                   title: convertToHtml(item.title),
                   text: convertToHtml(item.text),
                   loop: Boolean(item.loopVideo),
-                  // autoAdvance: boolean
+                  autoAdvance: Boolean(item.autoAdvance),
                   video: item.video
                     ? {
                         mp4: media(item.video.path),

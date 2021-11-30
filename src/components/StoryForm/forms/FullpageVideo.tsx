@@ -27,6 +27,13 @@ export default function FullpageVideo({ itemIndex }: Props) {
           label="Loop Video"
         />
       </Box>
+      <Box my={4}>
+        <Checkbox
+          key={`items.${itemIndex}.autoAdvance`}
+          name={`items.${itemIndex}.autoAdvance` as const}
+          label="Auto-advance"
+        />
+      </Box>
       <Divider light />
       <Box my={4}>
         <Wysiwyg
