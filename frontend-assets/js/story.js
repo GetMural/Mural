@@ -279,15 +279,6 @@ function init() {
   $story.on('itemfocus', onItemFocus)
   $story.on('itemblur', onItemBlur)
 
-  // Re-implement broken itemfocus
-  $(window).scroll(function () {
-    $('section.part').each(function (i, el) {
-      const viewportOffset = el.getBoundingClientRect()
-      if (viewportOffset.width > 0 && viewportOffset.y === 0)
-        console.log('ITEM FOCUS', el, viewportOffset)
-    })
-  })
-
   // parallax.
   $('[data-scroll-speed]').moveIt()
 
