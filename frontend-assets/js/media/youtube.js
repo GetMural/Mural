@@ -29,7 +29,6 @@ function getYoutubeId(item) {
 }
 
 function setMuted(muted) {
-  console.log('set muted', YOUTUBE)
   Object.keys(YOUTUBE).forEach(function (ytid) {
     const player = YOUTUBE[ytid]
     if (muted) {
@@ -78,7 +77,6 @@ function prepare(scrollStory, item) {
 
   const canPlayThrough = new Promise(function (resolve, reject) {
     YouTubePromise.then(function () {
-      console.log('yt laoding?', youtube_id)
       YOUTUBE[youtube_id] = new YT.Player(youtube_id, {
         width: window.innerWidth,
         height: window.innerHeight,
@@ -94,7 +92,6 @@ function prepare(scrollStory, item) {
         },
         events: {
           onReady: function (event) {
-            console.log('on ready', event)
             resolve()
           },
           onError: function (err) {

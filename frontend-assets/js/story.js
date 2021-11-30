@@ -143,7 +143,8 @@ if (WINDOW_WIDTH >= 1024) {
   attrKey = 'src-phone'
 }
 
-function onItemFocus(ev, item) {
+function setItemSticky(item) {
+  console.log('sticky', item)
   if (item.data.video) {
     videoMedia.fixBackgroundVideo(item.el)
   }
@@ -161,31 +162,8 @@ function onItemFocus(ev, item) {
   }
 }
 
-function onItemExitViewport(ev, item) {
-  console.log('on exist vp', item)
-  if (item.data.youtubeId) {
-    youtubeMedia.remove(item)
-  }
-
-  if (item.data.vimeoVideoId) {
-    vimeoMedia.remove(item)
-  }
-
-  if (item.data.dailymotionId) {
-    dailymotionMedia.remove(item)
-  }
-
-  if (item.data.video) {
-    videoMedia.removeBackgroundVideo(item.el, item.index)
-  }
-
-  if (item.data.audio) {
-    audioMedia.removeBackgroundAudio(item.index)
-  }
-}
-
-function onItemEnterViewport(ev, item) {
-  console.log('on enter vp', ev, item)
+function setItemStart(item) {
+  console.log('start', item)
   loadItem(item)
 
   // load another in advance
@@ -199,12 +177,20 @@ function onItemEnterViewport(ev, item) {
   }
 
   // Stop previous & next item
-  if (item.index > 0) {
-    onItemExitViewport(null, storyItems[item.index - 1])
-  }
+  if (
+    item.data.video ||
+    item.data.youtubeId ||
+    item.data.vimeoVideoId ||
+    item.data.dailymotionId ||
+    item.data.audio
+  ) {
+    if (item.index > 0) {
+      setItemStop(storyItems[item.index - 1])
+    }
 
-  if (item.index < storyItems.length) {
-    onItemExitViewport(null, storyItems[item.index + 1])
+    if (item.index < storyItems.length) {
+      setItemStop(storyItems[item.index + 1])
+    }
   }
 
   if (item.data.video) {
@@ -230,6 +216,47 @@ function onItemEnterViewport(ev, item) {
   }
 }
 
+function setItemStop(item) {
+  console.log('stop', item)
+  if (item.data.youtubeId) {
+    youtubeMedia.remove(item)
+  }
+
+  if (item.data.vimeoVideoId) {
+    vimeoMedia.remove(item)
+  }
+
+  if (item.data.dailymotionId) {
+    dailymotionMedia.remove(item)
+  }
+
+  if (item.data.video) {
+    videoMedia.removeBackgroundVideo(item.el, item.index)
+  }
+
+  if (item.data.audio) {
+    audioMedia.removeBackgroundAudio(item.index)
+  }
+}
+
+function onItemFocus(ev, item) {
+  console.log('on item focus', item)
+  setItemSticky(item)
+}
+
+function onItemExitViewport(ev, item) {
+  console.log('on exit vp', item.data)
+  setItemStop(item)
+}
+function onItemBlur(ev, item) {
+  console.log('on blur', item.data)
+}
+
+function onItemEnterViewport(ev, item) {
+  console.log('on enter vp', ev, item.data)
+  setItemStart(item)
+}
+
 function init() {
   WINDOW_WIDTH = $(window).width()
   const $story = $('#scrollytelling')
@@ -247,7 +274,7 @@ function init() {
   $story.on('itemfocus', onItemFocus)
   $story.on('itemexitviewport', onItemExitViewport)
   $story.on('itementerviewport', onItemEnterViewport)
-
+  $story.on('itemblur', onItemBlur)
   // parallax.
   $('[data-scroll-speed]').moveIt()
 
