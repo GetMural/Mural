@@ -123,7 +123,7 @@ function prepMediaElements(scrollStory) {
   })
 }
 
-let storyItems
+// let storyItems
 let scrollStory
 const LOAD_PROMISES = []
 const LOADED_STORY_SECTIONS = []
@@ -163,9 +163,11 @@ function setItemSticky(item) {
 }
 
 function setItemStart(item) {
+  const storyItems = scrollStory.getItems()
   console.log('start', item)
   loadItem(item)
 
+  console.log(storyItems)
   // load another in advance
   if (item.index + 1 < storyItems.length) {
     loadItem(storyItems[item.index + 1])
@@ -260,6 +262,7 @@ function onItemEnterViewport(ev, item) {
 function init() {
   WINDOW_WIDTH = $(window).width()
   const $story = $('#scrollytelling')
+
   scrollStory = $story
     .scrollStory({
       contentSelector: '.part',
@@ -269,11 +272,11 @@ function init() {
 
   prepMediaElements(scrollStory)
 
-  storyItems = scrollStory.getItems()
+  const storyItems = scrollStory.getItems()
 
-  $story.on('itemfocus', onItemFocus)
   $story.on('itemexitviewport', onItemExitViewport)
   $story.on('itementerviewport', onItemEnterViewport)
+  $story.on('itemfocus', onItemFocus)
   $story.on('itemblur', onItemBlur)
 
   // parallax.
@@ -368,6 +371,7 @@ function init() {
 }
 
 function loadExclusives() {
+  const storyItems = scrollStory.getItems()
   const active = scrollStory.getActiveItem()
 
   // Start first item
