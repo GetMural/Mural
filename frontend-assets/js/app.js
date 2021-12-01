@@ -53,6 +53,8 @@ playStart.addEventListener('click', () => {
 
   overlay = null
   playStart = null
+
+  story.load()
 })
 
 story.init()

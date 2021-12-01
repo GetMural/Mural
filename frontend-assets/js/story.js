@@ -345,29 +345,33 @@ function init() {
     }
   }
 
-  Promise.all(LOAD_PROMISES).then(() => {
-    const MURAL_MEDIA = scrollStory.MURAL_AUDIO.concat(scrollStory.MURAL_VIDEO)
-    // load a media element within scope of the user gesture to make sure Safari works.
-    if (MURAL_MEDIA.length) {
-      MURAL_MEDIA[MURAL_MEDIA.length - 1].load()
-    }
+  Promise.all(LOAD_PROMISES)
+}
 
-    if (active.data.video) {
-      videoMedia.playBackgroundVideo(active.index, getVideoAttrs(active))
-      videoMedia.fixBackgroundVideo(active.el)
-    }
+function load() {
+  const active = scrollStory.getActiveItem()
 
-    if (active.data.audio) {
-      audioMedia.playBackgroundAudio(active, {
-        muted: !isSoundEnabled,
-      })
-    }
+  const MURAL_MEDIA = scrollStory.MURAL_AUDIO.concat(scrollStory.MURAL_VIDEO)
+  // load a media element within scope of the user gesture to make sure Safari works.
+  if (MURAL_MEDIA.length) {
+    MURAL_MEDIA[MURAL_MEDIA.length - 1].load()
+  }
 
-    if (active.data.youtubeId) {
-      youtubeMedia.play(active, isSoundEnabled)
-      youtubeMedia.stick(active)
-    }
-  })
+  if (active.data.video) {
+    videoMedia.playBackgroundVideo(active.index, getVideoAttrs(active))
+    videoMedia.fixBackgroundVideo(active.el)
+  }
+
+  if (active.data.audio) {
+    audioMedia.playBackgroundAudio(active, {
+      muted: !isSoundEnabled,
+    })
+  }
+
+  if (active.data.youtubeId) {
+    youtubeMedia.play(active, isSoundEnabled)
+    youtubeMedia.stick(active)
+  }
 }
 
 function loadExclusives() {
@@ -545,4 +549,8 @@ function loadItem(item) {
   return Promise.all(returnPromises)
 }
 
-module.exports = { init: init, loadExclusives: loadExclusives }
+module.exports = {
+  init: init,
+  loadExclusives: loadExclusives,
+  load: load,
+}

@@ -11,14 +11,14 @@ function play(item, isSoundEnabled) {
 }
 
 function remove(item) {
-  const $container = item.el.find('.video-container')
-  $container.css('position', '')
+  // const $container = item.el.find('.video-container')
+  // $container.css('position', '')
   VIMEO[item.index].pause()
 }
 
 function stick(item) {
-  const $container = item.el.find('.video-container')
-  $container.css('position', 'fixed')
+  // const $container = item.el.find('.video-container')
+  // $container.css('position', 'fixed')
 }
 
 function prepare(scrollStory, item) {
