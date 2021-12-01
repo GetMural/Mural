@@ -243,7 +243,7 @@ export default function usePreview() {
                   id: item.id,
                   title: item.title,
                   subtitle: convertToHtml(item.subtitle),
-                  // light:
+                  light: Boolean(item.light),
                   intro: convertToHtml(item.introduction),
                   // snippets: {}
                 },

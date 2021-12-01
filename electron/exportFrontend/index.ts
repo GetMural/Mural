@@ -154,7 +154,7 @@ export type Items =
         id: string
         title?: string
         subtitle?: string
-        light?: 'on' | 'off' | null | undefined
+        light?: boolean
         intro?: string
         snippets?: {
           align?: string

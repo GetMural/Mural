@@ -126,6 +126,7 @@ export interface TextItem {
   title?: string
   subtitle?: RichText
   introduction?: RichText
+  light?: boolean
 }
 
 export interface ImageAudio {

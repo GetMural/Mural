@@ -1,5 +1,6 @@
 import { Box } from '@mui/material'
 import Input from 'components/StoryForm/Input'
+import Checkbox from '../Checkbox'
 import Wysiwyg from '../Wysiwyg'
 
 interface Props {
@@ -31,6 +32,13 @@ export default function Text({ itemIndex }: Props) {
           name={`items.${itemIndex}.introduction` as const}
           label="Introduction"
           placeholder="Your text here"
+        />
+      </Box>
+      <Box my={4}>
+        <Checkbox
+          key={`items.${itemIndex}.light`}
+          name={`items.${itemIndex}.light` as const}
+          label="Black text on white background"
         />
       </Box>
       <Box my={4}>
