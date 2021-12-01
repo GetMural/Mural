@@ -9,8 +9,12 @@ const render = (state: Storyboard) => {
   window.electron.renderPreview(state)
 }
 
+const absMedia = (url: string, relativePath: string) => {
+  return url + '/media/' + relativePath
+}
+
 const media = (relativePath: string) => {
-  return './media/' + relativePath
+  return absMedia('.', relativePath)
 }
 
 const encrypt = (text: string, shift: number) => {
@@ -308,8 +312,14 @@ export default function usePreview() {
       meta: {
         title: state.story.metadata.title,
         site_name: state.story.metadata.siteName,
+        splash_screen_img: state.story.metadata.siteImage
+          ? media(state.story.metadata.siteImage.big.path)
+          : undefined,
         site_img: state.story.metadata.siteImage
-          ? media(state.story.metadata.siteImage.medium.path)
+          ? absMedia(
+              state.story.metadata.canonicalUrl || '.',
+              state.story.metadata.siteImage.big.path
+            )
           : undefined,
         author: state.story.metadata.author,
         rsspingback: state.story.metadata.rssPingbkack,

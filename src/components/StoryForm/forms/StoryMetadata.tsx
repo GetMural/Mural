@@ -84,7 +84,7 @@ export default function StoryMetadataForm() {
         <Box my={4}>
           <Image
             name="metadata.siteImage"
-            label="Site Image"
+            label="Loading Page Image/Social Image"
             helperText={
               <>
                 This is where you should upload an image to represent your Mural

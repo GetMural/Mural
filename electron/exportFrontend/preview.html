@@ -138,9 +138,9 @@
 </head>
 
 <body class="longform frozen" name="top">
-  <div id="loading_overlay" class="loading" {{#meta}}{{#site_img}}
-    style="background-image:url('{{site_img}}');background-position:center center;background-size:cover;"
-    {{/site_img}}{{/meta}}>
+  <div id="loading_overlay" class="loading" {{#meta}}{{#splash_screen_img}}
+    style="background-image:url('{{splash_screen_img}}');background-position:center center;background-size:cover;"
+    {{/splash_screen_img}}{{/meta}}>
     <div class="opacity-pane"></div>
 
     <img src="./img/logo.svg" alt="Mural is Loading..." class="logo">
@@ -289,17 +289,17 @@
 
     {{#imageaudio}}
     <section
-      class="part imageaudio {{#light}} reverse_colors {{/light}}" 
-      name="story{{id}}" 
+      class="part imageaudio {{#light}} reverse_colors {{/light}}"
+      name="story{{id}}"
       {{#audio}}
         data-audio=true
         {{#loop}} data-loop="{{loop}}" {{/loop}}
-        {{#mp3}} data-mp3="{{mp3}}" {{/mp3}} 
+        {{#mp3}} data-mp3="{{mp3}}" {{/mp3}}
         {{#ogg}} data-ogg="{{ogg}}" {{/ogg}}
       {{/audio}}
     >
       {{#image}}
-      <img 
+      <img
         class="image-responsive"
         srcset="
           {{srcphone}} 200w,
@@ -537,8 +537,8 @@
 
     {{#youtube}}
     <section
-      class="st-video part" 
-      name="story{{id}}" 
+      class="st-video part"
+      name="story{{id}}"
       {{#embed}} {{#id}} data-youtube-id="{{id}}" {{/id}} {{/embed}}
       {{#showControls}} data-controls {{/showControls}}
       {{#autoAdvance}} data-auto-advance=true {{/autoAdvance}}>
@@ -549,8 +549,8 @@
     {{/youtube}}
 
     {{#vimeo}}
-    <section 
-      class="st-video part" 
+    <section
+      class="st-video part"
       name="story{{id}}"
       {{#showControls}} data-controls {{/showControls}}
       {{#embed}} {{#id}} data-vimeo-video-id="{{id}}" {{/id}} {{/embed}}>
@@ -561,8 +561,8 @@
     {{/vimeo}}
 
     {{#dailymotion}}
-    <section 
-      class="st-video part" 
+    <section
+      class="st-video part"
       name="story{{id}}"
       {{#showControls}} data-controls {{/showControls}}
       {{#embed}} {{#id}} data-dailymotion-id="{{id}}" {{/id}} {{/embed}}>

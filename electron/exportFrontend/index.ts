@@ -201,6 +201,7 @@ export interface Storyboard {
   meta: {
     title?: string
     site_name?: string
+    splash_screen_img?: string
     site_img?: string
     subtitle?: string
     author?: string
