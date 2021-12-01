@@ -25,6 +25,7 @@ export interface Image {
 
 export interface Video {
   path: string
+  url: string
 }
 
 export interface Audio {

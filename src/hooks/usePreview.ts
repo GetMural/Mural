@@ -77,7 +77,9 @@ export default function usePreview() {
                   autoAdvance: Boolean(item.autoAdvance),
                   video: item.video
                     ? {
-                        mp4: media(item.video.path),
+                        mp4: item.video.url
+                          ? item.video.url
+                          : media(item.video.path),
                       }
                     : undefined,
                   image: item.representativeImage
@@ -132,7 +134,9 @@ export default function usePreview() {
                   },
                   video: item.video
                     ? {
-                        mp4: media(item.video.path),
+                        mp4: item.video.url
+                          ? item.video.url
+                          : media(item.video.path),
                       }
                     : undefined,
                   title: convertToHtml(item.title),
