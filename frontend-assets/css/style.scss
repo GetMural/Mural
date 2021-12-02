@@ -2860,15 +2860,16 @@ article .part.box_text p {
 }
 
 // paywall
-.exclusive {
+#paywall.exclusive {
   display: none;
 }
 
 #paywallInfo {
-  background: red;
+  background: url('../img/curtain.png') no-repeat center center red;
+  background-size: cover;
   display: none;
-  text-align: center;
   pointer-events: all;
+  text-align: center;
 }
 
 #paywallInfo.paywallInfo {

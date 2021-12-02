@@ -33,7 +33,7 @@ form.find('button').on('click', function (event) {
   const value = form.find('input')[0].value
   if (encrypt(value, rot) === bypass) {
     console.log(`${value} matches ${bypass}`)
-    $('.exclusive').removeClass('exclusive')
+    $('#paywall').removeClass('exclusive')
     $('#paywallInfo').removeClass('paywallInfo')
     story.loadExclusives()
   } else {
@@ -50,6 +50,7 @@ playStart.style.display = 'block'
 playStart.addEventListener('click', () => {
   document.body.removeChild(overlay)
   document.body.classList.remove('frozen')
+  $('#paywall').addClass('exclusive')
 
   overlay = null
   playStart = null
