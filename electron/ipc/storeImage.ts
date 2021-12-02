@@ -9,9 +9,9 @@ import { media } from '../directories'
 
 const SIZES: { name: string; width?: number; height?: number }[] = [
   { name: 'square', width: 200, height: 200 },
-  { name: 'small', width: 200 },
-  { name: 'medium', width: 600 },
-  { name: 'big', width: 1200 },
+  { name: 'small', width: 1080 },
+  { name: 'medium', width: 1024 },
+  { name: 'big', width: 1920 },
 ]
 
 export default async function storeImage(
@@ -34,26 +34,23 @@ export default async function storeImage(
   // write original file
   fs.writeFileSync(newPath, buffer)
   const createdFiles = SIZES.map((size) => {
-    let relativePath = path.join(
-      'images',
+    const filename =
       fileBasename +
-        '_' +
-        [size?.width, size?.height].filter(Boolean).join('x') +
-        '_' +
-        nanoid() +
-        '.jpg'
-    )
-    let absolutePath = path.join(media, relativePath)
+      '_' +
+      [size?.width, size?.height].filter(Boolean).join('x') +
+      '_' +
+      nanoid() +
+      '.jpg'
+    let absolutePath = path.join(media, 'images', filename)
     const newImage = nativeImage.createFromBuffer(buffer).resize(size)
 
     fs.writeFileSync(absolutePath, newImage.toJPEG(90))
     return {
-      path: relativePath,
+      path: `images/${filename}`,
       size: {
         ...newImage.getSize(),
         name: size.name,
       },
-      original: args.filename,
     }
   })
   return keyBy(createdFiles, (f) => f.size.name)

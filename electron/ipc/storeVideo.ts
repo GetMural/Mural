@@ -15,15 +15,12 @@ export default async function storeVideo(
   const fileBasename = slugify(
     path.basename(args.filename, path.extname(args.filename))
   )
-  let relativePath = path.join(
-    'video',
-    fileBasename + '_' + nanoid() + path.extname(args.filename)
-  )
-  let absolutePath = path.join(media, relativePath)
+  const filename = fileBasename + '_' + nanoid() + path.extname(args.filename)
+  let absolutePath = path.join(media, 'video', filename)
   //   write file to app user folder
   fs.writeFileSync(absolutePath, buffer)
 
   return {
-    path: relativePath,
+    path: `video/${filename}`,
   }
 }

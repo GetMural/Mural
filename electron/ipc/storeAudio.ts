@@ -15,15 +15,12 @@ export default async function storeAudio(
   const fileBasename = slugify(
     path.basename(args.filename, path.extname(args.filename))
   )
-  let relativePath = path.join(
-    'audio',
-    fileBasename + '_' + nanoid() + path.extname(args.filename)
-  )
-  let absolutePath = path.join(media, relativePath)
+  const filename = fileBasename + '_' + nanoid() + path.extname(args.filename)
+  let absolutePath = path.join(media, 'audio', filename)
   // write file to app user folder
   fs.writeFileSync(absolutePath, buffer)
 
   return {
-    path: relativePath,
+    path: `audio/${filename}`,
   }
 }
