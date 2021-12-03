@@ -144,7 +144,6 @@ if (WINDOW_WIDTH >= 1024) {
 }
 
 function setItemSticky(item) {
-  console.log('sticky', item)
   if (item.data.video) {
     videoMedia.fixBackgroundVideo(item.el)
   }
@@ -164,10 +163,8 @@ function setItemSticky(item) {
 
 function setItemStart(item) {
   const storyItems = scrollStory.getItems()
-  // console.log('start', item)
   loadItem(item)
 
-  console.log(storyItems)
   // load another in advance
   if (item.index + 1 < storyItems.length) {
     loadItem(storyItems[item.index + 1])
@@ -219,7 +216,6 @@ function setItemStart(item) {
 }
 
 function setItemStop(item) {
-  // console.log('stop', item)
   if (item.data.youtubeId) {
     youtubeMedia.remove(item)
   }
@@ -242,20 +238,15 @@ function setItemStop(item) {
 }
 
 function onItemFocus(ev, item) {
-  // console.log('on item focus', item)
   setItemSticky(item)
 }
 
 function onItemExitViewport(ev, item) {
-  // console.log('on exit vp', item.data)
   setItemStop(item)
 }
-function onItemBlur(ev, item) {
-  // console.log('on blur', item.data)
-}
+function onItemBlur(ev, item) {}
 
 function onItemEnterViewport(ev, item) {
-  // console.log('on enter vp', ev, item.data)
   setItemStart(item)
 }
 
@@ -274,10 +265,10 @@ function init() {
 
   const storyItems = scrollStory.getItems()
 
-  $story.on('itemexitviewport', onItemExitViewport)
-  $story.on('itementerviewport', onItemEnterViewport)
-  $story.on('itemfocus', onItemFocus)
-  $story.on('itemblur', onItemBlur)
+  // $story.on('itemexitviewport', onItemExitViewport)
+  // $story.on('itementerviewport', onItemEnterViewport)
+  // $story.on('itemfocus', onItemFocus)
+  // $story.on('itemblur', onItemBlur)
 
   // parallax.
   $('[data-scroll-speed]').moveIt()
@@ -314,7 +305,7 @@ function init() {
   })
 
   $('nav').on('click', 'li', function () {
-    scrollStory.index(parseInt(this.dataset.id, 10))
+    scrollStory.index(parseInt(this.dataset.index, 10))
   })
 
   const active = scrollStory.getActiveItem()
@@ -328,7 +319,7 @@ function init() {
   })
 
   // push two in advance
-  if (active.index + 1 < storyItems.length) {
+  if (active && active.index + 1 < storyItems.length) {
     const loadPromise = loadItem(storyItems[active.index + 1])
 
     if (loadPromise) {
@@ -337,7 +328,7 @@ function init() {
   }
 
   // push two in advance
-  if (active.index + 2 < storyItems.length) {
+  if (active && active.index + 2 < storyItems.length) {
     const loadPromise = loadItem(storyItems[active.index + 2])
 
     if (loadPromise) {
@@ -349,6 +340,13 @@ function init() {
 }
 
 function load() {
+  const $story = $('#scrollytelling')
+
+  $story.on('itemexitviewport', onItemExitViewport)
+  $story.on('itementerviewport', onItemEnterViewport)
+  $story.on('itemfocus', onItemFocus)
+  $story.on('itemblur', onItemBlur)
+
   const active = scrollStory.getActiveItem()
 
   const MURAL_MEDIA = scrollStory.MURAL_AUDIO.concat(scrollStory.MURAL_VIDEO)
@@ -379,9 +377,11 @@ function loadExclusives() {
   const active = scrollStory.getActiveItem()
 
   // Start first item
-  loadItem(storyItems[active.index]).then(() => {
-    setItemStart(active)
-  })
+  if (active) {
+    loadItem(storyItems[active.index]).then(() => {
+      setItemStart(active)
+    })
+  }
 }
 
 function getVideoAttrs(item) {
@@ -479,7 +479,6 @@ function loadItem(item) {
     item.el.find('.bg-image').each(function (i) {
       const $el = $(this)
       const src = $el.data(scrKey)
-      console.log('SRC', src)
 
       const loadPromise = imageMedia.imageLoadPromise(src).then(() => {
         $el.css('background-image', `url(${src})`)

@@ -255,7 +255,6 @@ export default function usePreview() {
                 {
                   dailymotion: {
                     id: item.id,
-                    index: index,
                     showControls: item.showControls,
                     autoAdvance: item.autoAdvance,
                     embed: item.embed,
@@ -267,7 +266,6 @@ export default function usePreview() {
                 {
                   vimeo: {
                     id: item.id,
-                    index: index,
                     showControls: item.showControls,
                     autoAdvance: item.autoAdvance,
                     embed: item.embed,
@@ -279,7 +277,6 @@ export default function usePreview() {
               {
                 youtube: {
                   id: item.id,
-                  index: index,
                   showControls: item.showControls,
                   autoAdvance: item.autoAdvance,
                   embed: item.embed,
@@ -331,9 +328,9 @@ export default function usePreview() {
         font_headers_rules: state.story.metadata.headerFont,
         custom_css: state.story.metadata.extraCss,
       },
-      nav: state.story.items.flatMap((item) => {
+      nav: state.story.items.flatMap((item, index) => {
         if ('navigationTitle' in item && item.navigationTitle) {
-          return [{ title: item.navigationTitle, id: item.id }]
+          return [{ title: item.navigationTitle, id: item.id, index: index }]
         }
         return []
       }),

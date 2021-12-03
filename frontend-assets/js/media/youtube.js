@@ -56,7 +56,6 @@ function play(item, isSoundEnabled) {
 }
 
 function remove(item) {
-  console.log('youtube remove')
   const youtube_id = getYoutubeId(item)
   const $container = item.el.find('.video-container')
   $container.css('position', '')
@@ -64,7 +63,6 @@ function remove(item) {
 }
 
 function stick(item) {
-  console.log('youtube stick')
   const $container = item.el.find('.video-container')
   $container.css('position', 'fixed')
 }
