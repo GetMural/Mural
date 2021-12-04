@@ -238,6 +238,7 @@ function setItemStop(item) {
 }
 
 function onItemFocus(ev, item) {
+  // console.log('on item focus', item.name, item.data)
   setItemSticky(item)
 }
 
@@ -250,6 +251,28 @@ function onItemEnterViewport(ev, item) {
   setItemStart(item)
 }
 
+function listenForItemFocus(callback) {
+  const items = scrollStory.getItems()
+  let activeItemId
+
+  $(window).on('DOMContentLoaded load resize scroll', (el) => {
+    const focusRange = parseInt(window.innerHeight * 0.05)
+
+    for (const item of items) {
+      const rect = item.el[0].getBoundingClientRect()
+
+      if (
+        activeItemId !== item.id &&
+        Math.floor(rect.y) <= focusRange &&
+        Math.floor(rect.y) >= focusRange * -1
+      ) {
+        activeItemId = item.id
+        callback(null, item)
+      }
+    }
+  })
+}
+
 function init() {
   WINDOW_WIDTH = $(window).width()
   const $story = $('#scrollytelling')
@@ -258,17 +281,13 @@ function init() {
     .scrollStory({
       contentSelector: '.part',
       triggerOffset: 0,
+      index: 0,
     })
     .data('plugin_scrollStory')
 
   prepMediaElements(scrollStory)
 
   const storyItems = scrollStory.getItems()
-
-  // $story.on('itemexitviewport', onItemExitViewport)
-  // $story.on('itementerviewport', onItemEnterViewport)
-  // $story.on('itemfocus', onItemFocus)
-  // $story.on('itemblur', onItemBlur)
 
   // parallax.
   $('[data-scroll-speed]').moveIt()
@@ -344,8 +363,10 @@ function load() {
 
   $story.on('itemexitviewport', onItemExitViewport)
   $story.on('itementerviewport', onItemEnterViewport)
-  $story.on('itemfocus', onItemFocus)
+  // $story.on('itemfocus', onItemFocus)
   $story.on('itemblur', onItemBlur)
+
+  listenForItemFocus(onItemFocus)
 
   const active = scrollStory.getActiveItem()
 
@@ -355,18 +376,18 @@ function load() {
     MURAL_MEDIA[MURAL_MEDIA.length - 1].load()
   }
 
-  if (active.data.video) {
+  if (active && active.data.video) {
     videoMedia.playBackgroundVideo(active.index, getVideoAttrs(active))
     videoMedia.fixBackgroundVideo(active.el)
   }
 
-  if (active.data.audio) {
+  if (active && active.data.audio) {
     audioMedia.playBackgroundAudio(active, {
       muted: !isSoundEnabled,
     })
   }
 
-  if (active.data.youtubeId) {
+  if (active && active.data.youtubeId) {
     youtubeMedia.play(active, isSoundEnabled)
     youtubeMedia.stick(active)
   }
