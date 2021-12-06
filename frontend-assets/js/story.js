@@ -239,7 +239,7 @@ function setItemStop(item) {
 }
 
 function onItemFocus(ev, item) {
-  console.log('on item focus', item)
+  // console.log('on item focus', item)
   setItemSticky(item)
 }
 
@@ -276,6 +276,26 @@ function listenForItemFocus(callback) {
       }
     }
   })
+}
+
+function findFocusedItem() {
+  const items = scrollStory.getItems()
+  const focusRange = parseInt(window.innerHeight * 0.05)
+  let focusedItem
+
+  for (const item of items) {
+    const rect = item.el[0].getBoundingClientRect()
+
+    if (
+      item.el[0].offsetParent && // Is the item visible in the DOM?
+      Math.floor(rect.y) <= focusRange &&
+      Math.floor(rect.y) >= focusRange * -1
+    ) {
+      focusedItem = item
+    }
+  }
+
+  return focusedItem
 }
 
 function init() {
@@ -368,7 +388,6 @@ function load() {
 
   $story.on('itemexitviewport', onItemExitViewport)
   $story.on('itementerviewport', onItemEnterViewport)
-  // $story.on('itemfocus', onItemFocus)
   $story.on('itemblur', onItemBlur)
 
   listenForItemFocus(onItemFocus)
@@ -399,14 +418,11 @@ function load() {
 }
 
 function loadExclusives() {
-  const storyItems = scrollStory.getItems()
-  const active = scrollStory.getActiveItem()
+  const item = findFocusedItem()
 
-  // Start first item
-  if (active) {
-    loadItem(storyItems[active.index]).then(() => {
-      setItemStart(active)
-    })
+  if (item) {
+    setItemStart(item)
+    setItemSticky(item)
   }
 }
 
