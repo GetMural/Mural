@@ -22,30 +22,27 @@ interface Props extends UseControllerProps<StoryState> {
   ) => void
   label: string
   helperText?: string | React.ReactNode
-  name: `items.${number}.alignBackgroundImageText`
 }
 
-export default function AlignBackgroundImageText({
+export default function Align({
   label,
   helperText,
   onChange,
-  name,
   ...props
 }: Props) {
   const { control } = useFormContext()
 
   const {
-    field: { onChange: onChangeAlign },
+    field: { onChange: onChangeAlign, ...otherFields },
     fieldState: fieldStateAlign,
-    // @ts-ignore we assume here that the given name was a OffsetPortraitVideo
-  } = useController({ control, name: `${name}.align`, ...props })
+  } = useController({ control, ...props })
 
   return (
     <FormControl error={!!fieldStateAlign.error}>
       <FormLabel component="legend">{label}</FormLabel>
       <RadioGroup
         row
-        value={''}
+        value={otherFields.value || ''}
         onChange={(event) => {
           const value = event.target.value
           onChangeAlign(value)

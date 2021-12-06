@@ -113,14 +113,11 @@ export default function usePreview() {
                   },
                   title: convertToHtml(item.title),
                   subtitle: convertToHtml(item.subtitle),
-                  align: item.alignBackgroundImageText
-                    ? {
-                        center:
-                          item.alignBackgroundImageText.align === 'center',
-                        left: item.alignBackgroundImageText.align === 'left',
-                        right: item.alignBackgroundImageText.align === 'right',
-                      }
-                    : undefined,
+                  align: {
+                    center: item.alignBackgroundImageText === 'center',
+                    left: item.alignBackgroundImageText === 'left',
+                    right: item.alignBackgroundImageText === 'right',
+                  },
                   text: convertToHtml(item.text),
                   image: item.image && {
                     srcmain: media(item.image.big.path),

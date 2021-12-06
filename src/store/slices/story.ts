@@ -43,14 +43,13 @@ export interface Embed {
   embed: string
 }
 
-interface AlignBackgroundImageText {
-  align: 'left' | 'right' | 'center'
-}
+type AlignBackgroundImageText = 'left' | 'right' | 'center'
 
 interface OffsetPortraitVideo {
   align: 'left' | 'right' | 'center' | 'custom'
   customValue: number
 }
+
 interface BackgroundImage {
   id: string
   type: 'backgroundImage'
