@@ -2764,6 +2764,12 @@ article .part.text_align-center .text {
   article .part.text_align-center .text {
     margin-left: 25%;
   }
+  .sticky-image .row.center .text {
+    margin-left: 25%;
+  }
+  .sticky-image .row.right .text {
+    float: right;
+  }
 }
 
 article .part.no_gradient_background.background_gradient {

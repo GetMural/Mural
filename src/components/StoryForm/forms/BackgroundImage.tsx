@@ -4,6 +4,7 @@ import Checkbox from '../Checkbox'
 import Image from '../Image'
 import Wysiwyg from '../Wysiwyg'
 import Audio from '../Audio'
+import AlignBackgroundImageText from '../AlignBackgroundImageText'
 
 interface Props {
   itemIndex: number
@@ -41,6 +42,13 @@ export default function BackgroundImage({ itemIndex }: Props) {
           name={`items.${itemIndex}.subtitle` as const}
           label="Subtitle"
           placeholder="Your text here"
+        />
+      </Box>
+      <Box my={4}>
+        <AlignBackgroundImageText
+          key={`items.${itemIndex}.alignBackgroundImageText`}
+          name={`items.${itemIndex}.alignBackgroundImageText` as const}
+          label="Align Text"
         />
       </Box>
       <Box my={4}>

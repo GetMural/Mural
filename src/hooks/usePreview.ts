@@ -113,6 +113,14 @@ export default function usePreview() {
                   },
                   title: convertToHtml(item.title),
                   subtitle: convertToHtml(item.subtitle),
+                  align: item.alignBackgroundImageText
+                    ? {
+                        center:
+                          item.alignBackgroundImageText.align === 'center',
+                        left: item.alignBackgroundImageText.align === 'left',
+                        right: item.alignBackgroundImageText.align === 'right',
+                      }
+                    : undefined,
                   text: convertToHtml(item.text),
                   image: item.image && {
                     srcmain: media(item.image.big.path),
@@ -362,6 +370,7 @@ export default function usePreview() {
     state.settings.payment,
   ])
   React.useEffect(() => {
+    console.log(mappedState)
     render(mappedState)
   }, [mappedState])
 }

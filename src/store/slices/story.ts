@@ -43,6 +43,10 @@ export interface Embed {
   embed: string
 }
 
+interface AlignBackgroundImageText {
+  align: 'left' | 'right' | 'center'
+}
+
 interface OffsetPortraitVideo {
   align: 'left' | 'right' | 'center' | 'custom'
   customValue: number
@@ -56,6 +60,7 @@ interface BackgroundImage {
   navigationTitle?: string
   title?: RichText
   subtitle?: RichText
+  alignBackgroundImageText?: AlignBackgroundImageText
   text?: RichText
   audio?: Audio
   audioLoop?: boolean

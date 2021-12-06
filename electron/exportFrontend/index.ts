@@ -42,6 +42,12 @@ interface EmbedVideo {
   }
 }
 
+type AlignBackgroundImageText = {
+  left: boolean
+  center: boolean
+  right: boolean
+}
+
 type OffsetPortraitVideo = {
   left: boolean
   centre: boolean
@@ -79,6 +85,7 @@ export type Items =
         }
         title?: string
         subtitle?: string
+        align?: AlignBackgroundImageText
         text?: string
         image?: {
           srcmain: string
