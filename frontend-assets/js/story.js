@@ -216,6 +216,7 @@ function setItemStart(item) {
 }
 
 function setItemStop(item) {
+  // console.log('set item stop', item)
   if (item.data.youtubeId) {
     youtubeMedia.remove(item)
   }
@@ -238,19 +239,22 @@ function setItemStop(item) {
 }
 
 function onItemFocus(ev, item) {
-  // console.log('on item focus', item.name, item.data)
+  console.log('on item focus', item)
   setItemSticky(item)
 }
 
 function onItemExitViewport(ev, item) {
   setItemStop(item)
 }
-function onItemBlur(ev, item) {}
+function onItemBlur(ev, item) {
+  setItemStop(item)
+}
 
 function onItemEnterViewport(ev, item) {
   setItemStart(item)
 }
 
+// This function is here because scrollStory itemfocus doesn't work with the paywall
 function listenForItemFocus(callback) {
   const items = scrollStory.getItems()
   let activeItemId
@@ -264,6 +268,7 @@ function listenForItemFocus(callback) {
       if (
         activeItemId !== item.id &&
         Math.floor(rect.y) <= focusRange &&
+        item.el[0].offsetParent && // Is the item visible in the DOM?
         Math.floor(rect.y) >= focusRange * -1
       ) {
         activeItemId = item.id
