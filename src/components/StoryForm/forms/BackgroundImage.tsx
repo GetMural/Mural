@@ -24,7 +24,7 @@ export default function BackgroundImage({ itemIndex }: Props) {
         <Checkbox
           key={`items.${itemIndex}.fullPage`}
           name={`items.${itemIndex}.fullPage` as const}
-          label="Full Page Layout (Leave blank for smaller title and text in upper left)"
+          label="Full page layout (leave blank for smaller title and text in upper left)"
         />
       </Box>
       <Divider light />
@@ -33,7 +33,7 @@ export default function BackgroundImage({ itemIndex }: Props) {
           key={`items.${itemIndex}.title`}
           name={`items.${itemIndex}.title` as const}
           label="Title"
-          placeholder="Your text here"
+          placeholder="Your title here"
         />
       </Box>
       <Box my={4}>
@@ -41,22 +41,22 @@ export default function BackgroundImage({ itemIndex }: Props) {
           key={`items.${itemIndex}.subtitle`}
           name={`items.${itemIndex}.subtitle` as const}
           label="Subtitle"
-          placeholder="Your text here"
+          placeholder="Your subtitle here"
         />
       </Box>
       <Box my={4}>
         <AlignBackgroundImageText
           key={`items.${itemIndex}.alignBackgroundImageText`}
           name={`items.${itemIndex}.alignBackgroundImageText` as const}
-          label="Align Text"
+          label="Position body text"
         />
       </Box>
       <Box my={4}>
         <Wysiwyg
           key={`items.${itemIndex}.text`}
           name={`items.${itemIndex}.text` as const}
-          label="Text"
-          placeholder="Your text here"
+          label="Body text"
+          placeholder="Your body text here"
         />
       </Box>
       <Divider light />
@@ -64,15 +64,15 @@ export default function BackgroundImage({ itemIndex }: Props) {
         <Input
           key={`items.${itemIndex}.navigationTitle`}
           name={`items.${itemIndex}.navigationTitle` as const}
-          label="Navigation Title"
+          label="Navigation title"
         />
       </Box>
       <Box my={4}>
         <Input
           key={`items.${itemIndex}.altText`}
           name={`items.${itemIndex}.altText` as const}
-          label="Image Alt Text"
-          placeholder="Your text here"
+          label="Image alt text"
+          placeholder="Your image alt text here"
         />
       </Box>
       <Divider light />
