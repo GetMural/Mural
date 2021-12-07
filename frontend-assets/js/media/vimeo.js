@@ -22,6 +22,7 @@ function stick(item) {
 }
 
 function prepare(scrollStory, item) {
+  console.log('prepare vimeo', item.data)
   VIMEO[item.index] = new Vimeo.Player('vimeo_' + item.data.vimeoVideoId, {
     id: item.data.vimeoVideoId,
     responsive: true,

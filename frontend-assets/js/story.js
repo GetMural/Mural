@@ -216,30 +216,28 @@ function setItemStart(item) {
 }
 
 function setItemStop(item) {
-  // console.log('set item stop', item)
-  if (item.data.youtubeId) {
+  if (item.data && item.data.youtubeId) {
     youtubeMedia.remove(item)
   }
 
-  if (item.data.vimeoVideoId) {
+  if (item.data && item.data.vimeoVideoId) {
     vimeoMedia.remove(item)
   }
 
-  if (item.data.dailymotionId) {
+  if (item.data && item.data.dailymotionId) {
     dailymotionMedia.remove(item)
   }
 
-  if (item.data.video) {
+  if (item.data && item.data.video) {
     videoMedia.removeBackgroundVideo(item.el, item.index)
   }
 
-  if (item.data.audio) {
+  if (item.data && item.data.audio) {
     audioMedia.removeBackgroundAudio(item.index)
   }
 }
 
 function onItemFocus(ev, item) {
-  // console.log('on item focus', item)
   setItemSticky(item)
 }
 
@@ -270,6 +268,29 @@ function listenForItemFocus(callback) {
         Math.floor(rect.y) <= focusRange &&
         item.el[0].offsetParent && // Is the item visible in the DOM?
         Math.floor(rect.y) >= focusRange * -1
+      ) {
+        activeItemId = item.id
+        callback(null, item)
+      }
+    }
+  })
+}
+
+function listenForItemEnteringViewport(callback) {
+  const items = scrollStory.getItems()
+  let activeItemId
+
+  $(window).on('DOMContentLoaded load resize scroll', (el) => {
+    const focusRange = parseInt(window.innerHeight)
+
+    for (const item of items) {
+      const rect = item.el[0].getBoundingClientRect()
+
+      if (
+        activeItemId !== item.id &&
+        item.el[0].offsetParent && // Is the item visible in the DOM?
+        Math.floor(rect.y) <= focusRange &&
+        Math.floor(rect.y) >= 0
       ) {
         activeItemId = item.id
         callback(null, item)
@@ -387,10 +408,11 @@ function load() {
   const $story = $('#scrollytelling')
 
   $story.on('itemexitviewport', onItemExitViewport)
-  $story.on('itementerviewport', onItemEnterViewport)
+  // $story.on('itementerviewport', onItemEnterViewport)
   $story.on('itemblur', onItemBlur)
 
   listenForItemFocus(onItemFocus)
+  listenForItemEnteringViewport(onItemEnterViewport)
 
   const active = scrollStory.getActiveItem()
 
