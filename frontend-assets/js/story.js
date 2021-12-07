@@ -285,13 +285,25 @@ function listenForItemEnteringViewport(callback) {
 
     for (const item of items) {
       const rect = item.el[0].getBoundingClientRect()
+      const top = Math.floor(rect.y)
+      const bottom = Math.floor(rect.y) + rect.height
 
       if (
         activeItemId !== item.id &&
         item.el[0].offsetParent && // Is the item visible in the DOM?
-        Math.floor(rect.y) <= focusRange &&
-        Math.floor(rect.y) >= 0
+        top <= focusRange &&
+        top >= 0
       ) {
+        // Scroll down
+        activeItemId = item.id
+        callback(null, item)
+      } else if (
+        activeItemId !== item.id &&
+        item.el[0].offsetParent && // Is the item visible in the DOM?
+        bottom <= focusRange &&
+        bottom >= 0
+      ) {
+        // Scroll up
         activeItemId = item.id
         callback(null, item)
       }
