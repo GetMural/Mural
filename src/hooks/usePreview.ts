@@ -37,12 +37,12 @@ export default function usePreview() {
   const mappedState = React.useMemo(() => {
     const rotationalValue: number = Math.floor(Math.random() * 26)
     const paywallIndex = state.story.items.findIndex(
-      (item) => 'paywallSeparator' in item
+      (item) => item.type === 'paywallSeparator'
     )
     const items: Storyboard['items'] = flatMap(
       state.story.items,
       (item, index): [Items] | [] => {
-        const afterPaywall = index > paywallIndex
+        const afterPaywall = paywallIndex > -1 && index > paywallIndex
         switch (item.type) {
           case 'imageAudio':
             return [
