@@ -39,7 +39,7 @@ export default function usePreview() {
     const items: Storyboard['items'] = flatMap(
       state.story.items,
       (item, index): [Items] | [] => {
-        const paywallIndex = items.findIndex(
+        const paywallIndex = state.story.items.findIndex(
           (item) => 'paywallSeparator' in item
         )
         const afterPaywall = index > paywallIndex
