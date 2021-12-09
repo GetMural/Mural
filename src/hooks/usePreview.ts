@@ -36,12 +36,12 @@ export default function usePreview() {
   const state = useAppSelector((state) => state)
   const mappedState = React.useMemo(() => {
     const rotationalValue: number = Math.floor(Math.random() * 26)
+    const paywallIndex = state.story.items.findIndex(
+      (item) => 'paywallSeparator' in item
+    )
     const items: Storyboard['items'] = flatMap(
       state.story.items,
       (item, index): [Items] | [] => {
-        const paywallIndex = state.story.items.findIndex(
-          (item) => 'paywallSeparator' in item
-        )
         const afterPaywall = index > paywallIndex
         switch (item.type) {
           case 'imageAudio':
