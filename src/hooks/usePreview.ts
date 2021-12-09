@@ -39,12 +39,17 @@ export default function usePreview() {
     const items: Storyboard['items'] = flatMap(
       state.story.items,
       (item, index): [Items] | [] => {
+        const paywallIndex = items.findIndex(
+          (item) => 'paywallSeparator' in item
+        )
+        const afterPaywall = index > paywallIndex
         switch (item.type) {
           case 'imageAudio':
             return [
               {
                 imageaudio: {
                   id: item.id,
+                  afterPaywall,
                   light: !!item.light,
                   audio: item.audio
                     ? {
@@ -72,6 +77,7 @@ export default function usePreview() {
               {
                 videofullpage: {
                   id: item.id,
+                  afterPaywall,
                   format: {
                     fullpage: true,
                   },
@@ -108,6 +114,7 @@ export default function usePreview() {
               {
                 imagebackground: {
                   id: item.id,
+                  afterPaywall,
                   format: {
                     fullpage: !!item.fullPage,
                   },
@@ -138,6 +145,7 @@ export default function usePreview() {
               {
                 videobackground: {
                   id: item.id,
+                  afterPaywall,
                   format: {
                     fullpage: !!item.fullPage,
                   },
@@ -181,6 +189,7 @@ export default function usePreview() {
               {
                 imageparallax: {
                   id: item.id,
+                  afterPaywall,
                   title: item.title,
                   subtitle: convertToHtml(item.subtitle),
                   image: item.image && {
@@ -196,6 +205,7 @@ export default function usePreview() {
               {
                 slideshowvertical: {
                   id: item.id,
+                  afterPaywall,
                   title: convertToHtml(item.slideShowTitle),
                   light: !!item.light,
                   images: item.slides
@@ -221,6 +231,7 @@ export default function usePreview() {
               {
                 slideshowhorizontal: {
                   id: item.id,
+                  afterPaywall,
                   title: convertToHtml(item.slideShowTitle),
                   light: !!item.light,
                   images: item.slides
@@ -246,6 +257,7 @@ export default function usePreview() {
               {
                 textcentred: {
                   id: item.id,
+                  afterPaywall,
                   title: item.title,
                   subtitle: convertToHtml(item.subtitle),
                   light: Boolean(item.light),
@@ -260,6 +272,7 @@ export default function usePreview() {
                 {
                   dailymotion: {
                     id: item.id,
+                    afterPaywall,
                     showControls: item.showControls,
                     autoAdvance: item.autoAdvance,
                     embed: item.embed,
@@ -271,6 +284,7 @@ export default function usePreview() {
                 {
                   vimeo: {
                     id: item.id,
+                    afterPaywall,
                     showControls: item.showControls,
                     autoAdvance: item.autoAdvance,
                     embed: item.embed,
@@ -282,6 +296,7 @@ export default function usePreview() {
               {
                 youtube: {
                   id: item.id,
+                  afterPaywall,
                   showControls: item.showControls,
                   autoAdvance: item.autoAdvance,
                   embed: item.embed,

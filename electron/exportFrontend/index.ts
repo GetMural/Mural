@@ -17,6 +17,7 @@ interface Video {
 
 interface Slideshow {
   id: string
+  afterPaywall: boolean
   title?: string
   light?: boolean
   images?: {
@@ -31,6 +32,7 @@ interface Slideshow {
 
 interface EmbedVideo {
   id: string
+  afterPaywall: boolean
   index?: number
   showControls?: boolean
   autoAdvance?: boolean
@@ -60,6 +62,7 @@ export type Items =
   | {
       imageaudio: {
         id: string
+        afterPaywall: boolean
         light: boolean
         audio?: {
           loop: boolean
@@ -80,6 +83,7 @@ export type Items =
   | {
       imagebackground: {
         id: string
+        afterPaywall: boolean
         format?: {
           fullpage: boolean
         }
@@ -102,6 +106,7 @@ export type Items =
   | {
       videobackground: {
         id: string
+        afterPaywall: boolean
         format?: {
           fullpage: boolean
         }
@@ -124,6 +129,7 @@ export type Items =
   | {
       imageparallax: {
         id: string
+        afterPaywall: boolean
         title?: string
         subtitle?: string
         image?: {
@@ -136,6 +142,7 @@ export type Items =
   | {
       videofullpage: {
         id: string
+        afterPaywall: boolean
         format?: {
           fullpage: boolean
         }
@@ -159,6 +166,7 @@ export type Items =
   | {
       textcentred: {
         id: string
+        afterPaywall: boolean
         title?: string
         subtitle?: string
         light?: boolean
