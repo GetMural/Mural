@@ -32,10 +32,8 @@ form.find('button').on('click', function (event) {
   event.preventDefault()
   const value = form.find('input')[0].value
   if (encrypt(value, rot) === bypass) {
-    console.log(`${value} matches ${bypass}`)
-    $('#paywall').removeClass('exclusive')
-    $('#paywallInfo').removeClass('paywallInfo')
-    story.loadExclusives()
+    $('section, img').removeClass('exclusive')
+    story.loadExclusives();
   } else {
     console.log(
       `${value} does not match ${bypass} with rotational value ${rot}`
@@ -51,10 +49,8 @@ playStart.addEventListener('click', () => {
   document.body.removeChild(overlay)
   document.body.classList.remove('frozen')
   $('#paywall').addClass('exclusive')
-
   overlay = null
   playStart = null
-
   story.load()
 })
 

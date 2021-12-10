@@ -2866,7 +2866,7 @@ article .part.box_text p {
 }
 
 // paywall
-#paywall.exclusive {
+.exclusive {
   display: none;
 }
 
@@ -2876,11 +2876,6 @@ article .part.box_text p {
   display: none;
   pointer-events: all;
   text-align: center;
-}
-
-#paywallInfo.paywallInfo {
-  display: block;
-  height: 100vh;
   width: 100vw;
   form {
     input {
@@ -2888,6 +2883,18 @@ article .part.box_text p {
       cursor: default;
     }
   }
+  &.exclusive {
+    display: block;
+    height: 100vh;
+  }
+}
+
+#coil-active {
+  bottom: 70px;
+  right: 12px;
+  position: fixed;
+  width: 50px;
+  z-index: 100;
 }
 
 .st-video .vimeo-container {
