@@ -428,6 +428,8 @@ function load() {
 
   const active = scrollStory.getActiveItem()
 
+  // recalculate the offset
+
   const MURAL_MEDIA = scrollStory.MURAL_AUDIO.concat(scrollStory.MURAL_VIDEO)
   // load a media element within scope of the user gesture to make sure Safari works.
   if (MURAL_MEDIA.length) {
@@ -452,12 +454,7 @@ function load() {
 }
 
 function loadExclusives() {
-  const item = findFocusedItem()
-
-  if (item) {
-    setItemStart(item)
-    setItemSticky(item)
-  }
+  scrollStory.updateOffsets()
 }
 
 function getVideoAttrs(item) {

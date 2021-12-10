@@ -173,7 +173,7 @@
     {{#items}}
 
     {{#paywallSeparator}}
-    <div id="paywallInfo" class="paywallInfo">
+    <section id="paywallInfo" class="paywallInfo exclusive">
       <span>
         <img src="https://www.getmural.io/img/logo.svg" />
       </span>
@@ -186,12 +186,12 @@
         <button type="submit">Bypass</button>
       </form>
       <p>Sign up for a Coil account to support this creator and get other great web monitised content.</p>
-    </div>
-    <div id="paywall">
+    </section>
+    <img id="coil-active" class="exclusive" src="./img/wm-icon-animated.svg" />
     {{/paywallSeparator}}
 
     {{#imagebackground}}
-    <section class="part sticky-image" name="story{{id}}" {{#audio}} data-audio=true {{#mp3}} data-mp3="{{mp3}}"
+    <section class="part sticky-image{{#afterPaywall}} exclusive{{/afterPaywall}}" name="story{{id}}" {{#audio}} data-audio=true {{#mp3}} data-mp3="{{mp3}}"
       {{/mp3}} {{#ogg}} data-ogg="{{ogg}}" {{/ogg}} {{#loop}} data-loop="true" {{/loop}} {{/audio}} {{#image}}
       data-image=true {{#srcmain}} data-src="{{srcmain}}" {{/srcmain}} {{#srcmedium}} data-src-medium="{{srcmedium}}"
       {{/srcmedium}} {{#srcphone}} data-src-phone="{{srcphone}}" {{/srcphone}} {{/image}}>
@@ -289,7 +289,7 @@
 
     {{#imageaudio}}
     <section
-      class="part imageaudio {{#light}} reverse_colors {{/light}}"
+      class="part imageaudio{{#light}} reverse_colors{{/light}}{{#afterPaywall}} exclusive{{/afterPaywall}}"
       name="story{{id}}"
       {{#audio}}
         data-audio=true
@@ -333,7 +333,7 @@
     {{/imageaudio}}
 
     {{#imageparallax}}
-    <section class="part parallax" name="story{{id}}" data-parallax=true {{#image}} {{#srcmain}} data-src="{{srcmain}}"
+    <section class="part parallax{{#afterPaywall}} exclusive{{/afterPaywall}}" name="story{{id}}" data-parallax=true {{#image}} {{#srcmain}} data-src="{{srcmain}}"
       {{/srcmain}} {{#srcmedium}} data-src-medium="{{srcmedium}}" {{/srcmedium}} {{#srcphone}}
       data-src-phone="{{srcphone}}" {{/srcphone}} {{/image}}>
 
@@ -358,7 +358,7 @@
     {{/imageparallax}}
 
     {{#slideshowhorizontal}}
-    <section class="part slideshow-horizontal snap {{#light}} reverse_colors {{/light}}" name="story{{id}}"
+    <section class="part slideshow-horizontal snap {{#light}} reverse_colors {{/light}}{{#afterPaywall}} exclusive{{/afterPaywall}}" name="story{{id}}"
       data-slideshow=true>
       <div class="blueimp-gallery blueimp-gallery-carousel blueimp-gallery-controls">
         <div class="slides"></div>
@@ -385,7 +385,7 @@
     {{/slideshowhorizontal}}
 
     {{#slideshowvertical}}
-    <section class="part slideshow {{#light}} reverse_colors {{/light}}" name="story{{id}}" data-slides=true>
+    <section class="part slideshow {{#light}} reverse_colors {{/light}}{{#afterPaywall}} exclusive{{/afterPaywall}}" name="story{{id}}" data-slides=true>
       {{#images}}
       <div class="bg-image" {{#srcmain}} data-src='{{srcmain}}' {{/srcmain}} {{#srcmedium}}
         data-src-medium='{{srcmedium}}' {{/srcmedium}} {{#srcphone}} data-src-phone='{{srcphone}}' {{/srcphone}}>
@@ -406,7 +406,7 @@
     {{/slideshowvertical}}
 
     {{#textcentred}}
-    <section class="no-effects part text_align-center {{#light}} reverse_colors {{/light}}" name="story{{id}}"
+    <section class="no-effects part text_align-center {{#light}} reverse_colors {{/light}}{{#afterPaywall}} exclusive{{/afterPaywall}}" name="story{{id}}"
       {{#snippets}} data-dynamic-image="true" {{/snippets}}>
       <div class="content container-fluid">
         <div class="row">
@@ -444,7 +444,7 @@
     {{/textcentred}}
 
     {{#videobackground}}
-    <section class="st-video part" name="story{{id}}" {{#image}} data-poster="{{loading}}" {{/image}} {{#video}}
+    <section class="st-video part{{#afterPaywall}} exclusive{{/afterPaywall}}" name="story{{id}}" {{#image}} data-poster="{{loading}}" {{/image}} {{#video}}
       data-video="true" data-loop="true" data-autoplay="true" data-muted="false" {{#mp4}} data-mp4="{{mp4}}" {{/mp4}}
       {{#webm}} data-webm="{{webm}}" {{/webm}} {{/video}}>
       {{#offset.custom}}
@@ -505,7 +505,7 @@
     {{/videobackground}}
 
     {{#videofullpage}}
-    <section class="st-content-video part snap" name="story{{id}}" {{#loop}} data-loop="true" {{/loop}} {{#autoAdvance}}
+    <section class="st-content-video part snap{{#afterPaywall}} exclusive{{/afterPaywall}}" name="story{{id}}" {{#loop}} data-loop="true" {{/loop}} {{#autoAdvance}}
       data-auto-advance="true" {{/autoAdvance}} {{#image}} data-poster="{{loading}}" {{/image}} {{#video}}
       data-video="true" data-autoplay="true" data-muted="false" data-fullpage="true" {{#mp4}} data-mp4="{{mp4}}"
       {{/mp4}} {{#webm}} data-webm="{{webm}}" {{/webm}} {{/video}}>
@@ -537,7 +537,7 @@
 
     {{#youtube}}
     <section
-      class="st-video part"
+      class="st-video part{{#afterPaywall}} exclusive{{/afterPaywall}}"
       name="story{{id}}"
       {{#embed}} {{#id}} data-youtube-id="{{id}}" {{/id}} {{/embed}}
       {{#showControls}} data-controls {{/showControls}}
@@ -550,7 +550,7 @@
 
     {{#vimeo}}
     <section
-      class="st-video part"
+      class="st-video part{{#afterPaywall}} exclusive{{/afterPaywall}}"
       name="story{{id}}"
       {{#showControls}} data-controls {{/showControls}}
       {{#embed}} {{#id}} data-vimeo-video-id="{{id}}" {{/id}} {{/embed}}>
@@ -562,7 +562,7 @@
 
     {{#dailymotion}}
     <section
-      class="st-video part"
+      class="st-video part{{#afterPaywall}} exclusive{{/afterPaywall}}"
       name="story{{id}}"
       {{#showControls}} data-controls {{/showControls}}
       {{#embed}} {{#id}} data-dailymotion-id="{{id}}" {{/id}} {{/embed}}>
@@ -571,12 +571,6 @@
       </div>
     </section>
     {{/dailymotion}}
-
-
-    {{#paywallSeparatorEnd}}
-    <!-- end paywall -->
-    </div>
-    {{/paywallSeparatorEnd}}
 
     {{/items}}
 
