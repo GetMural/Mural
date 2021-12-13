@@ -2784,9 +2784,10 @@ article .part.box_text p {
   width: 100vw;
   height: 100vh;
   display: grid;
-  grid-template-rows: auto 200px 150px 150px auto;
+  grid-template-rows: auto;
   grid-template-areas:
     '.'
+    'intro'
     'logo'
     'storyname'
     'play'
@@ -2799,21 +2800,27 @@ article .part.box_text p {
 }
 
 .loading .logo {
+  align-items: center;
   grid-area: logo;
-  max-height: 250px;
+  max-height: 25vh;
+}
+
+.loading .monetization {
+  grid-area: intro;
+  padding: 20px 20px 0;
 }
 
 .loading .story-name {
+  align-items: center;
+  display: flex;
   grid-area: storyname;
   height: 150px;
-  display: flex;
   justify-content: center;
-  align-items: center;
 }
 
 .loading .play-start {
-  grid-area: play;
   cursor: pointer;
+  grid-area: play;
   height: 150px;
 }
 
