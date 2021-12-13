@@ -420,15 +420,13 @@ function load() {
   const $story = $('#scrollytelling')
 
   $story.on('itemexitviewport', onItemExitViewport)
-  // $story.on('itementerviewport', onItemEnterViewport)
+  $story.on('itementerviewport', onItemEnterViewport)
   $story.on('itemblur', onItemBlur)
 
   listenForItemFocus(onItemFocus)
   listenForItemEnteringViewport(onItemEnterViewport)
 
   const active = scrollStory.getActiveItem()
-
-  // recalculate the offset
 
   const MURAL_MEDIA = scrollStory.MURAL_AUDIO.concat(scrollStory.MURAL_VIDEO)
   // load a media element within scope of the user gesture to make sure Safari works.
@@ -454,8 +452,14 @@ function load() {
 }
 
 function loadExclusives() {
-  scrollStory.updateOffsets()
+  console.log('load exclusives')
+  $('section').removeClass('exclusive')
+  var resize_event = document.createEvent('Event');
+  resize_event.initEvent('resize', false, false);
+  window.dispatchEvent(resize_event);
 }
+
+window.loadExclusives = loadExclusives
 
 function getVideoAttrs(item) {
   const muted = !isSoundEnabled
@@ -544,7 +548,6 @@ function loadItem(item) {
         },
       })
     })
-
     returnPromises.push(horizontalSlidePromise)
   }
 

@@ -382,7 +382,6 @@ export default function usePreview() {
     state.settings.payment,
   ])
   React.useEffect(() => {
-    console.log(mappedState)
     render(mappedState)
   }, [mappedState])
 }

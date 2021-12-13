@@ -32,12 +32,7 @@ form.find('button').on('click', function (event) {
   event.preventDefault()
   const value = form.find('input')[0].value
   if (encrypt(value, rot) === bypass) {
-    $('section, img').removeClass('exclusive')
     story.loadExclusives();
-  } else {
-    console.log(
-      `${value} does not match ${bypass} with rotational value ${rot}`
-    )
   }
 })
 

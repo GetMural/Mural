@@ -124,10 +124,9 @@
       document.head.appendChild(monetizationRelTag);
 
       if (document.monetization) {
-        console.log('is monetized')
         document.monetization.addEventListener('monetizationstart', () => {
-          document.getElementById('paywall').classList.remove('exclusive');
-          document.getElementById('paywallInfo').classList.remove('paywallInfo');
+          $('img').removeClass('exclusive')
+          window.loadExclusives();
         })
       }
 
@@ -142,7 +141,9 @@
     style="background-image:url('{{splash_screen_img}}');background-position:center center;background-size:cover;"
     {{/splash_screen_img}}{{/meta}}>
     <div class="opacity-pane"></div>
-
+    <div class="monetization">
+      <p>This story has exclusive content which can be accessed either with a <a href="https://www.coil.com/" target="_blank'">Coil</a> account for web monetization or an access code from the creator. Click here for <a href="https://www.getmural.io/webmonetization" target="_blank">more info on Mural's web monetization</a> support.</p>
+    </div>
     <img src="./img/logo.svg" alt="Mural is Loading..." class="logo">
     <h3 class="story-name">{{#meta}}{{title}}{{/meta}}</h3>
     <img id="play_start" class="play-start animated bounce" src="./img/tuska_play.svg"
