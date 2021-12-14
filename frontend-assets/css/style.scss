@@ -2786,8 +2786,8 @@ article .part.box_text p {
   display: grid;
   grid-template-rows: auto;
   grid-template-areas:
-    '.'
     'intro'
+    '.'
     'logo'
     'storyname'
     'play'
@@ -2805,9 +2805,19 @@ article .part.box_text p {
   max-height: 25vh;
 }
 
-.loading .monetization {
+.loading .intro {
+  background: #000;
+  color: #fff;
   grid-area: intro;
-  padding: 20px 20px 0;
+  width: 100vw;
+  p {
+    margin: auto;
+    position: relative;
+    text-transform: uppercase;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 75vw;
+  }
 }
 
 .loading .story-name {
