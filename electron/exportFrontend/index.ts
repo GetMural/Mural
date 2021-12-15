@@ -218,6 +218,8 @@ export interface Storyboard {
     site_name?: string
     splash_screen_img?: string
     site_img?: string
+    site_img_width?: number
+    site_img_height?: number
     subtitle?: string
     author?: string
     rsspingback?: string
