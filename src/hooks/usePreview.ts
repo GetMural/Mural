@@ -332,12 +332,16 @@ export default function usePreview() {
         splash_screen_img: state.story.metadata.siteImage
           ? media(state.story.metadata.siteImage.big.path)
           : undefined,
-        site_img: state.story.metadata.siteImage
-          ? absMedia(
-              state.story.metadata.canonicalUrl || '.',
-              state.story.metadata.siteImage.big.path
-            )
-          : undefined,
+        ...(state.story.metadata.siteImage
+          ? {
+              site_img: absMedia(
+                state.story.metadata.canonicalUrl || '.',
+                state.story.metadata.siteImage.big.path
+              ),
+              site_img_width: state.story.metadata.siteImage.big.size.width,
+              site_img_height: state.story.metadata.siteImage.big.size.height,
+            }
+          : {}),
         author: state.story.metadata.author,
         rsspingback: state.story.metadata.rssPingbkack,
         description: state.story.metadata.description,
