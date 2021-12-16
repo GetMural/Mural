@@ -217,7 +217,7 @@ function setItemStart(item) {
 
 function setItemStop(item) {
   if (item.data && item.data.youtubeId) {
-    youtubeMedia.remove(item)
+    // youtubeMedia.remove(item)
   }
 
   if (item.data && item.data.vimeoVideoId) {

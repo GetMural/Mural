@@ -131,14 +131,57 @@
           window.loadExclusives();
         })
       }
-
     });
   </script>
     {{/payment}}
   {{/payment.enabled}}
+  <style>
+    body.loading {
+      display: none;
+    }
+    {{#meta}}
+    {{#font_base_rules}}
+    /* Set a font for the main article - focus on readability. */
+    body,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    .slideshow,
+    .slideshow-horizontal {
+      {{{font_base_rules}}}
+    }
+
+    {{/font_base_rules}}
+
+    {{#font_headers_rules}}
+
+    /* Set a special font just for item headers. */
+    .header h1,
+    .header h2,
+    .header-fullpage h1,
+    .header-fullpage h2,
+    header {
+      {{{font_headers_rules}}}
+    }
+
+    {{/font_headers_rules}}
+
+    {{/meta}}
+  </style>
+
+  {{#meta}}
+  {{#custom_css}}
+  <style>
+    {{{custom_css}}}
+  </style>
+  {{/custom_css}}
+  {{/meta}}
 </head>
 
-<body class="longform frozen" name="top">
+<body class="longform frozen loading" name="top">
   <div id="loading_overlay" class="loading" {{#meta}}{{#splash_screen_img}}
     style="background-image:url('{{splash_screen_img}}');background-position:center center;background-size:cover;"
     {{/splash_screen_img}}{{/meta}}>
@@ -591,47 +634,11 @@
   <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
   <!-- <script>Hls = {}; // remove me if you use the script above.</script> -->
   <script type="text/javascript" src="./bundle.js"></script>
-  <style>
-    {{#meta}}
-    {{#font_base_rules}}
-    /* Set a font for the main article - focus on readability. */
-    body,
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6,
-    .slideshow,
-    .slideshow-horizontal {
-      {{{font_base_rules}}}
-    }
-
-    {{/font_base_rules}}
-
-    {{#font_headers_rules}}
-
-    /* Set a special font just for item headers. */
-    .header h1,
-    .header h2,
-    .header-fullpage h1,
-    .header-fullpage h2,
-    header {
-      {{{font_headers_rules}}}
-    }
-
-    {{/font_headers_rules}}
-
-    {{/meta}}
-  </style>
-
-  {{#meta}}
-  {{#custom_css}}
-  <style>
-    {{{custom_css}}}
-  </style>
-  {{/custom_css}}
-  {{/meta}}
+  <script>
+    window.addEventListener('load', () => {
+      $('body').removeClass('loading');
+    })
+  </script>
 
 </body>
 

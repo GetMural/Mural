@@ -56,7 +56,9 @@ function fixBackgroundVideo($el) {
 
 function prepareVideo(scrollStory, $el, id, srcs, attrs) {
   let video = scrollStory.MURAL_VIDEO[id]
-  video.poster = attrs.poster
+  if (attrs.poster) {
+    video.poster = attrs.poster
+  }
   video.muted = attrs.muted
   video.preload = 'auto'
   video.setAttribute('webkit-playsinline', '')
