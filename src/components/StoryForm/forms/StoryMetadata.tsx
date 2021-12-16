@@ -59,11 +59,12 @@ export default function StoryMetadataForm() {
           <Input
             name="metadata.canonicalUrl"
             label="Canonical URL"
-            placeholder="https://your-website.com"
+            placeholder="https://your-website.com/path/to/your/story"
             helperText={
               <>
-                If you know the final URL of your Mural story, then this is
-                where to enter that information.
+                If you know the final top-level URL of your Mural story, including its path (if any), this is
+                where to enter that information. This is used especially for the og:image tag.
+                Make sure your URL does not include a slash at the end.
               </>
             }
           />
