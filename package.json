@@ -109,6 +109,10 @@
     ],
     "rules": {
       "import/no-webpack-loader-syntax": "off"
+    },
+    "globals": {
+      "Vimeo": false,
+      "YT": false
     }
   },
   "browserslist": {

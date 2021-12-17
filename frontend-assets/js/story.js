@@ -333,11 +333,8 @@ function load() {
 }
 
 function loadExclusives() {
-  console.log('load exclusives')
   $('section').removeClass('exclusive')
   scrollStory.updateOffsets()
-
-  // TODO need to load stuff here
 }
 
 function getVideoAttrs(item) {

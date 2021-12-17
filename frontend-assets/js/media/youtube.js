@@ -69,6 +69,7 @@ function stick(item) {
 
 function prepare(scrollStory, item) {
   loadYouTube()
+
   const videoId = item.data.youtubeId
   const autoAdvance = item.data.autoAdvance
   const id = item.index
