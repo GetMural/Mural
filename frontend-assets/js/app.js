@@ -1,10 +1,5 @@
 const $ = require('jquery')
 const story = require('./story')
-
-require('../css/blueimp-gallery.css')
-require('../css/blueimp-gallery-indicator.css')
-require('../css/style.scss')
-
 const form = $('#bypass')
 
 // original code courtesy of CodeNiro
@@ -32,7 +27,7 @@ form.find('button').on('click', function (event) {
   event.preventDefault()
   const value = form.find('input')[0].value
   if (encrypt(value, rot) === bypass) {
-    story.loadExclusives();
+    story.loadExclusives()
   }
 })
 
@@ -41,6 +36,13 @@ let playStart = document.getElementById('play_start')
 playStart.style.display = 'block'
 
 playStart.addEventListener('click', () => {
+  // load a media element within scope of the user gesture to make sure Safari works.
+  // NOTE THIS HAS TO STAY IN SCOPE OF THE USER GESTURE i.e. closure of event.
+  if (story.scrollStory.MURAL_MEDIA.length) {
+    story.scrollStory.MURAL_MEDIA[
+      story.scrollStory.MURAL_MEDIA.length - 1
+    ].load()
+  }
   document.body.removeChild(overlay)
   document.body.classList.remove('frozen')
   $('#paywall').addClass('exclusive')
