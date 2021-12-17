@@ -52,8 +52,7 @@ function prepare(scrollStory, item) {
         controls: item.data.hasOwnProperty('controls'),
       })
 
-      // VIMEO[item.index].on('bufferstart', resolve)
-      VIMEO[item.index].on('bufferend', resolve)
+      VIMEO[item.index].on('loaded', resolve)
       VIMEO[item.index].on('error', resolve)
     })
   })
