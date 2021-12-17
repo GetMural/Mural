@@ -1,3 +1,7 @@
+require('../css/blueimp-gallery.css')
+require('../css/blueimp-gallery-indicator.css')
+require('../css/style.scss')
+
 const $ = require('jquery')
 const story = require('./story')
 const form = $('#bypass')

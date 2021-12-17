@@ -1,8 +1,4 @@
 const $ = require('jquery')
-
-require('../css/blueimp-gallery.css')
-require('../css/blueimp-gallery-indicator.css')
-require('../css/style.scss')
 require('scrollstory/jquery.scrollstory.js')
 
 const blueimp = require('blueimp-gallery/js/blueimp-gallery')
