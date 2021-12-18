@@ -273,7 +273,7 @@ function init() {
 
   $('nav').on('click', 'li', function () {
     const itemId = parseInt(this.dataset.index, 10)
-    const quarantined = paywall && itemId >= paywall.index
+    const quarantined = paywall && !paywall.filtered && itemId >= paywall.index
 
     if (quarantined) {
       scrollStory.index(paywall.index)
