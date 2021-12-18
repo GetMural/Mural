@@ -141,8 +141,6 @@
   -webkit-box-sizing: content-box;
   -moz-box-sizing: content-box;
   box-sizing: content-box;
-  /* Small hack for our prev window atm */
-  background: #222 url(/img/prev.svg) center no-repeat;
   background: #222 url(../img/prev.svg) center no-repeat;
   background-color: rgba(0, 0, 0, 0.5);
   border: 3px solid #fff;
@@ -159,13 +157,9 @@
   background-image: url(../img/next.svg);
 }
 .blueimp-gallery-svgasimg > .prev {
-  /* Small hack for our prev window atm */
-  background-image: url(/img/prev.svg);
   background-image: url(../img/prev.svg);
 }
 .blueimp-gallery-svgasimg > .next {
-  /* Small hack for our prev window atm */
-  background-image: url(/img/next.svg);
   background-image: url(../img/next.svg);
 }
 .blueimp-gallery-display > .close {

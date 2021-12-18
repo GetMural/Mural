@@ -1,4 +1,11 @@
 const path = require('path')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const { WebpackManifestPlugin } = require('webpack-manifest-plugin')
+const WebpackMd5Hash = require('webpack-md5-hash')
+
+const extractSass = new ExtractTextPlugin({
+  filename: '[name].[hash].css',
+})
 
 module.exports = {
   entry: {
@@ -6,26 +13,35 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, 'frontend-assets-build'),
-    filename: 'bundle.js',
+    filename: '[name].[chunkhash].js',
+  },
+  optimization: {
+    minimize: true,
   },
   module: {
     rules: [
       {
-        test: /\.css$/,
-        use: ['style-loader', 'css-loader'],
-      },
-      {
-        test: /\.s[ac]ss$/i,
-        use: [
-          // Creates `style` nodes from JS strings
-          'style-loader',
-          // Translates CSS into CommonJS
-          'css-loader',
-          // Compiles Sass to CSS
-          {
-            loader: 'sass-loader',
-          },
-        ],
+        test: /\.scss|\.css$/,
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: [
+            {
+              loader: 'css-loader',
+              options: {
+                // If you are having trouble with urls not resolving add this setting.
+                // See https://github.com/webpack-contrib/css-loader#url
+                url: false,
+                sourceMap: false,
+              },
+            },
+            {
+              loader: 'sass-loader',
+              options: {
+                sourceMap: false,
+              },
+            },
+          ],
+        }),
       },
       {
         test: /\.svg$/,
@@ -38,6 +54,7 @@ module.exports = {
       },
     ],
   },
+  plugins: [extractSass, new WebpackManifestPlugin(), new WebpackMd5Hash()],
   externals: {
     'hls.js': 'Hls',
   },

@@ -1,12 +1,34 @@
 import * as Mustache from 'mustache'
 import fs from 'fs'
 import path from 'path'
+import electron from 'electron'
 
 export default function exportStory(story: Storyboard) {
+  const frontendManifest = fs.readFileSync(
+    path.join(
+      electron.app.getAppPath(),
+      'frontend-assets-build',
+      'manifest.json'
+    ),
+    {
+      encoding: 'utf8',
+    }
+  )
+
+  const frontendManifestJSON = JSON.parse(frontendManifest)
+
   const template = fs.readFileSync(path.join(__dirname, 'preview.html'), {
     encoding: 'utf8',
   })
-  var output = Mustache.render(template, story)
+  var output = Mustache.render(
+    template,
+    Object.assign(story, {
+      manifest: {
+        js: frontendManifestJSON['app.js'],
+        css: frontendManifestJSON['app.css'],
+      },
+    })
+  )
   return output
 }
 
