@@ -46,8 +46,7 @@ function canPlayThroughPromise(media, srcs) {
       resolve()
     }
 
-    function loadedMetaData(e) {
-      console.log('loaded meta data', e)
+    function loadedMetaData() {
       // media is in browser cache
       if (media.readyState > 3) {
         media.removeEventListener('canplaythrough', canPlayThrough)

@@ -1,8 +1,4 @@
 const $ = require('jquery')
-
-require('../css/blueimp-gallery.css')
-require('../css/blueimp-gallery-indicator.css')
-require('../css/style.scss')
 require('scrollstory/jquery.scrollstory.js')
 
 const blueimp = require('blueimp-gallery/js/blueimp-gallery')
@@ -84,12 +80,6 @@ MoveItItem.prototype.update = function (scrollTop) {
 blueimp.prototype.onkeydown = function (event) {
   if (this.options.storyItem.active) {
     switch (event.which || event.keyCode) {
-      case 13: // Enter
-        if (this.options.toggleControlsOnEnter) {
-          this.preventDefault(event)
-          this.toggleControls()
-        }
-        break
       case 38: // ArrowUp
         if (this.options.enableKeyboardNavigation) {
           this.preventDefault(event)
@@ -102,25 +92,14 @@ blueimp.prototype.onkeydown = function (event) {
           this.next()
         }
         break
+      default:
+        // Enter
+        if (this.options.toggleControlsOnEnter) {
+          this.preventDefault(event)
+          this.toggleControls()
+        }
     }
   }
-}
-
-function prepMediaElements(scrollStory) {
-  // need a central media registry for user gesture purposes.
-  scrollStory.MURAL_AUDIO = []
-  scrollStory.MURAL_VIDEO = []
-
-  const items = scrollStory.getItems()
-  items.forEach(function (item) {
-    if (item.data.video) {
-      scrollStory.MURAL_VIDEO[item.index] = document.createElement('video')
-    }
-
-    if (item.data.audio) {
-      scrollStory.MURAL_AUDIO[item.index] = document.createElement('audio')
-    }
-  })
 }
 
 // let storyItems
@@ -131,6 +110,16 @@ let isSoundEnabled = true
 let WINDOW_WIDTH
 let scrKey
 let attrKey
+
+const $story = $('#scrollytelling')
+
+scrollStory = $story
+  .scrollStory({
+    contentSelector: '.part',
+    triggerOffset: 0,
+    index: 0,
+  })
+  .data('plugin_scrollStory')
 
 if (WINDOW_WIDTH >= 1024) {
   scrKey = 'src'
@@ -143,25 +132,58 @@ if (WINDOW_WIDTH >= 1024) {
   attrKey = 'src-phone'
 }
 
-function setItemSticky(item) {
+let storyContent = scrollStory.getItems()
+let paywall = storyContent.filter((item) => item.id === 'paywallInfo')[0]
+
+function prepMediaElements() {
+  // need a central media registry for user gesture purposes.
+  scrollStory.MURAL_AUDIO = []
+  scrollStory.MURAL_VIDEO = []
+
+  storyContent.forEach(function (item) {
+    if (item.data.video) {
+      scrollStory.MURAL_VIDEO[item.index] = document.createElement('video')
+    }
+
+    if (item.data.audio) {
+      scrollStory.MURAL_AUDIO[item.index] = document.createElement('audio')
+    }
+  })
+
+  scrollStory.MURAL_MEDIA = scrollStory.MURAL_AUDIO.concat(
+    scrollStory.MURAL_VIDEO
+  ).filter((media) => media)
+}
+
+function setItemFocus(item) {
   if (item.data.video) {
     videoMedia.fixBackgroundVideo(item.el)
+    videoMedia.playBackgroundVideo(item.index, getVideoAttrs(item))
   }
 
   if (item.data.youtubeId) {
+    youtubeMedia.play(item, isSoundEnabled)
     youtubeMedia.stick(item)
   }
 
   if (item.data.vimeoVideoId) {
+    vimeoMedia.play(item, isSoundEnabled)
     vimeoMedia.stick(item)
   }
 
   if (item.data.dailymotionId) {
+    dailymotionMedia.play(item, isSoundEnabled)
     dailymotionMedia.stick(item)
+  }
+
+  if (item.data.audio) {
+    audioMedia.playBackgroundAudio(item, {
+      muted: !isSoundEnabled,
+    })
   }
 }
 
-function setItemStart(item) {
+function setItemEnter(item) {
   const storyItems = scrollStory.getItems()
   loadItem(item)
 
@@ -174,50 +196,11 @@ function setItemStart(item) {
   if (item.index + 2 < storyItems.length) {
     loadItem(storyItems[item.index + 2])
   }
-
-  // Stop previous & next item
-  if (
-    item.data.video ||
-    item.data.youtubeId ||
-    item.data.vimeoVideoId ||
-    item.data.dailymotionId ||
-    item.data.audio
-  ) {
-    if (item.index > 0) {
-      setItemStop(storyItems[item.index - 1])
-    }
-
-    if (item.index < storyItems.length) {
-      setItemStop(storyItems[item.index + 1])
-    }
-  }
-
-  if (item.data.video) {
-    videoMedia.playBackgroundVideo(item.index, getVideoAttrs(item))
-  }
-
-  if (item.data.youtubeId) {
-    youtubeMedia.play(item, isSoundEnabled)
-  }
-
-  if (item.data.vimeoVideoId) {
-    vimeoMedia.play(item, isSoundEnabled)
-  }
-
-  if (item.data.dailymotionId) {
-    dailymotionMedia.play(item, isSoundEnabled)
-  }
-
-  if (item.data.audio) {
-    audioMedia.playBackgroundAudio(item, {
-      muted: !isSoundEnabled,
-    })
-  }
 }
 
 function setItemStop(item) {
   if (item.data && item.data.youtubeId) {
-    // youtubeMedia.remove(item)
+    youtubeMedia.remove(item)
   }
 
   if (item.data && item.data.vimeoVideoId) {
@@ -238,119 +221,26 @@ function setItemStop(item) {
 }
 
 function onItemFocus(ev, item) {
-  setItemSticky(item)
+  setItemFocus(item)
 }
 
-function onItemExitViewport(ev, item) {
-  setItemStop(item)
-}
 function onItemBlur(ev, item) {
   setItemStop(item)
 }
 
 function onItemEnterViewport(ev, item) {
-  setItemStart(item)
-}
-
-// This function is here because scrollStory itemfocus doesn't work with the paywall
-function listenForItemFocus(callback) {
-  const items = scrollStory.getItems()
-  let activeItemId
-
-  $(window).on('DOMContentLoaded load resize scroll', (el) => {
-    const focusRange = parseInt(window.innerHeight * 0.05)
-
-    for (const item of items) {
-      const rect = item.el[0].getBoundingClientRect()
-
-      if (
-        activeItemId !== item.id &&
-        Math.floor(rect.y) <= focusRange &&
-        item.el[0].offsetParent && // Is the item visible in the DOM?
-        Math.floor(rect.y) >= focusRange * -1
-      ) {
-        activeItemId = item.id
-        callback(null, item)
-      }
-    }
-  })
-}
-
-function listenForItemEnteringViewport(callback) {
-  const items = scrollStory.getItems()
-  let activeItemId
-
-  $(window).on('DOMContentLoaded load resize scroll', (el) => {
-    const focusRange = parseInt(window.innerHeight)
-
-    for (const item of items) {
-      const rect = item.el[0].getBoundingClientRect()
-      const top = Math.floor(rect.y)
-      const bottom = Math.floor(rect.y) + rect.height
-
-      if (
-        activeItemId !== item.id &&
-        item.el[0].offsetParent && // Is the item visible in the DOM?
-        top <= focusRange &&
-        top >= 0
-      ) {
-        // Scroll down
-        activeItemId = item.id
-        callback(null, item)
-      } else if (
-        activeItemId !== item.id &&
-        item.el[0].offsetParent && // Is the item visible in the DOM?
-        bottom <= focusRange &&
-        bottom >= 0
-      ) {
-        // Scroll up
-        activeItemId = item.id
-        callback(null, item)
-      }
-    }
-  })
-}
-
-function findFocusedItem() {
-  const items = scrollStory.getItems()
-  const focusRange = parseInt(window.innerHeight * 0.05)
-  let focusedItem
-
-  for (const item of items) {
-    const rect = item.el[0].getBoundingClientRect()
-
-    if (
-      item.el[0].offsetParent && // Is the item visible in the DOM?
-      Math.floor(rect.y) <= focusRange &&
-      Math.floor(rect.y) >= focusRange * -1
-    ) {
-      focusedItem = item
-    }
-  }
-
-  return focusedItem
+  setItemEnter(item)
 }
 
 function init() {
   WINDOW_WIDTH = $(window).width()
-  const $story = $('#scrollytelling')
 
-  scrollStory = $story
-    .scrollStory({
-      contentSelector: '.part',
-      triggerOffset: 0,
-      index: 0,
-    })
-    .data('plugin_scrollStory')
-
-  prepMediaElements(scrollStory)
-
-  const storyItems = scrollStory.getItems()
+  prepMediaElements()
 
   // parallax.
   $('[data-scroll-speed]').moveIt()
 
-  $('.mute').click(function () {
+  $('.mute').on('click', function () {
     const $this = $(this)
     if ($this.hasClass('muted')) {
       isSoundEnabled = true
@@ -360,7 +250,7 @@ function init() {
       $this.addClass('muted')
     }
 
-    storyItems.forEach(function (item) {
+    storyContent.forEach(function (item) {
       if (item.data.video) {
         const muted = !isSoundEnabled || item.data.muted
         videoMedia.setMuted(item.index, muted)
@@ -377,12 +267,19 @@ function init() {
     dailymotionMedia.setMuted(!isSoundEnabled)
   })
 
-  $('.sticks_wrapper').click(function () {
+  $('.sticks_wrapper').on('click', function () {
     $('body').toggleClass('paneOpen')
   })
 
   $('nav').on('click', 'li', function () {
-    scrollStory.index(parseInt(this.dataset.index, 10))
+    const itemId = parseInt(this.dataset.index, 10)
+    const quarantined = paywall && !paywall.filtered && itemId >= paywall.index
+
+    if (quarantined) {
+      scrollStory.index(paywall.index)
+    } else {
+      scrollStory.index(itemId)
+    }
   })
 
   const active = scrollStory.getActiveItem()
@@ -396,8 +293,8 @@ function init() {
   })
 
   // push two in advance
-  if (active && active.index + 1 < storyItems.length) {
-    const loadPromise = loadItem(storyItems[active.index + 1])
+  if (active && active.index + 1 < storyContent.length) {
+    const loadPromise = loadItem(storyContent[active.index + 1])
 
     if (loadPromise) {
       LOAD_PROMISES.push(loadPromise)
@@ -405,61 +302,32 @@ function init() {
   }
 
   // push two in advance
-  if (active && active.index + 2 < storyItems.length) {
-    const loadPromise = loadItem(storyItems[active.index + 2])
+  if (active && active.index + 2 < storyContent.length) {
+    const loadPromise = loadItem(storyContent[active.index + 2])
 
     if (loadPromise) {
       LOAD_PROMISES.push(loadPromise)
     }
   }
 
-  Promise.all(LOAD_PROMISES)
+  return Promise.all(LOAD_PROMISES)
 }
 
 function load() {
-  const $story = $('#scrollytelling')
-
-  $story.on('itemexitviewport', onItemExitViewport)
+  $story.on('itemfocus', onItemFocus)
   $story.on('itementerviewport', onItemEnterViewport)
   $story.on('itemblur', onItemBlur)
 
-  listenForItemFocus(onItemFocus)
-  listenForItemEnteringViewport(onItemEnterViewport)
-
   const active = scrollStory.getActiveItem()
-
-  const MURAL_MEDIA = scrollStory.MURAL_AUDIO.concat(scrollStory.MURAL_VIDEO)
-  // load a media element within scope of the user gesture to make sure Safari works.
-  if (MURAL_MEDIA.length) {
-    MURAL_MEDIA[MURAL_MEDIA.length - 1].load()
-  }
-
-  if (active && active.data.video) {
-    videoMedia.playBackgroundVideo(active.index, getVideoAttrs(active))
-    videoMedia.fixBackgroundVideo(active.el)
-  }
-
-  if (active && active.data.audio) {
-    audioMedia.playBackgroundAudio(active, {
-      muted: !isSoundEnabled,
-    })
-  }
-
-  if (active && active.data.youtubeId) {
-    youtubeMedia.play(active, isSoundEnabled)
-    youtubeMedia.stick(active)
-  }
+  setItemFocus(active)
 }
 
 function loadExclusives() {
-  console.log('load exclusives')
-  $('section').removeClass('exclusive')
-  var resize_event = document.createEvent('Event');
-  resize_event.initEvent('resize', false, false);
-  window.dispatchEvent(resize_event);
-}
+  scrollStory.filter(storyContent[paywall.index])
 
-window.loadExclusives = loadExclusives
+  $('section').removeClass('exclusive')
+  scrollStory.updateOffsets()
+}
 
 function getVideoAttrs(item) {
   const muted = !isSoundEnabled
@@ -628,4 +496,5 @@ module.exports = {
   init: init,
   loadExclusives: loadExclusives,
   load: load,
+  scrollStory: scrollStory,
 }

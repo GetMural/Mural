@@ -22,7 +22,6 @@ function stopVideo(id) {
 }
 
 function playBackgroundVideo(id, attrs) {
-  console.log('play bg video', id, attrs)
   const video = MEDIA[id]
   $(video).stop(true)
 
@@ -71,10 +70,8 @@ function prepareVideo(scrollStory, $el, id, srcs, attrs) {
   const hslSource = sources.filter((src) => src.type === HSL_TYPE)[0]
   const normalSources = sources.filter((src) => src.type !== HSL_TYPE)
 
-  console.log('sources', sources)
   if (Hls && hslSource && Hls.isSupported()) {
     canPlayThrough = new Promise(function (resolve, reject) {
-      console.log('hls')
       const hls = new Hls()
       hls.loadSource(hslSource.src)
       hls.attachMedia(video)
@@ -83,7 +80,6 @@ function prepareVideo(scrollStory, $el, id, srcs, attrs) {
       })
     })
   } else if (Hls && hslSource && video.canPlayType(HSL_TYPE)) {
-    console.log('not hls')
     canPlayThrough = new Promise(function (resolve, reject) {
       video.src = hslSource.src
       video.addEventListener('loadedmetadata', function () {
@@ -91,11 +87,9 @@ function prepareVideo(scrollStory, $el, id, srcs, attrs) {
       })
     })
   } else {
-    console.log('not hls at all')
     canPlayThrough = mediaUtils.canPlayThroughPromise(video, normalSources)
   }
 
-  console.log('prepare video', video)
   $el.find('.video-container').append(video)
 
   $el.find('.play').click(function () {

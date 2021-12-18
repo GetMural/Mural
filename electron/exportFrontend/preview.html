@@ -80,65 +80,7 @@
   {{/font_headers_link}}
   {{/meta}}
 
-  {{#payment.enabled}}
-    {{#payment}}
-      {{#accessCode}}
-  <meta name="bypass" content="{{accessCode}}" />
-      {{/accessCode}}
-      {{#rot}}
-  <meta name="rot" content="{{rot}}" />
-      {{/rot}}
-    {{/payment}}
-  <script src="https://cdn.coil.com/coil-support-button.js"></script>
-    {{#payment}}
-  <script>
-    const pointers = {
-      '$ilp.uphold.com/e9EyJQYXGNHE': 10
-    }
-    let pointer = '';
-      {{#pointers}}
-    pointer = `{{pointer}}`.replace('&#x2F;', '/');
-    pointers[pointer] = {{share}};
-      {{/pointers}}
-
-    function pickPointer () {
-      const sum = Object.values(pointers).reduce((sum, weight) => sum + weight, 0);
-      let choice = Math.random() * sum;
-
-      for (const pointer in pointers) {
-        const weight = pointers[pointer];
-        if ((choice -= weight) <= 0) {
-          return pointer;
-        }
-      }
-    }
-
-    window.addEventListener('load', () => {
-      const pointer = pickPointer();
-      const monetizationTag = document.createElement('meta');
-      monetizationTag.name = 'monetization';
-      monetizationTag.content = pointer;
-      document.head.appendChild(monetizationTag);
-
-      const monetizationRelTag = document.createElement('link');
-      monetizationRelTag.rel = 'monetization';
-      monetizationRelTag.href = `https://${pointer}`.replace('$', '');
-      document.head.appendChild(monetizationRelTag);
-
-      if (document.monetization) {
-        document.monetization.addEventListener('monetizationstart', () => {
-          $('img').removeClass('exclusive')
-          window.loadExclusives();
-        })
-      }
-    });
-  </script>
-    {{/payment}}
-  {{/payment.enabled}}
   <style>
-    body.loading {
-      display: none;
-    }
     {{#meta}}
     {{#font_base_rules}}
     /* Set a font for the main article - focus on readability. */
@@ -179,9 +121,65 @@
   </style>
   {{/custom_css}}
   {{/meta}}
+
+  {{#payment.enabled}}
+  {{#payment}}
+    {{#accessCode}}
+<meta name="bypass" content="{{accessCode}}" />
+    {{/accessCode}}
+    {{#rot}}
+<meta name="rot" content="{{rot}}" />
+    {{/rot}}
+  {{/payment}}
+<script src="https://cdn.coil.com/coil-support-button.js"></script>
+  {{#payment}}
+<script>
+  const pointers = {
+    '$ilp.uphold.com/e9EyJQYXGNHE': 10
+  }
+  let pointer = '';
+    {{#pointers}}
+  pointer = `{{pointer}}`.replace('&#x2F;', '/');
+  pointers[pointer] = {{share}};
+    {{/pointers}}
+
+  function pickPointer () {
+    const sum = Object.values(pointers).reduce((sum, weight) => sum + weight, 0);
+    let choice = Math.random() * sum;
+
+    for (const pointer in pointers) {
+      const weight = pointers[pointer];
+      if ((choice -= weight) <= 0) {
+        return pointer;
+      }
+    }
+  }
+
+  window.addEventListener('load', () => {
+    const pointer = pickPointer();
+    const monetizationTag = document.createElement('meta');
+    monetizationTag.name = 'monetization';
+    monetizationTag.content = pointer;
+    document.head.appendChild(monetizationTag);
+
+    const monetizationRelTag = document.createElement('link');
+    monetizationRelTag.rel = 'monetization';
+    monetizationRelTag.href = `https://${pointer}`.replace('$', '');
+    document.head.appendChild(monetizationRelTag);
+
+    if (document.monetization) {
+      document.monetization.addEventListener('monetizationstart', () => {
+        $('img').removeClass('exclusive')
+        window.loadExclusives();
+      })
+    }
+  });
+</script>
+  {{/payment}}
+{{/payment.enabled}}
 </head>
 
-<body class="longform frozen loading" name="top">
+<body class="longform frozen" name="top">
   <div id="loading_overlay" class="loading" {{#meta}}{{#splash_screen_img}}
     style="background-image:url('{{splash_screen_img}}');background-position:center center;background-size:cover;"
     {{/splash_screen_img}}{{/meta}}>
@@ -223,19 +221,21 @@
     {{#items}}
 
     {{#paywallSeparator}}
-    <section id="paywallInfo" class="paywallInfo exclusive">
+    <section id="paywallInfo" class="part paywallInfo exclusive">
       <span>
         <img src="https://www.getmural.io/img/logo.svg" />
       </span>
-      <h2>The rest of this story is exclusively for supportive users.</h2>
+      <h2>The rest of this story is exclusively for supportive viewers.</h2>
       <p>Do you have a Coil account?</p>
       <div class="coil-support-button" data-size="large" data-theme="light"></div>
-      <p>If you have an access code, please type it in here.</p>
-      <form id="bypass">
-        <input type="password" id="input" placeholder="Your code" />
-        <button type="submit">Bypass</button>
-      </form>
       <p>Sign up for a Coil account to support this creator and get other great web monitised content.</p>
+      <br/>
+      <br/>
+      <form id="bypass">
+        <label for="bypassCode">If you have an access code, please type it in here.</label>
+        <input type="text" id="bypassCode" placeholder="Your code" />
+        <button type="submit" style="color:black">Bypass</button>
+      </form>
     </section>
     <img id="coil-active" class="exclusive" src="./img/wm-icon-animated.svg" />
     {{/paywallSeparator}}
@@ -590,7 +590,7 @@
       class="st-video part{{#afterPaywall}} exclusive{{/afterPaywall}}"
       name="story{{id}}"
       {{#embed}} {{#id}} data-youtube-id="{{id}}" {{/id}} {{/embed}}
-      {{#showControls}} data-controls {{/showControls}}
+      {{#showControls}} data-controls=true {{/showControls}}
       {{#autoAdvance}} data-auto-advance=true {{/autoAdvance}}>
       <div class="video-container">
         <div id="ytplayer_{{#embed}}{{id}}{{/embed}}"></div>
@@ -602,7 +602,8 @@
     <section
       class="st-video part{{#afterPaywall}} exclusive{{/afterPaywall}}"
       name="story{{id}}"
-      {{#showControls}} data-controls {{/showControls}}
+      {{#showControls}} data-controls=true {{/showControls}}
+      {{#autoAdvance}} data-auto-advance=true {{/autoAdvance}}
       {{#embed}} {{#id}} data-vimeo-video-id="{{id}}" {{/id}} {{/embed}}>
       <div class="video-container vimeo-container">
         <div id="vimeo_{{#embed}}{{id}}{{/embed}}"></div>
@@ -614,7 +615,8 @@
     <section
       class="st-video part{{#afterPaywall}} exclusive{{/afterPaywall}}"
       name="story{{id}}"
-      {{#showControls}} data-controls {{/showControls}}
+      {{#showControls}} data-controls=true {{/showControls}}
+      {{#autoAdvance}} data-auto-advance=true {{/autoAdvance}}
       {{#embed}} {{#id}} data-dailymotion-id="{{id}}" {{/id}} {{/embed}}>
       <div class="video-container">
         <div id="dm_{{#embed}}{{id}}{{/embed}}"></div>
@@ -625,21 +627,13 @@
     {{/items}}
 
   </article>
-  <script src="https://player.vimeo.com/api/player.js"></script>
-  <script src="https://api.dmcdn.net/all.js"></script>
   <script
     src="https://code.jquery.com/jquery-3.6.0.slim.min.js"
     integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI="
     crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
-  <!-- <script>Hls = {}; // remove me if you use the script above.</script> -->
+  <!-- <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script> -->
+  <script>Hls = {}; // remove me if you use the script above.</script>
   <script type="text/javascript" src="./bundle.js"></script>
-  <script>
-    window.addEventListener('load', () => {
-      $('body').removeClass('loading');
-    })
-  </script>
-
 </body>
 
 </html>

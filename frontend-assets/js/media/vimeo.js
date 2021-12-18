@@ -1,5 +1,26 @@
 const VIMEO = {}
 
+let loaded = false
+
+function loadVimeo() {
+  if (!loaded) {
+    const tag = document.createElement('script')
+    tag.async = true
+    tag.src = 'https://player.vimeo.com/api/player.js'
+    tag.onload = window.onVimeoReadyCallback
+    const firstScriptTag = document.getElementsByTagName('script')[0]
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag)
+    loaded = true
+  }
+}
+
+const VimeoPromise = new Promise(function (resolve, reject) {
+  window.onVimeoReadyCallback = function () {
+    console.log('Vimeo ready')
+    resolve()
+  }
+})
+
 function setMuted(muted) {
   for (const index of Object.keys(VIMEO)) {
     VIMEO[index].setVolume(muted ? 0 : 1)
@@ -7,7 +28,14 @@ function setMuted(muted) {
 }
 
 function play(item, isSoundEnabled) {
-  VIMEO[item.index].play()
+  const player = VIMEO[item.index]
+
+  if (!player) {
+    return
+  }
+
+  player.setVolume(isSoundEnabled ? 1 : 0)
+  player.play()
 }
 
 function remove(item) {
@@ -22,13 +50,37 @@ function stick(item) {
 }
 
 function prepare(scrollStory, item) {
-  console.log('prepare vimeo', item.data)
-  VIMEO[item.index] = new Vimeo.Player('vimeo_' + item.data.vimeoVideoId, {
-    id: item.data.vimeoVideoId,
-    responsive: true,
-    autoplay: false,
-    controls: item.data.hasOwnProperty('controls'),
+  loadVimeo()
+
+  const canPlayThrough = new Promise(function (resolve, reject) {
+    VimeoPromise.then(function () {
+      const autoAdvance = item.data.autoAdvance
+      const player = new Vimeo.Player('vimeo_' + item.data.vimeoVideoId, {
+        id: item.data.vimeoVideoId,
+        responsive: true,
+        autoplay: false,
+        controls: !!item.data.controls,
+      })
+
+      player.on('loaded', resolve)
+      player.on('error', resolve)
+
+      player.on('ended', function () {
+        if (autoAdvance) {
+          const count = scrollStory.getItems().length
+          const id = item.index
+          const next = id + 1
+
+          if (next < count) {
+            scrollStory.index(next)
+          }
+        }
+      })
+
+      VIMEO[item.index] = player
+    })
   })
+  return canPlayThrough
 }
 
 module.exports = {
