@@ -150,7 +150,7 @@ function prepMediaElements(scrollStory) {
 
   scrollStory.MURAL_MEDIA = scrollStory.MURAL_AUDIO.concat(
     scrollStory.MURAL_VIDEO
-  )
+  ).filter((media) => media)
 }
 
 function setItemFocus(item) {
