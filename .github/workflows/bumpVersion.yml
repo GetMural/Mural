@@ -16,7 +16,7 @@ jobs:
       - name: 'Checkout source code'
         uses: 'actions/checkout@v2'
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.github_token }}
       - run: cat package.json
       - name: 'Automated Version Bump'
         id: version-bump
@@ -24,7 +24,7 @@ jobs:
         with:
           tag-prefix: 'v'
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.github_token }}
       - run: cat package.json
       - name: 'Output Step'
         env:
