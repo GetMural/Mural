@@ -43,7 +43,7 @@ jobs:
       - name: Check out Git repository
         uses: actions/checkout@v2
         with:
-          ref: main
+          ref: ${{ steps.version-bump.outputs.newTag }}
           fetch-depth: 2
       - name: Install Node.js, NPM and Yarn
         uses: actions/setup-node@v1
