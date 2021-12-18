@@ -136,9 +136,6 @@
     {{/payment}}
   {{/payment.enabled}}
   <style>
-    body.loading {
-      display: none;
-    }
     {{#meta}}
     {{#font_base_rules}}
     /* Set a font for the main article - focus on readability. */
@@ -181,7 +178,7 @@
   {{/meta}}
 </head>
 
-<body class="longform frozen loading" name="top">
+<body class="longform frozen" name="top">
   <div id="loading_overlay" class="loading" {{#meta}}{{#splash_screen_img}}
     style="background-image:url('{{splash_screen_img}}');background-position:center center;background-size:cover;"
     {{/splash_screen_img}}{{/meta}}>
@@ -633,12 +630,6 @@
   <!-- <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script> -->
   <script>Hls = {}; // remove me if you use the script above.</script>
   <script type="text/javascript" src="./bundle.js"></script>
-  <script>
-    window.addEventListener('load', () => {
-      $('body').removeClass('loading');
-    })
-  </script>
-
 </body>
 
 </html>

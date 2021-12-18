@@ -303,33 +303,16 @@ function init() {
     }
   }
 
-  Promise.all(LOAD_PROMISES)
+  return Promise.all(LOAD_PROMISES)
 }
 
 function load() {
-  const $story = $('#scrollytelling')
-
   $story.on('itemfocus', onItemFocus)
   $story.on('itementerviewport', onItemEnterViewport)
   $story.on('itemblur', onItemBlur)
 
   const active = scrollStory.getActiveItem()
-
-  if (active && active.data.video) {
-    videoMedia.playBackgroundVideo(active.index, getVideoAttrs(active))
-    videoMedia.fixBackgroundVideo(active.el)
-  }
-
-  if (active && active.data.audio) {
-    audioMedia.playBackgroundAudio(active, {
-      muted: !isSoundEnabled,
-    })
-  }
-
-  if (active && active.data.youtubeId) {
-    youtubeMedia.play(active, isSoundEnabled)
-    youtubeMedia.stick(active)
-  }
+  setItemFocus(active)
 }
 
 function loadExclusives() {

@@ -4,6 +4,7 @@ module.exports = {
   entry: {
     app: path.resolve(__dirname, 'frontend-assets', 'js', 'app.js'),
   },
+  devtool: 'source-map',
   output: {
     path: path.resolve(__dirname, 'frontend-assets-build'),
     filename: 'bundle.js',
