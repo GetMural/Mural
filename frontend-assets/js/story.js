@@ -132,13 +132,15 @@ if (WINDOW_WIDTH >= 1024) {
   attrKey = 'src-phone'
 }
 
-function prepMediaElements(scrollStory) {
+let storyContent = scrollStory.getItems()
+let paywall = storyContent.filter((item) => item.id === 'paywallInfo')[0]
+
+function prepMediaElements() {
   // need a central media registry for user gesture purposes.
   scrollStory.MURAL_AUDIO = []
   scrollStory.MURAL_VIDEO = []
 
-  const items = scrollStory.getItems()
-  items.forEach(function (item) {
+  storyContent.forEach(function (item) {
     if (item.data.video) {
       scrollStory.MURAL_VIDEO[item.index] = document.createElement('video')
     }
@@ -233,9 +235,7 @@ function onItemEnterViewport(ev, item) {
 function init() {
   WINDOW_WIDTH = $(window).width()
 
-  prepMediaElements(scrollStory)
-
-  const storyItems = scrollStory.getItems()
+  prepMediaElements()
 
   // parallax.
   $('[data-scroll-speed]').moveIt()
@@ -250,7 +250,7 @@ function init() {
       $this.addClass('muted')
     }
 
-    storyItems.forEach(function (item) {
+    storyContent.forEach(function (item) {
       if (item.data.video) {
         const muted = !isSoundEnabled || item.data.muted
         videoMedia.setMuted(item.index, muted)
@@ -272,7 +272,14 @@ function init() {
   })
 
   $('nav').on('click', 'li', function () {
-    scrollStory.index(parseInt(this.dataset.index, 10))
+    const itemId = parseInt(this.dataset.index, 10)
+    const quarantined = paywall && itemId >= paywall.index
+
+    if (quarantined) {
+      scrollStory.index(paywall.index)
+    } else {
+      scrollStory.index(itemId)
+    }
   })
 
   const active = scrollStory.getActiveItem()
@@ -286,8 +293,8 @@ function init() {
   })
 
   // push two in advance
-  if (active && active.index + 1 < storyItems.length) {
-    const loadPromise = loadItem(storyItems[active.index + 1])
+  if (active && active.index + 1 < storyContent.length) {
+    const loadPromise = loadItem(storyContent[active.index + 1])
 
     if (loadPromise) {
       LOAD_PROMISES.push(loadPromise)
@@ -295,8 +302,8 @@ function init() {
   }
 
   // push two in advance
-  if (active && active.index + 2 < storyItems.length) {
-    const loadPromise = loadItem(storyItems[active.index + 2])
+  if (active && active.index + 2 < storyContent.length) {
+    const loadPromise = loadItem(storyContent[active.index + 2])
 
     if (loadPromise) {
       LOAD_PROMISES.push(loadPromise)
@@ -316,12 +323,8 @@ function load() {
 }
 
 function loadExclusives() {
-  const content = scrollStory.getItems()
-  const paywall = content.filter((item) => item.id === 'paywallInfo')
+  scrollStory.filter(storyContent[paywall.index])
 
-  scrollStory.filter(content[paywall[0].index])
-
-  console.log(scrollStory.getItems())
   $('section').removeClass('exclusive')
   scrollStory.updateOffsets()
 }
