@@ -316,6 +316,12 @@ function load() {
 }
 
 function loadExclusives() {
+  const content = scrollStory.getItems()
+  const paywall = content.filter((item) => item.id === 'paywallInfo')
+
+  scrollStory.filter(content[paywall[0].index])
+
+  console.log(scrollStory.getItems())
   $('section').removeClass('exclusive')
   scrollStory.updateOffsets()
 }
