@@ -74,7 +74,7 @@ function prepare(scrollStory, item) {
   const autoAdvance = item.data.autoAdvance
   const id = item.index
   const youtube_id = getYoutubeId(item)
-  const controls = item.data.hasOwnProperty('controls') ? 1 : 0
+  const controls = item.data.controls ? 1 : 0
 
   const canPlayThrough = new Promise(function (resolve, reject) {
     YouTubePromise.then(function () {

@@ -26,7 +26,14 @@ function setMuted(muted) {
 }
 
 function play(item, isSoundEnabled) {
-  VIMEO[item.index].play()
+  const player = VIMEO[item.index]
+
+  if (!player) {
+    return
+  }
+
+  player.setVolume(isSoundEnabled ? 1 : 0)
+  player.play()
 }
 
 function remove(item) {
@@ -45,15 +52,30 @@ function prepare(scrollStory, item) {
 
   const canPlayThrough = new Promise(function (resolve, reject) {
     VimeoPromise.then(function () {
-      VIMEO[item.index] = new Vimeo.Player('vimeo_' + item.data.vimeoVideoId, {
+      const autoAdvance = item.data.autoAdvance
+      const player = new Vimeo.Player('vimeo_' + item.data.vimeoVideoId, {
         id: item.data.vimeoVideoId,
         responsive: true,
         autoplay: false,
-        controls: item.data.hasOwnProperty('controls'),
+        controls: !!item.data.controls,
       })
 
-      VIMEO[item.index].on('loaded', resolve)
-      VIMEO[item.index].on('error', resolve)
+      player.on('loaded', resolve)
+      player.on('error', resolve)
+
+      player.on('ended', function () {
+        if (autoAdvance) {
+          const count = scrollStory.getItems().length
+          const id = item.index
+          const next = id + 1
+
+          if (next < count) {
+            scrollStory.index(next)
+          }
+        }
+      })
+
+      VIMEO[item.index] = player
     })
   })
   return canPlayThrough

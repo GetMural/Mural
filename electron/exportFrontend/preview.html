@@ -588,7 +588,7 @@
       class="st-video part{{#afterPaywall}} exclusive{{/afterPaywall}}"
       name="story{{id}}"
       {{#embed}} {{#id}} data-youtube-id="{{id}}" {{/id}} {{/embed}}
-      {{#showControls}} data-controls {{/showControls}}
+      {{#showControls}} data-controls=true {{/showControls}}
       {{#autoAdvance}} data-auto-advance=true {{/autoAdvance}}>
       <div class="video-container">
         <div id="ytplayer_{{#embed}}{{id}}{{/embed}}"></div>
@@ -600,7 +600,8 @@
     <section
       class="st-video part{{#afterPaywall}} exclusive{{/afterPaywall}}"
       name="story{{id}}"
-      {{#showControls}} data-controls {{/showControls}}
+      {{#showControls}} data-controls=true {{/showControls}}
+      {{#autoAdvance}} data-auto-advance=true {{/autoAdvance}}
       {{#embed}} {{#id}} data-vimeo-video-id="{{id}}" {{/id}} {{/embed}}>
       <div class="video-container vimeo-container">
         <div id="vimeo_{{#embed}}{{id}}{{/embed}}"></div>
@@ -612,7 +613,7 @@
     <section
       class="st-video part{{#afterPaywall}} exclusive{{/afterPaywall}}"
       name="story{{id}}"
-      {{#showControls}} data-controls {{/showControls}}
+      {{#showControls}} data-controls=true {{/showControls}}
       {{#embed}} {{#id}} data-dailymotion-id="{{id}}" {{/id}} {{/embed}}>
       <div class="video-container">
         <div id="dm_{{#embed}}{{id}}{{/embed}}"></div>
