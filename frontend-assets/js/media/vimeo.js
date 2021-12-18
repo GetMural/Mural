@@ -5,6 +5,7 @@ let loaded = false
 function loadVimeo() {
   if (!loaded) {
     const tag = document.createElement('script')
+    tag.async = true
     tag.src = 'https://player.vimeo.com/api/player.js'
     tag.onload = window.onVimeoReadyCallback
     const firstScriptTag = document.getElementsByTagName('script')[0]
@@ -15,6 +16,7 @@ function loadVimeo() {
 
 const VimeoPromise = new Promise(function (resolve, reject) {
   window.onVimeoReadyCallback = function () {
+    console.log('Vimeo ready')
     resolve()
   }
 })

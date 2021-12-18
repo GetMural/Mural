@@ -112,7 +112,8 @@
     },
     "globals": {
       "Vimeo": false,
-      "YT": false
+      "YT": false,
+      "DM": false
     }
   },
   "browserslist": {

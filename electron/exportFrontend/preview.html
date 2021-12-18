@@ -616,6 +616,7 @@
       class="st-video part{{#afterPaywall}} exclusive{{/afterPaywall}}"
       name="story{{id}}"
       {{#showControls}} data-controls=true {{/showControls}}
+      {{#autoAdvance}} data-auto-advance=true {{/autoAdvance}}
       {{#embed}} {{#id}} data-dailymotion-id="{{id}}" {{/id}} {{/embed}}>
       <div class="video-container">
         <div id="dm_{{#embed}}{{id}}{{/embed}}"></div>
@@ -626,7 +627,6 @@
     {{/items}}
 
   </article>
-  <script src="https://api.dmcdn.net/all.js"></script>
   <script
     src="https://code.jquery.com/jquery-3.6.0.slim.min.js"
     integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI="

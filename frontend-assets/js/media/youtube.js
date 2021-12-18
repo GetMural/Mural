@@ -4,6 +4,7 @@ let loaded = false
 function loadYouTube() {
   if (!loaded) {
     const tag = document.createElement('script')
+    tag.async = true
     tag.src = 'https://www.youtube.com/player_api'
     const firstScriptTag = document.getElementsByTagName('script')[0]
     firstScriptTag.parentNode.insertBefore(tag, firstScriptTag)
@@ -13,6 +14,7 @@ function loadYouTube() {
 
 const YouTubePromise = new Promise(function (resolve, reject) {
   window.onYouTubePlayerAPIReady = function () {
+    console.log('YouTube ready')
     resolve()
   }
 })
