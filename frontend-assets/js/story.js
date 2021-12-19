@@ -328,6 +328,7 @@ function loadExclusives() {
   $('section').removeClass('exclusive')
   scrollStory.updateOffsets()
 }
+window.loadExclusives = loadExclusives
 
 function getVideoAttrs(item) {
   const muted = !isSoundEnabled

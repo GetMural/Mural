@@ -64,28 +64,23 @@
   <link rel="shortcut icon" href="./img/favicon.ico">
   <link rel="apple-touch-icon" href="./img/touch-icon.png">
 
-  {{#manifest}}
-    <link rel="stylesheet" type="text/css" href="{{css}}">
-  {{/manifest}}
-
   {{#meta}}
-  {{#font_base_link}}
-  {{{font_base_link}}}
-  {{/font_base_link}}
-  {{^font_base_link}}
-  <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:ital,wght@0,400;0,700;1,300&display=swap"
-    rel="stylesheet">
-  {{/font_base_link}}
-  {{/meta}}
+    {{#font_base_link}}
+      {{{font_base_link}}}
+    {{/font_base_link}}
 
-  {{#meta}}
-  {{#font_headers_link}}
-  {{{font_headers_link}}}
-  {{/font_headers_link}}
+    {{^font_base_link}}
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:ital,wght@0,400;0,700;1,300&display=swap"
+      rel="stylesheet">
+    {{/font_base_link}}
+
+    {{#font_headers_link}}
+      {{{font_headers_link}}}
+    {{/font_headers_link}}
   {{/meta}}
 
   <style>
-    {{#meta}}
+  {{#meta}}
     {{#font_base_rules}}
     /* Set a font for the main article - focus on readability. */
     body,
@@ -99,11 +94,9 @@
     .slideshow-horizontal {
       {{{font_base_rules}}}
     }
-
     {{/font_base_rules}}
 
     {{#font_headers_rules}}
-
     /* Set a special font just for item headers. */
     .header h1,
     .header h2,
@@ -112,19 +105,13 @@
     header {
       {{{font_headers_rules}}}
     }
-
     {{/font_headers_rules}}
 
-    {{/meta}}
-  </style>
-
-  {{#meta}}
-  {{#custom_css}}
-  <style>
-    {{{custom_css}}}
-  </style>
-  {{/custom_css}}
+    {{#custom_css}}
+      {{{custom_css}}}
+    {{/custom_css}}
   {{/meta}}
+  </style>
 
   {{#payment.enabled}}
   {{#payment}}
