@@ -7,7 +7,7 @@
   },
   "description": "Mural is a tool for visual storytelling.",
   "license": "LGPL",
-  "version": "2.3.0",
+  "version": "2.3.1",
   "private": true,
   "repository": {
     "type": "git",
