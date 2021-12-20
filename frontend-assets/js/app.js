@@ -2,7 +2,7 @@ require('../css/blueimp-gallery.css')
 require('../css/blueimp-gallery-indicator.css')
 require('../css/style.scss')
 
-const $ = require('jquery')
+require('stickybits/src/jquery.stickybits')
 const story = require('./story')
 const form = $('#bypass')
 

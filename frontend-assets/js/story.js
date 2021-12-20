@@ -1,6 +1,3 @@
-const $ = require('jquery')
-require('scrollstory/jquery.scrollstory.js')
-
 const blueimp = require('blueimp-gallery/js/blueimp-gallery')
 const videoMedia = require('./media/video')
 const imageMedia = require('./media/images')
@@ -8,7 +5,6 @@ const audioMedia = require('./media/audio')
 const youtubeMedia = require('./media/youtube')
 const vimeoMedia = require('./media/vimeo')
 const dailymotionMedia = require('./media/dailymotion')
-require("stickybits/src/jquery.stickybits");
 
 $.fn.moveIt = function () {
   var $window = $(window)
@@ -421,17 +417,19 @@ function loadItem(item) {
   }
 
   if (item.data.slides) {
-    item.el.find('.bg-image').each(function (i) {
-      const $el = $(this)
-      const src = $el.data(scrKey)
+    item.el
+      .find('.bg-image')
+      .each(function (i) {
+        const $el = $(this)
+        const src = $el.data(scrKey)
 
-      const loadPromise = imageMedia.imageLoadPromise(src).then(() => {
-        $el.css('background-image', `url(${src})`)
+        const loadPromise = imageMedia.imageLoadPromise(src).then(() => {
+          $el.css('background-image', `url(${src})`)
+        })
+
+        returnPromises.push(loadPromise)
       })
-
-      returnPromises.push(loadPromise)
-    })
-    .stickybits()
+      .stickybits()
   }
 
   if (item.data.parallax) {
