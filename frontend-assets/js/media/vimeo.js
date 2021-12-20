@@ -1,4 +1,5 @@
 const VIMEO = {}
+const DATA = {}
 
 let loaded = false
 
@@ -16,7 +17,6 @@ function loadVimeo() {
 
 const VimeoPromise = new Promise(function (resolve, reject) {
   window.onVimeoReadyCallback = function () {
-    console.log('Vimeo ready')
     resolve()
   }
 })
@@ -28,20 +28,49 @@ function setMuted(muted) {
 }
 
 function play(item, isSoundEnabled) {
-  const player = VIMEO[item.index]
+  const id = item.index
+  DATA[id].active = true
+  const player = VIMEO[id]
 
   if (!player) {
     return
   }
 
   player.setVolume(isSoundEnabled ? 1 : 0)
-  player.play()
+  DATA[id].playPromise = DATA[id].playPromise.then(function () {
+    return player.getPaused().then(function (paused) {
+      const active = DATA[id].active
+      if (paused && active) {
+        return player.play()
+      } else if (!paused && !active) {
+        return player.pause()
+      }
+    })
+  })
 }
 
 function remove(item) {
+  const id = item.index
+  DATA[id].active = false
+  const player = VIMEO[id]
+
+  if (!player) {
+    return
+  }
+
   const $container = item.el.find('.video-container')
   $container.css('position', '')
-  VIMEO[item.index].pause()
+
+  DATA[id].playPromise = DATA[id].playPromise.then(function () {
+    return player.getPaused().then(function (paused) {
+      const active = DATA[id].active
+      if (paused && active) {
+        return player.play()
+      } else if (!paused && !active) {
+        return player.pause()
+      }
+    })
+  })
 }
 
 function stick(item) {
@@ -50,6 +79,7 @@ function stick(item) {
 }
 
 function prepare(scrollStory, item) {
+  const id = item.index
   loadVimeo()
 
   const canPlayThrough = new Promise(function (resolve, reject) {
@@ -68,7 +98,6 @@ function prepare(scrollStory, item) {
       player.on('ended', function () {
         if (autoAdvance) {
           const count = scrollStory.getItems().length
-          const id = item.index
           const next = id + 1
 
           if (next < count) {
@@ -77,7 +106,9 @@ function prepare(scrollStory, item) {
         }
       })
 
-      VIMEO[item.index] = player
+      VIMEO[id] = player
+      DATA[id] = {}
+      DATA[id].playPromise = Promise.resolve()
     })
   })
   return canPlayThrough
