@@ -8,7 +8,7 @@ const audioMedia = require('./media/audio')
 const youtubeMedia = require('./media/youtube')
 const vimeoMedia = require('./media/vimeo')
 const dailymotionMedia = require('./media/dailymotion')
-const { default: stickybits } = require('stickybits')
+require("stickybits/src/jquery.stickybits");
 
 $.fn.moveIt = function () {
   var $window = $(window)
@@ -431,8 +431,7 @@ function loadItem(item) {
 
       returnPromises.push(loadPromise)
     })
-
-    stickybits('.bg-image')
+    .stickybits()
   }
 
   if (item.data.parallax) {
