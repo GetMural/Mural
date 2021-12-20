@@ -1,4 +1,6 @@
 const YOUTUBE = {}
+const DATA = {}
+
 let loaded = false
 
 function loadYouTube() {
@@ -14,7 +16,6 @@ function loadYouTube() {
 
 const YouTubePromise = new Promise(function (resolve, reject) {
   window.onYouTubePlayerAPIReady = function () {
-    console.log('YouTube ready')
     resolve()
   }
 })
@@ -42,26 +43,46 @@ function setMuted(muted) {
 }
 
 function play(item, isSoundEnabled) {
+  const id = item.index
+  DATA[id].active = true
   const youtube_id = getYoutubeId(item)
-  const player = YOUTUBE[youtube_id]
 
-  if (!player) {
-    return
-  }
+  DATA[id].playPromise = DATA[id].playPromise.then(function () {
+    const player = YOUTUBE[youtube_id]
+    const active = DATA[id].active
 
-  if (isSoundEnabled) {
-    player.unMute()
-  } else {
-    player.mute()
-  }
-  player.playVideo()
+    if (isSoundEnabled) {
+      player.unMute()
+    } else {
+      player.mute()
+    }
+
+    if (active) {
+      player.playVideo()
+    } else {
+      player.pauseVideo()
+    }
+  })
 }
 
 function remove(item) {
+  const id = item.index
+  DATA[id].active = false
   const youtube_id = getYoutubeId(item)
+
   const $container = item.el.find('.video-container')
   $container.css('position', '')
-  YOUTUBE[youtube_id].pauseVideo()
+
+  DATA[id].playPromise = DATA[id].playPromise.then(function () {
+    const player = YOUTUBE[youtube_id]
+    const active = DATA[id].active
+
+    if (active) {
+      player.playVideo()
+    } else {
+      player.pauseVideo()
+    }
+  })
 }
 
 function stick(item) {
@@ -117,6 +138,7 @@ function prepare(scrollStory, item) {
     })
   })
 
+  DATA[id] = { playPromise: canPlayThrough }
   return canPlayThrough
 }
 
