@@ -1,6 +1,6 @@
 const $ = require('jquery')
-const mediaUtils = require('./media')
 const Hls = require('hls.js')
+const mediaUtils = require('./media')
 
 const MEDIA = []
 const DATA = []
@@ -8,25 +8,27 @@ const HSL_TYPE = 'application/vnd.apple.mpegurl'
 
 function stopVideo(id) {
   const video = MEDIA[id]
-  $(video).stop(true)
   DATA[id].active = false
+  $(video).finish()
 
   if (video.paused) {
-    DATA[id].playPromise = null
+    DATA[id].playPromise = Promise.resolve()
     return
   }
 
-  mediaUtils.fadeout(video, function () {
-    return DATA[id].active === false
+  DATA[id].playPromise = DATA[id].playPromise.then(function () {
+    return mediaUtils.fadeout(video, function () {
+      return DATA[id].active === false
+    })
   })
 }
 
 function playBackgroundVideo(id, attrs) {
   const video = MEDIA[id]
-  $(video).stop(true)
+  DATA[id].active = true
+  $(video).finish()
 
   if (!video.paused) {
-    DATA[id].active = true
     return
   }
 
@@ -37,8 +39,9 @@ function playBackgroundVideo(id, attrs) {
     (!DATA[id].paused && attrs.autoplay) ||
     (DATA[id].playTriggered && !DATA[id].paused)
   ) {
-    DATA[id].playPromise = mediaUtils.fadein(video)
-    DATA[id].active = true
+    DATA[id].playPromise = DATA[id].playPromise.then(function () {
+      return mediaUtils.fadein(video)
+    })
   }
 }
 
@@ -64,6 +67,7 @@ function prepareVideo(scrollStory, $el, id, srcs, attrs) {
   video.setAttribute('playsinline', '')
   MEDIA[id] = video
   DATA[id] = {}
+  DATA[id].playPromise = Promise.resolve()
   let canPlayThrough
 
   const sources = srcs.filter((src) => src.src !== undefined)

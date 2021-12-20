@@ -51,9 +51,9 @@ function setMuted(id, muted) {
 function playBackgroundAudio(item, attrs) {
   const id = item.index
   const audio = MEDIA[id]
+  DATA[id].active = true
 
   audio.pause()
-  DATA[id].active = true
 
   if (!audio.paused) {
     return
