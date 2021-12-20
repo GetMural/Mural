@@ -30,14 +30,10 @@ function setMuted(muted) {
 function play(item, isSoundEnabled) {
   const id = item.index
   DATA[id].active = true
-  const player = VIMEO[id]
 
-  if (!player) {
-    return
-  }
-
-  player.setVolume(isSoundEnabled ? 1 : 0)
   DATA[id].playPromise = DATA[id].playPromise.then(function () {
+    const player = VIMEO[id]
+    player.setVolume(isSoundEnabled ? 1 : 0)
     return player.getPaused().then(function (paused) {
       const active = DATA[id].active
       if (paused && active) {
@@ -52,16 +48,13 @@ function play(item, isSoundEnabled) {
 function remove(item) {
   const id = item.index
   DATA[id].active = false
-  const player = VIMEO[id]
-
-  if (!player) {
-    return
-  }
 
   const $container = item.el.find('.video-container')
   $container.css('position', '')
 
   DATA[id].playPromise = DATA[id].playPromise.then(function () {
+    const player = VIMEO[id]
+
     return player.getPaused().then(function (paused) {
       const active = DATA[id].active
       if (paused && active) {
@@ -79,8 +72,8 @@ function stick(item) {
 }
 
 function prepare(scrollStory, item) {
-  const id = item.index
   loadVimeo()
+  const id = item.index
 
   const canPlayThrough = new Promise(function (resolve, reject) {
     VimeoPromise.then(function () {
@@ -107,10 +100,10 @@ function prepare(scrollStory, item) {
       })
 
       VIMEO[id] = player
-      DATA[id] = {}
-      DATA[id].playPromise = Promise.resolve()
     })
   })
+
+  DATA[id] = { playPromise: canPlayThrough }
   return canPlayThrough
 }
 
