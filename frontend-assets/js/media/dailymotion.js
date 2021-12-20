@@ -1,4 +1,5 @@
 const DAILYMOTION = {}
+const DATA = {}
 
 let loaded = false
 
@@ -15,7 +16,6 @@ function loadDailyMotion() {
 
 const DailyMotionPromise = new Promise(function (resolve, reject) {
   window.dmAsyncInit = function () {
-    console.log('DailyMotionPromise')
     resolve()
   }
 })
@@ -27,13 +27,44 @@ function setMuted(muted) {
 }
 
 function play(item, isSoundEnabled) {
-  DAILYMOTION[item.index].play()
+  const id = item.index
+  DATA[id].active = true
+
+  DATA[id].playPromise = DATA[id].playPromise.then(function () {
+    const player = DAILYMOTION[id]
+    const active = DATA[id].active
+
+    if (isSoundEnabled) {
+      player.setMuted(false)
+    } else {
+      player.setMuted(true)
+    }
+
+    if (active) {
+      player.play()
+    } else {
+      player.pause()
+    }
+  })
 }
 
 function remove(item) {
+  const id = item.index
+  DATA[id].active = false
+
   const $container = item.el.find('.video-container')
   $container.css('position', '')
-  DAILYMOTION[item.index].pause()
+
+  DATA[id].playPromise = DATA[id].playPromise.then(function () {
+    const player = DAILYMOTION[id]
+    const active = DATA[id].active
+
+    if (active) {
+      player.play()
+    } else {
+      player.pause()
+    }
+  })
 }
 
 function stick(item) {
@@ -43,6 +74,7 @@ function stick(item) {
 
 function prepare(scrollStory, item) {
   loadDailyMotion()
+  const id = item.index
 
   const canPlayThrough = new Promise(function (resolve, reject) {
     DailyMotionPromise.then(function () {
@@ -63,7 +95,6 @@ function prepare(scrollStory, item) {
             video_end: function () {
               if (autoAdvance) {
                 const count = scrollStory.getItems().length
-                const id = item.index
                 const next = id + 1
 
                 if (next < count) {
@@ -83,6 +114,7 @@ function prepare(scrollStory, item) {
     })
   })
 
+  DATA[id] = { playPromise: canPlayThrough }
   return canPlayThrough
 }
 
