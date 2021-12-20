@@ -5,7 +5,7 @@
   margin: 0;
   padding: 0;
 }
-html,
+ht
 body,
 div,
 span,
@@ -2784,7 +2784,7 @@ article .part.box_text p {
   width: 100vw;
   height: 100vh;
   display: grid;
-  grid-template-rows: auto;
+  grid-template-rows: none;
   grid-template-areas:
     'intro'
     '.'
@@ -2802,7 +2802,7 @@ article .part.box_text p {
 .loading .logo {
   align-items: center;
   grid-area: logo;
-  max-height: 25vh;
+  max-height: 20vh;
 }
 
 .loading .intro {
@@ -2824,7 +2824,6 @@ article .part.box_text p {
   align-items: center;
   display: flex;
   grid-area: storyname;
-  height: 150px;
   justify-content: center;
 }
 
@@ -2894,6 +2893,9 @@ article .part.box_text p {
   pointer-events: all;
   text-align: center;
   width: 100%;
+  img {
+    width: 150px;
+  }
   form {
     input {
       color: #000;
