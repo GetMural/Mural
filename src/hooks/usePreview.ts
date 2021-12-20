@@ -54,7 +54,7 @@ export default function usePreview() {
                   audio: item.audio
                     ? {
                         loop: !!item.loop,
-                        mp3: item.audio.path,
+                        mp3: media(item.audio.path),
                         // ogg: string
                         audio_credits: convertToHtml(item.audioCredits),
                       }
@@ -133,7 +133,7 @@ export default function usePreview() {
                   },
                   audio: item.audio
                     ? {
-                        mp3: item.audio.path,
+                        mp3: media(item.audio.path),
                         loop: !!item.audioLoop,
                       }
                     : undefined,

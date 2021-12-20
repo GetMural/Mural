@@ -12208,11 +12208,6 @@ schema-utils@^3.0.0:
     ajv "^6.12.5"
     ajv-keywords "^3.5.2"
 
-scrollstory@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/scrollstory/-/scrollstory-1.1.0.tgz#89b544627fc2ea621adb5e6fd2455209769868ef"
-  integrity sha512-jTTiWadlOtz/s5/H0ad2cn74EaeINhB6OrOdyklrAWvQ0hMS8ua1gbxC3QXzMPAgj1/Kr15vaGlzi0NL1j2vXA==
-
 secure-compare@3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/secure-compare/-/secure-compare-3.0.1.tgz#f1a0329b308b221fae37b9974f3d578d0ca999e3"

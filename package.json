@@ -49,6 +49,7 @@
     "react-sortablejs": "^6.0.0",
     "redux-localstorage-simple": "^2.4.1",
     "redux-logger": "^3.0.6",
+    "stickybits": "^3.7.9",
     "slugify": "^1.6.1",
     "sortablejs": "^1.14.0",
     "typeface-ubuntu": "^1.1.13",
@@ -113,7 +114,8 @@
     "globals": {
       "Vimeo": false,
       "YT": false,
-      "DM": false
+      "DM": false,
+      "$": false
     }
   },
   "browserslist": {
@@ -167,8 +169,6 @@
     "rimraf": "^3.0.2",
     "sass": "^1.42.1",
     "sass-loader": "^10",
-    "scrollstory": "^1.1.0",
-    "stickybits": "^3.7.9",
     "style-loader": "^2.0.0",
     "svg-loader": "^0.0.2",
     "wait-on": "^6.0.0",
