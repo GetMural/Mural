@@ -2,38 +2,37 @@ const $ = require('jquery')
 const FADE_DURATION = 20
 
 function fadeout(media, shouldPause) {
-  $(media).animate(
-    { volume: 0 },
-    {
-      duration: FADE_DURATION,
-      always: function () {
-        if (shouldPause()) {
-          media.pause()
+  return Promise.resolve().then(function () {
+    return $(media)
+      .animate(
+        { volume: 0 },
+        {
+          duration: FADE_DURATION,
+          always: function () {
+            if (shouldPause() && !media.paused) {
+              media.pause()
+            }
+          },
         }
-      },
-    }
-  )
+      )
+      .promise()
+  })
 }
 
 function fadein(media) {
   media.volume = 0
   const playPromise = media.play()
 
-  playPromise
-    .then(function () {
-      $(media).animate(
+  playPromise.then(function () {
+    return $(media)
+      .animate(
         { volume: 1 },
         {
           duration: FADE_DURATION,
-          fail: function () {
-            console.log("couldn't animate volume")
-          },
         }
       )
-    })
-    .catch(function (e) {
-      console.log(e)
-    })
+      .promise()
+  })
 
   return playPromise
 }

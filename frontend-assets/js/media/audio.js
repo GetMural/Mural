@@ -1,3 +1,4 @@
+const $ = require('jquery')
 const mediaUtils = require('./media')
 
 const MEDIA = []
@@ -6,20 +7,21 @@ const DATA = []
 function stopAudio(id) {
   const audio = MEDIA[id]
   DATA[id].active = false
+  $(audio).finish()
 
   if (audio.paused) {
-    DATA[id].playPromise = null
+    DATA[id].playPromise = Promise.resolve()
     return
   }
 
-  audio.pause()
-
-  mediaUtils.fadeout(audio, function () {
-    // Allow it to restart from the beginning.
-    if (!audio.loop) {
-      audio.currentTime = 0
-    }
-    return DATA[id].active === false
+  DATA[id].playPromise = DATA[id].playPromise.then(function () {
+    return mediaUtils.fadeout(audio, function () {
+      // Allow it to restart from the beginning.
+      if (!audio.loop) {
+        audio.currentTime = 0
+      }
+      return DATA[id].active === false
+    })
   })
 }
 
@@ -27,6 +29,7 @@ function prepareAudio(scrollStory, $el, id, srcs, attrs) {
   const audio = scrollStory.MURAL_AUDIO[id]
   MEDIA[id] = audio
   DATA[id] = {}
+  DATA[id].playPromise = Promise.resolve()
   audio.loop = !!attrs.loop
   audio.preload = 'auto'
 
@@ -51,16 +54,17 @@ function setMuted(id, muted) {
 function playBackgroundAudio(item, attrs) {
   const id = item.index
   const audio = MEDIA[id]
-
-  audio.pause()
   DATA[id].active = true
+  $(audio).finish()
 
   if (!audio.paused) {
     return
   }
 
   audio.muted = attrs.muted
-  DATA[id].playPromise = mediaUtils.fadein(audio)
+  DATA[id].playPromise = DATA[id].playPromise.then(function () {
+    return mediaUtils.fadein(audio)
+  })
 }
 
 module.exports = {
