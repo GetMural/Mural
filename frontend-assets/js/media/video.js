@@ -45,16 +45,24 @@ function fadeIn(id, video) {
   }
 }
 
-function playBackgroundVideo(scrollStory, id) {
+function playBackgroundVideo(scrollStory, item) {
+  const id = item.index
   const video = scrollStory.MURAL_VIDEO[id]
   DATA[id].active = true
+  DATA[id].paused = false
+
   fadeIn(id, video)
+  item.el.find('.play').hide()
+  item.el.find('.pause').show()
 }
 
 function removeBackgroundVideo(scrollStory, item) {
   const $container = item.el.find('.video-container')
   $container.css('position', '')
+
   stopVideo(scrollStory, item.index)
+  item.el.find('.pause').hide()
+  item.el.find('.play').show()
 }
 
 function fixBackgroundVideo($el) {
@@ -114,8 +122,6 @@ function prepareVideo(scrollStory, $el, id, srcs, attrs) {
     $(this).hide()
     $el.find('.play').show()
   })
-
-  $el.find('.play').hide()
 
   if (attrs.autoAdvance) {
     video.addEventListener('ended', () => {

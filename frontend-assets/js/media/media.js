@@ -9,8 +9,6 @@ function fadeout(media, shouldPause) {
           duration: FADE_DURATION,
           always: function () {
             if (shouldPause() && !media.paused) {
-              console.log('pausing media')
-              console.log(media)
               media.pause()
             }
           },
@@ -30,10 +28,6 @@ function fadein(media) {
         { volume: 1 },
         {
           duration: FADE_DURATION,
-          always: function () {
-            console.log('playing media')
-            console.log(media)
-          },
         }
       )
       .promise()

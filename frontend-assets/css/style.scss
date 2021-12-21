@@ -2474,11 +2474,11 @@ article .part.box_text p {
 
   &.pause {
     background: transparent url('img/pause.png') center center no-repeat;
+    display: none;
   }
 
   &.play {
     background: transparent url('img/play.png') center center no-repeat;
-    display: none;
   }
 }
 

@@ -159,7 +159,7 @@ function prepMediaElements() {
 function setItemFocus(item) {
   if (item.data.video) {
     videoMedia.fixBackgroundVideo(item.el)
-    videoMedia.playBackgroundVideo(scrollStory, item.index)
+    videoMedia.playBackgroundVideo(scrollStory, item)
   }
 
   if (item.data.youtubeId) {
