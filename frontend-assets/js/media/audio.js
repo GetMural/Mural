@@ -1,4 +1,3 @@
-const $ = require('jquery')
 const mediaUtils = require('./media')
 
 const MEDIA = []

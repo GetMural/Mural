@@ -164,7 +164,6 @@
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "http-server": "^14.0.0",
     "img-loader": "^4.0.0",
-    "jquery": "^3.6.0",
     "rimraf": "^3.0.2",
     "sass": "^1.42.1",
     "sass-loader": "^10",
