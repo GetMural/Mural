@@ -1,20 +1,19 @@
 const FADE_DURATION = 20
 
-function fadeout(media, shouldPause) {
-  return Promise.resolve().then(function () {
-    return $(media)
-      .animate(
-        { volume: 0 },
-        {
-          duration: FADE_DURATION,
-          always: function () {
-            if (shouldPause() && !media.paused) {
-              media.pause()
-            }
-          },
-        }
-      )
-      .promise()
+function fadeout(media, data) {
+  return new Promise(function (resolve, reject) {
+    $(media).animate(
+      { volume: 0 },
+      {
+        duration: FADE_DURATION,
+        always: function () {
+          if (data.paused || (!data.active && !data.paused)) {
+            media.pause()
+          }
+          resolve()
+        },
+      }
+    )
   })
 }
 
@@ -23,14 +22,17 @@ function fadein(media) {
   const playPromise = media.play()
 
   playPromise.then(function () {
-    return $(media)
-      .animate(
+    return new Promise(function (resolve, reject) {
+      $(media).animate(
         { volume: 1 },
         {
           duration: FADE_DURATION,
+          always: function () {
+            resolve()
+          },
         }
       )
-      .promise()
+    })
   })
 
   return playPromise
