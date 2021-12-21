@@ -178,9 +178,7 @@ function setItemFocus(item) {
   }
 
   if (item.data.audio) {
-    audioMedia.playBackgroundAudio(item, {
-      muted: !isSoundEnabled,
-    })
+    audioMedia.playBackgroundAudio(scrollStory, item)
   }
 }
 
@@ -251,16 +249,8 @@ function init() {
       $this.addClass('muted')
     }
 
-    storyContent.forEach(function (item) {
-      // TODO just set on audio/video elements above.
-      // if (item.data.video) {
-      //   const muted = !isSoundEnabled || item.data.muted
-      //   videoMedia.setMuted(item.index, muted)
-      // }
-      // if (item.data.audio) {
-      //   const muted = !isSoundEnabled
-      //   audioMedia.setMuted(item.index, muted)
-      // }
+    scrollStory.MURAL_MEDIA.forEach(function (media) {
+      media.muted = isSoundEnabled
     })
 
     youtubeMedia.setMuted(!isSoundEnabled)
@@ -462,7 +452,6 @@ function loadItem(item) {
   if (item.data.audio) {
     const audioLoaded = audioMedia.prepareAudio(
       scrollStory,
-      item.el,
       item.index,
       [
         {

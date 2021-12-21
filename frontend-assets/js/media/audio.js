@@ -1,17 +1,10 @@
 const mediaUtils = require('./media')
+const DATA = {}
 
-const MEDIA = []
-const DATA = []
-
-function stopAudio(id) {
-  const audio = MEDIA[id]
+function stopAudio(scrollStory, id) {
+  const audio = scrollStory.MURAL_AUDIO[id]
   DATA[id].active = false
   $(audio).finish()
-
-  if (audio.paused) {
-    DATA[id].playPromise = Promise.resolve()
-    return
-  }
 
   DATA[id].playPromise = DATA[id].playPromise.then(function () {
     return mediaUtils.fadeout(audio, function () {
@@ -24,11 +17,8 @@ function stopAudio(id) {
   })
 }
 
-function prepareAudio(scrollStory, $el, id, srcs, attrs) {
+function prepareAudio(scrollStory, id, srcs, attrs) {
   const audio = scrollStory.MURAL_AUDIO[id]
-  MEDIA[id] = audio
-  DATA[id] = {}
-  DATA[id].playPromise = Promise.resolve()
   audio.loop = !!attrs.loop
   audio.preload = 'auto'
 
@@ -36,31 +26,20 @@ function prepareAudio(scrollStory, $el, id, srcs, attrs) {
   const canPlayThrough = mediaUtils.canPlayThroughPromise(audio, sources)
   audio.load()
 
+  DATA[id] = { playPromise: canPlayThrough }
   return canPlayThrough
 }
 
-function removeBackgroundAudio(id) {
-  stopAudio(id)
+function removeBackgroundAudio(scrollStory, id) {
+  stopAudio(scrollStory, id)
 }
 
-function setMuted(id, muted) {
-  const audio = MEDIA[id]
-  if (audio) {
-    audio.muted = muted
-  }
-}
-
-function playBackgroundAudio(item, attrs) {
+function playBackgroundAudio(scrollStory, item) {
   const id = item.index
-  const audio = MEDIA[id]
+  const audio = scrollStory.MURAL_AUDIO[id]
   DATA[id].active = true
   $(audio).finish()
 
-  if (!audio.paused) {
-    return
-  }
-
-  audio.muted = attrs.muted
   DATA[id].playPromise = DATA[id].playPromise.then(function () {
     return mediaUtils.fadein(audio)
   })
@@ -70,5 +49,4 @@ module.exports = {
   playBackgroundAudio,
   prepareAudio,
   removeBackgroundAudio,
-  setMuted,
 }
