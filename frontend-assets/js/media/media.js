@@ -1,4 +1,3 @@
-const $ = require('jquery')
 const FADE_DURATION = 20
 
 function fadeout(media, shouldPause) {

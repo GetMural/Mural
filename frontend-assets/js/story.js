@@ -138,11 +138,16 @@ function prepMediaElements() {
 
   storyContent.forEach(function (item) {
     if (item.data.video) {
-      scrollStory.MURAL_VIDEO[item.index] = document.createElement('video')
+      const video = document.createElement('video')
+      video.muted = !!item.data.muted
+      video.loop = !!item.data.loop
+      scrollStory.MURAL_VIDEO[item.index] = video
     }
 
     if (item.data.audio) {
-      scrollStory.MURAL_AUDIO[item.index] = document.createElement('audio')
+      const audio = document.createElement('audio')
+      audio.muted = item.data.muted
+      scrollStory.MURAL_AUDIO[item.index] = audio
     }
   })
 
@@ -154,7 +159,7 @@ function prepMediaElements() {
 function setItemFocus(item) {
   if (item.data.video) {
     videoMedia.fixBackgroundVideo(item.el)
-    videoMedia.playBackgroundVideo(item.index, getVideoAttrs(item))
+    videoMedia.playBackgroundVideo(scrollStory, item)
   }
 
   if (item.data.youtubeId) {
@@ -173,9 +178,7 @@ function setItemFocus(item) {
   }
 
   if (item.data.audio) {
-    audioMedia.playBackgroundAudio(item, {
-      muted: !isSoundEnabled,
-    })
+    audioMedia.playBackgroundAudio(scrollStory, item)
   }
 }
 
@@ -208,11 +211,11 @@ function setItemStop(item) {
   }
 
   if (item.data && item.data.video) {
-    videoMedia.removeBackgroundVideo(item.el, item.index)
+    videoMedia.removeBackgroundVideo(scrollStory, item)
   }
 
   if (item.data && item.data.audio) {
-    audioMedia.removeBackgroundAudio(item.index)
+    audioMedia.removeBackgroundAudio(scrollStory, item.index)
   }
 }
 
@@ -246,16 +249,8 @@ function init() {
       $this.addClass('muted')
     }
 
-    storyContent.forEach(function (item) {
-      if (item.data.video) {
-        const muted = !isSoundEnabled || item.data.muted
-        videoMedia.setMuted(item.index, muted)
-      }
-
-      if (item.data.audio) {
-        const muted = !isSoundEnabled
-        audioMedia.setMuted(item.index, muted)
-      }
+    scrollStory.MURAL_MEDIA.forEach(function (media) {
+      media.muted = !isSoundEnabled
     })
 
     youtubeMedia.setMuted(!isSoundEnabled)
@@ -325,18 +320,6 @@ function loadExclusives() {
   scrollStory.updateOffsets()
 }
 window.loadExclusives = loadExclusives
-
-function getVideoAttrs(item) {
-  const muted = !isSoundEnabled
-
-  return {
-    poster: item.data.poster,
-    autoplay: true,
-    muted: muted,
-    loop: item.data.loop,
-    autoAdvance: item.data.autoAdvance,
-  }
-}
 
 function loadItem(item) {
   if (LOADED_STORY_SECTIONS[item.index] !== undefined) {
@@ -460,7 +443,7 @@ function loadItem(item) {
           src: item.data.hls,
         },
       ],
-      getVideoAttrs(item)
+      videoMedia.getVideoAttrs(item)
     )
 
     returnPromises.push(videoLoaded)
@@ -469,7 +452,6 @@ function loadItem(item) {
   if (item.data.audio) {
     const audioLoaded = audioMedia.prepareAudio(
       scrollStory,
-      item.el,
       item.index,
       [
         {

@@ -1,43 +1,43 @@
-const $ = require('jquery')
 const Hls = require('hls.js')
 const mediaUtils = require('./media')
 
-const MEDIA = []
-const DATA = []
+const DATA = {}
 const HSL_TYPE = 'application/vnd.apple.mpegurl'
 
-function stopVideo(id) {
-  const video = MEDIA[id]
-  DATA[id].active = false
-  $(video).finish()
-
-  if (video.paused) {
-    DATA[id].playPromise = Promise.resolve()
-    return
+function getVideoAttrs(item) {
+  return {
+    poster: item.data.poster,
+    autoAdvance: item.data.autoAdvance,
   }
-
-  DATA[id].playPromise = DATA[id].playPromise.then(function () {
-    return mediaUtils.fadeout(video, function () {
-      return DATA[id].active === false
-    })
-  })
 }
 
-function playBackgroundVideo(id, attrs) {
-  const video = MEDIA[id]
-  DATA[id].active = true
+function fadeOut(id, video) {
   $(video).finish()
 
-  if (!video.paused) {
-    return
+  if (
+    (DATA[id].paused && !video.paused) ||
+    (!DATA[id].active && !video.paused)
+  ) {
+    DATA[id].playPromise = DATA[id].playPromise.then(function () {
+      return mediaUtils.fadeout(video, function () {
+        return DATA[id].paused || DATA[id].active === false
+      })
+    })
   }
+}
 
-  video.loop = attrs.loop
-  video.muted = attrs.muted
+function stopVideo(scrollStory, id) {
+  const video = scrollStory.MURAL_VIDEO[id]
+  DATA[id].active = false
+  fadeOut(id, video)
+}
+
+function fadeIn(id, video) {
+  $(video).finish()
 
   if (
-    (!DATA[id].paused && attrs.autoplay) ||
-    (DATA[id].playTriggered && !DATA[id].paused)
+    (!DATA[id].paused && video.paused) ||
+    (!DATA[id].paused && DATA[id].active && video.paused)
   ) {
     DATA[id].playPromise = DATA[id].playPromise.then(function () {
       return mediaUtils.fadein(video)
@@ -45,10 +45,24 @@ function playBackgroundVideo(id, attrs) {
   }
 }
 
-function removeBackgroundVideo($el, id) {
-  const $container = $el.find('.video-container')
+function playBackgroundVideo(scrollStory, item) {
+  const id = item.index
+  const video = scrollStory.MURAL_VIDEO[id]
+  DATA[id].active = true
+  DATA[id].paused = false
+
+  fadeIn(id, video)
+  item.el.find('.play').hide()
+  item.el.find('.pause').show()
+}
+
+function removeBackgroundVideo(scrollStory, item) {
+  const $container = item.el.find('.video-container')
   $container.css('position', '')
-  stopVideo(id)
+
+  stopVideo(scrollStory, item.index)
+  item.el.find('.pause').hide()
+  item.el.find('.play').show()
 }
 
 function fixBackgroundVideo($el) {
@@ -61,13 +75,10 @@ function prepareVideo(scrollStory, $el, id, srcs, attrs) {
   if (attrs.poster) {
     video.poster = attrs.poster
   }
-  video.muted = attrs.muted
   video.preload = 'auto'
   video.setAttribute('webkit-playsinline', '')
   video.setAttribute('playsinline', '')
-  MEDIA[id] = video
-  DATA[id] = {}
-  DATA[id].playPromise = Promise.resolve()
+
   let canPlayThrough
 
   const sources = srcs.filter((src) => src.src !== undefined)
@@ -97,25 +108,20 @@ function prepareVideo(scrollStory, $el, id, srcs, attrs) {
   $el.find('.video-container').append(video)
 
   $el.find('.play').click(function () {
-    DATA[id].playPromise = mediaUtils.fadein(video)
     DATA[id].paused = false
-    DATA[id].playTriggered = true
+    fadeIn(id, video)
+
     $(this).hide()
     $el.find('.pause').show()
   })
 
   $el.find('.pause').click(function () {
-    stopVideo(id)
     DATA[id].paused = true
+    fadeOut(id, video)
+
     $(this).hide()
     $el.find('.play').show()
   })
-
-  if (attrs.autoplay === true) {
-    $el.find('.play').hide()
-  } else {
-    $el.find('.pause').hide()
-  }
 
   if (attrs.autoAdvance) {
     video.addEventListener('ended', () => {
@@ -132,14 +138,8 @@ function prepareVideo(scrollStory, $el, id, srcs, attrs) {
   }
 
   video.load()
+  DATA[id] = { playPromise: canPlayThrough }
   return canPlayThrough
-}
-
-function setMuted(id, muted) {
-  const video = MEDIA[id]
-  if (video) {
-    video.muted = muted
-  }
 }
 
 module.exports = {
@@ -147,5 +147,5 @@ module.exports = {
   prepareVideo,
   removeBackgroundVideo,
   fixBackgroundVideo,
-  setMuted,
+  getVideoAttrs,
 }
