@@ -7,12 +7,11 @@ function stopAudio(scrollStory, id) {
   $(audio).finish()
 
   DATA[id].playPromise = DATA[id].playPromise.then(function () {
-    return mediaUtils.fadeout(audio, function () {
+    return mediaUtils.fadeout(audio, DATA[id]).then(function () {
       // Allow it to restart from the beginning.
       if (!audio.loop) {
         audio.currentTime = 0
       }
-      return DATA[id].active === false
     })
   })
 }
