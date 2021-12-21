@@ -154,6 +154,8 @@ function prepMediaElements() {
   scrollStory.MURAL_MEDIA = scrollStory.MURAL_AUDIO.concat(
     scrollStory.MURAL_VIDEO
   ).filter((media) => media)
+
+  console.log(scrollStory.MURAL_MEDIA)
 }
 
 function setItemFocus(item) {
@@ -250,7 +252,7 @@ function init() {
     }
 
     scrollStory.MURAL_MEDIA.forEach(function (media) {
-      media.muted = isSoundEnabled
+      media.muted = !isSoundEnabled
     })
 
     youtubeMedia.setMuted(!isSoundEnabled)
