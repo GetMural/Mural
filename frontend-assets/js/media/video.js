@@ -14,14 +14,9 @@ function getVideoAttrs(item) {
 function fadeOut(id, video) {
   $(video).finish()
 
-  if (
-    (DATA[id].paused && !video.paused) ||
-    (!DATA[id].active && !video.paused)
-  ) {
+  if (DATA[id].paused || !DATA[id].active) {
     DATA[id].playPromise = DATA[id].playPromise.then(function () {
-      return mediaUtils.fadeout(video, function () {
-        return DATA[id].paused || DATA[id].active === false
-      })
+      return mediaUtils.fadeout(video, DATA[id])
     })
   }
 }

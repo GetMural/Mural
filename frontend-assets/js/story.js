@@ -141,12 +141,14 @@ function prepMediaElements() {
       const video = document.createElement('video')
       video.muted = !!item.data.muted
       video.loop = !!item.data.loop
+      video.dataset.id = item.index
       scrollStory.MURAL_VIDEO[item.index] = video
     }
 
     if (item.data.audio) {
       const audio = document.createElement('audio')
       audio.muted = item.data.muted
+      audio.dataset.id = item.index
       scrollStory.MURAL_AUDIO[item.index] = audio
     }
   })
