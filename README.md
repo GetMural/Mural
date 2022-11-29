@@ -35,7 +35,7 @@ In the project directory, you can run:
 
 ### `yarn start`
 
-It starts the electron app and build and serve it's react app in developement mode
+It starts the electron app and build and serve its react app in developement mode
 
 ### `yarn build`
 
