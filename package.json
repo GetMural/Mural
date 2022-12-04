@@ -36,6 +36,7 @@
     "is-electron": "^2.2.0",
     "lint-staged": "^11.0.0",
     "lodash": "^4.17.21",
+    "mini-css-extract-plugin": "^2.7.1",
     "mustache": "^4.2.0",
     "node-polyfill-webpack-plugin": "^2.0.1",
     "node-static": "^0.7.11",
@@ -55,8 +56,7 @@
     "typeface-ubuntu": "^1.1.13",
     "typescript": "^4.1.2",
     "unzipper": "^0.10.11",
-    "web-vitals": "^2.1.0",
-    "webpack-shell-plugin-next": "^2.3.1"
+    "web-vitals": "^2.1.0"
   },
   "scripts": {
     "preclean-start": "rm -rf frontend-assets-build 'userFolder/preview/**/*.(js|css|html)'",
@@ -76,7 +76,7 @@
   "build": {
     "appId": "com.mural",
     "productName": "Mural",
-    "copyright": "Copyright © 2021 ${author}",
+    "copyright": "Copyright © 2022 ${author}",
     "linux": {
       "target": [
         "deb",
