@@ -16,7 +16,7 @@ jobs:
       newTag: ${{ steps.version-bump.outputs.newTag }}
     steps:
       - name: 'Checkout source code'
-        uses: 'actions/checkout@v2'
+        uses: 'actions/checkout@v2.5.0'
         with:
           token: ${{ secrets.github_token }}
       - run: cat package.json
