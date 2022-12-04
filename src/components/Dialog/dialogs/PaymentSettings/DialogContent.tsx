@@ -24,13 +24,15 @@ import {
   RegisterOptions,
   useController,
   Control,
+  FieldValues,
 } from 'react-hook-form'
 import { useAppSelector } from 'store/hooks'
 import { setPaymentSettings, SettingsState } from 'store/slices/settings'
 import React from 'react'
 import { cloneDeep } from 'lodash'
 
-interface CustomInputProps<InputType> extends StandardTextFieldProps {
+interface CustomInputProps<InputType extends FieldValues>
+  extends StandardTextFieldProps {
   name: Path<InputType>
   control: Control<InputType>
   options?: RegisterOptions
@@ -96,13 +98,14 @@ export default function PaymentSettingsDialogContent({
           Web Monetization Live Payment
         </Typography>
         <Typography gutterBottom>
-          To receive web monetization live payments while a viewer engages with your content,
-          please add your payment pointer information below. To split payments between
-          multiple payment pointers, add them below and indicate the percentage of payments
-          (out of 100) to be received by each pointer.
-          Please note that Mural receives 10% of all web monetization payments. This helps
-          us maintain the software and related services. To find out more about Coil's
-          web monetization service, please visit the link below.
+          To receive web monetization live payments while a viewer engages with
+          your content, please add your payment pointer information below. To
+          split payments between multiple payment pointers, add them below and
+          indicate the percentage of payments (out of 100) to be received by
+          each pointer. Please note that Mural receives 10% of all web
+          monetization payments. This helps us maintain the software and related
+          services. To find out more about Coil's web monetization service,
+          please visit the link below.
         </Typography>
         <Box my={4}>
           {fields.map((field, index) => (
@@ -191,11 +194,10 @@ export default function PaymentSettingsDialogContent({
         </Box>
 
         <Typography gutterBottom>
-          If you donʼt currently have an online wallet that supports
-          interledger protocol (ILP), you can set one up quickly and
-          easily by creating an account on a service that supports
-          ILP-enabled wallets like Uphold or Gatehub. Then copy your
-          ILP payment pointer here.
+          If you donʼt currently have an online wallet that supports interledger
+          protocol (ILP), you can set one up quickly and easily by creating an
+          account on a service that supports ILP-enabled wallets like Uphold or
+          Gatehub. Then copy your ILP payment pointer here.
         </Typography>
         <Box my={4}>
           <Box mr={10} component="span">
@@ -219,8 +221,8 @@ export default function PaymentSettingsDialogContent({
           <Typography gutterBottom>
             Create a unique code below (12-15 characters) to allow your
             supporters on donation and subscription services (Patreon, Ko-Fi,
-            PayPal, etc.) to access exclusive content. You can share this
-            code with your supporters on these services, or by email.
+            PayPal, etc.) to access exclusive content. You can share this code
+            with your supporters on these services, or by email.
           </Typography>
         </Box>
         <Box my={4}>
