@@ -158,6 +158,8 @@ export default function usePreview() {
                     : undefined,
                   title: convertToHtml(item.title),
                   subtitle: convertToHtml(item.subtitle),
+                  loop: Boolean(item.loopVideo),
+                  autoAdvance: Boolean(item.autoAdvance),
                   text: convertToHtml(item.text),
                   image: item.posterImage
                     ? {
@@ -351,6 +353,7 @@ export default function usePreview() {
         font_base_rules: state.story.metadata.mainFont,
         font_headers_rules: state.story.metadata.headerFont,
         custom_css: state.story.metadata.extraCss,
+        default_auto_advance: state.story.metadata.defaultAutoAdvance,
       },
       nav: state.story.items.flatMap((item, index) => {
         if ('navigationTitle' in item && item.navigationTitle) {
@@ -380,6 +383,7 @@ export default function usePreview() {
     state.story.metadata.headerFont,
     state.story.metadata.mainFont,
     state.story.metadata.rssPingbkack,
+    state.story.metadata.defaultAutoAdvance,
     state.story.metadata.siteImage,
     state.story.metadata.siteName,
     state.story.metadata.title,

@@ -499,7 +499,7 @@
 
     {{#videobackground}}
     <section class="st-video part{{#afterPaywall}} exclusive{{/afterPaywall}}" name="story{{id}}" {{#image}} data-poster="{{loading}}" {{/image}} {{#video}}
-      data-video="true" data-loop="true" data-autoplay="true" data-muted="false" {{#mp4}} data-mp4="{{mp4}}" {{/mp4}}
+    {{#loop}} data-loop="true" {{/loop}} {{#autoAdvance}} data-auto-advance="true" {{/autoAdvance}} data-video="true" data-autoplay="true" data-muted="false" {{#mp4}} data-mp4="{{mp4}}" {{/mp4}}
       {{#webm}} data-webm="{{webm}}" {{/webm}} {{/video}}>
       {{#offset.custom}}
       <style>

@@ -6,12 +6,15 @@ import Image from '../Image'
 import Wysiwyg from '../Wysiwyg'
 import Color from '../Color'
 import OffsetPortraitVideo from '../OffsetPortraitVideo'
+import { useAppSelector } from 'store/hooks'
 
 interface Props {
   itemIndex: number
 }
 
 export default function BackgroundVideo({ itemIndex }: Props) {
+  const state = useAppSelector((state) => state)
+
   return (
     <>
       <Box my={4}>
@@ -21,6 +24,24 @@ export default function BackgroundVideo({ itemIndex }: Props) {
           label="Video"
         />
       </Box>
+      {state.story.metadata.defaultAutoAdvance && (
+        <>
+          <Box my={4}>
+            <Checkbox
+              key={`items.${itemIndex}.loopVideo`}
+              name={`items.${itemIndex}.loopVideo` as const}
+              label="Loop Video"
+            />
+          </Box>
+          <Box my={4}>
+            <Checkbox
+              key={`items.${itemIndex}.autoAdvance`}
+              name={`items.${itemIndex}.autoAdvance` as const}
+              label="Auto-advance"
+            />
+          </Box>
+        </>
+      )}
       <Box my={4}>
         <Checkbox
           key={`items.${itemIndex}.fullPage`}

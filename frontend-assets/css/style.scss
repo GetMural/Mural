@@ -1885,11 +1885,11 @@ article .part:not(.text_align-center):not(.imageaudio) {
 /*
 grouping all the z-index hacks/fixes together
 */
-body.frozen {
-  pointer-events: auto;
-}
 body {
   pointer-events: none;
+}
+body.frozen {
+  pointer-events: auto;
 }
 article .part.active {
   z-index: -1;

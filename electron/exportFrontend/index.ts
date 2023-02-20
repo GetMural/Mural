@@ -29,6 +29,7 @@ export default function exportStory(story: Storyboard) {
       },
     })
   )
+
   return output
 }
 
@@ -135,6 +136,8 @@ export type Items =
         title?: string
         subtitle?: string
         text?: string
+        loop: boolean
+        autoAdvance?: boolean
         video?: Video
         image?: {
           loading: string

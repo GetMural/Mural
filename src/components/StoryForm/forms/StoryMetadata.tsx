@@ -62,9 +62,10 @@ export default function StoryMetadataForm() {
             placeholder="https://your-website.com/path/to/your/story"
             helperText={
               <>
-                If you know the final top-level URL of your Mural story, including its path (if any), this is
-                where to enter that information. This is used especially for the og:image tag.
-                Make sure your URL does not include a slash at the end.
+                If you know the final top-level URL of your Mural story,
+                including its path (if any), this is where to enter that
+                information. This is used especially for the og:image tag. Make
+                sure your URL does not include a slash at the end.
               </>
             }
           />
@@ -166,6 +167,21 @@ export default function StoryMetadataForm() {
         </Box>
         <Box my={4}>
           <Input name="metadata.rssPingbkack" label="RSS pingback" />
+        </Box>
+        <Box my={4}>
+          <Input
+            name="metadata.defaultAutoAdvance"
+            label="Default Mural item auto advance"
+            multiline
+            helperText={
+              <>
+                A number in seconds to specify how long an item should displayed
+                before automatically advancing into the next story item.
+                <br />
+                <code>15</code>
+              </>
+            }
+          />
         </Box>
       </form>
     </>

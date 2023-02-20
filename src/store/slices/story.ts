@@ -86,6 +86,8 @@ interface BackgroundVideoItem {
   posterImage?: Image
   backgroundTextColor?: RGBColor
   offsetPortraitVideo?: OffsetPortraitVideo
+  loopVideo?: boolean
+  autoAdvance?: boolean
 }
 
 interface EmbedVideo {
@@ -195,6 +197,7 @@ export interface StoryState {
     mainFont?: string
     headerFont?: string
     extraCss?: string
+    defaultAutoAdvance?: number
   }
   items: Items[]
 }
