@@ -22,7 +22,18 @@ module.exports = {
     rules: [
       {
         test: /\.scss|\.css$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader'],
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader,
+            options: {
+              publicPath: '../',
+            },
+          },
+          { loader: 'css-loader', options: { url: false } },
+          {
+            loader: 'sass-loader',
+          },
+        ],
       },
       {
         test: /\.svg$/,
@@ -34,12 +45,7 @@ module.exports = {
       },
       {
         test: /\.(jpe?g|png|gif|svg)$/i,
-        use: {
-          options: {
-            loader: 'url-loader',
-            limit: 1000,
-          },
-        },
+        type: 'asset',
       },
     ],
   },
