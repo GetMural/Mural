@@ -133,7 +133,7 @@ function prepareVideo(scrollStory, $el, id, srcs, attrs) {
       const time = window.MURAL.default_auto_advance
       video.addEventListener('play', (event) => {
         console.log('setting timer')
-        setTimeout(advanceStory, time)
+        setTimeout(advanceStory, time * 1000)
       })
     }
   }

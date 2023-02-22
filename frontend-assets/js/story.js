@@ -226,6 +226,8 @@ function onItemFocus(ev, item) {
 }
 
 function onItemBlur(ev, item) {
+  console.log('on item blur')
+  console.log(item)
   setItemStop(item)
 }
 
