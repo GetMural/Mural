@@ -136,8 +136,6 @@ export type Items =
         title?: string
         subtitle?: string
         text?: string
-        loop: boolean
-        autoAdvance?: boolean
         video?: Video
         image?: {
           loading: string
@@ -149,6 +147,7 @@ export type Items =
           }
         }
         offset?: OffsetPortraitVideo
+        timer?: string
       }
     }
   | {
@@ -255,6 +254,7 @@ export interface Storyboard {
     font_base_rules?: string
     font_headers_rules?: string
     custom_css?: string
+    default_auto_advance?: number
   }
   items: Items[]
   nav: {

@@ -124,6 +124,13 @@
     {{{custom_css}}}
   </style>
   {{/custom_css}}
+
+  {{#default_auto_advance}}
+  <script>
+    window.MURAL = {}
+    window.MURAL['default_auto_advance'] = {{{default_auto_advance}}}
+  </script>
+  {{/default_auto_advance}}
   {{/meta}}
 
   {{#payment.enabled}}
@@ -499,7 +506,7 @@
 
     {{#videobackground}}
     <section class="st-video part{{#afterPaywall}} exclusive{{/afterPaywall}}" name="story{{id}}" {{#image}} data-poster="{{loading}}" {{/image}} {{#video}}
-    {{#loop}} data-loop="true" {{/loop}} {{#autoAdvance}} data-auto-advance="true" {{/autoAdvance}} data-video="true" data-autoplay="true" data-muted="false" {{#mp4}} data-mp4="{{mp4}}" {{/mp4}}
+     data-loop="true" {{#timer}} data-timer="{{timer}}" {{/timer}} data-video="true" data-autoplay="true" data-muted="false" {{#mp4}} data-mp4="{{mp4}}" {{/mp4}}
       {{#webm}} data-webm="{{webm}}" {{/webm}} {{/video}}>
       {{#offset.custom}}
       <style>

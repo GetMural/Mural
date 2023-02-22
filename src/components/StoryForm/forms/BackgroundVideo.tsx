@@ -1,10 +1,11 @@
-import { Box, Divider, Typography } from '@mui/material'
+import { Box, Divider } from '@mui/material'
 import Input from 'components/StoryForm/Input'
 import Checkbox from '../Checkbox'
 import Video from '../Video'
 import Image from '../Image'
 import Wysiwyg from '../Wysiwyg'
 import Color from '../Color'
+import Timer from '../Timer'
 import OffsetPortraitVideo from '../OffsetPortraitVideo'
 import { useAppSelector } from 'store/hooks'
 
@@ -13,7 +14,7 @@ interface Props {
 }
 
 export default function BackgroundVideo({ itemIndex }: Props) {
-  const state = useAppSelector((state) => state)
+  const story = useAppSelector((state) => state.story)
 
   return (
     <>
@@ -24,28 +25,12 @@ export default function BackgroundVideo({ itemIndex }: Props) {
           label="Video"
         />
       </Box>
-      {state.story.metadata.defaultAutoAdvance && (
-        <fieldset>
-          <legend>
-            <Typography variant="h5" component="h4">
-              You have chosen to enable timers
-            </Typography>
-          </legend>
-          <Box my={4}>
-            <Checkbox
-              key={`items.${itemIndex}.loopVideo`}
-              name={`items.${itemIndex}.loopVideo` as const}
-              label={`Loop video within timer of ${state.story.metadata.defaultAutoAdvance} seconds`}
-            />
-          </Box>
-          <Box my={4}>
-            <Checkbox
-              key={`items.${itemIndex}.autoAdvance`}
-              name={`items.${itemIndex}.autoAdvance` as const}
-              label="Play video once"
-            />
-          </Box>
-        </fieldset>
+      {story.metadata.defaultAutoAdvance && (
+        <Timer
+          key={`items.${itemIndex}.timer`}
+          name={`items.${itemIndex}.timer` as const}
+          time={story.metadata.defaultAutoAdvance}
+        />
       )}
       <Box my={4}>
         <Checkbox

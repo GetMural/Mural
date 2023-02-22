@@ -8,6 +8,7 @@ function getVideoAttrs(item) {
   return {
     poster: item.data.poster,
     autoAdvance: item.data.autoAdvance,
+    timer: item.data.timer,
   }
 }
 
@@ -118,18 +119,23 @@ function prepareVideo(scrollStory, $el, id, srcs, attrs) {
     $el.find('.play').show()
   })
 
-  if (attrs.autoAdvance) {
-    video.addEventListener('ended', () => {
-      const count = scrollStory.getItems().length
-      const next = id + 1
+  // TODO refactor this at some point when fadein/fadeout are all handled by a general media class.
+  if (attrs.autoAdvance || attrs.timer) {
+    const advanceStory = mediaUtils.addAutoAdvance(
+      video,
+      scrollStory,
+      id,
+      attrs.autoAdvance || attrs.timer === 'single'
+    )
 
-      if (next < count) {
-        scrollStory.index(next)
-      }
-
-      // Allow it to restart from the beginning.
-      video.currentTime = 0
-    })
+    if (advanceStory) {
+      console.log('need to use a timer')
+      const time = window.MURAL.default_auto_advance
+      video.addEventListener('play', (event) => {
+        console.log('setting timer')
+        setTimeout(advanceStory, time)
+      })
+    }
   }
 
   video.load()

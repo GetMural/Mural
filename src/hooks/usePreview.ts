@@ -158,8 +158,7 @@ export default function usePreview() {
                     : undefined,
                   title: convertToHtml(item.title),
                   subtitle: convertToHtml(item.subtitle),
-                  loop: Boolean(item.loopVideo),
-                  autoAdvance: Boolean(item.autoAdvance),
+                  timer: item.timer,
                   text: convertToHtml(item.text),
                   image: item.posterImage
                     ? {

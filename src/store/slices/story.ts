@@ -86,8 +86,7 @@ interface BackgroundVideoItem {
   posterImage?: Image
   backgroundTextColor?: RGBColor
   offsetPortraitVideo?: OffsetPortraitVideo
-  loopVideo?: boolean
-  autoAdvance?: boolean
+  timer?: string
 }
 
 interface EmbedVideo {

@@ -84,7 +84,33 @@ function canPlayThroughPromise(media, srcs) {
   })
 }
 
+function addAutoAdvance(media, story, itemId, once) {
+  const count = story.getItems().length
+  const next = itemId + 1
+
+  function advanceMedia() {
+    if (next < count) {
+      story.index(next)
+    }
+
+    // Allow it to restart from the beginning.
+    media.currentTime = 0
+
+    console.log(`advancing media ${itemId}`)
+  }
+
+  // loop within timer
+  if (once) {
+    media.addEventListener('ended', advanceMedia)
+  }
+  // auto advance on media end
+  else {
+    return advanceMedia
+  }
+}
+
 module.exports = {
+  addAutoAdvance,
   canPlayThroughPromise,
   fadeout,
   fadein,
