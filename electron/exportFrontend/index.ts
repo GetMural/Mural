@@ -180,6 +180,7 @@ export type Items =
           loading: string
         }
         offset?: OffsetPortraitVideo
+        timer?: string
       }
     }
   | {

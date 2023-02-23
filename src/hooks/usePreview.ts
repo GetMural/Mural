@@ -83,6 +83,7 @@ export default function usePreview() {
                   },
                   title: convertToHtml(item.title),
                   text: convertToHtml(item.text),
+                  timer: item.timer,
                   loop: Boolean(item.loopVideo),
                   autoAdvance: Boolean(item.autoAdvance),
                   video: item.video

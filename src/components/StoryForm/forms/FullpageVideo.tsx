@@ -4,13 +4,16 @@ import Checkbox from '../Checkbox'
 import Image from '../Image'
 import Video from '../Video'
 import Wysiwyg from '../Wysiwyg'
+import Timer from '../Timer'
 import OffsetPortraitVideo from '../OffsetPortraitVideo'
+import { useAppSelector } from 'store/hooks'
 
 interface Props {
   itemIndex: number
 }
 
 export default function FullpageVideo({ itemIndex }: Props) {
+  const story = useAppSelector((state) => state.story)
   return (
     <>
       <Box my={4}>
@@ -20,20 +23,31 @@ export default function FullpageVideo({ itemIndex }: Props) {
           label="Video"
         />
       </Box>
-      <Box my={4}>
-        <Checkbox
-          key={`items.${itemIndex}.loopVideo`}
-          name={`items.${itemIndex}.loopVideo` as const}
-          label="Loop Video"
+      {story.metadata.defaultAutoAdvance && (
+        <Timer
+          key={`items.${itemIndex}.timer`}
+          name={`items.${itemIndex}.timer` as const}
+          time={story.metadata.defaultAutoAdvance}
         />
-      </Box>
-      <Box my={4}>
-        <Checkbox
-          key={`items.${itemIndex}.autoAdvance`}
-          name={`items.${itemIndex}.autoAdvance` as const}
-          label="Auto-advance"
-        />
-      </Box>
+      )}
+      {!story.metadata.defaultAutoAdvance && (
+        <>
+          <Box my={4}>
+            <Checkbox
+              key={`items.${itemIndex}.loopVideo`}
+              name={`items.${itemIndex}.loopVideo` as const}
+              label="Loop Video"
+            />
+          </Box>
+          <Box my={4}>
+            <Checkbox
+              key={`items.${itemIndex}.autoAdvance`}
+              name={`items.${itemIndex}.autoAdvance` as const}
+              label="Auto-advance"
+            />
+          </Box>
+        </>
+      )}
       <Divider light />
       <Box my={4}>
         <Wysiwyg

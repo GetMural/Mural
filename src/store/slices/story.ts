@@ -162,6 +162,7 @@ export interface FullpageVideo {
   loopVideo?: boolean
   autoAdvance?: boolean
   offsetPortraitVideo?: OffsetPortraitVideo
+  timer?: string
 }
 
 export interface PaywallSeparator {
