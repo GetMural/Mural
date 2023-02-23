@@ -135,6 +135,7 @@ export default function usePreview() {
                     ? {
                         mp3: media(item.audio.path),
                         loop: !!item.audioLoop,
+                        timer: item.timer,
                       }
                     : undefined,
                 },

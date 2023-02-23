@@ -23,6 +23,26 @@ function prepareAudio(scrollStory, id, srcs, attrs) {
 
   const sources = srcs.filter((src) => src.src !== undefined)
   const canPlayThrough = mediaUtils.canPlayThroughPromise(audio, sources)
+
+  if (attrs.timer) {
+    const advanceStory = mediaUtils.addAutoAdvance(
+      audio,
+      scrollStory,
+      id,
+      attrs.timer === 'single'
+    )
+
+    if (advanceStory) {
+      console.log('need to use a timer')
+      const time = window.MURAL.default_auto_advance
+      audio.loop = true
+      audio.addEventListener('play', (event) => {
+        console.log('setting timer')
+        setTimeout(advanceStory, time * 1000)
+      })
+    }
+  }
+
   audio.load()
 
   DATA[id] = { playPromise: canPlayThrough }

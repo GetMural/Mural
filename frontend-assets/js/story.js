@@ -467,7 +467,7 @@ function loadItem(item) {
           src: item.data.ogg,
         },
       ],
-      { loop: item.data.loop }
+      { loop: item.data.loop, timer: item.data.timer }
     )
 
     returnPromises.push(audioLoaded)

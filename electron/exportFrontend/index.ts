@@ -123,6 +123,7 @@ export type Items =
           mp3?: string
           ogg?: string
           loop?: boolean
+          timer?: string
         }
       }
     }

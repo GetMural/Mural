@@ -63,6 +63,7 @@ interface BackgroundImage {
   text?: RichText
   audio?: Audio
   audioLoop?: boolean
+  timer?: string
 }
 
 interface ParallaxImage {
