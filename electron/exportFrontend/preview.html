@@ -125,12 +125,13 @@
   </style>
   {{/custom_css}}
 
-  {{#default_auto_advance}}
   <script>
     window.MURAL = {}
+    {{#default_auto_advance}}
     window.MURAL['default_auto_advance'] = {{{default_auto_advance}}}
+    {{/default_auto_advance}}
   </script>
-  {{/default_auto_advance}}
+ 
   {{/meta}}
 
   {{#payment.enabled}}

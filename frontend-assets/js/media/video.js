@@ -120,20 +120,21 @@ function prepareVideo(scrollStory, $el, id, srcs, attrs) {
   })
 
   // TODO refactor this at some point when fadein/fadeout are all handled by a general media class.
-  if (attrs.autoAdvance || attrs.timer) {
+  const timer = window.MURAL.default_auto_advance
+  if (attrs.autoAdvance || (timer && attrs.timer)) {
     const advanceStory = mediaUtils.addAutoAdvance(
       video,
       scrollStory,
       id,
-      attrs.timer === 'single' || (!attrs.timer && attrs.autoAdvance)
+      (timer && attrs.timer === 'single') || attrs.autoAdvance
     )
 
     if (advanceStory) {
       console.log('need to use a timer')
-      const time = window.MURAL.default_auto_advance
+
       video.addEventListener('play', (event) => {
         console.log('setting timer')
-        setTimeout(advanceStory, time * 1000)
+        setTimeout(advanceStory, timer * 1000)
       })
     }
   }

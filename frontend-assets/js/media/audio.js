@@ -2,6 +2,7 @@ const mediaUtils = require('./media')
 const DATA = {}
 
 function stopAudio(scrollStory, id) {
+  console.log('stopping audio')
   const audio = scrollStory.MURAL_AUDIO[id]
   DATA[id].active = false
   $(audio).finish()
@@ -10,6 +11,7 @@ function stopAudio(scrollStory, id) {
     return mediaUtils.fadeout(audio, DATA[id]).then(function () {
       // Allow it to restart from the beginning.
       if (!audio.loop) {
+        console.log('start audio from beginning')
         audio.currentTime = 0
       }
     })
@@ -19,12 +21,14 @@ function stopAudio(scrollStory, id) {
 function prepareAudio(scrollStory, id, srcs, attrs) {
   const audio = scrollStory.MURAL_AUDIO[id]
   audio.loop = !!attrs.loop
+  console.log(`Audio looped? ${audio.loop}`)
   audio.preload = 'auto'
 
   const sources = srcs.filter((src) => src.src !== undefined)
   const canPlayThrough = mediaUtils.canPlayThroughPromise(audio, sources)
+  const timer = window.MURAL.default_auto_advance
 
-  if (attrs.timer) {
+  if (timer && attrs.timer) {
     const advanceStory = mediaUtils.addAutoAdvance(
       audio,
       scrollStory,
@@ -34,8 +38,12 @@ function prepareAudio(scrollStory, id, srcs, attrs) {
 
     if (advanceStory) {
       console.log('need to use a timer')
-      const time = window.MURAL.default_auto_advance
-      audio.loop = true
+
+      if (audio.duration < timer) {
+        console.log('looping shorter audio')
+        audio.loop = true
+      }
+
       audio.addEventListener('play', (event) => {
         console.log('setting timer')
         setTimeout(advanceStory, time * 1000)
@@ -54,6 +62,7 @@ function removeBackgroundAudio(scrollStory, id) {
 }
 
 function playBackgroundAudio(scrollStory, item) {
+  console.log('playing audio')
   const id = item.index
   const audio = scrollStory.MURAL_AUDIO[id]
   DATA[id].active = true
