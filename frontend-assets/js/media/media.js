@@ -93,17 +93,18 @@ function addAutoAdvance(media, story, itemId, once) {
       story.index(next)
     }
 
-    // Allow it to restart from the beginning.
-    media.currentTime = 0
-
     console.log(`advancing media ${itemId}`)
   }
 
-  // loop within timer
   if (once) {
-    media.addEventListener('ended', advanceMedia)
+    // auto advance on media end
+    media.addEventListener('ended', function () {
+      // Allow it to restart from the beginning.
+      media.currentTime = 0
+      advanceMedia()
+    })
   }
-  // auto advance on media end
+  // loop within timer
   else {
     return advanceMedia
   }

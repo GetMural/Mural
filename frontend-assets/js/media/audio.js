@@ -39,12 +39,13 @@ function prepareAudio(scrollStory, id, srcs, attrs) {
     if (advanceStory) {
       console.log('need to use a timer')
 
-      if (audio.duration < timer) {
-        console.log('looping shorter audio')
-        audio.loop = true
-      }
-
       audio.addEventListener('play', (event) => {
+        console.log(`Audio duration: ${audio.duration}, timer: ${timer}`)
+
+        if (audio.duration < timer) {
+          console.log('looping shorter audio')
+          audio.loop = true
+        }
         console.log('setting timer')
         setTimeout(advanceStory, timer * 1000)
       })
