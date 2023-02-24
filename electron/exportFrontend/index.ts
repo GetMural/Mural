@@ -92,6 +92,7 @@ export type Items =
           mp3?: string
           ogg?: string
           audio_credits?: string
+          timer?: string
         }
         image?: {
           srcmain: string

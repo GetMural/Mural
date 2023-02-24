@@ -57,6 +57,7 @@ export default function usePreview() {
                         mp3: media(item.audio.path),
                         // ogg: string
                         audio_credits: convertToHtml(item.audioCredits),
+                        timer: item.timer,
                       }
                     : undefined,
                   image: item.image

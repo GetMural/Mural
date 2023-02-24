@@ -4,12 +4,15 @@ import Checkbox from 'components/StoryForm/Checkbox'
 import Audio from 'components/StoryForm/Audio'
 import Image from 'components/StoryForm/Image'
 import Wysiwyg from '../Wysiwyg'
+import Timer from '../Timer'
+import { useAppSelector } from 'store/hooks'
 
 interface Props {
   itemIndex: number
 }
 
 export default function ImageAudio({ itemIndex }: Props) {
+  const story = useAppSelector((state) => state.story)
   return (
     <>
       <Box my={4}>
@@ -26,13 +29,22 @@ export default function ImageAudio({ itemIndex }: Props) {
           label="Audio"
         />
       </Box>
-      <Box my={4}>
-        <Checkbox
-          key={`items.${itemIndex}.loop`}
-          name={`items.${itemIndex}.loop` as const}
-          label="Loop Audio"
+      {story.metadata.defaultAutoAdvance && (
+        <Timer
+          key={`items.${itemIndex}.timer`}
+          name={`items.${itemIndex}.timer` as const}
+          time={story.metadata.defaultAutoAdvance}
         />
-      </Box>
+      )}
+      {!story.metadata.defaultAutoAdvance && (
+        <Box my={4}>
+          <Checkbox
+            key={`items.${itemIndex}.audioLoop`}
+            name={`items.${itemIndex}.audioLoop` as const}
+            label="Loop"
+          />
+        </Box>
+      )}
       <Box my={4}>
         <Checkbox
           key={`items.${itemIndex}.light`}

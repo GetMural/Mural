@@ -149,6 +149,7 @@ export interface ImageAudio {
   audioCredits?: RichText
   navigationTitle?: string
   title?: string
+  timer?: string
 }
 
 export interface FullpageVideo {
