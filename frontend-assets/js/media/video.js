@@ -126,7 +126,7 @@ function prepareVideo(scrollStory, $el, id, srcs, attrs) {
       video,
       scrollStory,
       id,
-      (timer && attrs.timer === 'single') || attrs.autoAdvance
+      (timer && attrs.timer === 'single') || (!timer && attrs.autoAdvance)
     )
 
     if (advanceStory) {
