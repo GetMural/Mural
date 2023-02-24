@@ -46,7 +46,7 @@ function prepareAudio(scrollStory, id, srcs, attrs) {
 
       audio.addEventListener('play', (event) => {
         console.log('setting timer')
-        setTimeout(advanceStory, time * 1000)
+        setTimeout(advanceStory, timer * 1000)
       })
     }
   }
