@@ -91,6 +91,8 @@ function addAutoAdvance(media, story, itemId, once) {
   function advanceMedia() {
     if (next < count) {
       story.index(next)
+    } else {
+      story.index(0)
     }
 
     console.log(`advancing media ${itemId}`)
