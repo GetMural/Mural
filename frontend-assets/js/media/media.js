@@ -94,8 +94,6 @@ function addAutoAdvance(media, story, itemId, once) {
     } else {
       story.index(0)
     }
-
-    console.log(`advancing media ${itemId}`)
   }
 
   if (once) {

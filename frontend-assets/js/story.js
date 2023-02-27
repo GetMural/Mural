@@ -217,15 +217,7 @@ function onItemFocus(ev, item) {
 }
 
 function onItemBlur(ev, item) {
-  console.log('on item blur')
-  console.log(item)
-
   if (window.MURAL && window.MURAL.timers) {
-    console.log(
-      `Clearing timeout for item: ${item.index}, ${
-        window.MURAL.timers[item.index]
-      }`
-    )
     clearTimeout(window.MURAL.timers[item.index])
   }
 
