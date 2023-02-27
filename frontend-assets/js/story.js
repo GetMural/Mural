@@ -176,7 +176,7 @@ function setItemFocus(item) {
     const timer = window.MURAL.default_auto_advance
 
     if (timer) {
-      setTimeout(function () {
+      window.MURAL.timers[item.index] = setTimeout(function () {
         scrollStory.index((item.index + 1) % storyContent.length)
       }, timer * 1000)
     }
@@ -221,7 +221,11 @@ function onItemBlur(ev, item) {
   console.log(item)
 
   if (window.MURAL && window.MURAL.timers) {
-    console.log(`Clearing timeout for item: ${window.MURAL.timers[item.index]}`)
+    console.log(
+      `Clearing timeout for item: ${item.index}, ${
+        window.MURAL.timers[item.index]
+      }`
+    )
     clearTimeout(window.MURAL.timers[item.index])
   }
 
