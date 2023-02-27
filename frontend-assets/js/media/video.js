@@ -134,7 +134,7 @@ function prepareVideo(scrollStory, $el, id, srcs, attrs) {
 
       video.addEventListener('play', (event) => {
         console.log('setting timer')
-        setTimeout(advanceStory, timer * 1000)
+        window.MURAL.timers[id] = setTimeout(advanceStory, timer * 1000)
       })
     }
   }

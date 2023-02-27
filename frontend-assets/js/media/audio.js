@@ -47,7 +47,7 @@ function prepareAudio(scrollStory, id, srcs, attrs) {
           audio.loop = true
         }
         console.log('setting timer')
-        setTimeout(advanceStory, timer * 1000)
+        window.MURAL.timers[id] = setTimeout(advanceStory, timer * 1000)
       })
     }
   }
