@@ -5,13 +5,17 @@ import Video from '../Video'
 import Image from '../Image'
 import Wysiwyg from '../Wysiwyg'
 import Color from '../Color'
+import Timer from '../Timer'
 import OffsetPortraitVideo from '../OffsetPortraitVideo'
+import { useAppSelector } from 'store/hooks'
 
 interface Props {
   itemIndex: number
 }
 
 export default function BackgroundVideo({ itemIndex }: Props) {
+  const story = useAppSelector((state) => state.story)
+
   return (
     <>
       <Box my={4}>
@@ -21,6 +25,13 @@ export default function BackgroundVideo({ itemIndex }: Props) {
           label="Video"
         />
       </Box>
+      {story.metadata.defaultAutoAdvance && (
+        <Timer
+          key={`items.${itemIndex}.timer`}
+          name={`items.${itemIndex}.timer` as const}
+          time={story.metadata.defaultAutoAdvance}
+        />
+      )}
       <Box my={4}>
         <Checkbox
           key={`items.${itemIndex}.fullPage`}

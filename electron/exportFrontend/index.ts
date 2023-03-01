@@ -29,6 +29,7 @@ export default function exportStory(story: Storyboard) {
       },
     })
   )
+
   return output
 }
 
@@ -91,6 +92,7 @@ export type Items =
           mp3?: string
           ogg?: string
           audio_credits?: string
+          timer?: string
         }
         image?: {
           srcmain: string
@@ -122,6 +124,7 @@ export type Items =
           mp3?: string
           ogg?: string
           loop?: boolean
+          timer?: string
         }
       }
     }
@@ -146,6 +149,7 @@ export type Items =
           }
         }
         offset?: OffsetPortraitVideo
+        timer?: string
       }
     }
   | {
@@ -177,6 +181,7 @@ export type Items =
           loading: string
         }
         offset?: OffsetPortraitVideo
+        timer?: string
       }
     }
   | {
@@ -252,6 +257,7 @@ export interface Storyboard {
     font_base_rules?: string
     font_headers_rules?: string
     custom_css?: string
+    default_auto_advance?: number
   }
   items: Items[]
   nav: {

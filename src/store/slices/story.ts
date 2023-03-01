@@ -63,6 +63,7 @@ interface BackgroundImage {
   text?: RichText
   audio?: Audio
   audioLoop?: boolean
+  timer?: string
 }
 
 interface ParallaxImage {
@@ -86,6 +87,7 @@ interface BackgroundVideoItem {
   posterImage?: Image
   backgroundTextColor?: RGBColor
   offsetPortraitVideo?: OffsetPortraitVideo
+  timer?: string
 }
 
 interface EmbedVideo {
@@ -147,6 +149,7 @@ export interface ImageAudio {
   audioCredits?: RichText
   navigationTitle?: string
   title?: string
+  timer?: string
 }
 
 export interface FullpageVideo {
@@ -160,6 +163,7 @@ export interface FullpageVideo {
   loopVideo?: boolean
   autoAdvance?: boolean
   offsetPortraitVideo?: OffsetPortraitVideo
+  timer?: string
 }
 
 export interface PaywallSeparator {
@@ -195,6 +199,7 @@ export interface StoryState {
     mainFont?: string
     headerFont?: string
     extraCss?: string
+    defaultAutoAdvance?: number
   }
   items: Items[]
 }

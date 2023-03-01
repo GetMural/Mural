@@ -57,6 +57,7 @@ export default function usePreview() {
                         mp3: media(item.audio.path),
                         // ogg: string
                         audio_credits: convertToHtml(item.audioCredits),
+                        timer: item.timer,
                       }
                     : undefined,
                   image: item.image
@@ -83,6 +84,7 @@ export default function usePreview() {
                   },
                   title: convertToHtml(item.title),
                   text: convertToHtml(item.text),
+                  timer: item.timer,
                   loop: Boolean(item.loopVideo),
                   autoAdvance: Boolean(item.autoAdvance),
                   video: item.video
@@ -135,6 +137,7 @@ export default function usePreview() {
                     ? {
                         mp3: media(item.audio.path),
                         loop: !!item.audioLoop,
+                        timer: item.timer,
                       }
                     : undefined,
                 },
@@ -158,6 +161,7 @@ export default function usePreview() {
                     : undefined,
                   title: convertToHtml(item.title),
                   subtitle: convertToHtml(item.subtitle),
+                  timer: item.timer,
                   text: convertToHtml(item.text),
                   image: item.posterImage
                     ? {
@@ -351,6 +355,7 @@ export default function usePreview() {
         font_base_rules: state.story.metadata.mainFont,
         font_headers_rules: state.story.metadata.headerFont,
         custom_css: state.story.metadata.extraCss,
+        default_auto_advance: state.story.metadata.defaultAutoAdvance,
       },
       nav: state.story.items.flatMap((item, index) => {
         if ('navigationTitle' in item && item.navigationTitle) {
@@ -380,6 +385,7 @@ export default function usePreview() {
     state.story.metadata.headerFont,
     state.story.metadata.mainFont,
     state.story.metadata.rssPingbkack,
+    state.story.metadata.defaultAutoAdvance,
     state.story.metadata.siteImage,
     state.story.metadata.siteName,
     state.story.metadata.title,

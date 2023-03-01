@@ -141,7 +141,7 @@
   -webkit-box-sizing: content-box;
   -moz-box-sizing: content-box;
   box-sizing: content-box;
-  background: #222 url(/frontend-assets/img/prev.svg) center no-repeat;
+  background: #222 url(img/prev.svg) center no-repeat;
   background-color: rgba(0, 0, 0, 0.5);
   border: 3px solid #fff;
   -webkit-border-radius: 30px;
@@ -154,13 +154,13 @@
 .blueimp-gallery-display > .next {
   right: 15px;
   left: auto;
-  background-image: url(/frontend-assets/img/next.svg);
+  background-image: url(img/next.svg);
 }
 .blueimp-gallery-svgasimg > .prev {
-  background-image: url(/frontend-assets/img/prev.svg);
+  background-image: url(img/prev.svg);
 }
 .blueimp-gallery-svgasimg > .next {
-  background-image: url(/frontend-assets/img/next.svg);
+  background-image: url(img/next.svg);
 }
 .blueimp-gallery-display > .close {
   position: absolute;
@@ -168,7 +168,7 @@
   right: 15px;
   width: 30px;
   height: 30px;
-  background: url(/frontend-assets/img/close.png) center no-repeat;
+  background: url(img/close.png) center no-repeat;
   opacity: 0.8;
   cursor: pointer;
   display: none;

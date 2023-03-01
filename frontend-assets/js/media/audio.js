@@ -23,6 +23,26 @@ function prepareAudio(scrollStory, id, srcs, attrs) {
 
   const sources = srcs.filter((src) => src.src !== undefined)
   const canPlayThrough = mediaUtils.canPlayThroughPromise(audio, sources)
+  const timer = window.MURAL.default_auto_advance
+
+  if (timer && attrs.timer) {
+    const advanceStory = mediaUtils.addAutoAdvance(
+      audio,
+      scrollStory,
+      id,
+      attrs.timer === 'single'
+    )
+
+    if (advanceStory) {
+      audio.addEventListener('play', (event) => {
+        if (audio.duration < timer) {
+          audio.loop = true
+        }
+        window.MURAL.timers[id] = setTimeout(advanceStory, timer * 1000)
+      })
+    }
+  }
+
   audio.load()
 
   DATA[id] = { playPromise: canPlayThrough }
@@ -34,6 +54,7 @@ function removeBackgroundAudio(scrollStory, id) {
 }
 
 function playBackgroundAudio(scrollStory, item) {
+  console.log('playing audio')
   const id = item.index
   const audio = scrollStory.MURAL_AUDIO[id]
   DATA[id].active = true

@@ -143,9 +143,7 @@ function prepMediaElements() {
       video.loop = !!item.data.loop
       video.dataset.id = item.index
       scrollStory.MURAL_VIDEO[item.index] = video
-    }
-
-    if (item.data.audio) {
+    } else if (item.data.audio) {
       const audio = document.createElement('audio')
       audio.muted = item.data.muted
       audio.dataset.id = item.index
@@ -162,25 +160,26 @@ function setItemFocus(item) {
   if (item.data.video) {
     videoMedia.fixBackgroundVideo(item.el)
     videoMedia.playBackgroundVideo(scrollStory, item)
-  }
-
-  if (item.data.youtubeId) {
+  } else if (item.data.youtubeId) {
     youtubeMedia.play(item, isSoundEnabled)
     youtubeMedia.stick(item)
-  }
-
-  if (item.data.vimeoVideoId) {
+  } else if (item.data.vimeoVideoId) {
     vimeoMedia.play(item, isSoundEnabled)
     vimeoMedia.stick(item)
-  }
-
-  if (item.data.dailymotionId) {
+  } else if (item.data.dailymotionId) {
     dailymotionMedia.play(item, isSoundEnabled)
     dailymotionMedia.stick(item)
-  }
-
-  if (item.data.audio) {
+  } else if (item.data.audio) {
     audioMedia.playBackgroundAudio(scrollStory, item)
+  } else {
+    // catch all timer atm.
+    const timer = window.MURAL.default_auto_advance
+
+    if (timer) {
+      window.MURAL.timers[item.index] = setTimeout(function () {
+        scrollStory.index((item.index + 1) % storyContent.length)
+      }, timer * 1000)
+    }
   }
 }
 
@@ -200,23 +199,15 @@ function setItemEnter(item) {
 }
 
 function setItemStop(item) {
-  if (item.data && item.data.youtubeId) {
+  if (item.data.youtubeId) {
     youtubeMedia.remove(item)
-  }
-
-  if (item.data && item.data.vimeoVideoId) {
+  } else if (item.data.vimeoVideoId) {
     vimeoMedia.remove(item)
-  }
-
-  if (item.data && item.data.dailymotionId) {
+  } else if (item.data.dailymotionId) {
     dailymotionMedia.remove(item)
-  }
-
-  if (item.data && item.data.video) {
+  } else if (item.data.video) {
     videoMedia.removeBackgroundVideo(scrollStory, item)
-  }
-
-  if (item.data && item.data.audio) {
+  } else if (item.data.audio) {
     audioMedia.removeBackgroundAudio(scrollStory, item.index)
   }
 }
@@ -226,6 +217,10 @@ function onItemFocus(ev, item) {
 }
 
 function onItemBlur(ev, item) {
+  if (window.MURAL && window.MURAL.timers) {
+    clearTimeout(window.MURAL.timers[item.index])
+  }
+
   setItemStop(item)
 }
 
@@ -465,7 +460,7 @@ function loadItem(item) {
           src: item.data.ogg,
         },
       ],
-      { loop: item.data.loop }
+      { loop: item.data.loop, timer: item.data.timer }
     )
 
     returnPromises.push(audioLoaded)

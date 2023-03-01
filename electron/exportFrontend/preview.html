@@ -124,6 +124,15 @@
     {{{custom_css}}}
   </style>
   {{/custom_css}}
+
+  <script>
+    window.MURAL = {}
+    {{#default_auto_advance}}
+    window.MURAL['default_auto_advance'] = {{{default_auto_advance}}}
+    window.MURAL['timers'] = {}
+    {{/default_auto_advance}}
+  </script>
+ 
   {{/meta}}
 
   {{#payment.enabled}}
@@ -246,7 +255,7 @@
 
     {{#imagebackground}}
     <section class="part sticky-image{{#afterPaywall}} exclusive{{/afterPaywall}}" name="story{{id}}" {{#audio}} data-audio=true {{#mp3}} data-mp3="{{mp3}}"
-      {{/mp3}} {{#ogg}} data-ogg="{{ogg}}" {{/ogg}} {{#loop}} data-loop="true" {{/loop}} {{/audio}} {{#image}}
+      {{/mp3}} {{#ogg}} data-ogg="{{ogg}}" {{/ogg}} {{#loop}} data-loop="true" {{/loop}} {{#timer}} data-timer="{{timer}}" {{/timer}}  {{/audio}} {{#image}}
       data-image=true {{#srcmain}} data-src="{{srcmain}}" {{/srcmain}} {{#srcmedium}} data-src-medium="{{srcmedium}}"
       {{/srcmedium}} {{#srcphone}} data-src-phone="{{srcphone}}" {{/srcphone}} {{/image}}>
       {{#image}}
@@ -350,6 +359,7 @@
         {{#loop}} data-loop="{{loop}}" {{/loop}}
         {{#mp3}} data-mp3="{{mp3}}" {{/mp3}}
         {{#ogg}} data-ogg="{{ogg}}" {{/ogg}}
+        {{#timer}} data-timer="{{timer}}" {{/timer}}
       {{/audio}}
     >
       {{#image}}
@@ -499,7 +509,7 @@
 
     {{#videobackground}}
     <section class="st-video part{{#afterPaywall}} exclusive{{/afterPaywall}}" name="story{{id}}" {{#image}} data-poster="{{loading}}" {{/image}} {{#video}}
-      data-video="true" data-loop="true" data-autoplay="true" data-muted="false" {{#mp4}} data-mp4="{{mp4}}" {{/mp4}}
+     data-loop="true" {{#timer}} data-timer="{{timer}}" {{/timer}} data-video="true" data-autoplay="true" data-muted="false" {{#mp4}} data-mp4="{{mp4}}" {{/mp4}}
       {{#webm}} data-webm="{{webm}}" {{/webm}} {{/video}}>
       {{#offset.custom}}
       <style>
@@ -560,7 +570,7 @@
 
     {{#videofullpage}}
     <section class="st-content-video part snap{{#afterPaywall}} exclusive{{/afterPaywall}}" name="story{{id}}" {{#loop}} data-loop="true" {{/loop}} {{#autoAdvance}}
-      data-auto-advance="true" {{/autoAdvance}} {{#image}} data-poster="{{loading}}" {{/image}} {{#video}}
+      data-auto-advance="true" {{/autoAdvance}} {{#timer}} data-timer="{{timer}}" {{/timer}} {{#image}} data-poster="{{loading}}" {{/image}} {{#video}}
       data-video="true" data-autoplay="true" data-muted="false" data-fullpage="true" {{#mp4}} data-mp4="{{mp4}}"
       {{/mp4}} {{#webm}} data-webm="{{webm}}" {{/webm}} {{/video}}>
       {{#offset.custom}}

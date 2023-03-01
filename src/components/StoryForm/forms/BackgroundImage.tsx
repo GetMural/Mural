@@ -5,12 +5,15 @@ import Image from '../Image'
 import Wysiwyg from '../Wysiwyg'
 import Audio from '../Audio'
 import Align from '../Align'
+import Timer from '../Timer'
+import { useAppSelector } from 'store/hooks'
 
 interface Props {
   itemIndex: number
 }
 
 export default function BackgroundImage({ itemIndex }: Props) {
+  const story = useAppSelector((state) => state.story)
   return (
     <>
       <Box my={4}>
@@ -83,13 +86,22 @@ export default function BackgroundImage({ itemIndex }: Props) {
           label="Audio"
         />
       </Box>
-      <Box my={4}>
-        <Checkbox
-          key={`items.${itemIndex}.audioLoop`}
-          name={`items.${itemIndex}.audioLoop` as const}
-          label="Loop"
+      {story.metadata.defaultAutoAdvance && (
+        <Timer
+          key={`items.${itemIndex}.timer`}
+          name={`items.${itemIndex}.timer` as const}
+          time={story.metadata.defaultAutoAdvance}
         />
-      </Box>
+      )}
+      {!story.metadata.defaultAutoAdvance && (
+        <Box my={4}>
+          <Checkbox
+            key={`items.${itemIndex}.audioLoop`}
+            name={`items.${itemIndex}.audioLoop` as const}
+            label="Loop"
+          />
+        </Box>
+      )}
     </>
   )
 }
