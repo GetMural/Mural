@@ -40,3 +40,7 @@ It starts the electron app and build and serve its react app in developement mod
 ### `yarn build`
 
 It builds the electron package for the current architecture
+
+#### TODO
+
+Watch this issue: https://github.com/SortableJS/react-sortablejs/issues/237

@@ -42,7 +42,7 @@
     "react-hook-form": "^7.17.5",
     "react-redux": "^7.2.0",
     "react-scripts": "^5.0.1",
-    "react-sortablejs": "^6.1.4",
+    "react-sortablejs": "6.0.3",
     "redux-localstorage-simple": "^2.4.1",
     "redux-logger": "^3.0.6",
     "slugify": "^1.6.1",
