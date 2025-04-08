@@ -120,7 +120,7 @@ blockquote:before,
 q:before,
 blockquote:after,
 q:after {
-  content: '';
+  content: "";
   content: none;
 }
 table {
@@ -228,7 +228,7 @@ kbd,
 pre,
 samp {
   font-family: monospace, serif;
-  _font-family: 'courier new', monospace;
+  _font-family: "courier new", monospace;
   font-size: 1em;
 }
 pre {
@@ -241,7 +241,7 @@ q {
 }
 q:before,
 q:after {
-  content: '';
+  content: "";
   content: none;
 }
 small {
@@ -319,9 +319,9 @@ input {
   line-height: normal;
 }
 button,
-html input[type='button'],
-input[type='reset'],
-input[type='submit'] {
+html input[type="button"],
+input[type="reset"],
+input[type="submit"] {
   -webkit-appearance: button;
   cursor: pointer;
   *overflow: visible;
@@ -330,19 +330,19 @@ button[disabled],
 input[disabled] {
   cursor: default;
 }
-input[type='checkbox'],
-input[type='radio'] {
+input[type="checkbox"],
+input[type="radio"] {
   box-sizing: border-box;
   padding: 0;
   *height: 13px;
   *width: 13px;
 }
-input[type='search'] {
+input[type="search"] {
   -webkit-appearance: textfield;
   box-sizing: content-box;
 }
-input[type='search']::-webkit-search-cancel-button,
-input[type='search']::-webkit-search-decoration {
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-decoration {
   -webkit-appearance: none;
 }
 button::-moz-focus-inner,
@@ -488,9 +488,9 @@ select {
   text-transform: none;
 }
 button,
-html input[type='button'],
-input[type='reset'],
-input[type='submit'] {
+html input[type="button"],
+input[type="reset"],
+input[type="submit"] {
   -webkit-appearance: button;
   cursor: pointer;
 }
@@ -506,21 +506,21 @@ input::-moz-focus-inner {
 input {
   line-height: normal;
 }
-input[type='checkbox'],
-input[type='radio'] {
+input[type="checkbox"],
+input[type="radio"] {
   box-sizing: border-box;
   padding: 0;
 }
-input[type='number']::-webkit-inner-spin-button,
-input[type='number']::-webkit-outer-spin-button {
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
   height: auto;
 }
-input[type='search'] {
+input[type="search"] {
   -webkit-appearance: textfield;
   box-sizing: content-box;
 }
-input[type='search']::-webkit-search-cancel-button,
-input[type='search']::-webkit-search-decoration {
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-decoration {
   -webkit-appearance: none;
 }
 fieldset {
@@ -653,7 +653,7 @@ hr {
   overflow: visible;
   clip: auto;
 }
-[role='button'] {
+[role="button"] {
   cursor: pointer;
 }
 h1,
@@ -972,7 +972,7 @@ blockquote .small {
 blockquote footer:before,
 blockquote small:before,
 blockquote .small:before {
-  content: '\2014 \00A0';
+  content: "\2014 \00A0";
 }
 .blockquote-reverse,
 blockquote.pull-right {
@@ -988,7 +988,7 @@ blockquote.pull-right footer:before,
 blockquote.pull-right small:before,
 .blockquote-reverse .small:before,
 blockquote.pull-right .small:before {
-  content: '';
+  content: "";
 }
 .blockquote-reverse footer:after,
 blockquote.pull-right footer:after,
@@ -996,7 +996,7 @@ blockquote.pull-right footer:after,
 blockquote.pull-right small:after,
 .blockquote-reverse .small:after,
 blockquote.pull-right .small:after {
-  content: '\00A0 \2014';
+  content: "\00A0 \2014";
 }
 address {
   margin-bottom: 20px;
@@ -1778,7 +1778,7 @@ address {
 .container-fluid:after,
 .row:before,
 .row:after {
-  content: ' ';
+  content: " ";
   display: table;
 }
 .clearfix:after,
@@ -1855,7 +1855,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: 'Roboto Slab', arial, serif;
+  font-family: "Roboto Slab", arial, serif;
 }
 a,
 button {
@@ -2008,10 +2008,10 @@ blockquote {
   font-size: 1.2em;
   font-weight: 200;
   font-style: italic;
-  quotes: '\201C''\201D''\2018''\2019';
+  quotes: "\201C""\201D""\2018""\2019";
 }
 pre {
-  font-family: Menlo, Monaco, Consolas, 'Courier New', monospace;
+  font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
   display: block;
   padding: 9.5px;
   margin: 0px 0px 10px;
@@ -2029,6 +2029,10 @@ u {
 }
 s {
   text-decoration: line-through;
+}
+
+em {
+  font-style: italic;
 }
 
 .cms-image {
@@ -2294,7 +2298,7 @@ article .part.box_text p {
   right: 55px;
   top: 5px;
   z-index: 100;
-  background: url('img/icon-unmuted.png') center center no-repeat black;
+  background: url("img/icon-unmuted.png") center center no-repeat black;
   background-size: cover;
   display: inline-block;
   text-indent: -1000px;
@@ -2306,7 +2310,7 @@ article .part.box_text p {
   border: 3px solid black;
 
   &.muted {
-    background-image: url('img/icon-muted.png');
+    background-image: url("img/icon-muted.png");
     background-size: cover;
   }
 }
@@ -2318,7 +2322,7 @@ article .part.box_text p {
   left: 50%;
   margin-top: -40px; /* Negative half of height. */
   margin-left: -40px; /* Negative half of width. */
-  background: url('img/icon-unmuted.png') center center no-repeat
+  background: url("img/icon-unmuted.png") center center no-repeat
     rgba(0, 0, 0, 0.3);
   background-size: cover;
   text-indent: -1000px;
@@ -2330,7 +2334,7 @@ article .part.box_text p {
   z-index: 11;
 
   &.muted {
-    background-image: url('img/icon-muted.png');
+    background-image: url("img/icon-muted.png");
     background-size: cover;
   }
 }
@@ -2468,12 +2472,12 @@ article .part.box_text p {
   float: left;
 
   &.pause {
-    background: transparent url('img/pause.png') center center no-repeat;
+    background: transparent url("img/pause.png") center center no-repeat;
     display: none;
   }
 
   &.play {
-    background: transparent url('img/play.png') center center no-repeat;
+    background: transparent url("img/play.png") center center no-repeat;
   }
 }
 
@@ -2512,7 +2516,7 @@ article .part.box_text p {
 }
 
 .slideshow {
-  font-family: 'Roboto Slab', arial, serif;
+  font-family: "Roboto Slab", arial, serif;
 }
 .slideshow.reverse_colors {
   color: #000;
@@ -2560,7 +2564,7 @@ article .part.box_text p {
   width: 100%;
   position: relative;
   overflow: hidden;
-  font-family: 'Roboto Slab', arial, serif;
+  font-family: "Roboto Slab", arial, serif;
 }
 
 .blueimp-gallery > .prev:hover,
@@ -2781,12 +2785,12 @@ article .part.box_text p {
   display: grid;
   grid-template-rows: none;
   grid-template-areas:
-    'intro'
-    '.'
-    'logo'
-    'storyname'
-    'play'
-    '.';
+    "intro"
+    "."
+    "logo"
+    "storyname"
+    "play"
+    ".";
   grid-row-gap: 0.3rem;
   background: white;
   position: fixed;
@@ -2882,7 +2886,7 @@ article .part.box_text p {
 }
 
 #paywallInfo {
-  background: url('img/curtain.png') no-repeat center center red;
+  background: url("img/curtain.png") no-repeat center center red;
   background-size: cover;
   display: none;
   pointer-events: all;
